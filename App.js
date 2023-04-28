@@ -9,7 +9,7 @@ export default function App() {
   console.log(`${Platform.OS} => Started Successfully`)
   useEffect(() => {
     storage.set("mberr", 'Hello')
-    console.log(storage.contains('mberr'))
+    console.log("MMVK store successful? " + storage.contains('mberr'))
   }, [])
   function getMMVK() {
     const get = storage.getString('mberr')
