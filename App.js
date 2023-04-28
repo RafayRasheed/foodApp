@@ -6,7 +6,7 @@ export default function App() {
   return (
     <SafeAreaView
       style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      <Text>Hello</Text>
+      <Text>Hello000000</Text>
       <Text>Hello</Text>
     </SafeAreaView>
   );
