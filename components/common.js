@@ -6,11 +6,9 @@ export function printWithPlat(print) {
 }
 export function myHeight(per) {
     const myHeight = (per * height) / 100
-    printWithPlat(myHeight)
     return myHeight
 }
 export function myWidth(per) {
     const myHeight = (per * height) / 100
-    printWithPlat(myHeight)
     return myHeight
 }

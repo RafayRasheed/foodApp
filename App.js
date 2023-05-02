@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleS
 import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
+import { StartupScreen } from './components/startup/startup_screens';
 
 const storage = new MMKV()
 
@@ -22,41 +23,9 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={styles.textOther}>Hello000000</Text>
-        <Text>Hello</Text>
-      </View>
-      <TouchableOpacity activeOpacity={0.6} style={styles.containerButton}
-        onPress={() => getMMKV()}>
-        <Text style={styles.textOther}>Get MMKV</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StartupScreen />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: myColors.background,
-    marginVertical: myHeight(50),
-  },
-
-  containerButton: {
-    backgroundColor: myColors.primary,
-    height: 40,
-    width: 140,
-    borderRadius: 10,
-    alignSelf: 'center',
-    justifyContent: "center",
-    alignItems: 'center',
-  },
-
-  textButton: {
-    color: myColors.background,
-    fontWeight: 'bold',
-  },
-  textOther: {
-    fontFamily: 'Roboto-Black',
-  }
-})
