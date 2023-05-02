@@ -2,27 +2,34 @@ import React, { useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleSheet } from 'react-native';
 import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
+import { myHeight, printWithPlat } from './components/common';
 
 const storage = new MMKV()
 
+
+
 export default function App() {
-  console.log(`${Platform.OS} => Started Successfully`)
+
   useEffect(() => {
+    printWithPlat('Started Successfully')
     storage.set("mberr", 'Hello')
-    console.log("MMVK store successful? " + storage.contains('mberr'))
+    // printWithPlat("Is MMKV store successful? " + storage.contains('mberr'))
   }, [])
-  function getMMVK() {
-    const get = storage.getString('mberr')
-    console.log(get)
+
+  function getMMKV() {
+    // const get = storage.getString('mberr')
+    // printWithPlat(get)
   }
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text>Hello000000</Text>
+        <Text style={styles.textOther}>Hello000000</Text>
         <Text>Hello</Text>
       </View>
-      <TouchableOpacity activeOpacity={0.6} style={styles.containerButton} onPress={() => getMMVK()}>
-        <Text style={styles.textButton}>Button</Text>
+      <TouchableOpacity activeOpacity={0.6} style={styles.containerButton}
+        onPress={() => getMMKV()}>
+        <Text style={styles.textOther}>Get MMKV</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: myColors.background,
+    marginVertical: myHeight(50),
   },
 
   containerButton: {
@@ -45,6 +53,10 @@ const styles = StyleSheet.create({
   },
 
   textButton: {
-    color: myColors.background
+    color: myColors.background,
+    fontWeight: 'bold',
   },
+  textOther: {
+    fontFamily: 'Roboto-Black',
+  }
 })

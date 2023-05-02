@@ -23,6 +23,4 @@ export const myColors = {
     offColor4: '#D2D4D8',
     border: '#BEC5D1',
     searchbar: '#E6E7E9'
-
-
 }
