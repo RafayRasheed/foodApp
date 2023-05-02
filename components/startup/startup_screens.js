@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { myHeight } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFonts } from '../../ultils/myFonts';
@@ -13,6 +13,7 @@ export const StartupScreen = () => {
                 <Text style={styles.textSkip}>Skip</Text>
                 {/* <Image /> */}
             </View>
+            <Image source={require('../assets/startup/undraw_shopping1.png')} />
         </View>
     )
 }
