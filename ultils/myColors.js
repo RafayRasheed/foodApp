@@ -1,11 +1,14 @@
 export const myColors = {
-    primary: '#32B768',
+    primary: '#FFAF66',
     textL: '#8F8F8F',
     text: '#1F2937',
+    dot: '#D9D9D9',
+    background: '#FFFFFF',
+
+
     // textL2: '#4B5563',
     // textL3: '#828282',
     // text2: '#242323',
-    background: '#FFFFFF',
     // backgroundL: '#F6F6F6',
     // backgroundTrans: 'rgba(0,0,0,0.5)',
     blue: '#2C8DFF',
@@ -13,7 +16,6 @@ export const myColors = {
     blue: '#2C8DFF',
     statusbarW: '#FFFFFF',
     statusbarG: '#32B768',
-    dot: '#E6E6E6',
     lightGree: "#D1FAE5",
     black: 'black',
     black2: '#222222',

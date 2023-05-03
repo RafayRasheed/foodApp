@@ -1,4 +1,6 @@
-import { Dimensions } from 'react-native'
+import React from 'react';
+import { Dimensions, View } from 'react-native'
+
 const { height, width } = Dimensions.get('window')
 
 export function printWithPlat(print) {
@@ -9,6 +11,10 @@ export function myHeight(per) {
     return myHeight
 }
 export function myWidth(per) {
-    const myHeight = (per * height) / 100
+    const myHeight = (per * width) / 100
     return myHeight
 }
+
+export const Spacer = ({ paddingEnd = 0, paddingT = 0 }) => (
+    <View style={{ paddingEnd: paddingEnd, paddingTop: paddingT }} />
+)
