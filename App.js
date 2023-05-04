@@ -4,6 +4,7 @@ import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
 import { StartupScreen } from './components/startup/startup_screens';
+import { AppNavigator } from './components/app_navigator';
 
 const storage = new MMKV()
 
@@ -23,9 +24,7 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StartupScreen />
-    </SafeAreaView>
+    <AppNavigator />
   );
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, View } from 'react-native'
+import { MMKV } from 'react-native-mmkv';
 
 const { height, width } = Dimensions.get('window')
 
@@ -18,3 +19,5 @@ export function myWidth(per) {
 export const Spacer = ({ paddingEnd = 0, paddingT = 0 }) => (
     <View style={{ paddingEnd: paddingEnd, paddingTop: paddingT }} />
 )
+
+export const storage = new MMKV()

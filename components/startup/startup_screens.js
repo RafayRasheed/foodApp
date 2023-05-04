@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Spacer, myHeight, myWidth } from '../common';
+import { Spacer, myHeight, myWidth, storage } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts } from '../../ultils/myFonts';
 
@@ -33,7 +33,7 @@ const startupData = [
 
 ]
 
-export const StartupScreen = () => {
+export const StartupScreen = ({ navigation }) => {
     const [i, setI] = useState(0)
     const dotArr = []
     const lenStartup = startupData.length
@@ -58,6 +58,7 @@ export const StartupScreen = () => {
             });
         }
     }
+
     function onForward() {
         const pos = posX[i + 1]
         setI(i + 1)
@@ -67,6 +68,7 @@ export const StartupScreen = () => {
             animated: true,
         });
     }
+
     function onBack() {
         setI(i - 1)
         const pos = posX[i - 1]
@@ -76,15 +78,25 @@ export const StartupScreen = () => {
             animated: true,
         });
     }
+
     useEffect(() => {
         console.log(i)
     }, [i])
 
+    function onContinue() {
+        storage.set('isFirstTime', false)
+        if (storage.contains('isFirstTime')) {
+            navigation.replace('AccountNavigator')
+            return
+        }
+        console.log('Error!: storage On continue')
+    }
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Top --> Skip */}
             {i < lenStartup - 1 &&
-                <TouchableOpacity activeOpacity={0.6} onPress={() => null} style={styles.containerSkip}>
+                <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerSkip}>
                     <Text style={styles.textSkip}>Skip</Text>
                     <Spacer paddingEnd={myWidth(1)} />
                     <View style={styles.containerCross}>
@@ -135,27 +147,29 @@ export const StartupScreen = () => {
             <View style={styles.containerBottom}>
                 {i < lenStartup - 1 ?
                     <View style={styles.containerChange}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
-                            <Image style={styles.imageArrow} source={require('../assets/startup/arrowL.png')} />
+                        {/* Arrow Left */}
+                        <TouchableOpacity style={{ width: myWidth(6), }} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
+                            {i > 0 && <Image style={styles.imageArrow} source={require('../assets/startup/arrowL.png')} />}
                         </TouchableOpacity>
 
                         <View style={{ flexDirection: 'row' }}>
                             {dotArr}
                         </View>
 
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
+                        {/* Arrow Right */}
+                        <TouchableOpacity style={{ width: myWidth(6), }} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
                             <Image style={styles.imageArrow} source={require('../assets/startup/arrowR.png')} />
                         </TouchableOpacity>
                     </View>
                     :
                     <TouchableOpacity activeOpacity={0.6} onPress={() => null} style={styles.containerStart}>
-                        <Text style={styles.textStart}>Get Started</Text>
+                        <Text style={styles.textStart} onPress={onContinue}>Get Started</Text>
                     </TouchableOpacity>
                 }
 
             </View>
 
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -248,6 +262,8 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.body,
         color: myColors.background
     },
+
+
 
 
     //Image
