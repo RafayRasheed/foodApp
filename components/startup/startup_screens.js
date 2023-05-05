@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Spacer, myHeight, myWidth, storage } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts } from '../../ultils/myFonts';
@@ -40,26 +40,32 @@ export const StartupScreen = ({ navigation }) => {
     const width = myWidth(100)
     const [ref, setRef] = useState(null);
     const [posX, setPosX] = useState([]);
+    const [scrollTouch, setScrollTouch] = useState(false)
     // Loop for dots
     for (let j = 0; j < lenStartup; j++) {
         dotArr.push(<View key={j} style={[styles.containerDot, { backgroundColor: j == i ? myColors.primary : myColors.dot, }]} />)
     }
 
     function handleScroll(event) {
-        const a = (event.nativeEvent.contentOffset.x) / width
-        const pos = posX[a]
-        console.log(Math.round(a))
-        if (pos != undefined) {
-            setI(a)
-            ref.scrollTo({
-                x: pos,
-                y: 0,
-                animated: true,
-            });
+        if (scrollTouch) {
+            const a = (event.nativeEvent.contentOffset.x) / width
+            var getDecimal = a.toString().split(".")[1];
+            if (getDecimal) {
+                if (getDecimal[0] < 3 || getDecimal[0] > 7) {
+                    const r = Math.round(a)
+                    const pos = posX[r]
+                    if (pos != undefined) {
+                        setI(r)
+
+
+                    }
+                }
+            }
         }
     }
 
     function onForward() {
+        setScrollTouch(false)
         const pos = posX[i + 1]
         setI(i + 1)
         ref.scrollTo({
@@ -70,6 +76,8 @@ export const StartupScreen = ({ navigation }) => {
     }
 
     function onBack() {
+        setScrollTouch(false)
+
         setI(i - 1)
         const pos = posX[i - 1]
         ref.scrollTo({
@@ -95,25 +103,31 @@ export const StartupScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             {/* Top --> Skip */}
-            {i < lenStartup - 1 &&
-                <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerSkip}>
-                    <Text style={styles.textSkip}>Skip</Text>
-                    <Spacer paddingEnd={myWidth(1)} />
-                    <View style={styles.containerCross}>
-                        <Image style={styles.imageCross} source={require('../assets/startup/cross.png')} />
-                    </View>
+            <View style={styles.containerTopSkip}>
 
-                </TouchableOpacity>
-            }
+                {i < lenStartup - 1 &&
+                    <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerSkip}>
+
+                        <Text style={styles.textSkip}>Skip</Text>
+                        <Spacer paddingEnd={myWidth(1)} />
+                        <View style={styles.containerCross}>
+                            <Image style={styles.imageCross} source={require('../assets/startup/cross.png')} />
+                        </View>
+
+
+                    </TouchableOpacity>
+                }
+            </View>
 
             {/* Mid */}
             <View>
                 <ScrollView
                     // onScroll={handleScroll}
                     horizontal
-                    scrollEnabled={false}
+                    onTouchStart={() => setScrollTouch(true)}
+                    onScroll={handleScroll}
                     overScrollMode='never'
-                    // scrollEnabled={i < lenStartup - 1}
+                    scrollEnabled={i < lenStartup - 1}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ alignItems: 'flex-end' }}
                     pagingEnabled
@@ -179,12 +193,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: myColors.background,
-        paddingBottom: myHeight(8.1),
+        justifyContent: 'space-between'
+        // paddingBottom: myHeight(8.1),
     },
-    containerSkip: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+
     containerMid: {
         width: myWidth(100),
         alignItems: 'center',
@@ -199,20 +211,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderColor: myColors.textL,
     },
+    containerTopSkip: {
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        paddingEnd: myWidth(9.3),
+        height: myHeight(5.2),
+
+
+    },
     containerSkip: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        position: 'absolute',
-        top: myHeight(1.7),
-        end: myWidth(9.3),
-        zIndex: 1,
     },
     containerBottom: {
         width: myWidth(100),
-        position: 'absolute',
-        bottom: myHeight(7),
-        zIndex: 1,
+        height: myHeight(10),
+        // position: 'absolute',
+        // zIndex: 1,
     },
     containerChange: {
         flexDirection: 'row',
