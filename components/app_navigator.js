@@ -11,7 +11,10 @@ export const AppNavigator = () => {
         <NavigationContainer>
             <AppTAB.Navigator
                 initialRouteName={storage.contains('isFirstTime') ? "AccountNavigator" : "StartupScreen"}
-                screenOptions={{ headerShown: false }}
+                screenOptions={{
+                    animation: 'slide_from_right',
+                    headerShown: false
+                }}
             >
                 <AppTAB.Screen component={StartupScreen} name="StartupScreen" />
                 <AppTAB.Screen component={AccountNavigator} name="AccountNavigator" />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, View } from 'react-native'
 import { MMKV } from 'react-native-mmkv';
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('screen')
 
 export function printWithPlat(print) {
     console.log(`${Platform.OS} => ${print}`)
