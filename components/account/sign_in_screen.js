@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { myFontSize, myFonts } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
-import { Spacer, myHeight, myWidth } from "../common"
+import { Spacer, ios, myHeight, myWidth } from "../common"
 
 
 export const SignIn = ({ navigation }) => {
@@ -50,11 +50,14 @@ export const SignIn = ({ navigation }) => {
                 style={styles.container}>
                 {/* Content */}
                 <View style={styles.containerContent}>
+                    <Spacer paddingT={myHeight(6.2)} />
                     {/* Text Portion */}
                     <View style={{ alignItems: 'center' }}>
                         <Text style={styles.textSignIn}>Sign In</Text>
                         <Text style={styles.textWelcome}>Welcome back! Please enter your details</Text>
                     </View>
+
+                    <Spacer paddingT={myHeight(5.4)} />
                     {/* Input Portion */}
                     <View>
                         {/* Email Portion */}
@@ -89,11 +92,13 @@ export const SignIn = ({ navigation }) => {
                             <Text style={styles.textForgot}>Forgot Password?</Text>
                         </TouchableOpacity>
                     </View>
+                    <Spacer paddingT={myHeight(6.1)} />
 
                     {/* Sign Button */}
                     <TouchableOpacity activeOpacity={0.6} onPress={() => null} style={styles.containerSign}>
                         <Text style={styles.textSignInBu}>Sign in</Text>
                     </TouchableOpacity>
+                    <Spacer paddingT={myHeight(5.1)} />
 
                     {/* Or sign with */}
                     <View style={styles.containerOrSignWith}>
@@ -103,6 +108,7 @@ export const SignIn = ({ navigation }) => {
                         </TouchableOpacity>
                         <View style={styles.containerLine} />
                     </View>
+                    <Spacer paddingT={myHeight(5.1)} />
 
                     {/* Social Portion */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -126,6 +132,7 @@ export const SignIn = ({ navigation }) => {
                             <Text style={styles.textSocial}>Apple</Text>
                         </TouchableOpacity>
                     </View>
+                    <Spacer paddingT={myHeight(5.1)} />
 
                     {/* Dont have an Acc*/}
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -135,34 +142,34 @@ export const SignIn = ({ navigation }) => {
                             <Text style={styles.textSignUp}>Sign Up!</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
 
-                <Spacer paddingT={myHeight(15)} />
+                    <Spacer paddingT={myHeight(20)} />
 
-                {/* Terms & Policy */}
-                <View style={styles.containerTermCond}>
-                    {/* First line */}
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupScreen')}>
-                            <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
-                        </TouchableOpacity>
+                    {/* Terms & Policy */}
+                    <View style={styles.containerTermCond}>
+                        {/* First line */}
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupScreen')}>
+                                <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
+                            </TouchableOpacity>
 
-                        <Text style={styles.textTermCond}>and </Text>
+                            <Text style={styles.textTermCond}>and </Text>
 
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                            <Text style={styles.textTermCondColor}>Privacy Policy</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                                <Text style={styles.textTermCondColor}>Privacy Policy</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Second Line */}
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={styles.textTermCond}>Copyrights 2023 </Text>
+
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                                <Text style={styles.textTermCondColor}>M-Rides Inc</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Spacer paddingT={myHeight(1)} />
                     </View>
-
-                    {/* Second Line */}
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.textTermCond}>Copyrights 2023 </Text>
-
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                            <Text style={styles.textTermCondColor}>M-Rides Inc</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Spacer paddingT={myHeight(1)} />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
     },
     containerContent: {
         flex: 1,
-        justifyContent: 'space-around',
+        // justifyContent: 'space-around',
         paddingHorizontal: myWidth(10),
     },
     containerInputPortion: {
@@ -189,7 +196,9 @@ const styles = StyleSheet.create({
     containerInput: {
         flex: 1,
         textAlignVertical: 'center',
-        paddingVertical: myHeight(1.4),
+        paddingVertical: ios ? myHeight(1.4) : myHeight(0.8),
+
+        // paddingVertical: myHeight(1.4),
         fontSize: myFontSize.body, color: myColors.text, fontFamily: myFonts.bodyBold,
         lineHeight: 0
     },
