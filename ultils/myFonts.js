@@ -1,6 +1,6 @@
 import { RFValue } from "react-native-responsive-fontsize"
 import { Dimensions } from "react-native"
-import { ios } from "../components/common"
+import { ios, myWidth } from "../components/common"
 const { height } = Dimensions.get('screen')
 const myHeight = ios ? height : height - 30;
 export const myFonts = {
@@ -13,7 +13,9 @@ export const myFonts = {
     //700
     headingBold: 'OpenSans-Bold',
 }
-
+export const myLetSpacing = {
+    common: -myWidth(0.0395)
+}
 export const myFontSize = {
     tiny: RFValue(8), //done 10
     small: RFValue(9), // done 11

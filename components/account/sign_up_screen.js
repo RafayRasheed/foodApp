@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import { myFontSize, myFonts } from "../../ultils/myFonts"
+import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Spacer, ios, myHeight, myWidth } from "../common"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 
 export const SignUp = ({ navigation }) => {
@@ -58,16 +59,13 @@ export const SignUp = ({ navigation }) => {
         }
     }, [email, password])
 
-
+    // const KeyboardAware = listenToKeyboardEvents = () =>{
+    //     <ScrollView {}
+    // }
     return (
-        <SafeAreaView style={styles.container}>
-
-            <KeyboardAvoidingView
-                // behavior={(Platform.OS === 'ios') ? "padding" : null}
-                keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.container}
-            >
+        <SafeAreaView style={{ flex: 1 }}>
+            <KeyboardAwareScrollView>
+                {/* <ScrollView contentContainerStyle={{}}> */}
 
                 {/* Content */}
                 <View style={styles.containerContent}>
@@ -101,6 +99,7 @@ export const SignUp = ({ navigation }) => {
                             <Image style={styles.imageInput} source={require('../assets/account/iPhone.png')} />
                             <Spacer paddingEnd={myWidth(1.8)} />
                             <TextInput placeholder="Phone"
+                                keyboardType='phone-pad'
                                 placeholderTextColor={myColors.offColor}
                                 selectionColor={myColors.primaryT}
                                 style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -115,6 +114,7 @@ export const SignUp = ({ navigation }) => {
                             <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
                             <Spacer paddingEnd={myWidth(1.8)} />
                             <TextInput placeholder="Email Address"
+                                autoCapitalize='none'
                                 placeholderTextColor={myColors.offColor}
                                 selectionColor={myColors.primaryT}
                                 style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -144,6 +144,7 @@ export const SignUp = ({ navigation }) => {
                             <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
                             <Spacer paddingEnd={myWidth(1.8)} />
                             <TextInput placeholder="Referral Code"
+                                autoCapitalize='none'
                                 placeholderTextColor={myColors.offColor}
                                 selectionColor={myColors.primaryT}
                                 style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -236,8 +237,8 @@ export const SignUp = ({ navigation }) => {
                         <Spacer paddingT={myHeight(1)} />
                     </View>
                 </View>
-            </KeyboardAvoidingView>
-
+                {/* </ScrollView> */}
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     )
 }
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     containerContent: {
-        flex: 1,
+        // flex: 1,
         paddingHorizontal: myWidth(10),
     },
     containerInputPortion: {
@@ -262,7 +263,8 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlignVertical: 'center',
         paddingVertical: ios ? myHeight(1.3) : myHeight(0.8),
-        fontSize: myFontSize.body, color: myColors.text, fontFamily: myFonts.bodyBold,
+        fontSize: myFontSize.body,
+        color: myColors.text, fontFamily: myFonts.bodyBold,
     },
     containerSign: {
         alignItems: 'center',
@@ -299,55 +301,75 @@ const styles = StyleSheet.create({
         fontSize: myFontSize.small,
         fontFamily: myFonts.heading,
         color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+
     },
 
     textTermCondColor: {
         fontSize: myFontSize.small,
         fontFamily: myFonts.heading,
         color: myColors.primaryT,
+        letterSpacing: myLetSpacing.common,
+
     },
     textForgot: {
         fontSize: myFontSize.tiny,
         fontFamily: myFonts.body,
         color: myColors.textL2,
+        letterSpacing: myLetSpacing.common,
+
     },
 
     textSignUp: {
         fontSize: myFontSize.large,
         fontFamily: myFonts.body,
         color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+
     },
 
     textSignBu: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+
     },
     textWelcome: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.offColor,
+        letterSpacing: myLetSpacing.common,
+
     },
     textSignWith: {
         fontSize: myFontSize.xSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
         paddingHorizontal: myWidth(2.3),
+        letterSpacing: myLetSpacing.common,
+
     },
     textAlreHaveAcc: {
         fontSize: myFontSize.xSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+
     },
     textSignIn: {
         fontSize: myFontSize.xSmall,
         fontFamily: myFonts.heading,
         color: myColors.primaryT,
+        letterSpacing: myLetSpacing.common,
+
     },
     textSocial: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+
     },
 
 

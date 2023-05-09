@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Spacer, myHeight, myWidth, storage } from '../common';
 import { myColors } from '../../ultils/myColors';
-import { myFontSize, myFonts } from '../../ultils/myFonts';
+import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 
 const startupData = [
     {
@@ -41,13 +41,15 @@ export const StartupScreen = ({ navigation }) => {
     const [ref, setRef] = useState(null);
     const [posX, setPosX] = useState([]);
     const [scrollTouch, setScrollTouch] = useState(false)
+    const [isScrollLas, setIsScrollLas] = useState(false)
+
     // Loop for dots
     for (let j = 0; j < lenStartup; j++) {
         dotArr.push(<View key={j} style={[styles.containerDot, { backgroundColor: j == i ? myColors.primary : myColors.dot, }]} />)
     }
 
     function handleScroll(event) {
-        if (scrollTouch) {
+        if (scrollTouch && !isScrollLas) {
             const a = (event.nativeEvent.contentOffset.x) / width
             var getDecimal = a.toString().split(".")[1];
             if (getDecimal) {
@@ -87,10 +89,19 @@ export const StartupScreen = ({ navigation }) => {
         });
     }
 
-    useEffect(() => {
-        console.log(i)
-    }, [i])
+    function scrollToLast() {
+        const pos = posX[lenStartup - 1]
+        if (pos) {
+            setIsScrollLas(true)
+            ref.scrollTo({
+                x: pos,
+                y: 0,
+                animated: true,
+            });
+            setTimeout(() => setI(lenStartup - 1), 100);
 
+        }
+    }
     function onContinue() {
         storage.set('isFirstTime', false)
         if (storage.contains('isFirstTime')) {
@@ -106,7 +117,7 @@ export const StartupScreen = ({ navigation }) => {
             <View style={styles.containerTopSkip}>
 
                 {i < lenStartup - 1 &&
-                    <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerSkip}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={scrollToLast} style={styles.containerSkip}>
 
                         <Text style={styles.textSkip}>Skip</Text>
                         <Spacer paddingEnd={myWidth(1)} />
@@ -176,8 +187,8 @@ export const StartupScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     :
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => null} style={styles.containerStart}>
-                        <Text style={styles.textStart} onPress={onContinue}>Get Started</Text>
+                    <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerStart}>
+                        <Text style={styles.textStart}> Get Started</Text>
                     </TouchableOpacity>
                 }
 
@@ -250,32 +261,38 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-
     },
-
-
 
 
     //Text
     textSkip: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
-        color: myColors.textL
+        color: myColors.textL,
+        letterSpacing: myLetSpacing.common,
+
     },
     textTitle: {
         fontSize: myFontSize.large,
         fontFamily: myFonts.body,
-        color: myColors.text
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+
     },
     textDes: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
-        color: myColors.text
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+
     },
     textStart: {
         fontSize: myFontSize.xBody,
         fontFamily: myFonts.body,
-        color: myColors.background
+        color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+
+
     },
 
 
