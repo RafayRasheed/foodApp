@@ -17,9 +17,11 @@ export const myLetSpacing = {
     common: -myWidth(0.0395)
 }
 export const myFontSize = {
-    tiny: RFValue(8), //done 10
+    tiny: RFValue(8.3), //done 10
     small: RFValue(9), // done 11
+    small2: RFValue(9.75), // done 12
     xSmall: RFValue(10.5), //done 13
+    xxSmall: RFValue(11.25), //done 14
     body: RFValue(12), //done 15
     xBody: RFValue(15), //done 20
     medium: RFValue(20), // n done 25

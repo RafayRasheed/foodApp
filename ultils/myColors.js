@@ -4,9 +4,13 @@ export const myColors = {
     primaryL: '#FFAF6659',
     textL: '#8F8F8F',
     textL2: '#9E9C9C',
+    textL3: '#888888',
+    textL4: '#797979',
+
     text: '#1F2937',
     dot: '#D9D9D9',
     background: '#FFFFFF',
+
     offColor: '#9B9B9B',
     offColor2: "#B7B7B7",
     ligBlue: '#66D1FF',

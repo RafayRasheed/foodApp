@@ -14,7 +14,6 @@ export const SignUp = ({ navigation }) => {
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
 
-
     const onSignUp = () => {
 
     }

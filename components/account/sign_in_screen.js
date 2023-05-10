@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 
 export const SignIn = ({ navigation }) => {
+
+
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState(null)
 
@@ -76,6 +78,9 @@ export const SignIn = ({ navigation }) => {
                             <Spacer paddingEnd={myWidth(1.5)} />
                             <TextInput placeholder="Password"
                                 secureTextEntry
+                                password={true}
+                                clearTextOnFocus={false}
+                                textContentType='password'
                                 placeholderTextColor={myColors.offColor}
                                 selectionColor={myColors.primaryT}
                                 style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -176,6 +181,7 @@ export const SignIn = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: myColors.background
     },
     containerContent: {
         // flex: 1,
@@ -234,6 +240,7 @@ const styles = StyleSheet.create({
         fontSize: myFontSize.small,
         fontFamily: myFonts.heading,
         color: myColors.text,
+        letterSpacing: myLetSpacing.common,
     },
 
     textTermCondColor: {
