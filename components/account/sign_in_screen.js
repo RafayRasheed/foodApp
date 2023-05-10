@@ -96,7 +96,7 @@ export const SignIn = ({ navigation }) => {
                     <Spacer paddingT={myHeight(6.1)} />
 
                     {/* Sign Button */}
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => null} style={styles.containerSign}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('HomeNavigator')} style={styles.containerSign}>
                         <Text style={styles.textSignInBu}>Sign in</Text>
                     </TouchableOpacity>
                     <Spacer paddingT={myHeight(5.1)} />

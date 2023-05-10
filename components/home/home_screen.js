@@ -25,7 +25,7 @@ export const HomeScreen = ({ navigation }) => {
         const a = (event.nativeEvent.contentOffset.x) / width
         var getDecimal = a.toString().split(".")[1];
         if (getDecimal) {
-            if (getDecimal[0] < 3 || getDecimal[0] > 7) {
+            if (getDecimal[0] < 5 || getDecimal[0] > 5) {
                 const r = Math.round(a)
                 setI(r)
                 // const pos = posX[r]
@@ -74,10 +74,10 @@ export const HomeScreen = ({ navigation }) => {
 
             {/* Book Now */}
             <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
-                <ScrollView scrollEventThrottle={1} onScroll={handleScroll} onScrollEndDrag={() => console.log('j')} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
+                <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
                     {
                         bookNow.map((item, ind) =>
-                            <View style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View key={ind} style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View style={styles.containerBookNowText}>
                                     <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
                                     <Spacer paddingT={myHeight(3.2)} />

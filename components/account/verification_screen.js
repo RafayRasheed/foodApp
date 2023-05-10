@@ -22,7 +22,9 @@ export const Verification = ({ navigation }) => {
 
     useEffect(() => {
         if (finalVeriVal) {
-            console.log('Go ==> Verification')
+            setTimeout(() => navigation.replace("SignIn"), 500);
+
+
         }
     }, [finalVeriVal])
 
