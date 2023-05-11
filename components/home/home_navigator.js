@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, SafeAreaView, View, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ios, myHeight, myWidth } from "../common";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { HomeScreen } from "./home_screen";
+import { ActivityScreen } from "../activity/activity_screen";
 
 const Tab = createBottomTabNavigator()
 
@@ -42,10 +43,10 @@ const screenOptions = ({ route }) => {
             source={Icons[name]} />,
     }
 }
-const Xr = () => (
-    <View style={{ flex: 1, backgroundColor: myColors.background }}>
-        <Text style={{}}>HomeStack!</Text>
-    </View>
+const Xr = ({ navigation }) => (
+    <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
+        <Text onPress={() => navigation.navigate('SignIn')} style={{}}>Sign Out</Text>
+    </SafeAreaView>
 )
 
 export const HomeNavigator = ({ route, navigation }) => {
@@ -55,10 +56,10 @@ export const HomeNavigator = ({ route, navigation }) => {
             headerShown={false}
             screenOptions={screenOptions}
             tabBarShowLabel={false}
+            initialRouteName="HOME"
         >
-
             <Tab.Screen name="HOME" component={HomeScreen} />
-            <Tab.Screen name="ACTIVITY" component={Xr} />
+            <Tab.Screen name="ACTIVITY" component={ActivityScreen} />
             <Tab.Screen name="CART" component={Xr} />
             <Tab.Screen name="WALLET" component={Xr} />
             <Tab.Screen name="ACCOUNT" component={Xr} />

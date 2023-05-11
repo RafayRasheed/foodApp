@@ -2,10 +2,13 @@ export const myColors = {
     primary: '#FFAF66',
     primaryT: '#FF881B',
     primaryL: '#FFAF6659',
+    primaryL2: '#FFE4CC',
     textL: '#8F8F8F',
     textL2: '#9E9C9C',
     textL3: '#888888',
     textL4: '#797979',
+    line: '#AFAFAF',
+    divider: '#EAEAEA',
 
     text: '#1F2937',
     dot: '#D9D9D9',

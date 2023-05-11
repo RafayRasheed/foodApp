@@ -40,79 +40,81 @@ export const HomeScreen = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <Spacer paddingT={myHeight(1.8)} />
+            <ScrollView contentContainerStyle={styles.container}>
+                <Spacer paddingT={myHeight(1.8)} />
 
-            {/* Morning & Loca */}
-            <View style={{ paddingHorizontal: myWidth(6.75) }}>
-                <Text style={styles.textGoodM}>{`Good Morning ${name}!`}</Text>
-                <Spacer paddingT={myHeight(0.4)} />
-                <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.imageLoc} source={require('../assets/home_main/location.png')} />
-                    <Text style={styles.textLoc}>  Work - 100 Dynamic Drive</Text>
+                {/* Morning & Loca */}
+                <View style={{ paddingHorizontal: myWidth(6.75) }}>
+                    <Text style={styles.textGoodM}>{`Good Morning ${name}!`}</Text>
+                    <Spacer paddingT={myHeight(0.4)} />
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image style={styles.imageLoc} source={require('../assets/home_main/location.png')} />
+                        <Text style={styles.textLoc}>  Work - 100 Dynamic Drive</Text>
+                    </View>
                 </View>
-            </View>
 
 
-            <Spacer paddingT={myHeight(2)} />
-            {/* Category */}
-            <View style={styles.containerCategory}>
-                {category.map((cat, index) =>
-                    <TouchableOpacity key={index} onPress={null} style={{ paddingTop: myHeight(2.2), flexBasis: '23.5%', }} activeOpacity={0.8}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.containerEachCate}>
-                                    <Image style={styles.imageCate} source={cat.image} />
+                <Spacer paddingT={myHeight(2)} />
+                {/* Category */}
+                <View style={styles.containerCategory}>
+                    {category.map((cat, index) =>
+                        <TouchableOpacity key={index} onPress={null} style={{ paddingTop: myHeight(2.2), flexBasis: '23.5%', }} activeOpacity={0.8}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ alignItems: 'center' }}>
+                                    <View style={styles.containerEachCate}>
+                                        <Image style={styles.imageCate} source={cat.image} />
+                                    </View>
+                                    <Spacer paddingT={myHeight(0.3)} />
+                                    <Text style={styles.textCat}>{cat.name}</Text>
                                 </View>
-                                <Spacer paddingT={myHeight(0.3)} />
-                                <Text style={styles.textCat}>{cat.name}</Text>
                             </View>
-                        </View>
-                    </TouchableOpacity>
-                )}
-            </View>
-            <Spacer paddingT={myHeight(3.44)} />
-
-            {/* Book Now */}
-            <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
-                <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
-                    {
-                        bookNow.map((item, ind) =>
-                            <View key={ind} style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View style={styles.containerBookNowText}>
-                                    <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
-                                    <Spacer paddingT={myHeight(3.2)} />
-                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'baseline' }} activeOpacity={0.6} onPress={() => null}>
-                                        <Text style={styles.textBookNow}>Book Now    </Text>
-                                        <Image style={styles.imageArrow} source={require('../assets/home_main/arrow.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <Image style={styles.imageMan} source={require('../assets/home_main/man.png')} />
-                            </View>
-                        )
-                    }
-                </ScrollView>
-                {/* Dot */}
-                <View style={{ position: 'absolute', zIndex: 1, left: myWidth(4.2), bottom: myHeight(1.6), flexDirection: 'row' }}>
-                    {dotArr}
-                </View>
-            </LinearGradient>
-
-
-            <Spacer paddingT={myHeight(2.6)} />
-            {/* Daily Special */}
-            <Text style={styles.textDailyS}>Daily Special</Text>
-            <Spacer paddingT={myHeight(1.15)} />
-            {/* Row */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: myWidth(3.72) }}>
-                <View style={styles.containerDailyS}>
-                    {dailySpecial.map((item, i) =>
-                        <TouchableOpacity key={i} activeOpacity={0.6} >
-                            <DailySpecial item={item} />
                         </TouchableOpacity>
                     )}
                 </View>
+                <Spacer paddingT={myHeight(3.44)} />
 
+                {/* Book Now */}
+                <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
+                    <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
+                        {
+                            bookNow.map((item, ind) =>
+                                <View key={ind} style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <View style={styles.containerBookNowText}>
+                                        <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
+                                        <Spacer paddingT={myHeight(3.2)} />
+                                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'baseline' }} activeOpacity={0.6} onPress={() => null}>
+                                            <Text style={styles.textBookNow}>Book Now    </Text>
+                                            <Image style={styles.imageArrow} source={require('../assets/home_main/arrow.png')} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Image style={styles.imageMan} source={require('../assets/home_main/man.png')} />
+                                </View>
+                            )
+                        }
+                    </ScrollView>
+                    {/* Dot */}
+                    <View style={{ position: 'absolute', zIndex: 1, left: myWidth(4.2), bottom: myHeight(1.6), flexDirection: 'row' }}>
+                        {dotArr}
+                    </View>
+                </LinearGradient>
+
+
+                <Spacer paddingT={myHeight(2.6)} />
+                {/* Daily Special */}
+                <Text style={styles.textDailyS}>Daily Special</Text>
+                <Spacer paddingT={myHeight(1.15)} />
+                {/* Row */}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingHorizontal: myWidth(3.72) }}>
+                    <View style={styles.containerDailyS}>
+                        {dailySpecial.map((item, i) =>
+                            <TouchableOpacity key={i} activeOpacity={0.6} >
+                                <DailySpecial item={item} />
+                            </TouchableOpacity>
+                        )}
+                    </View>
+
+                </ScrollView>
             </ScrollView>
         </SafeAreaView >
     )
