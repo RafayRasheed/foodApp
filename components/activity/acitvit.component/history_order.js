@@ -104,18 +104,24 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textTime_Status: {
         fontSize: myFontSize.tiny,
         fontFamily: myFonts.body,
         color: myColors.textL4,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textReb_Order: {
         fontSize: myFontSize.small2,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
 
 

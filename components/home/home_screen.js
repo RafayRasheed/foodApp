@@ -166,30 +166,40 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textLoc: {
         fontSize: myFontSize.xSmall,
         fontFamily: myFonts.heading,
         color: myColors.textL3,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textCat: {
         fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textBookNowName: {
         fontSize: myFontSize.xBody,
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textBookNow: {
         fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textDailyS: {
         fontSize: myFontSize.body,
@@ -197,6 +207,8 @@ const styles = StyleSheet.create({
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         paddingStart: myWidth(4.6),
+        includeFontPadding: false,
+        padding: 0,
     },
 
 
@@ -208,13 +220,13 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageCate: {
-        height: myHeight(5.37),
-        width: myWidth(11),
-        resizeMode: 'stretch',
-
         // height: myHeight(5.37),
-        // width: myHeight(5.37),
-        // resizeMode: 'contain',
+        // width: myWidth(11),
+        // resizeMode: 'stretch',
+
+        height: myHeight(5.37),
+        width: myHeight(5.37),
+        resizeMode: 'cover',
     },
 
     imageMan: {

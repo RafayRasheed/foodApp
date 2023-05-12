@@ -28,12 +28,16 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
 
     },
     textDist_Rat: {
         fontSize: myFontSize.tiny,
         fontFamily: myFonts.body,
         color: myColors.textL4,
+        includeFontPadding: false,
+        padding: 0,
     },
     imageMain: {
         width: myWidth(34),

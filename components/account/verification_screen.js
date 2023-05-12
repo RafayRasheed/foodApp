@@ -223,24 +223,31 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: myFontSize.xMedium,
         fontFamily: myFonts.body,
+        includeFontPadding: false,
+
     },
     textVer: {
         fontSize: myFontSize.large,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
     },
     textEnterC: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.offColor,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+
 
     },
     textDidC: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.text,
+        includeFontPadding: false,
+
         letterSpacing: myLetSpacing.common,
     },
 
@@ -249,6 +256,7 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.heading,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
 
     },
 

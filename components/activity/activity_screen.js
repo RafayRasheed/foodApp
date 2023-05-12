@@ -70,6 +70,7 @@ export const ActivityScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: myColors.background
     },
     containerTop: {
         paddingHorizontal: myWidth(5.58),
@@ -107,11 +108,15 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
     },
     textHist_Order: {
         fontSize: myFontSize.small2,
         fontFamily: myFonts.body,
         letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
 
     },
 

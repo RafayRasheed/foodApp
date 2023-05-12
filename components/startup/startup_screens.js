@@ -7,29 +7,25 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 const startupData = [
     {
         title: 'Shop Local',
-        des: 'Shop anything, anytime, anywhere',
+        des: 'Shop anything, anytime, anywhere!',
         image: require('../assets/startup/startup1.png')
     },
     {
         title: 'Book Rides',
         des: 'Use M-Rides to get anywhere in your city!',
-        image: require('../assets/startup/startup2.png')
+        image: require('../assets/startup/startup5.png')
     },
     {
         title: 'Order Food',
-        des: 'Order all your favorites cuisines & cravings!',
-        image: require('../assets/startup/startup3.png')
+        des: 'Order all your favorite cuisines & cravings!',
+        image: require('../assets/startup/startup4.png')
     },
     {
         title: 'Send Parcel',
         des: 'Send parcels to anywhere in your city',
-        image: require('../assets/startup/startup4.png')
+        image: require('../assets/startup/startup3.png')
     },
-    {
-        title: '',
-        des: 'Earn coins from all services to use in app!',
-        image: require('../assets/startup/startup5.png')
-    },
+
 
 ]
 
@@ -118,14 +114,10 @@ export const StartupScreen = ({ navigation }) => {
 
                 {i < lenStartup - 1 &&
                     <TouchableOpacity activeOpacity={0.6} onPress={scrollToLast} style={styles.containerSkip}>
-
                         <Text style={styles.textSkip}>Skip</Text>
                         <Spacer paddingEnd={myWidth(1)} />
-                        <View style={styles.containerCross}>
-                            <Image style={styles.imageCross} source={require('../assets/startup/cross.png')} />
-                        </View>
-
-
+                        <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />
+                        <Image style={[styles.imageGo, { marginStart: -myWidth(1) }]} source={require('../assets/startup/go.png')} />
                     </TouchableOpacity>
                 }
             </View>
@@ -170,27 +162,36 @@ export const StartupScreen = ({ navigation }) => {
 
             {/* Bottom * => Start Button & Change*/}
             <View style={styles.containerBottom}>
+                <Spacer paddingT={myHeight(12.5)} />
                 {i < lenStartup - 1 ?
                     <View style={styles.containerChange}>
                         {/* Arrow Left */}
-                        <TouchableOpacity style={{ width: myWidth(6), }} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
-                            {i > 0 && <Image style={styles.imageArrow} source={require('../assets/startup/arrowL.png')} />}
-                        </TouchableOpacity>
+                        <View style={{ width: myHeight(3) }}>
+                            {i > 0 &&
+                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
+                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goL.png')} />
+                                </TouchableOpacity>
+                            }
+                        </View>
 
                         <View style={{ flexDirection: 'row' }}>
                             {dotArr}
                         </View>
 
                         {/* Arrow Right */}
-                        <TouchableOpacity style={{ width: myWidth(6), }} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
-                            <Image style={styles.imageArrow} source={require('../assets/startup/arrowR.png')} />
-                        </TouchableOpacity>
+                        <View style={{ width: myHeight(3) }}>
+                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
+                                <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     :
                     <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerStart}>
                         <Text style={styles.textStart}> Get Started</Text>
                     </TouchableOpacity>
                 }
+                <Spacer paddingT={myHeight(15)} />
+
 
             </View>
 
@@ -225,10 +226,8 @@ const styles = StyleSheet.create({
     containerTopSkip: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        paddingEnd: myWidth(9.3),
+        paddingEnd: myWidth(7),
         height: myHeight(5.2),
-
-
     },
     containerSkip: {
         flexDirection: 'row',
@@ -236,7 +235,8 @@ const styles = StyleSheet.create({
     },
     containerBottom: {
         width: myWidth(100),
-        height: myHeight(10),
+        // flex:1,
+        // height: myHeight(10),
         // position: 'absolute',
         // zIndex: 1,
     },
@@ -254,10 +254,18 @@ const styles = StyleSheet.create({
         marginStart: myWidth(1.2),
     },
     containerStart: {
-        backgroundColor: myColors.primary,
+        backgroundColor: myColors.primaryT,
         paddingVertical: myHeight(1),
         borderRadius: myHeight(3),
         width: myWidth(42),
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+    containerGoLR: {
+        backgroundColor: myColors.primaryT,
+        padding: myHeight(1.4),
+        borderRadius: myHeight(3),
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
@@ -266,33 +274,36 @@ const styles = StyleSheet.create({
 
     //Text
     textSkip: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.body,
-        color: myColors.textL,
-        letterSpacing: myLetSpacing.common,
+        color: myColors.primaryT,
+        includeFontPadding: false,
+        padding: 0,
 
     },
     textTitle: {
         fontSize: myFontSize.large,
-        fontFamily: myFonts.body,
+        fontFamily: myFonts.bodyBold,
         color: myColors.text,
-        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
 
     },
     textDes: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.text,
-        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
 
     },
     textStart: {
         fontSize: myFontSize.xBody,
-        fontFamily: myFonts.body,
+        fontFamily: myFonts.bodyBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
-
-
+        includeFontPadding: false,
+        padding: 0,
     },
 
 
@@ -303,9 +314,14 @@ const styles = StyleSheet.create({
         width: myWidth(86),
         resizeMode: 'contain',
     },
-    imageCross: {
-        width: myHeight(0.75),
-        height: myHeight(0.75),
+    imageGo: {
+        width: myHeight(1.2),
+        height: myHeight(1.2),
+        resizeMode: 'contain',
+    },
+    imageGoLR: {
+        height: myHeight(1.75),
+        width: myHeight(1.75),
         resizeMode: 'contain',
     },
     imageArrow: {

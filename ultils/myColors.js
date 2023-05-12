@@ -9,12 +9,14 @@ export const myColors = {
     textL4: '#797979',
     line: '#AFAFAF',
     divider: '#EAEAEA',
-
-    text: '#1F2937',
+    text: '#000000',
+    text2: '#1F2937',
     dot: '#D9D9D9',
     background: '#FFFFFF',
-
     offColor: '#9B9B9B',
+
+
+
     offColor2: "#B7B7B7",
     ligBlue: '#66D1FF',
     ligRed: 'rgba(255, 102, 102, 0.78)',
