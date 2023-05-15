@@ -104,7 +104,8 @@ export const SignIn = ({ navigation }) => {
                                 />
                             </View>
                             <Spacer paddingT={myHeight(0.5)} />
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingEnd: myWidth(1) }} onPress={() => null} activeOpacity={0.6} >
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingEnd: myWidth(1) }}
+                                onPress={() => navigation.navigate('ForgotPassword')} activeOpacity={0.6} >
                                 <Text style={styles.textForgot}>Forgot Password?</Text>
                             </TouchableOpacity>
                         </View>
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: myWidth(2.5),
         borderWidth: myHeight(0.09),
         borderColor: myColors.primaryT,
+
     },
     containerInput: {
         flex: 1,
@@ -221,6 +223,7 @@ const styles = StyleSheet.create({
         color: myColors.text,
         includeFontPadding: false,
         fontFamily: myFonts.bodyBold,
+
         // lineHeight: 0,
 
 
@@ -357,5 +360,6 @@ const styles = StyleSheet.create({
         width: myHeight(3.76),
         resizeMode: 'contain',
     },
+
 
 })

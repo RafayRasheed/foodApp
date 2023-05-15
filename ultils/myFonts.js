@@ -6,12 +6,16 @@ const myHeight = ios ? height : height - 30;
 export const myFonts = {
     //400
     body: 'Poppins-Regular',
+    bodyO: 'OpenSans-Regular',
     //500
     bodyBold: 'Poppins-Medium',
+    bodyBoldO: 'OpenSans-Medium',
     //600
     heading: 'Poppins-SemiBold',
+    headingO: 'OpenSans-SemiBold',
     //700
     headingBold: 'Poppins-Bold',
+    headingBoldO: 'OpenSans-Bold',
 }
 export const myLetSpacing = {
     common: -myWidth(0.0395)
@@ -29,6 +33,7 @@ export const myFontSize = {
     medium2: RFValue(22), // n done 25
     xMedium: RFValue(26), // done 32
     large: RFValue(29), //done 36
+
 
     // tiny: RFValue(10, myHeight),
     // small: RFValue(11, myHeight),
