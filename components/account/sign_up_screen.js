@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Spacer, ios, myHeight, myWidth } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Flag from './account.component/phone_select';
 
 
 export const SignUp = ({ navigation }) => {
@@ -13,9 +14,14 @@ export const SignUp = ({ navigation }) => {
     const [code, setCode] = useState(null)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
+    const flagRef = useRef(null)
 
     const onSignUp = () => {
-
+        navigation.navigate('Verification')
+    }
+    function onChangePhone(val) {
+        setPhone(val)
+        flagRef.current.setNumber(val)
     }
 
     function verifyEmail() {
@@ -32,7 +38,9 @@ export const SignUp = ({ navigation }) => {
     }
     function verifyPhone() {
         if (phone) {
-            return true
+            const s = flagRef.current.checkNumber()
+            console.log("isValid Number", s)
+            return s
         }
         return false
     }
@@ -79,6 +87,23 @@ export const SignUp = ({ navigation }) => {
                         <Spacer paddingT={myHeight(6)} />
                         {/* Input Portion */}
                         <View>
+                            {/* Phone Portion */}
+                            <View style={styles.containerInputPortion}>
+
+                                <Flag ref={flagRef} />
+                                <Spacer paddingEnd={myWidth(1.8)} />
+                                <TextInput placeholder="Enter Number"
+                                    keyboardType='phone-pad'
+                                    maxLength={14}
+                                    placeholderTextColor={myColors.offColor}
+                                    selectionColor={myColors.primaryT}
+                                    style={styles.containerInput}
+                                    cursorColor={myColors.primaryT}
+                                    value={phone} onChangeText={(val) => onChangePhone(val)}
+                                    onEndEditing={() => verifyPhone()}
+                                />
+                            </View>
+                            <Spacer paddingT={myHeight(1.5)} />
                             {/* Name Portion */}
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
@@ -93,21 +118,7 @@ export const SignUp = ({ navigation }) => {
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
 
-                            {/* Phone Portion */}
-                            <View style={styles.containerInputPortion}>
 
-                                <Image style={styles.imageInput} source={require('../assets/account/iPhone.png')} />
-                                <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Phone"
-                                    keyboardType='phone-pad'
-                                    placeholderTextColor={myColors.offColor}
-                                    selectionColor={myColors.primaryT}
-                                    style={styles.containerInput} cursorColor={myColors.primaryT}
-                                    value={phone} onChangeText={setPhone}
-                                    onEndEditing={() => verifyPhone()}
-                                />
-                            </View>
-                            <Spacer paddingT={myHeight(1.5)} />
 
                             {/* Email Portion */}
                             <View style={styles.containerInputPortion}>
@@ -143,7 +154,7 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Referral Code"
+                                <TextInput placeholder="Referral Code (Optional)"
                                     autoCapitalize='none'
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
@@ -155,7 +166,7 @@ export const SignUp = ({ navigation }) => {
                             <Spacer paddingT={myHeight(2.8)} />
 
                             {/* Sign Button */}
-                            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Verification')} style={styles.containerSign}>
+                            <TouchableOpacity activeOpacity={0.6} onPress={onSignUp} style={styles.containerSign}>
                                 <Text style={styles.textSignBu}>Sign Up</Text>
                             </TouchableOpacity>
                         </View>

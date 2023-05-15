@@ -29,7 +29,6 @@ const screenOptions = ({ route }) => {
             height: myHeight(9.5),
             paddingBottom: ios ? myHeight(2.5) : myHeight(2),
             paddingTop: myHeight(2.5),
-
         },
         tabBarLabelStyle: {
             fontSize: myFontSize.tiny,
@@ -43,9 +42,10 @@ const screenOptions = ({ route }) => {
             source={Icons[name]} />,
     }
 }
+
 const Xr = ({ navigation }) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
-        <Text onPress={() => navigation.navigate('SignIn')} style={{}}>Sign Out</Text>
+        <Text onPress={() => navigation.navigate('AccountNavigator')} style={{}}>Sign Out</Text>
     </SafeAreaView>
 )
 

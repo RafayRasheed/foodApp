@@ -4,25 +4,35 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Spacer, ios, myHeight, myWidth } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import PhoneInput from 'react-native-phone-input'
-import { Flag } from "./account.component/phone_select"
-import CountryPicker, { getAllCountries, getCallingCode } from 'react-native-country-picker-modal';
-
+import Flag from './account.component/phone_select';
 
 
 export const SignIn = ({ navigation }) => {
 
-    const [email, setEmail] = useState(null)
+    const [phone, setPhone] = useState(null)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
-    const phone = useRef()
+    const flagRef = useRef(null)
     const onLogin = () => {
-
+        if (verifyPhone() && verifyPass()) {
+            setVerifyLog(true)
+        }
+        else {
+            setVerifyLog(false)
+        }
+        navigation.replace('HomeNavigator')
     }
 
-    function verifyEmail() {
-        if (email) {
-            return true
+    function onChangePhone(val) {
+        setPhone(val)
+        flagRef.current.setNumber(val)
+    }
+
+    function verifyPhone() {
+        if (phone) {
+            const s = flagRef.current.checkNumber()
+            console.log("isValid Number", s)
+            return s
         }
         return false
     }
@@ -33,14 +43,14 @@ export const SignIn = ({ navigation }) => {
         return false
     }
 
-    useEffect(() => {
-        if (verifyEmail() && verifyPass()) {
-            setVerifyLog(true)
-        }
-        else {
-            setVerifyLog(false)
-        }
-    }, [email, password])
+    // useEffect(() => {
+    //     if (verifyPhone() && verifyPass()) {
+    //         setVerifyLog(true)
+    //     }
+    //     else {
+    //         setVerifyLog(false)
+    //     }
+    // }, [phone, password])
 
 
     return (
@@ -62,17 +72,17 @@ export const SignIn = ({ navigation }) => {
                         <View>
                             {/* Phone Portion */}
                             <View style={styles.containerInputPortion}>
-                                <Flag />
+                                <Flag ref={flagRef} />
                                 <Spacer paddingEnd={myWidth(1.8)} />
                                 <TextInput placeholder="Enter Number"
-                                    autoCapitalize='none'
+                                    keyboardType='phone-pad'
+                                    maxLength={14}
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput}
-
                                     cursorColor={myColors.primaryT}
-                                    value={email} onChangeText={setEmail}
-                                    onEndEditing={() => verifyEmail()}
+                                    value={phone} onChangeText={(val) => onChangePhone(val)}
+                                    onEndEditing={() => verifyPhone()}
                                 />
                             </View>
                             <Spacer paddingT={myHeight(2.4)} />
@@ -80,7 +90,7 @@ export const SignIn = ({ navigation }) => {
                             {/* Password Portion */}
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
-                                <Spacer paddingEnd={myWidth(1.5)} />
+                                <Spacer paddingEnd={myWidth(1.8)} />
                                 <TextInput placeholder="Password"
                                     secureTextEntry
                                     password={true}
@@ -90,7 +100,7 @@ export const SignIn = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={password} onChangeText={setPass}
-                                    onEndEditing={() => verifyEmail()}
+                                    onEndEditing={() => verifyPass()}
                                 />
                             </View>
                             <Spacer paddingT={myHeight(0.5)} />
@@ -101,7 +111,7 @@ export const SignIn = ({ navigation }) => {
                         <Spacer paddingT={myHeight(5.3)} />
 
                         {/* Sign Button */}
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('HomeNavigator')} style={styles.containerSign}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={onLogin} style={styles.containerSign}>
                             <Text style={styles.textSignInBu}>Sign in</Text>
                         </TouchableOpacity>
                     </View>
