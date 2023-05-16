@@ -8,22 +8,26 @@ const startupData = [
     {
         title: 'Shop Local',
         des: 'Shop anything, anytime, anywhere!',
-        image: require('../assets/startup/startup1.png')
+        image: require('../assets/startup/startup1.png'),
+        style: { width: myWidth(70), height: myHeight(27), marginBottom: -myHeight(0.5) },
     },
     {
         title: 'Book Rides',
         des: 'Use M-Rides to get anywhere in your city!',
-        image: require('../assets/startup/startup5.png')
+        image: require('../assets/startup/startup2.png'),
+        style: { width: myWidth(73), height: myHeight(28), marginBottom: -myHeight(2) },
     },
     {
         title: 'Order Food',
         des: 'Order all your favorite cuisines & cravings!',
-        image: require('../assets/startup/startup4.png')
+        image: require('../assets/startup/startup3.png'),
+        style: { width: myWidth(73), height: myHeight(28), },
     },
     {
         title: 'Send Parcel',
-        des: 'Send parcels to anywhere in your city',
-        image: require('../assets/startup/startup3.png')
+        des: 'Send parcels to anywhere in your city!',
+        image: require('../assets/startup/startup4.png'),
+        style: { width: myWidth(84), height: myHeight(24), },
     },
 
 
@@ -38,6 +42,7 @@ export const StartupScreen = ({ navigation }) => {
     const [posX, setPosX] = useState([]);
     const [scrollTouch, setScrollTouch] = useState(false)
     const [isScrollLas, setIsScrollLas] = useState(false)
+    const [getStart, setGetStart] = useState(false)
 
     // Loop for dots
     for (let j = 0; j < lenStartup; j++) {
@@ -106,6 +111,19 @@ export const StartupScreen = ({ navigation }) => {
         }
         console.log('Error!: storage On continue')
     }
+    useEffect(() => {
+        console.log(i)
+        if (i == lenStartup - 1) {
+            const timer = setTimeout(() => {
+                setGetStart(true)
+            }, 1500)
+            return () => clearTimeout(timer);
+        }
+        else {
+            setGetStart(false)
+        }
+
+    }, [i])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -144,15 +162,15 @@ export const StartupScreen = ({ navigation }) => {
                                     const layout = event.nativeEvent.layout;
                                     posX[i] = layout.x;
                                     setPosX(posX);
-
                                 }}
                                 style={styles.containerMid} key={i}>
                                 {/* <Image /> */}
-                                <Image style={styles.imageMid} source={item.image} />
-                                <Spacer paddingT={myHeight(0.8)} />
+                                <Image style={[styles.imageMid, item.style]} source={item.image} />
+                                {/* <Spacer paddingT={myHeight(0.8)} /> */}
                                 <Text style={styles.textTitle}> {item.title}</Text>
                                 <Spacer paddingT={myHeight(0.8)} />
                                 <Text style={styles.textDes}>{item.des}</Text>
+                                <Spacer paddingT={myHeight(12.5)} />
                             </View>
                         )
                     }
@@ -162,8 +180,7 @@ export const StartupScreen = ({ navigation }) => {
 
             {/* Bottom * => Start Button & Change*/}
             <View style={styles.containerBottom}>
-                <Spacer paddingT={myHeight(12.5)} />
-                {i < lenStartup - 1 ?
+                {!getStart ?
                     <View style={styles.containerChange}>
                         {/* Arrow Left */}
                         <View style={{ width: myHeight(3) }}>
@@ -180,9 +197,12 @@ export const StartupScreen = ({ navigation }) => {
 
                         {/* Arrow Right */}
                         <View style={{ width: myHeight(3) }}>
-                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
-                                <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
-                            </TouchableOpacity>
+                            {i < lenStartup - 1 &&
+                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
+                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
+                                </TouchableOpacity>
+
+                            }
                         </View>
                     </View>
                     :
@@ -226,12 +246,13 @@ const styles = StyleSheet.create({
     containerTopSkip: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        paddingEnd: myWidth(7),
-        height: myHeight(5.2),
+        paddingEnd: myWidth(5),
+        height: myHeight(6.2),
     },
     containerSkip: {
         flexDirection: 'row',
         alignItems: 'center',
+        padding: myHeight(1)
     },
     containerBottom: {
         width: myWidth(100),
@@ -311,8 +332,10 @@ const styles = StyleSheet.create({
 
     //Image
     imageMid: {
-        width: myWidth(86),
         resizeMode: 'contain',
+        // backgroundColor: 'blue',
+
+
     },
     imageGo: {
         width: myHeight(1.2),
