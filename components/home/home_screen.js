@@ -55,6 +55,7 @@ export const HomeScreen = ({ navigation }) => {
 
 
                 <Spacer paddingT={myHeight(2)} />
+
                 {/* Category */}
                 <View style={styles.containerCategory}>
                     {category.map((cat, index) =>
@@ -62,6 +63,7 @@ export const HomeScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ alignItems: 'center' }}>
                                     <View style={styles.containerEachCate}>
+
                                         <Image style={styles.imageCate} source={cat.image} />
                                     </View>
                                     <Spacer paddingT={myHeight(0.3)} />
@@ -74,29 +76,31 @@ export const HomeScreen = ({ navigation }) => {
                 <Spacer paddingT={myHeight(3.44)} />
 
                 {/* Book Now */}
-                <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
-                    <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
-                        {
-                            bookNow.map((item, ind) =>
-                                <View key={ind} style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <View style={styles.containerBookNowText}>
-                                        <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
-                                        <Spacer paddingT={myHeight(3.2)} />
-                                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'baseline' }} activeOpacity={0.6} onPress={() => null}>
-                                            <Text style={styles.textBookNow}>Book Now    </Text>
-                                            <Image style={styles.imageArrow} source={require('../assets/home_main/arrow.png')} />
-                                        </TouchableOpacity>
+                <View style={styles.containerTry}>
+                    <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
+                        <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
+                            {
+                                bookNow.map((item, ind) =>
+                                    <View key={ind} style={{ width: myWidth(92) - 0.5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={styles.containerBookNowText}>
+                                            <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
+                                            <Spacer paddingT={myHeight(3.2)} />
+                                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'baseline' }} activeOpacity={0.6} onPress={() => null}>
+                                                <Text style={styles.textBookNow}>Book Now    </Text>
+                                                <Image style={styles.imageArrow} source={require('../assets/home_main/arrow.png')} />
+                                            </TouchableOpacity>
+                                        </View>
+                                        <Image style={styles.imageMan} source={require('../assets/home_main/man.png')} />
                                     </View>
-                                    <Image style={styles.imageMan} source={require('../assets/home_main/man.png')} />
-                                </View>
-                            )
-                        }
-                    </ScrollView>
-                    {/* Dot */}
-                    <View style={{ position: 'absolute', zIndex: 1, left: myWidth(4.2), bottom: myHeight(1.6), flexDirection: 'row' }}>
-                        {dotArr}
-                    </View>
-                </LinearGradient>
+                                )
+                            }
+                        </ScrollView>
+                        {/* Dot */}
+                        <View style={{ position: 'absolute', zIndex: 1, left: myWidth(4.2), bottom: myHeight(1.6), flexDirection: 'row' }}>
+                            {dotArr}
+                        </View>
+                    </LinearGradient>
+                </View>
 
 
                 <Spacer paddingT={myHeight(2.6)} />
@@ -128,25 +132,47 @@ const styles = StyleSheet.create({
     containerCategory: {
         flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'flex-end',
         backgroundColor: myColors.background,
+
+    },
+    containerEachCate2: {
+
+
     },
     containerEachCate: {
         padding: myHeight(1.4),
-        backgroundColor: myColors.primaryL,
         borderRadius: myHeight(5),
+        backgroundColor: myColors.primaryL,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
 
     },
     containerBookNow: {
         // width: myWidth(92),
         alignSelf: 'center', height: myHeight(19),
         borderRadius: myWidth(3),
-        borderWidth: 0.5,
         overflow: 'hidden',
         borderColor: myColors.textL4,
+
+
+    },
+    containerTry: {
+        alignSelf: 'center',
+        borderRadius: myWidth(3),
+        backgroundColor: myColors.background,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.3,
+        shadowRadius: 1,
     },
     containerBookNowText: {
         flex: 1,
         paddingVertical: myHeight(1.8),
         paddingHorizontal: myWidth(4.7),
+
     },
     containerDailyS: {
         flexDirection: 'row',
@@ -220,18 +246,17 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageCate: {
-        // height: myHeight(5.37),
-        // width: myWidth(11),
-        // resizeMode: 'stretch',
+        height: myWidth(11),
+        width: myWidth(11),
+        resizeMode: 'contain',
 
-        height: myHeight(5.37),
-        width: myHeight(5.37),
-        resizeMode: 'cover',
+        // height: myHeight(5.37),
+        // width: myHeight(5.37),
+        // resizeMode: 'cover',
     },
 
     imageMan: {
         borderRadius: myWidth(3),
-
         height: myHeight(19),
         width: myWidth(43.2),
         resizeMode: 'stretch',

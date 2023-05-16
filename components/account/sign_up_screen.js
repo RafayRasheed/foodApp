@@ -15,6 +15,7 @@ export const SignUp = ({ navigation }) => {
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const flagRef = useRef(null)
+    const [hidePass, setHidePass] = useState(true);
 
     const onSignUp = () => {
         navigation.navigate('Verification')
@@ -140,13 +141,17 @@ export const SignUp = ({ navigation }) => {
                                 <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
                                 <TextInput placeholder="Password"
-                                    secureTextEntry
+                                    secureTextEntry={hidePass}
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={password} onChangeText={setPass}
                                     onEndEditing={() => verifyEmail()}
                                 />
+                                <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
+                                    <Image style={styles.imageEye}
+                                        source={hidePass ? require('../assets/account/eyeO.png') : require('../assets/account/eyeC.png')} />
+                                </TouchableOpacity>
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
 
@@ -207,45 +212,48 @@ export const SignUp = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <Spacer paddingT={myHeight(4.6)} />
+                    <Spacer paddingT={myHeight(3.6)} />
 
                     {/* Already have an Acc*/}
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={styles.textAlreHaveAcc}>Already have an account? </Text>
 
                         <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+                            <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textSignIn}>Sign In!</Text>
+                            <Spacer paddingT={myHeight(1)} />
+
                         </TouchableOpacity>
                     </View>
 
                 </View>
 
-                {/* <Spacer paddingT={myHeight(6.5)} /> */}
-
                 {/* Terms & Policy */}
                 <View style={styles.containerTermCond}>
                     {/* First line */}
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupScreen')}>
+                            <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
                         </TouchableOpacity>
 
                         <Text style={styles.textTermCond}>and </Text>
 
                         <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                            <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Privacy Policy</Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* Second Line */}
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                         <Text style={styles.textTermCond}>Copyrights 2023 </Text>
 
                         <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
                             <Text style={styles.textTermCondColor}>M-Rides Inc</Text>
+                            <Spacer paddingT={myHeight(0.7)} />
                         </TouchableOpacity>
                     </View>
-                    <Spacer paddingT={myHeight(0.8)} />
                 </View>
                 {/* </ScrollView> */}
             </KeyboardAwareScrollView>
@@ -257,8 +265,7 @@ export const SignUp = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: myColors.background
-
+        backgroundColor: myColors.background,
     },
     containerContent: {
         // flex: 1,
@@ -271,16 +278,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: myWidth(2.5),
         borderWidth: myHeight(0.09),
         borderColor: myColors.primaryT,
+        backgroundColor: myColors.background,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
     containerInput: {
         flex: 1,
         textAlignVertical: 'center',
-        paddingVertical: myHeight(1.17),
-        // paddingVertical: myHeight(1.4),
         fontSize: myFontSize.body,
         color: myColors.text,
         fontFamily: myFonts.bodyBold,
         includeFontPadding: false,
+        paddingHorizontal: 0,
         paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
 
 
@@ -300,8 +312,8 @@ const styles = StyleSheet.create({
     },
     containerLine: {
         flex: 1,
-        height: myHeight(0.085),
-        backgroundColor: myColors.text,
+        borderTopWidth: myHeight(0.085),
+        borderColor: myColors.text,
     },
     containerSocial: {
         paddingHorizontal: myWidth(4.18),
@@ -416,6 +428,11 @@ const styles = StyleSheet.create({
         width: myHeight(3.76),
         resizeMode: 'contain',
     },
+    imageEye: {
+        height: myHeight(2.5),
+        width: myHeight(2.5),
+        resizeMode: 'contain'
+    }
 
 
 })

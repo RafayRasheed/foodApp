@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     imageMain: {
         height: myHeight(6.5),
         width: myWidth(14),
-        resizeMode: 'stretch'
+        resizeMode: 'cover'
     },
     imageDown_Rel: {
         height: myHeight(1.34),

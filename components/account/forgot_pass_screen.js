@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, View, TextInput } from 'react-native';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Spacer, ios, myHeight, myWidth } from '../common';
+import Flag from './account.component/phone_select';
 
 export const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState(null)
-
+    const flagRef = useRef(null)
+    const [phone, setPhone] = useState(null)
+    function verifyPhone() {
+        if (phone) {
+            const s = flagRef.current.checkNumber()
+            console.log("isValid Number", s)
+            return s
+        }
+        return false
+    }
+    function onChangePhone(val) {
+        setPhone(val)
+        flagRef.current.setNumber(val)
+    }
     function onSend() {
-
+        navigation.navigate('NewPassword')
     }
     return (
         <SafeAreaView style={styles.container}>
-            <Spacer paddingT={myHeight(2)} />
-            {/* Top */}
-            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-                <Image style={styles.imageBack} source={require('../assets/account/back.png')} />
-            </TouchableOpacity>
-            <Spacer paddingT={myHeight(1.6)} />
+            <Spacer paddingT={myHeight(7)} />
+
             <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>
                 {/* Forgot Password */}
                 <Text style={styles.textForgotPass}>Forgot Password</Text>
@@ -25,25 +35,31 @@ export const ForgotPassword = ({ navigation }) => {
                 <Text style={styles.textDes}>Enter your Email Address to get link for resetting password</Text>
 
                 <Spacer paddingT={myHeight(3.2)} />
-                {/* Email Portion */}
+
+                {/* Phone Portion */}
                 <View style={styles.containerInputPortion}>
-                    <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
-                    <Spacer paddingEnd={myWidth(2.5)} />
-                    <TextInput placeholder="Email Address"
-                        autoCapitalize='none'
+                    <Flag ref={flagRef} />
+                    <Spacer paddingEnd={myWidth(1.8)} />
+                    <TextInput placeholder="Phone Number"
+                        keyboardType='phone-pad'
+                        maxLength={14}
                         placeholderTextColor={myColors.offColor}
                         selectionColor={myColors.primaryT}
-                        style={styles.containerInput} cursorColor={myColors.primaryT}
-                        value={email} onChangeText={setEmail}
+                        style={styles.containerInput}
+                        cursorColor={myColors.primaryT}
+                        value={phone} onChangeText={(val) => onChangePhone(val)}
+                        onEndEditing={() => verifyPhone()}
                     />
                 </View>
-                <Spacer paddingT={myHeight(3.2)} />
+                <Spacer paddingT={myHeight(2.2)} />
 
                 {/* Back to sign in */}
                 <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('SignIn')}>
+                    <Spacer paddingT={myHeight(1)} />
                     <Text style={styles.textBackToSign}>Back to Sign in</Text>
+                    <Spacer paddingT={myHeight(1)} />
                 </TouchableOpacity>
-                <Spacer paddingT={myHeight(3.2)} />
+                <Spacer paddingT={myHeight(2.2)} />
 
                 {/* Sign Button */}
                 <TouchableOpacity activeOpacity={0.6} onPress={onSend} style={styles.containerSign}>
@@ -68,6 +84,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: myWidth(2.5),
         borderWidth: myHeight(0.09),
         borderColor: myColors.primaryT,
+        backgroundColor: myColors.background,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
 
     },
     containerInput: {
@@ -78,6 +100,7 @@ const styles = StyleSheet.create({
         color: myColors.text,
         includeFontPadding: false,
         fontFamily: myFonts.bodyBold,
+
 
         // lineHeight: 0,
 
@@ -97,7 +120,7 @@ const styles = StyleSheet.create({
     // Text
     textForgotPass: {
         fontSize: myFontSize.large,
-        fontFamily: myFonts.headingO,
+        fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
@@ -118,7 +141,7 @@ const styles = StyleSheet.create({
     },
     textBackToSign: {
         fontSize: myFontSize.body,
-        fontFamily: myFonts.headingO,
+        fontFamily: myFonts.heading,
         color: myColors.offColor,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
@@ -128,12 +151,11 @@ const styles = StyleSheet.create({
     },
     textSendBu: {
         fontSize: myFontSize.body2,
-        fontFamily: myFonts.headingBoldO,
+        fontFamily: myFonts.headingBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,
-
     },
 
 

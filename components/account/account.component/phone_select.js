@@ -138,8 +138,8 @@ const Flag = (props, ref) => {
                         // changeData()
                     }}
                     onChangePhoneNumber={(s) => console.log('mu', s)}
-                    onPressFlag={() => phone.current && setModalVisible(true)}
                     initialCountry={country}
+                    onPressFlag={() => phone.current && setModalVisible(true)}
                     initialValue={countryCode}
                     renderFlag={({ imageSource }) =>
                         <View>
@@ -157,16 +157,16 @@ const Flag = (props, ref) => {
                     style={{ width: myWidth(6.9), alignItems: 'center', justifyContent: 'center' }}
                 />
 
-                <Text style={styles.textPlus}>+</Text>
-                <TextInput
-                    maxLength={3}
+                <Text style={styles.textPlus}>+{countryCode}</Text>
+
+                {/* <TextInput
                     keyboardType='phone-pad'
                     editable={false}
-                    selectionColor={myColors.primaryT}
+                    onPressIn={() => phone.current && setModalVisible(true)} selectionColor={myColors.primaryT}
                     style={styles.containerCode}
                     cursorColor={myColors.primaryT}
                     value={countryCode} onChangeText={(val => onChangeCode(val))}
-                />
+                /> */}
             </View>
 
 
@@ -294,9 +294,12 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         fontSize: myFontSize.body,
         color: myColors.text,
-        includeFontPadding: false,
         fontFamily: myFonts.bodyBold,
         padding: 0,
+        paddingRight: 0,
+        includeFontPadding: false,
+        paddingEnd: 0,
+        backgroundColor: myColors.blue,
     },
     containerSearch: {
         flex: 1,
@@ -336,8 +339,11 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
+        textAlignVertical: 'bottom',
         includeFontPadding: false,
-        padding: 0,
+        marginBottom: -myHeight(0.09)
+        // paddingVertical: 0,
+        // backgroundColor: myColors.blue
     },
     textName: {
         fontSize: myFontSize.body2,

@@ -10,12 +10,25 @@ import { ActivityScreen } from "../activity/activity_screen";
 const Tab = createBottomTabNavigator()
 
 const Icons = {
-    HOME: require('../assets/home_main/navigator/home.png'),
-    ACTIVITY: require('../assets/home_main/navigator/activity.png'),
-    CART: require('../assets/home_main/navigator/cart.png'),
-    WALLET: require('../assets/home_main/navigator/wallet.png'),
-    ACCOUNT: require('../assets/home_main/navigator/account.png'),
+    HOME: {
+        image: require('../assets/home_main/navigator/home.png'),
+        style: { width: myWidth(6.5), height: myHeight(2.68) }
+    },
+    ACTIVITY: {
+        image: require('../assets/home_main/navigator/activity.png'),
+        style: { width: myWidth(6.2), height: myHeight(2.15) }
+    },
+    CART: {
+        image: require('../assets/home_main/navigator/cart.png'),
+        style: { width: myWidth(5.5), height: myHeight(2.68) }
+    },
+    // WALLET: require('../assets/home_main/navigator/wallet.png'),
+    ACCOUNT: {
+        image: require('../assets/home_main/navigator/account.png'),
+        style: { width: myWidth(6.2), height: myHeight(2.68) }
+    },
 }
+
 
 const screenOptions = ({ route }) => {
     const name = route.name
@@ -38,8 +51,8 @@ const screenOptions = ({ route }) => {
         },
         tabBarActiveTintColor: myColors.primaryT,
         tabBarInactiveTintColor: myColors.text,
-        tabBarIcon: ({ color }) => <Image style={{ tintColor: color, width: myWidth(6.5), height: myHeight(2.68), resizeMode: 'contain' }}
-            source={Icons[name]} />,
+        tabBarIcon: ({ color }) => <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain' }]}
+            source={Icons[name].image} />,
     }
 }
 
@@ -61,7 +74,7 @@ export const HomeNavigator = ({ route, navigation }) => {
             <Tab.Screen name="HOME" component={HomeScreen} />
             <Tab.Screen name="ACTIVITY" component={ActivityScreen} />
             <Tab.Screen name="CART" component={Xr} />
-            <Tab.Screen name="WALLET" component={Xr} />
+            {/* <Tab.Screen name="WALLET" component={Xr} /> */}
             <Tab.Screen name="ACCOUNT" component={Xr} />
 
         </Tab.Navigator>

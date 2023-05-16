@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     imageMain: {
         width: myWidth(34),
         height: myHeight(16.5),
-        resizeMode: 'stretch',
+        resizeMode: 'cover',
         borderRadius: myHeight(1)
     },
     imageStar: {
         width: myHeight(1.18),
         height: myHeight(1.18),
-        resizeMode: 'stretch',
+        resizeMode: 'contain',
     },
 })
