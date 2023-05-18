@@ -8,6 +8,7 @@ export const myColors = {
     textL2: '#9E9C9C',
     textL3: '#888888',
     textL4: '#797979',
+    textL5: '#555555',
     line: '#AFAFAF',
     divider: '#EAEAEA',
     text: '#000000',
@@ -18,6 +19,7 @@ export const myColors = {
     offColor2: "#B7B7B7",
     offColor3: '#F3F3F3',
     offColor4: '#F1F1F1',
+    offColor5: '#F5F5F5',
 
 
 

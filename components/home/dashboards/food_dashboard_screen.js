@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, SafeAreaView, Image, Text } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text } from 'react-native';
 import { myColors } from '../../../ultils/myColors';
-import { Spacer, myHeight, myWidth } from '../../common';
+import { Spacer, ios, myHeight, myWidth } from '../../common';
 import { myFontSize } from '../../../ultils/myFonts';
 import { myFonts } from '../../../ultils/myFonts';
 import { myLetSpacing } from '../../../ultils/myFonts';
@@ -9,6 +9,8 @@ import { myLetSpacing } from '../../../ultils/myFonts';
 
 export const FoodDashboard = ({ navigation }) => {
     const [i, setI] = useState(0)
+    const [search, setSearch] = useState(null)
+
     return (
         <SafeAreaView style={styles.container}>
             <Spacer paddingT={myHeight(1.8)} />
@@ -43,10 +45,29 @@ export const FoodDashboard = ({ navigation }) => {
                 <Text style={styles.textFind}>Let’s Find</Text>
                 <Text style={styles.textFind}>Some Foods!</Text>
 
-                <Spacer paddingT={myHeight(2)} />
+                <Spacer paddingT={myHeight(2.2)} />
                 {/* Search */}
-                <View style={styles.containerTop}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={styles.containerSearchPortion}>
+                        <Image style={styles.imageSearch} source={require('../../assets/home_main/dashboards/search.png')} />
+                        <Spacer paddingEnd={myWidth(3.5)} />
+                        <TextInput placeholder="Search Any Item"
+                            placeholderTextColor={myColors.textL5}
+                            selectionColor={myColors.text}
+                            style={styles.containerSearch}
+                            cursorColor={myColors.primaryT}
+                            value={search} onChangeText={setSearch}
+                        // value={search} onChangeText={(val) => null}
+                        />
+                    </View>
+                    <Spacer paddingEnd={myWidth(3.7)} />
                     {/* Filter */}
+                    <TouchableOpacity onPress={() => null} activeOpacity={0.6}
+                        style={styles.containerFilter}>
+                        <Image style={styles.imageFilter}
+                            source={require('../../assets/home_main/dashboards/filter.png')} />
+                    </TouchableOpacity>
+
 
                 </View>
 
@@ -77,6 +98,36 @@ const styles = StyleSheet.create({
         flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    containerFilter: {
+        height: myHeight(4.6),
+        width: myWidth(10),
+        justifyContent: 'center',
+        alignItems: 'center',
+        // paddingVertical: myHeight(1.6),
+        // paddingHorizontal: myWidth(2.8),
+        backgroundColor: myColors.primaryT,
+        borderRadius: myWidth(2),
+
+    },
+    containerSearchPortion: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: myWidth(3),
+        paddingVertical: myHeight(0.2),
+        backgroundColor: myColors.offColor5,
+        borderRadius: myWidth(3.5),
+    },
+    containerSearch: {
+        flex: 1,
+        textAlignVertical: 'center',
+        paddingVertical: ios ? myHeight(1.2) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.1),
+        fontSize: myFontSize.xxSmall,
+        color: myColors.text,
+        includeFontPadding: false,
+        fontFamily: myFonts.bodyBold,
+        // lineHeight: 0,
     },
 
 
@@ -111,5 +162,16 @@ const styles = StyleSheet.create({
         height: myHeight(2.15),
         resizeMode: 'contain',
         tintColor: myColors.primaryT
-    }
+    },
+    imageFilter: {
+        width: myHeight(2.15),
+        height: myHeight(1.6),
+        resizeMode: 'contain',
+    },
+    imageSearch: {
+        height: myHeight(2.15),
+        width: myHeight(2.15),
+        resizeMode: 'contain',
+        tintColor: myColors.textL5
+    },
 })

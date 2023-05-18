@@ -243,14 +243,7 @@ const styles = StyleSheet.create({
         includeFontPadding: false,
         fontFamily: myFonts.bodyBold,
         textAlignVertical: 'center',
-        // backgroundColor: myColors.ligRed,
         paddingHorizontal: 0,
-
-
-
-        // lineHeight: 0,
-
-
     },
     containerSign: {
         alignItems: 'center',
@@ -258,8 +251,6 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.primaryT,
         paddingVertical: myHeight(1.25),
         borderRadius: myWidth(3.2),
-
-
     },
     containerOrSignWith: {
         alignItems: 'center',
