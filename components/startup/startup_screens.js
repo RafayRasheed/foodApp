@@ -9,7 +9,7 @@ const startupData = [
         title: 'Shop Local',
         des: 'Shop anything, anytime, anywhere!',
         image: require('../assets/startup/startup1.png'),
-        style: { width: myWidth(70), height: myHeight(27), marginBottom: -myHeight(0.5) },
+        style: { width: myWidth(70), height: myHeight(32), marginBottom: -myHeight(0.5) },
     },
     {
         title: 'Book Rides',
@@ -112,7 +112,6 @@ export const StartupScreen = ({ navigation }) => {
         console.log('Error!: storage On continue')
     }
     useEffect(() => {
-        console.log(i)
         if (i == lenStartup - 1) {
             const timer = setTimeout(() => {
                 setGetStart(true)
@@ -124,6 +123,12 @@ export const StartupScreen = ({ navigation }) => {
         }
 
     }, [i])
+
+    useEffect(() => {
+        if (getStart) {
+            navigation.replace('Started')
+        }
+    }, [getStart])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -180,36 +185,36 @@ export const StartupScreen = ({ navigation }) => {
 
             {/* Bottom * => Start Button & Change*/}
             <View style={styles.containerBottom}>
-                {!getStart ?
-                    <View style={styles.containerChange}>
-                        {/* Arrow Left */}
-                        <View style={{ width: myHeight(3) }}>
-                            {i > 0 &&
-                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
-                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goL.png')} />
-                                </TouchableOpacity>
-                            }
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            {dotArr}
-                        </View>
-
-                        {/* Arrow Right */}
-                        <View style={{ width: myHeight(3) }}>
-                            {i < lenStartup - 1 &&
-                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
-                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
-                                </TouchableOpacity>
-
-                            }
-                        </View>
+                {/* {!getStart? */}
+                <View style={styles.containerChange}>
+                    {/* Arrow Left */}
+                    <View style={{ width: myHeight(3) }}>
+                        {i > 0 &&
+                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
+                                <Image style={styles.imageGoLR} source={require('../assets/startup/goL.png')} />
+                            </TouchableOpacity>
+                        }
                     </View>
-                    :
+
+                    <View style={{ flexDirection: 'row' }}>
+                        {dotArr}
+                    </View>
+
+                    {/* Arrow Right */}
+                    <View style={{ width: myHeight(3) }}>
+                        {i < lenStartup - 1 &&
+                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
+                                <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
+                            </TouchableOpacity>
+
+                        }
+                    </View>
+                </View>
+                {/* :
                     <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerStart}>
-                        <Text style={styles.textStart}> Get Started</Text>
-                    </TouchableOpacity>
-                }
+                        <Text style={styles.textStart}>Get Started</Text>
+                    </TouchableOpacity> */}
+                {/* } */}
                 <Spacer paddingT={myHeight(15)} />
 
 

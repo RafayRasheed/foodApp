@@ -130,7 +130,7 @@ const Flag = (props, ref) => {
 
     return (
         <View style={{}}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => phone.current && setModalVisible(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <PhoneInput
                     ref={phone}
                     onSelectCountry={(c) => {
@@ -167,7 +167,7 @@ const Flag = (props, ref) => {
                     cursorColor={myColors.primaryT}
                     value={countryCode} onChangeText={(val => onChangeCode(val))}
                 /> */}
-            </View>
+            </TouchableOpacity>
 
 
             {/* Slide */}
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
         letterSpacing: myLetSpacing.common,
         textAlignVertical: 'bottom',
         includeFontPadding: false,
-        marginBottom: -myHeight(0.09)
+        marginBottom: ios ? -myHeight(0.09) : 0
         // paddingVertical: 0,
         // backgroundColor: myColors.blue
     },

@@ -4,6 +4,7 @@ import { AccountNavigator } from "./account/account_navigation"
 import { StartupScreen } from "./startup/startup_screens"
 import { storage } from "./common"
 import { HomeNavigator } from "./home/home_navigator"
+import { StartupNavigator } from "./startup/startup_navigator"
 
 const AppTAB = createNativeStackNavigator()
 
@@ -18,7 +19,7 @@ export const AppNavigator = () => {
                     headerShown: false
                 }}
             >
-                <AppTAB.Screen component={StartupScreen} name="StartupScreen" />
+                <AppTAB.Screen component={StartupNavigator} name="StartupNavigator" />
                 <AppTAB.Screen component={AccountNavigator} name="AccountNavigator" />
                 <AppTAB.Screen component={HomeNavigator} name="HomeNavigator" />
 

@@ -1,6 +1,23 @@
+export const notifications = [
+    {
+        orderID: '1233432',
+        estimateTime: '30 mins - 3:40pm',
+        status: 'Driver On The Way',
+    },
 
+]
 
-
+export const rewards = [
+    {
+        title: 'Enjoy Discount on your First Order'
+    },
+    {
+        title: 'Enjoy Discount on your First Order'
+    },
+    {
+        title: 'Enjoy Discount on your First Order'
+    },
+]
 export const category = [
     {
         name: 'RIDE',
@@ -88,4 +105,23 @@ export const bookNow = [
         name: 'Save $10 off your rides',
         image: require('../assets/home_main/man.png')
     },
+]
+
+export const nearDrivers = [
+    {
+        name: 'John Doe',
+        time: '2 - 4 min away from your location',
+        image: require('../assets/home_main/driver.png'),
+    },
+    {
+        name: 'Millar',
+        time: '2 - 4 min away from your location',
+        image: require('../assets/home_main/man.png'),
+    },
+    {
+        name: 'David',
+        time: '2 - 4 min away from your location',
+        image: require('../assets/home_main/man.png'),
+    },
+
 ]

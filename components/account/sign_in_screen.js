@@ -179,7 +179,7 @@ export const SignIn = ({ navigation }) => {
                 <View style={styles.containerTermCond}>
                     {/* First line */}
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupScreen')}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupNavigator')}>
                             <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
                         </TouchableOpacity>
