@@ -196,9 +196,10 @@ export const HomeScreen = ({ navigation }) => {
 
             <View style={styles.containerNotification}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificatonExpand(!notificationExpand)}>
                     <Spacer paddingT={myHeight(0.5)} />
-                    <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]} source={require('../assets/home_main/up.png')} />
+                    <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
+                        source={require('../assets/home_main/up.png')} />
                     <Spacer paddingT={myHeight(0.5)} />
                 </TouchableOpacity>
                 {
