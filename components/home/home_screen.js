@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal } from 'react-native'
 import { Spacer, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
@@ -13,8 +13,11 @@ import LinearGradient from 'react-native-linear-gradient';
 export const HomeScreen = ({ navigation }) => {
     const name = "MBE";
     const dotArr = []
-    const [notificationVisible, setNotificatonVisible] = useState(false)
-    const [notificationExpand, setNotificatonExpand] = useState(false)
+    const [notiLen, setNotiLen] = useState(notifications.length.toString())
+    const [notificationVisible, setNotificationVisible] = useState(notifications.length != 0 ? [notifications[0]] : null)
+    const [notificationExpand, setNotificationExpand] = useState(false)
+    const [notificationsFocusID, setNotificationsFocusID] = useState(notifications.length != 0 ? notifications[0].orderID : null)
+
     const [i, setI] = useState(0)
     const lenBook = bookNow.length;
     const width = myWidth(92)
@@ -32,8 +35,47 @@ export const HomeScreen = ({ navigation }) => {
                 setI(r)
             }
         }
-
     }
+    function onNotificationsFocus(orderID) {
+        if (orderID == notificationsFocusID) {
+            setNotificationExpand(false)
+            return
+        }
+        setNotificationsFocusID(orderID)
+    }
+    function settingNotification() {
+        const s = notifications.filter((item) => item.orderID == notificationsFocusID)
+        if (s.length) {
+            setNotificationVisible(s)
+        } else if (notifications.length) {
+            setNotificationVisible([notifications[0]])
+        } else {
+            setNotificationVisible([])
+        }
+    }
+    useEffect(() => {
+        if (notificationExpand) {
+            setNotificationVisible(notifications)
+        }
+        else {
+            settingNotification()
+        }
+    }, [notificationExpand])
+
+    useEffect(() => {
+        settingNotification()
+        setNotificationExpand(false)
+    }, [notificationsFocusID])
+
+    useEffect(() => {
+        settingNotification()
+        const l = notifications.length
+        if (l) {
+            setNotiLen(l.toString())
+        }
+    }, [notifications])
+
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.container}>
@@ -55,7 +97,7 @@ export const HomeScreen = ({ navigation }) => {
                 {/* Category */}
                 <View style={styles.containerCategory}>
                     {category.map((cat, index) =>
-                        <TouchableOpacity key={index} onPress={null} style={{ paddingTop: myHeight(2.5), flexBasis: '23.5%', }} activeOpacity={0.8}>
+                        <TouchableOpacity key={index} onPress={() => navigation.navigate(cat.navigate)} style={{ paddingTop: myHeight(2.5), flexBasis: '23.5%', }} activeOpacity={0.8}>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ alignItems: 'center' }}>
                                     <View style={styles.containerEachCate}>
@@ -128,7 +170,6 @@ export const HomeScreen = ({ navigation }) => {
                     <Spacer paddingT={myHeight(1.15)} />
                     {rewards.map((item, i) =>
                         <View key={i}>
-
                             <View style={styles.containerReward}>
                                 <Image style={styles.imageSpeaker} source={require('../assets/home_main/speaker.png')} />
                                 <Spacer paddingEnd={myWidth(3)} />
@@ -191,30 +232,73 @@ export const HomeScreen = ({ navigation }) => {
                     </ScrollView> */}
 
                 </View>
+                {notifications.length > 0 && <Spacer paddingT={myHeight(20)} />}
             </ScrollView>
             {/* Notification Section */}
-
             <View style={styles.containerNotification}>
-
-                <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificatonExpand(!notificationExpand)}>
-                    <Spacer paddingT={myHeight(0.5)} />
-                    <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
-                        source={require('../assets/home_main/up.png')} />
-                    <Spacer paddingT={myHeight(0.5)} />
-                </TouchableOpacity>
-                {
-                    notifications.map((item, i) =>
-                        <View>
-                            <Text>{item.estimateTime}</Text>
+                {notifications.length > 1 &&
+                    <View style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificationExpand(!notificationExpand)}>
+                            <Spacer paddingT={myHeight(0.5)} />
+                            <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
+                                source={require('../assets/home_main/up.png')} />
+                            <Spacer paddingT={myHeight(0.5)} />
+                        </TouchableOpacity>
+                        <Text style={styles.textNotiSwipe}>{notificationExpand ? 'Swipe down to see less requests' : 'Swipe up to see more requests'}</Text>
+                        <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
+                            <Text style={styles.textNotiCount}>{notifications.length}</Text>
                         </View>
-                    )
-                }
-            </View>
 
+                    </View>
+                }
+                <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>
+                    <View>
+                        {notificationVisible &&
+                            notificationVisible.map((item, i) =>
+                                <TouchableOpacity activeOpacity={0.8} onPress={() => onNotificationsFocus(item.orderID)} key={i}
+                                    style={[styles.containerNotiItem, notificationExpand && i != 0 && { borderTopWidth: myHeight(0.085) }]}>
+                                    <View style={{ flex: 1 }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Order ID: </Text>
+                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.orderID}</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Estimated Time: </Text>
+                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.estimateTime}</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={[styles.textNotiItem, { fontFamily: myFonts.heading }]}>Status: </Text>
+                                            <Text style={[styles.textNotiItem, { flex: 1 }]} numberOfLines={1} >{item.status}</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                                        <Spacer paddingT={myHeight(2.15)} />
+                                        <Image style={[styles.imageGoReward, { tintColor: myColors.background }]} source={require('../assets/home_main/go.png')} />
+                                        <Spacer paddingT={myHeight(2.15)} />
+                                    </TouchableOpacity>
+                                </TouchableOpacity>
+                            )
+                        }
+                    </View>
+                </ScrollView>
+            </View>
 
         </SafeAreaView>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -259,7 +343,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: myHeight(1.8),
         paddingHorizontal: myWidth(4.7),
-
     },
     containerDailyS: {
         flexDirection: 'row',
@@ -294,8 +377,8 @@ const styles = StyleSheet.create({
     },
     containerNotification: {
         backgroundColor: myColors.background,
-        width: '100%',
-        height: 200,
+        width: myWidth(100),
+        maxHeight: myHeight(80),
         alignItems: 'center',
         position: 'absolute',
         zIndex: 1,
@@ -303,6 +386,30 @@ const styles = StyleSheet.create({
         borderTopStartRadius: myWidth(6),
         borderTopEndRadius: myWidth(6),
     },
+    containerNotiCount: {
+        paddingHorizontal: myHeight(1.2),
+        paddingVertical: myHeight(0.4),
+        position: 'absolute',
+        backgroundColor: myColors.primaryT,
+        bottom: 0,
+        borderRadius: myWidth(10),
+
+    },
+    containerNotiItem: {
+        flexDirection: 'row',
+        width: myWidth(100),
+        backgroundColor: myColors.primaryT,
+        paddingVertical: myHeight(1.3),
+        paddingHorizontal: myWidth(4.6),
+
+    },
+
+
+
+
+
+
+
 
 
 
@@ -384,6 +491,38 @@ const styles = StyleSheet.create({
         includeFontPadding: false,
         padding: 0,
     },
+    textNotiSwipe: {
+        fontSize: myFontSize.body,
+        fontFamily: myFonts.heading,
+        color: myColors.primaryT,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+        alignSelf: 'center'
+    },
+    textNotiCount: {
+        fontSize: myFontSize.body,
+        fontFamily: myFonts.heading,
+        color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+    textNotiItem: {
+        fontSize: myFontSize.xSmall,
+        fontFamily: myFonts.body,
+        color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+
+
+
+
+
+
+
 
 
 

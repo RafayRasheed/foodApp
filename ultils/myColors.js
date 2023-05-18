@@ -15,11 +15,13 @@ export const myColors = {
     dot: '#D9D9D9',
     background: '#FFFFFF',
     offColor: '#9B9B9B',
-
-
-
     offColor2: "#B7B7B7",
     offColor3: '#F3F3F3',
+    offColor4: '#F1F1F1',
+
+
+
+
     ligBlue: '#66D1FF',
     ligRed: 'rgba(255, 102, 102, 0.78)',
     purple: '#66A3FF',
@@ -38,7 +40,6 @@ export const myColors = {
     lightGree: "#D1FAE5",
     black: 'black',
     black2: '#222222',
-    offColor4: '#D2D4D8',
     border: '#BEC5D1',
     searchbar: '#E6E7E9'
 }

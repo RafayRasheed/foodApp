@@ -24,7 +24,11 @@ export default function App() {
   }
 
   return (
-    <AppNavigator />
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+
+      <AppNavigator />
+    </>
   );
 }
 

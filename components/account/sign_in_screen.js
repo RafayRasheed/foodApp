@@ -21,7 +21,7 @@ export const SignIn = ({ navigation }) => {
         else {
             setVerifyLog(false)
         }
-        navigation.replace('HomeNavigator')
+        navigation.replace('HomeBottomNavigator')
     }
 
     function onChangePhone(val) {

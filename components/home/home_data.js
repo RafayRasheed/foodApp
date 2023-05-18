@@ -4,6 +4,52 @@ export const notifications = [
         estimateTime: '30 mins - 3:40pm',
         status: 'Driver On The Way',
     },
+    {
+        orderID: '1233433',
+        estimateTime: '30 mins - 3:40pm',
+        status: 'Driver On The Way',
+    },
+    // {
+    //     orderID: '1233434',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233435',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233436',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233437',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233438',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233439',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233440',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233442',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+
 
 ]
 
@@ -21,38 +67,46 @@ export const rewards = [
 export const category = [
     {
         name: 'RIDE',
-        image: require('../assets/home_main/category/ride.png')
+        image: require('../assets/home_main/category/ride.png'),
+        navigate: 'FoodDashboard',
     },
     {
         name: 'FOOD',
-        image: require('../assets/home_main/category/food.png')
+        image: require('../assets/home_main/category/food.png'),
+        navigate: 'FoodDashboard',
     },
     {
         name: 'SHOP',
-        image: require('../assets/home_main/category/shop.png')
+        image: require('../assets/home_main/category/shop.png'),
+        navigate: 'FoodDashboard',
     },
     {
         name: 'COURIER',
-        image: require('../assets/home_main/category/corrier.png')
+        image: require('../assets/home_main/category/corrier.png'),
+        navigate: 'FoodDashboard',
     },
     {
         name: 'HOMES',
-        image: require('../assets/home_main/category/homes.png')
+        image: require('../assets/home_main/category/homes.png'),
+        navigate: 'FoodDashboard',
 
     },
     {
         name: 'SERVICES',
-        image: require('../assets/home_main/category/services.png')
+        image: require('../assets/home_main/category/services.png'),
+        navigate: 'FoodDashboard',
 
     },
     {
         name: 'LOCAL',
-        image: require('../assets/home_main/category/local.png')
+        image: require('../assets/home_main/category/local.png'),
+        navigate: 'FoodDashboard',
 
     },
     {
         name: 'PHARMACY',
-        image: require('../assets/home_main/category/pharmacy.png')
+        image: require('../assets/home_main/category/pharmacy.png'),
+        navigate: 'FoodDashboard',
 
     },
 ]

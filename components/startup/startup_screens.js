@@ -153,7 +153,7 @@ export const StartupScreen = ({ navigation }) => {
                     onTouchStart={() => setScrollTouch(true)}
                     onScroll={handleScroll}
                     overScrollMode='never'
-                    scrollEnabled={i < lenStartup - 1}
+                    // scrollEnabled={i < lenStartup - 1}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ alignItems: 'flex-end' }}
                     pagingEnabled
