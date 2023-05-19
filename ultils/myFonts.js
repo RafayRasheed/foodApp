@@ -9,12 +9,15 @@ export const myFonts = {
     bodyO: 'OpenSans-Regular',
     //500
     bodyBold: 'Poppins-Medium',
+    bodyBoldIt: 'Poppins-MediumItalic',
     bodyBoldO: 'OpenSans-Medium',
     //600
     heading: 'Poppins-SemiBold',
+    headingIt: 'Poppins-SemiBoldItalic',
     headingO: 'OpenSans-SemiBold',
     //700
     headingBold: 'Poppins-Bold',
+    // headingBoldIt: 'Poppins-BoldItalic',
     headingBoldO: 'OpenSans-Bold',
 }
 export const myLetSpacing = {
@@ -24,10 +27,10 @@ export const myFontSize = {
     tiny: RFValue(8.3), //done 10
     small: RFValue(9), // done 11
     small2: RFValue(9.75), // done 12
-    xSmall: RFValue(10.2), //done 13
+    xSmall: RFValue(10.1), //done 13
     xxSmall: RFValue(11.25), //done 14
     body: RFValue(12.2), //done 15
-    body2: RFValue(13.2), //done 16
+    body2: RFValue(13.1), //done 16
     xBody: RFValue(16), //done 20
     medium0: RFValue(19.2),  //done 24
     medium: RFValue(20), //  done 25

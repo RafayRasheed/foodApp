@@ -4,6 +4,7 @@ export const myColors = {
     primaryL: '#fce4cc',
     // primaryL: '#FFAF6659',
     primaryL2: '#FFE4CC',
+    primaryL3: '#FFAF6635',
     textL: '#8F8F8F',
     textL2: '#9E9C9C',
     textL3: '#888888',
@@ -13,6 +14,7 @@ export const myColors = {
     divider: '#EAEAEA',
     text: '#000000',
     text2: '#1F2937',
+    text3: '#242424',
     dot: '#D9D9D9',
     background: '#FFFFFF',
     offColor: '#9B9B9B',
@@ -20,6 +22,7 @@ export const myColors = {
     offColor3: '#F3F3F3',
     offColor4: '#F1F1F1',
     offColor5: '#F5F5F5',
+    darkBlue: '#0066FF',
 
 
 
