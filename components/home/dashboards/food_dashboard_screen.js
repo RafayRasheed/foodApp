@@ -55,6 +55,7 @@ export const FoodDashboard = ({ navigation }) => {
                             <Spacer paddingEnd={myWidth(3.5)} />
                             <TextInput placeholder="Search Any Item"
                                 placeholderTextColor={myColors.textL5}
+                                autoCorrect={false}
                                 selectionColor={myColors.text}
                                 style={styles.containerSearch}
                                 cursorColor={myColors.primaryT}

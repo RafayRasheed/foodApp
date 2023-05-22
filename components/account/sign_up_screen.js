@@ -101,8 +101,7 @@ export const SignUp = ({ navigation }) => {
                                     style={styles.containerInput}
                                     cursorColor={myColors.primaryT}
                                     value={phone} onChangeText={(val) => onChangePhone(val)}
-                                    onEndEditing={() => verifyPhone()}
-                                />
+                                    autoCorrect={false} />
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
                             {/* Name Portion */}
@@ -114,8 +113,7 @@ export const SignUp = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={name} onChangeText={setName}
-                                    onEndEditing={() => verifyName()}
-                                />
+                                    autoCorrect={false} />
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
 
@@ -131,8 +129,7 @@ export const SignUp = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={email} onChangeText={setEmail}
-                                    onEndEditing={() => verifyEmail()}
-                                />
+                                    autoCorrect={false} />
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
 
@@ -146,8 +143,7 @@ export const SignUp = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={password} onChangeText={setPass}
-                                    onEndEditing={() => verifyEmail()}
-                                />
+                                    autoCorrect={false} />
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
                                     <Image style={styles.imageEye}
                                         source={hidePass ? require('../assets/account/eyeO.png') : require('../assets/account/eyeC.png')} />
@@ -165,8 +161,7 @@ export const SignUp = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={code} onChangeText={setCode}
-                                    onEndEditing={() => verifyCode()}
-                                />
+                                    autoCorrect={false} />
                             </View>
                             <Spacer paddingT={myHeight(2.8)} />
 

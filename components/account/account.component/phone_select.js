@@ -196,6 +196,7 @@ const Flag = (props, ref) => {
                             placeholderTextColor={myColors.offColor}
                             selectionColor={myColors.primaryT}
                             style={styles.containerSearch}
+                            autoCorrect={false}
                             cursorColor={myColors.primaryT}
                             value={search} onChangeText={(val) => onChangeSearch(val)}
                         // value={search} onChangeText={(val) => null}

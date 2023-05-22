@@ -82,6 +82,7 @@ export const SignIn = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput}
                                     cursorColor={myColors.primaryT}
+                                    autoCorrect={false}
                                     value={phone} onChangeText={(val) => onChangePhone(val)}
                                     onEndEditing={() => verifyPhone()}
                                 />
@@ -96,6 +97,7 @@ export const SignIn = ({ navigation }) => {
                                 <TextInput placeholder="Password"
                                     secureTextEntry={hidePass}
                                     password={true}
+                                    autoCorrect={false}
                                     textContentType='password'
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}

@@ -6,8 +6,11 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
 import { DailySpecial } from './home.component/daily_special';
 import LinearGradient from 'react-native-linear-gradient';
-
-
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
+} from 'react-native-reanimated';
 
 
 export const HomeScreen = ({ navigation }) => {
@@ -24,6 +27,23 @@ export const HomeScreen = ({ navigation }) => {
     for (let j = 0; j < lenBook; j++) {
         dotArr.push(<View key={j} style={[styles.containerDot, { backgroundColor: j == i ? myColors.text : myColors.dot, }]} />)
     }
+
+    const [notiItemHeight, setNotiItemHeight] = useState(0)
+    const [notiContHeight, setNotiContHeight] = useState(0)
+
+    const [layoutNotiItem, setLoayoutNotiItem] = useState(false)
+    const [layoutNotiCon, setLoayoutNotiCon] = useState(false)
+    const boxHeight = useSharedValue(myHeight(0));
+    const truncatedAnimation = useAnimatedStyle(() => {
+        return {
+            height: withTiming(boxHeight.value, { duration: 500 }),
+        };
+    }, []);
+
+    // useEffect(() => {
+    //     console.log(notiContHeight, notiItemHeight)
+    //     boxHeight.value = notiContHeight + notiItemHeight
+    // }, [notiItemHeight, notiContHeight])
 
     function handleScroll(event) {
 
@@ -43,6 +63,28 @@ export const HomeScreen = ({ navigation }) => {
         }
         setNotificationsFocusID(orderID)
     }
+    function setAnimation() {
+        if (notiItemHeight || notiItemHeight) {
+
+            if (notificationExpand) {
+                boxHeight.value = notiContHeight + (((notiItemHeight + myHeight(0.1)) * notifications.length) + myHeight(0.8))
+                // console.log(notiContHeight, notiItemHeight, notificationVisible.length)
+            }
+            else if (notifications.length > 1) {
+                // console.log(notiContHeight, notiItemHeight, notificationVisible.length)
+                boxHeight.value = notiContHeight + (notiItemHeight + myHeight(0.8))
+            }
+            else {
+                boxHeight.value = notiItemHeight
+            }
+        }
+        else {
+            setTimeout(() => {
+                console.log(notiContHeight, notiItemHeight)
+            }, 1000)
+
+        }
+    }
     function settingNotification() {
         const s = notifications.filter((item) => item.orderID == notificationsFocusID)
         if (s.length) {
@@ -54,12 +96,17 @@ export const HomeScreen = ({ navigation }) => {
         }
     }
     useEffect(() => {
+        // boxHeight.value === 155 ? (boxHeight.value = 400) : (boxHeight.value = 155);
         if (notificationExpand) {
             setNotificationVisible(notifications)
         }
         else {
-            settingNotification()
+            setTimeout(() => {
+                settingNotification()
+            }, 10)
         }
+        setAnimation()
+
     }, [notificationExpand])
 
     useEffect(() => {
@@ -75,6 +122,10 @@ export const HomeScreen = ({ navigation }) => {
         }
     }, [notifications])
 
+    useEffect(() => {
+
+        setAnimation()
+    }, [layoutNotiCon, layoutNotiItem])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -234,10 +285,24 @@ export const HomeScreen = ({ navigation }) => {
                 </View>
                 {notifications.length > 0 && <Spacer paddingT={myHeight(20)} />}
             </ScrollView>
+
+
+
             {/* Notification Section */}
-            <View style={styles.containerNotification}>
+            <Animated.View
+
+                style={[styles.containerNotification, truncatedAnimation]}>
                 {notifications.length > 1 &&
-                    <View style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
+                    <View onLayout={(event) => {
+                        if (!layoutNotiCon && notiContHeight == 0) {
+                            const { height } = event.nativeEvent.layout;
+                            setNotiContHeight(height)
+                            setLoayoutNotiCon(true)
+                        }
+                        const { height } = event.nativeEvent.layout;
+                        setNotiContHeight(height)
+                    }}
+                        style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificationExpand(!notificationExpand)}>
                             <Spacer paddingT={myHeight(0.5)} />
                             <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
@@ -248,14 +313,20 @@ export const HomeScreen = ({ navigation }) => {
                         <View style={[styles.containerNotiCount, { right: -(myWidth(9.5) + (myWidth(1) * notiLen.length)), }]}>
                             <Text style={styles.textNotiCount}>{notifications.length}</Text>
                         </View>
-
                     </View>
                 }
                 <ScrollView bounces={false} contentContainerStyle={{ flexGrow: 1 }}>
                     <View>
                         {notificationVisible &&
                             notificationVisible.map((item, i) =>
-                                <TouchableOpacity activeOpacity={0.8} onPress={() => onNotificationsFocus(item.orderID)} key={i}
+                                <TouchableOpacity onLayout={(event) => {
+                                    if (i == 0 && !layoutNotiItem && notiItemHeight == 0) {
+                                        const { height } = event.nativeEvent.layout;
+                                        setNotiItemHeight(height)
+                                        setLoayoutNotiItem(true)
+                                    }
+                                }}
+                                    activeOpacity={0.8} onPress={() => onNotificationsFocus(item.orderID)} key={i}
                                     style={[styles.containerNotiItem, notificationExpand && i != 0 && { borderTopWidth: myHeight(0.085) }]}>
                                     <View style={{ flex: 1 }}>
                                         <View style={{ flexDirection: 'row' }}>
@@ -281,8 +352,7 @@ export const HomeScreen = ({ navigation }) => {
                         }
                     </View>
                 </ScrollView>
-            </View>
-
+            </Animated.View>
         </SafeAreaView>
     )
 }

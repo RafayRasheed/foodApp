@@ -36,6 +36,7 @@ export const NewPassword = ({ navigation }) => {
                         password={true}
                         clearTextOnFocus={false}
                         textContentType='password'
+                        autoCorrect={false}
                         placeholderTextColor={myColors.offColor}
                         selectionColor={myColors.primaryT}
                         style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -56,6 +57,7 @@ export const NewPassword = ({ navigation }) => {
                         password={true}
                         clearTextOnFocus={false}
                         textContentType='password'
+                        autoCorrect={false}
                         placeholderTextColor={myColors.offColor}
                         selectionColor={myColors.primaryT}
                         style={styles.containerInput} cursorColor={myColors.primaryT}
