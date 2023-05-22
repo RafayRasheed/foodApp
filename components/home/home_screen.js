@@ -294,13 +294,14 @@ export const HomeScreen = ({ navigation }) => {
                 style={[styles.containerNotification, truncatedAnimation]}>
                 {notifications.length > 1 &&
                     <View onLayout={(event) => {
-                        if (!layoutNotiCon && notiContHeight == 0) {
-                            const { height } = event.nativeEvent.layout;
+                        const { height } = event.nativeEvent.layout;
+                        console.log(height)
+
+                        if (notiContHeight < height) {
+                            console.log('here', height)
                             setNotiContHeight(height)
                             setLoayoutNotiCon(true)
                         }
-                        const { height } = event.nativeEvent.layout;
-                        setNotiContHeight(height)
                     }}
                         style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificationExpand(!notificationExpand)}>
