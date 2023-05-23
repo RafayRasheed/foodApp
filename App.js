@@ -17,6 +17,9 @@ export default function App() {
     storage.set("mberr", 'Hello')
     // printWithPlat("Is MMKV store successful? " + storage.contains('mberr'))
   }, [])
+  const isAndroid = Platform.OS == 'android'
+  // const OsVer = Platform.constants['Release']; Android Version like 9,10, 11
+  const OsVer = Platform.Version; //API level like 27, 28, 22 
 
   function getMMKV() {
     // const get = storage.getString('mberr')
@@ -25,7 +28,12 @@ export default function App() {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+      {isAndroid ? OsVer >= 23 &&
+
+        <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+        :
+        <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+      }
 
       <AppNavigator />
     </>

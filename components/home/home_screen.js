@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal } from 'react-native'
-import { Spacer, myHeight, myWidth } from '../common';
+import { SafeAreaView, Animated, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import { Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
 import { DailySpecial } from './home.component/daily_special';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
-} from 'react-native-reanimated';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+
+if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
 
 export const HomeScreen = ({ navigation }) => {
@@ -28,22 +28,6 @@ export const HomeScreen = ({ navigation }) => {
         dotArr.push(<View key={j} style={[styles.containerDot, { backgroundColor: j == i ? myColors.text : myColors.dot, }]} />)
     }
 
-    const [notiItemHeight, setNotiItemHeight] = useState(0)
-    const [notiContHeight, setNotiContHeight] = useState(0)
-
-    const [layoutNotiItem, setLoayoutNotiItem] = useState(false)
-    const [layoutNotiCon, setLoayoutNotiCon] = useState(false)
-    const boxHeight = useSharedValue(myHeight(0));
-    const truncatedAnimation = useAnimatedStyle(() => {
-        return {
-            height: withTiming(boxHeight.value, { duration: 500 }),
-        };
-    }, []);
-
-    // useEffect(() => {
-    //     console.log(notiContHeight, notiItemHeight)
-    //     boxHeight.value = notiContHeight + notiItemHeight
-    // }, [notiItemHeight, notiContHeight])
 
     function handleScroll(event) {
 
@@ -63,28 +47,6 @@ export const HomeScreen = ({ navigation }) => {
         }
         setNotificationsFocusID(orderID)
     }
-    function setAnimation() {
-        if (notiItemHeight || notiItemHeight) {
-
-            if (notificationExpand) {
-                boxHeight.value = notiContHeight + (((notiItemHeight + myHeight(0.1)) * notifications.length) + myHeight(0.8))
-                // console.log(notiContHeight, notiItemHeight, notificationVisible.length)
-            }
-            else if (notifications.length > 1) {
-                // console.log(notiContHeight, notiItemHeight, notificationVisible.length)
-                boxHeight.value = notiContHeight + (notiItemHeight + myHeight(0.8))
-            }
-            else {
-                boxHeight.value = notiItemHeight
-            }
-        }
-        else {
-            setTimeout(() => {
-                console.log(notiContHeight, notiItemHeight)
-            }, 1000)
-
-        }
-    }
     function settingNotification() {
         const s = notifications.filter((item) => item.orderID == notificationsFocusID)
         if (s.length) {
@@ -96,16 +58,12 @@ export const HomeScreen = ({ navigation }) => {
         }
     }
     useEffect(() => {
-        // boxHeight.value === 155 ? (boxHeight.value = 400) : (boxHeight.value = 155);
         if (notificationExpand) {
             setNotificationVisible(notifications)
         }
         else {
-            setTimeout(() => {
-                settingNotification()
-            }, 10)
+            settingNotification()
         }
-        setAnimation()
 
     }, [notificationExpand])
 
@@ -122,15 +80,25 @@ export const HomeScreen = ({ navigation }) => {
         }
     }, [notifications])
 
-    useEffect(() => {
-
-        setAnimation()
-    }, [layoutNotiCon, layoutNotiItem])
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.container}>
-
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
+                <GestureRecognizer
+                    // onSwipe={(direction, state) => console.log(direction, state)}
+                    onSwipeUp={(state) => console.log('u')}
+                    onSwipeDown={(state) => console.log('d')}
+                    // onSwipeLeft={(state) => this.onSwipeLeft(state)}
+                    // onSwipeRight={(state) => this.onSwipeRight(state)}
+                    // config={config}
+                    style={{
+                        // flex: 1,
+                        // backgroundColor: this.state.backgroundColor
+                    }}
+                >
+                    <Text>ok</Text>
+                    <Text>onSwipe callback received gesture: </Text>
+                </GestureRecognizer>
                 <Spacer paddingT={myHeight(3)} />
 
                 {/* Morning & Loca */}
@@ -291,20 +259,31 @@ export const HomeScreen = ({ navigation }) => {
             {/* Notification Section */}
             <Animated.View
 
-                style={[styles.containerNotification, truncatedAnimation]}>
+                style={[styles.containerNotification]}>
                 {notifications.length > 1 &&
-                    <View onLayout={(event) => {
-                        const { height } = event.nativeEvent.layout;
-                        console.log(height)
 
-                        if (notiContHeight < height) {
-                            console.log('here', height)
-                            setNotiContHeight(height)
-                            setLoayoutNotiCon(true)
-                        }
-                    }}
+                    <View
+
                         style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => setNotificationExpand(!notificationExpand)}>
+                        <TouchableOpacity activeOpacity={0.6}
+                            onPress={() => {
+                                // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+                                setNotificationExpand(!notificationExpand)
+                                const duration = notificationExpand ? 150 : 300
+                                LayoutAnimation.configureNext({
+                                    "create": { "property": "opacity", "type": "linear" },
+                                    "delete": { "property": "opacity", "type": "linear" },
+                                    "duration": duration,
+                                    "update": { "type": "linear" }
+                                });
+                                // LayoutAnimation.configureNext({
+                                //     duration: 500,
+                                //     create: { type: 'easeInEaseOut', property: 'opacity' },
+
+                                // });
+
+                            }
+                            }>
                             <Spacer paddingT={myHeight(0.5)} />
                             <Image style={[styles.imageUp, notificationExpand && { transform: [{ rotate: '180deg' }] }]}
                                 source={require('../assets/home_main/up.png')} />
@@ -320,14 +299,22 @@ export const HomeScreen = ({ navigation }) => {
                     <View>
                         {notificationVisible &&
                             notificationVisible.map((item, i) =>
-                                <TouchableOpacity onLayout={(event) => {
-                                    if (i == 0 && !layoutNotiItem && notiItemHeight == 0) {
-                                        const { height } = event.nativeEvent.layout;
-                                        setNotiItemHeight(height)
-                                        setLoayoutNotiItem(true)
+                                <TouchableOpacity
+                                    activeOpacity={notificationExpand ? 0.8 : 1}
+                                    onPress={() => {
+                                        if (notificationExpand) {
+                                            // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+                                            LayoutAnimation.configureNext({
+                                                "create": { "property": "opacity", "type": "linear" },
+                                                "delete": { "property": "opacity", "type": "linear" },
+                                                "duration": 150,
+                                                "update": { "type": "linear" }
+                                            });
+                                            onNotificationsFocus(item.orderID)
+                                        }
                                     }
-                                }}
-                                    activeOpacity={0.8} onPress={() => onNotificationsFocus(item.orderID)} key={i}
+                                    }
+                                    key={i}
                                     style={[styles.containerNotiItem, notificationExpand && i != 0 && { borderTopWidth: myHeight(0.085) }]}>
                                     <View style={{ flex: 1 }}>
                                         <View style={{ flexDirection: 'row' }}>
@@ -353,6 +340,7 @@ export const HomeScreen = ({ navigation }) => {
                         }
                     </View>
                 </ScrollView>
+
             </Animated.View>
         </SafeAreaView>
     )

@@ -12,9 +12,11 @@ export const FoodDashboard = ({ navigation }) => {
     const [i, setI] = useState(0)
     const [search, setSearch] = useState(null)
 
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={{}}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{}}>
                 <Spacer paddingT={myHeight(1.8)} />
                 {/* Top */}
                 <View style={styles.containerTop}>
@@ -53,10 +55,10 @@ export const FoodDashboard = ({ navigation }) => {
                         <View style={styles.containerSearchPortion}>
                             <Image style={styles.imageSearch} source={require('../../assets/home_main/dashboards/search.png')} />
                             <Spacer paddingEnd={myWidth(3.5)} />
-                            <TextInput placeholder="Search Any Item"
+                            <TextInput placeholder=" Search Any Item"
                                 placeholderTextColor={myColors.textL5}
                                 autoCorrect={false}
-                                selectionColor={myColors.text}
+                                selectionColor={myColors.primaryT}
                                 style={styles.containerSearch}
                                 cursorColor={myColors.primaryT}
                                 value={search} onChangeText={setSearch}
@@ -65,7 +67,7 @@ export const FoodDashboard = ({ navigation }) => {
                         </View>
                         <Spacer paddingEnd={myWidth(3.7)} />
                         {/* Filter */}
-                        <TouchableOpacity onPress={() => null} activeOpacity={0.6}
+                        <TouchableOpacity onPress={() => navigation.navigate('Filter')} activeOpacity={0.6}
                             style={styles.containerFilter}>
                             <Image style={styles.imageFilter}
                                 source={require('../../assets/home_main/dashboards/filter.png')} />

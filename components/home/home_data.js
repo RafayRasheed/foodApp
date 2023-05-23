@@ -19,36 +19,36 @@ export const notifications = [
         estimateTime: '30 mins - 3:40pm',
         status: 'Driver On The Way',
     },
-    {
-        orderID: '1233436',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233437',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233438',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233439',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233440',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233442',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
+    // {
+    //     orderID: '1233436',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233437',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233438',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233439',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233440',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233442',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
 
 
 ]

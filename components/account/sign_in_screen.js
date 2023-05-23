@@ -53,6 +53,8 @@ export const SignIn = ({ navigation }) => {
     //     }
     // }, [phone, password])
 
+    TextInput.defaultProps = TextInput.defaultProps || {};
+    TextInput.defaultProps.selectionColor = 'red';
 
     return (
         <SafeAreaView style={styles.container}>

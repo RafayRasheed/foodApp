@@ -1,10 +1,11 @@
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Image, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { myColors } from '../../../../ultils/myColors'
 import { myWidth, myHeight, Spacer } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
 
 export const RestaurantInfo = ({ item }) => {
+
     let items = ''
     item.items.map((item, i) => {
         if (i != 0) {
@@ -19,6 +20,7 @@ export const RestaurantInfo = ({ item }) => {
             {/* Image & Others*/}
             <View>
                 <Image style={styles.imageRes} source={item.image} />
+                {/* Icon */}
                 <View style={styles.containerIcon}>
                     <Image style={styles.imageIcon} source={item.icon} />
                     {
@@ -28,6 +30,16 @@ export const RestaurantInfo = ({ item }) => {
                         </View>
                     }
                 </View>
+                {/* Rating */}
+                <View style={styles.containerRating}>
+                    <Text style={styles.textRating}>{item.rating}</Text>
+                    <Spacer paddingEnd={myWidth(1)} />
+                    <Image style={styles.imageStar} source={require('../../../assets/home_main/star.png')} />
+                </View>
+                {/* Heart */}
+                <TouchableOpacity activeOpacity={0.7} style={styles.containerHeart}>
+                    <Image style={styles.imageHeart} source={require('../../../assets/home_main/dashboards/heart.png')} />
+                </TouchableOpacity>
             </View>
             <Spacer paddingT={myHeight(1)} />
 
@@ -83,6 +95,27 @@ const styles = StyleSheet.create({
         padding: myHeight(0.085),
         borderRadius: myHeight(2),
     },
+    containerRating: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        zIndex: 2,
+        left: myWidth(2.3),
+        top: myHeight(1),
+        backgroundColor: myColors.background,
+        paddingHorizontal: myWidth(2.5),
+        paddingVertical: myHeight(0.1),
+        borderRadius: myWidth(1),
+    },
+    containerHeart: {
+        position: 'absolute',
+        zIndex: 2,
+        right: myWidth(2.3),
+        top: myHeight(0.8),
+        backgroundColor: myColors.background,
+        padding: myHeight(0.65),
+        borderRadius: myWidth(5),
+    },
 
     //Text
     textName: {
@@ -105,6 +138,15 @@ const styles = StyleSheet.create({
         // flex: 1,
         fontSize: myFontSize.small2,
         fontFamily: myFonts.bodyBold,
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+    textRating: {
+        // flex: 1,
+        fontSize: myFontSize.xSmall,
+        fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
@@ -135,6 +177,16 @@ const styles = StyleSheet.create({
     imageVeri: {
         height: myHeight(0.86),
         width: myHeight(0.86),
+        resizeMode: 'contain',
+    },
+    imageStar: {
+        height: myHeight(1.5),
+        width: myHeight(1.5),
+        resizeMode: 'contain',
+    },
+    imageHeart: {
+        height: myHeight(1.6),
+        width: myHeight(1.6),
         resizeMode: 'contain',
     },
 
