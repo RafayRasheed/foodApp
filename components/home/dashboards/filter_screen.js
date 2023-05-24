@@ -79,7 +79,6 @@ export const FilterScreen = ({ navigation }) => {
                         )
                 }
             </View>
-
         </SafeAreaView>
     )
 }
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     },
 
 
-
+    //Text
     textCommon: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.bodyBold,
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     },
 
 
-
+    //Image
     imageBack: {
         width: myHeight(2.5),
         height: myHeight(2.5),

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
-import { Spacer, ios, myHeight, myWidth, printWithPlat } from "../common"
+import { MyError, Spacer, ios, myHeight, myWidth, printWithPlat } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Flag from './account.component/phone_select';
 
@@ -14,6 +14,16 @@ export const SignIn = ({ navigation }) => {
     const [verifyLog, setVerifyLog] = useState(false)
     const [hidePass, setHidePass] = useState(true);
     const flagRef = useRef(null)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    useEffect(() => {
+        if (errorMessage) {
+            console.log(errorMessage.length)
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
     const onLogin = () => {
         if (verifyPhone() && verifyPass()) {
             setVerifyLog(true)
@@ -32,15 +42,21 @@ export const SignIn = ({ navigation }) => {
     function verifyPhone() {
         if (phone) {
             const s = flagRef.current.checkNumber()
-            console.log("isValid Number", s)
-            return s
+            if (s) {
+                return true
+            }
+            setErrorMessage('Please Enter a Valid Number')
+            return false
         }
+
+        setErrorMessage('Please Enter a Number')
         return false
     }
     function verifyPass() {
         if (password) {
             return true
         }
+        setErrorMessage('Please Enter a Password')
         return false
     }
 
@@ -58,6 +74,7 @@ export const SignIn = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            {errorMessage && <MyError message={errorMessage} />}
             <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
                 {/* Content */}
                 <View>
@@ -86,7 +103,6 @@ export const SignIn = ({ navigation }) => {
                                     cursorColor={myColors.primaryT}
                                     autoCorrect={false}
                                     value={phone} onChangeText={(val) => onChangePhone(val)}
-                                    onEndEditing={() => verifyPhone()}
                                 />
 
                             </View>
@@ -105,7 +121,6 @@ export const SignIn = ({ navigation }) => {
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
                                     value={password} onChangeText={setPass}
-                                    onEndEditing={() => verifyPass()}
                                 />
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
                                     <Image style={styles.imageEye}
@@ -167,7 +182,11 @@ export const SignIn = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={styles.textDontHaveAcc}>Don't have an account? </Text>
 
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('SignUp')}>
+                        <TouchableOpacity activeOpacity={0.6}
+                            onPress={() => {
+                                navigation.navigate('SignUp')
+                                setErrorMessage(null)
+                            }}>
                             <Spacer paddingT={myHeight(1)} />
 
                             <Text style={styles.textSignUp}>Sign Up!</Text>

@@ -115,25 +115,33 @@ export const dailySpecial = [
         name: 'McDonalds - King St',
         distance: '6.6 km',
         rating: 4.4,
-        image: require('../assets/home_main/daily_special/dailyS1.png')
+        country: 'America',
+        totalRating: '200+',
+        image: require('../assets/home_main/daily_special/dailyS1.jpg')
     },
     {
         name: 'KFC - Lawrence Ave',
         distance: '5.1 km',
         rating: 4.3,
-        image: require('../assets/home_main/daily_special/dailyS2.png')
+        country: 'America',
+        totalRating: '200+',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg')
     },
     {
         name: 'Freshii - Markha',
         distance: '3.1 km',
         rating: 4.9,
-        image: require('../assets/home_main/daily_special/dailyS3.png')
+        country: 'America',
+        totalRating: '200+',
+        image: require('../assets/home_main/daily_special/dailyS3.jpg')
     },
     {
         name: 'McDonalds - King St',
         distance: '6.6 km',
         rating: 4.4,
-        image: require('../assets/home_main/daily_special/dailyS1.png')
+        country: 'America',
+        totalRating: '200+',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg')
     },
 
 ]
@@ -178,4 +186,42 @@ export const nearDrivers = [
         image: require('../assets/home_main/man.png'),
     },
 
+]
+
+export const mainCourse = [
+    {
+        name: 'Classic Sandwich',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
+    {
+        name: 'Classic Sandwich',
+        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
+        price: '$8.25',
+        cals: '640',
+        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+    },
 ]
