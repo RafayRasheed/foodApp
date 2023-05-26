@@ -8,7 +8,7 @@ const item = {
     title: 'Earn Coins',
     des: 'Earn coins from all our services to use in app!',
     image: require('../assets/startup/startup5.png'),
-    style: { width: myWidth(70), height: myHeight(27) },
+    style: { width: myWidth(84), height: myWidth(84) * 0.8 },
 }
 export const Started = ({ navigation }) => {
     return (
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     //Image
     imageMid: {
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         // backgroundColor: 'blue',
 
 

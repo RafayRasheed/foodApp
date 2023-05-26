@@ -4,7 +4,6 @@ import { FoodDashboard } from "./dashboards/food_dashboard_screen";
 import { FilterScreen } from "./dashboards/filter_screen";
 import { RestaurantDetail } from "./restaurant_detail_screen";
 
-
 const HomeTAB = createNativeStackNavigator();
 
 export const HomeNavigator = () => {

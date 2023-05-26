@@ -24,6 +24,14 @@ export const SignIn = ({ navigation }) => {
             }, 2000)
         }
     }, [errorMessage])
+
+    useEffect(() => {
+        if (verifyLog) {
+            navigation.replace('HomeBottomNavigator')
+
+        }
+    }, [verifyLog])
+
     const onLogin = () => {
         if (verifyPhone() && verifyPass()) {
             setVerifyLog(true)
@@ -31,7 +39,6 @@ export const SignIn = ({ navigation }) => {
         else {
             setVerifyLog(false)
         }
-        navigation.replace('HomeBottomNavigator')
     }
 
     function onChangePhone(val) {
@@ -209,7 +216,7 @@ export const SignIn = ({ navigation }) => {
 
                         <Text style={styles.textTermCond}>and </Text>
 
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('HomeBottomNavigator')}>
                             <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Privacy Policy</Text>
                         </TouchableOpacity>

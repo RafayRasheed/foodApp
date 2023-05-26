@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react"
 import { Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
-import { Spacer, ios, myHeight, myWidth } from "../common"
+import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Flag from './account.component/phone_select';
+
 
 
 export const SignUp = ({ navigation }) => {
@@ -16,10 +17,29 @@ export const SignUp = ({ navigation }) => {
     const [verifyLog, setVerifyLog] = useState(false)
     const flagRef = useRef(null)
     const [hidePass, setHidePass] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
+
+    useEffect(() => {
+        if (verifyLog) {
+            navigation.replace('HomeBottomNavigator')
+        }
+    }, [verifyLog])
 
     const onSignUp = () => {
-        navigation.navigate('Verification')
+        if (verifyPhone() && verifyName() && verifyEmail() && verifyPass() && verifyCode()) {
+            setVerifyLog(true)
+        }
+        return false
     }
+
     function onChangePhone(val) {
         setPhone(val)
         flagRef.current.setNumber(val)
@@ -27,51 +47,61 @@ export const SignUp = ({ navigation }) => {
 
     function verifyEmail() {
         if (email) {
-            return true
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
+                return true
+            }
+            setErrorMessage('Please Enter a Valid Email')
+            return false
         }
+        setErrorMessage('Please Enter a Email')
         return false
     }
     function verifyName() {
         if (name) {
             return true
         }
+        setErrorMessage('Please Enter a Name')
         return false
     }
     function verifyPhone() {
         if (phone) {
             const s = flagRef.current.checkNumber()
-            console.log("isValid Number", s)
-            return s
+            if (s) {
+                return true
+            }
+            setErrorMessage('Please Enter a Valid Number')
+            return false
         }
+        setErrorMessage('Please Enter a Number')
         return false
     }
+
     function verifyCode() {
         if (code) {
             return true
         }
-        return false
+        return true
     }
     function verifyPass() {
         if (password) {
             return true
         }
+        setErrorMessage('Please Enter a Password')
         return false
     }
 
-    useEffect(() => {
-        if (verifyEmail() && verifyPass()) {
-            setVerifyLog(true)
-        }
-        else {
-            setVerifyLog(false)
-        }
-    }, [email, password])
+
 
     // const KeyboardAware = listenToKeyboardEvents = () =>{
     //     <ScrollView {}
     // }
+
+
     return (
         <SafeAreaView style={styles.container}>
+            {<Loader />}
+            {errorMessage && <MyError message={errorMessage} />}
             <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
                 <View>
                     {/* Content */}
@@ -93,7 +123,7 @@ export const SignUp = ({ navigation }) => {
 
                                 <Flag ref={flagRef} />
                                 <Spacer paddingEnd={myWidth(1.8)} />
-                                <TextInput placeholder="Enter Number"
+                                <TextInput placeholder=" Enter Number"
                                     keyboardType='phone-pad'
                                     maxLength={14}
                                     placeholderTextColor={myColors.offColor}
@@ -108,7 +138,7 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Full Name"
+                                <TextInput placeholder=" Full Name"
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
@@ -123,7 +153,7 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Email Address"
+                                <TextInput placeholder=" Email Address"
                                     autoCapitalize='none'
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
@@ -137,7 +167,7 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Password"
+                                <TextInput placeholder=" Password"
                                     secureTextEntry={hidePass}
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
@@ -155,7 +185,8 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder="Referral Code (Optional)"
+                                <TextInput placeholder=" Referral Code (Optional)"
+                                    keyboardType='numeric'
                                     autoCapitalize='none'
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
@@ -227,7 +258,7 @@ export const SignUp = ({ navigation }) => {
                 <View style={styles.containerTermCond}>
                     {/* First line */}
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('StartupScreen')}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
                             <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
                         </TouchableOpacity>
@@ -252,7 +283,7 @@ export const SignUp = ({ navigation }) => {
                 </View>
                 {/* </ScrollView> */}
             </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 

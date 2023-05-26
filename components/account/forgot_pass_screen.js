@@ -1,20 +1,37 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, View, TextInput } from 'react-native';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { Spacer, ios, myHeight, myWidth } from '../common';
+import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import Flag from './account.component/phone_select';
 
 export const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState(null)
     const flagRef = useRef(null)
     const [phone, setPhone] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    useEffect(() => {
+        if (errorMessage) {
+            console.log(errorMessage.length)
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
+    // { errorMessage && <MyError message={errorMessage} /> }
+
     function verifyPhone() {
         if (phone) {
             const s = flagRef.current.checkNumber()
-            console.log("isValid Number", s)
-            return s
+            if (s) {
+                return true
+            }
+            setErrorMessage('Please Enter a Valid Number')
+            return false
         }
+
+        setErrorMessage('Please Enter a Number')
         return false
     }
     function onChangePhone(val) {
@@ -22,10 +39,13 @@ export const ForgotPassword = ({ navigation }) => {
         flagRef.current.setNumber(val)
     }
     function onSend() {
-        navigation.navigate('NewPassword')
+        if (verifyPhone()) {
+            navigation.navigate('NewPassword')
+        }
     }
     return (
         <SafeAreaView style={styles.container}>
+            {errorMessage && <MyError message={errorMessage} />}
             <Spacer paddingT={myHeight(7)} />
 
             <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>

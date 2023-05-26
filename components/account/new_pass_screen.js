@@ -1,23 +1,64 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, View, TextInput } from 'react-native';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { Spacer, ios, myHeight, myWidth } from '../common';
+import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import Flag from './account.component/phone_select';
 
 export const NewPassword = ({ navigation }) => {
     const [password, setPassword] = useState(null)
     const flagRef = useRef(null)
     const [confirmPass, setConfirmPass] = useState(null)
+    const [verifyDone, setverifyDone] = useState(false)
     const [hidePass, setHidePass] = useState(true);
     const [hideConPass, setHideConPass] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    useEffect(() => {
+        if (errorMessage) {
+            console.log(errorMessage.length)
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
+
+    useEffect(() => {
+        if (verifyDone) {
+            navigation.navigate('DonePassword')
+        }
+    }, [verifyDone])
 
     function onSubmit() {
-        navigation.navigate('DonePassword')
+        if (verifyPass() && verifyConPass()) {
+            setverifyDone(true)
+        }
+        // navigation.navigate('DonePassword')
 
+    }
+    function verifyPass() {
+        if (password) {
+            return true
+        }
+        setErrorMessage('Please Enter a Password')
+        return false
+    }
+
+    function verifyConPass() {
+        if (confirmPass) {
+            if (password === confirmPass) {
+                return true
+            }
+            setErrorMessage('Password Do Not Match')
+            return false
+        }
+        setErrorMessage('Please Enter a Password Again')
+        return false
     }
     return (
         <SafeAreaView style={styles.container}>
+
+            {errorMessage && <MyError message={errorMessage} />}
             <Spacer paddingT={myHeight(7)} />
 
             <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>

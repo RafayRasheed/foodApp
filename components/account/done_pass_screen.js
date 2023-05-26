@@ -4,6 +4,7 @@ import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Spacer, ios, myHeight, myWidth } from '../common';
 import Flag from './account.component/phone_select';
+import Lottie from 'lottie-react-native';
 
 export const DonePassword = ({ navigation }) => {
     const [password, setPassword] = useState(null)
@@ -23,15 +24,22 @@ export const DonePassword = ({ navigation }) => {
                 <Spacer paddingT={myHeight(1.1)} />
                 <Text style={styles.textDes}>Your Password Successfully Update</Text>
 
-                <Spacer paddingT={myHeight(11)} />
+                <Spacer paddingT={myHeight(10)} />
+                <Lottie
+                    autoPlay={true}
+                    loop={false}
+                    source={require('../assets/lottie/check.json')}
+                    style={{ height: myHeight(19), width: myHeight(19), }}
 
-                <Image style={styles.imageDone} source={require('../assets/account/done.png')} />
-                <Spacer paddingT={myHeight(6)} />
+                />
+                {/* <Image style={styles.imageDone} source={require('../assets/account/done.png')} /> */}
+                <Spacer paddingT={myHeight(5)} />
                 <Text style={styles.textInst}>You can login your account with your new password.</Text>
 
 
 
             </View>
+
             {/* Sign Button */}
             <View style={{ alignItems: 'center' }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('SignIn')}

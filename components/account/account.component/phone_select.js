@@ -142,11 +142,12 @@ const Flag = (props, ref) => {
                     onPressFlag={() => phone.current && setModalVisible(true)}
                     initialValue={countryCode}
                     renderFlag={({ imageSource }) =>
-                        <View>
+                        <View style={{}}>
                             {countryFlag ?
                                 <Image source={countryFlag}
                                     style={{
-                                        height: myHeight(1.8), width: myWidth(6.9),
+                                        borderWidth: 1, borderColor: myColors.dot, padding: 0,
+                                        height: myHeight(2), width: myHeight(2) * 1.6,
                                         resizeMode: 'contain', alignSelf: 'center'
                                     }} />
                                 : <View style={styles.containerEmpty} />

@@ -4,10 +4,11 @@ import { MMKV } from 'react-native-mmkv';
 import { myColors } from '../ultils/myColors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { myFontSize, myFonts, myLetSpacing } from '../ultils/myFonts';
-
+import Animated, { BounceInUp, FadeInUp, FadeOutUp } from 'react-native-reanimated';
 const { height, width } = Dimensions.get('window')
 export const ios = Platform.OS == 'ios'
 export const stutusH = StatusBar.currentHeight
+import { Circle } from "react-native-animated-spinkit"
 
 export function printWithPlat(print) {
     console.log(`${Platform.OS} => ${print} ${height} ${StatusBar.currentHeight}`)
@@ -31,47 +32,46 @@ export function myWidth(per) {
 export const Spacer = ({ paddingEnd = 0, paddingT = 0 }) => (
     <View style={{ paddingEnd: paddingEnd, paddingTop: paddingT }} />
 )
+export const Loader = () => (
+    <View
+        style={{
+            height: myHeight(100), width: myWidth(100), position: 'absolute', zIndex: 10,
+            justifyContent: 'center', alignItems: 'center',
+            backgroundColor: '#00000025'
+        }}>
+        <Circle size={myHeight(10)} color='#d16402' />
 
+    </View>
+)
 export const MyError = ({ message = '' }) => {
 
-    // function isIphoneX() {
-    //     const dimen = Dimensions.get('window');
-    //     return (
-    //         Platform.OS === 'ios' &&
-    //         !Platform.isPad &&
-    //         !Platform.isTV &&
-    //         (dimen.height === 812 || dimen.width === 812 || (dimen.height === 896 || dimen.width === 896))
-    //     );
-    // }
-    // function getStatusBarHeight(skipAndroid) {
-    //     return Platform.select({
-    //         ios: isIphoneX() ? 44 : 20,
-    //         android: skipAndroid ? 0 : StatusBar.currentHeight,
-    //         default: 0
-    //     })
-    // }
-    // console.log('k', getStatusBarHeight())
     return (
-        <SafeAreaView style={{ zIndex: 1, position: 'absolute' }}>
-            <View
-                style={{
-                    paddingVertical: myHeight(0.7), paddingHorizontal: myWidth(3),
-                    width: myWidth(100), backgroundColor: myColors.red, alignItems: 'center'
-                }}
-            >
-                <Text
+        <Animated.View
+            entering={FadeInUp}
+            exiting={FadeOutUp}
+        >
+            <View style={{ zIndex: 1, position: 'absolute' }}>
+                <View
                     style={{
-                        fontSize: myFontSize.body,
-                        fontFamily: myFonts.bodyBold,
-                        color: myColors.background,
-                        letterSpacing: myLetSpacing.common,
-                        includeFontPadding: false,
-                        padding: 0,
+                        paddingVertical: myHeight(0.7), paddingHorizontal: myWidth(3),
+                        width: myWidth(100), backgroundColor: myColors.red, alignItems: 'center'
                     }}
-                >{message}</Text>
+                >
+                    <Text
+                        style={{
+                            fontSize: myFontSize.body,
+                            fontFamily: myFonts.bodyBold,
+                            color: myColors.background,
+                            letterSpacing: myLetSpacing.common,
+                            includeFontPadding: false,
+                            padding: 0,
+                        }}
+                    >{message}</Text>
+                </View>
             </View>
-        </SafeAreaView>
+        </Animated.View>
     )
 }
+
 
 export const storage = new MMKV()

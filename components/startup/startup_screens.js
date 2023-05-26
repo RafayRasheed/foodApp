@@ -9,25 +9,25 @@ const startupData = [
         title: 'Shop Local',
         des: 'Shop anything, anytime, anywhere!',
         image: require('../assets/startup/startup1.png'),
-        style: { width: myWidth(70), height: myHeight(32), marginBottom: -myHeight(0.5) },
+        style: { width: myWidth(70), height: myWidth(70) * 0.8, marginBottom: -myHeight(0.5) },
     },
     {
         title: 'Book Rides',
         des: 'Use M-Rides to get anywhere in your city!',
         image: require('../assets/startup/startup2.png'),
-        style: { width: myWidth(73), height: myHeight(28), marginBottom: -myHeight(2) },
+        style: { width: myWidth(84), height: myWidth(84) * 0.62, marginBottom: -myHeight(2) },
     },
     {
         title: 'Order Food',
         des: 'Order all your favorite cuisines & cravings!',
         image: require('../assets/startup/startup3.png'),
-        style: { width: myWidth(73), height: myHeight(28), },
+        style: { width: myWidth(73), height: myWidth(73) * 0.85, },
     },
     {
         title: 'Send Parcel',
         des: 'Send parcels to anywhere in your city!',
         image: require('../assets/startup/startup4.png'),
-        style: { width: myWidth(84), height: myHeight(24), },
+        style: { width: myWidth(84), height: myWidth(84) * 0.62, },
     },
 
 
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
 
     //Image
     imageMid: {
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         // backgroundColor: 'blue',
 
 
