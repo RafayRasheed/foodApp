@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView } from 'react-native';
-import { myColors } from '../../../ultils/myColors';
-import { Spacer, ios, myHeight, myWidth } from '../../common';
-import { myFontSize } from '../../../ultils/myFonts';
-import { myFonts } from '../../../ultils/myFonts';
-import { myLetSpacing } from '../../../ultils/myFonts';
+import { myColors } from '../../../../ultils/myColors';
+import { Spacer, ios, myHeight, myWidth } from '../../../common';
+import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
 import { FoodOpenNow } from './food_data';
-import { RestaurantInfo, } from './dashboard_component/restuarant_info';
+import { RestaurantInfo } from './dashboard_component/restuarant_info';
 
-export const FoodDashboard = ({ navigation }) => {
+export const FoodScreen = ({ navigation }) => {
     const [i, setI] = useState(0)
     const [search, setSearch] = useState(null)
-
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -20,7 +16,7 @@ export const FoodDashboard = ({ navigation }) => {
                 <Spacer paddingT={myHeight(1.8)} />
                 {/* Top */}
                 <View style={styles.containerTop}>
-                    <Image style={styles.imageLoc} source={require('../../assets/home_main/dashboards/location.png')} />
+                    <Image style={styles.imageLoc} source={require('../../../assets/home_main/dashboards/location.png')} />
                     <Spacer paddingEnd={myWidth(2)} />
                     <Text numberOfLines={2} style={styles.textLoc}>67 Buick boulevard Brampton Canada</Text>
                     <Spacer paddingEnd={myWidth(2)} />
@@ -30,14 +26,14 @@ export const FoodDashboard = ({ navigation }) => {
                             style={[styles.containerDelivery,
                             i == 0 && { backgroundColor: myColors.primaryT }]}>
                             <Image style={[styles.imageDelivery, i == 0 && { tintColor: myColors.background }]}
-                                source={require('../../assets/home_main/dashboards/delivery.png')} />
+                                source={require('../../../assets/home_main/dashboards/delivery.png')} />
 
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setI(1)} activeOpacity={0.6}
                             style={[styles.containerDelivery,
                             i == 1 && { backgroundColor: myColors.primaryT }]}>
                             <Image style={[styles.imageDelivery, i == 1 && { tintColor: myColors.background }]}
-                                source={require('../../assets/home_main/dashboards/man_shop.png')} />
+                                source={require('../../../assets/home_main/dashboards/man_shop.png')} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -46,14 +42,13 @@ export const FoodDashboard = ({ navigation }) => {
                 <View style={{ paddingHorizontal: myWidth(4) }}>
                     <Spacer paddingT={myHeight(2)} />
                     {/* Let finds */}
-                    <Text style={styles.textFind}>Let’s Find</Text>
-                    <Text style={styles.textFind}>Some Foods!</Text>
+                    <Text style={styles.textFind}>Let’s Find {'\n'}Some Foods!</Text>
 
                     <Spacer paddingT={myHeight(2.2)} />
                     {/* Search */}
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <View style={styles.containerSearchPortion}>
-                            <Image style={styles.imageSearch} source={require('../../assets/home_main/dashboards/search.png')} />
+                            <Image style={styles.imageSearch} source={require('../../../assets/home_main/dashboards/search.png')} />
                             <Spacer paddingEnd={myWidth(3.5)} />
                             <TextInput placeholder=" Search Any Item"
                                 placeholderTextColor={myColors.textL5}
@@ -67,10 +62,10 @@ export const FoodDashboard = ({ navigation }) => {
                         </View>
                         <Spacer paddingEnd={myWidth(3.7)} />
                         {/* Filter */}
-                        <TouchableOpacity onPress={() => navigation.navigate('Filter')} activeOpacity={0.6}
+                        <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')} activeOpacity={0.6}
                             style={styles.containerFilter}>
                             <Image style={styles.imageFilter}
-                                source={require('../../assets/home_main/dashboards/filter.png')} />
+                                source={require('../../../assets/home_main/dashboards/filter.png')} />
                         </TouchableOpacity>
                     </View>
                     <Spacer paddingT={myHeight(3.3)} />
@@ -79,30 +74,26 @@ export const FoodDashboard = ({ navigation }) => {
                     <View style={styles.containerOffer}>
                         <View style={styles.containerOfferText}>
                             <Text style={styles.textOfferTitle}>Buy one get one free</Text>
-                            <Spacer paddingT={myHeight(0.5)} />
-                            <Text style={styles.textOfferDeadline}>Until 20 jan</Text>
-                            <Spacer paddingT={myHeight(0.6)} />
+                            <Spacer paddingT={myHeight(0.2)} />
+                            <Text style={styles.textOfferDeadline}>Until 20 Jan</Text>
+                            <Spacer paddingT={myHeight(0.2)} />
                             <TouchableOpacity onPress={() => null} activeOpacity={0.6}
                                 style={styles.containerOfferButton}>
                                 <Text style={styles.textOfferButton}>Get Now</Text>
                             </TouchableOpacity>
                         </View>
                         <Image style={styles.imageOfferImage}
-                            source={require('../../assets/home_main/dashboards/burger.png')} />
+                            source={require('../../../assets/home_main/dashboards/burger.png')} />
                     </View>
-
-
-
-
                 </View>
                 {/* Open Now*/}
                 <View>
-                    <Spacer paddingT={myHeight(5)} />
+                    <Spacer paddingT={myHeight(3.3)} />
 
                     {/* Open Now */}
                     <View style={styles.containerHeading}>
                         <Text style={styles.textHeading}>Open Now</Text>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
                             <Text style={styles.textSeeAll}>See all</Text>
                         </TouchableOpacity>
                     </View>
@@ -122,12 +113,12 @@ export const FoodDashboard = ({ navigation }) => {
 
                 {/* Popular Stores */}
                 <View>
-                    <Spacer paddingT={myHeight(3.2)} />
+                    <Spacer paddingT={myHeight(2.4)} />
 
                     {/*Popular Stores */}
                     <View style={styles.containerHeading}>
                         <Text style={styles.textHeading}>Popular Stores</Text>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
+                        <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
                             <Text style={styles.textSeeAll}>See all</Text>
                         </TouchableOpacity>
                     </View>
@@ -208,7 +199,6 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.primaryL3,
         borderRadius: myWidth(3),
         alignItems: 'center'
-
     },
     containerOfferButton: {
         backgroundColor: myColors.primaryT,
@@ -258,7 +248,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
     },
     textOfferDeadline: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -267,7 +257,7 @@ const styles = StyleSheet.create({
     },
     textOfferButton: {
         fontSize: myFontSize.xSmall,
-        fontFamily: myFonts.bodyBold,
+        fontFamily: myFonts.heading,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
@@ -275,7 +265,7 @@ const styles = StyleSheet.create({
     },
 
     textHeading: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.xxBody,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,

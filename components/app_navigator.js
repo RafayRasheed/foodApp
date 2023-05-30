@@ -12,10 +12,10 @@ export const AppNavigator = () => {
     return (
         <NavigationContainer>
             <AppTAB.Navigator
-                initialRouteName="AccountNavigator"
+                initialRouteName="HomeBottomNavigator"
                 // initialRouteName={storage.contains('isFirstTime') ? "AccountNavigator" : "StartupScreen"}
                 screenOptions={{
-                    animation: 'slide_from_right',
+                    animation: 'fade',
                     headerShown: false
                 }}
             >

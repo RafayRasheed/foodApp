@@ -8,8 +8,10 @@ export const DailySpecial = ({ item }) => {
     return (
         <View style={{ paddingEnd: myWidth(2.3) }}>
             <Image source={item.image} style={styles.imageMain} />
+            <Spacer paddingT={myHeight(0.8)} />
             <View style={{ paddingStart: myWidth(0.7) }}>
                 <Text style={styles.textName} numberOfLines={1}>{item.name}</Text>
+                <Spacer paddingT={myHeight(0.3)} />
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.textDist_Rat} numberOfLines={1}>{item.distance}</Text>
                     <Spacer paddingEnd={myWidth(3)} />

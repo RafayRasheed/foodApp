@@ -1,8 +1,8 @@
 import { Image, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { myColors } from '../../../../ultils/myColors'
-import { myWidth, myHeight, Spacer } from '../../../common'
-import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
+import { myColors } from '../../../../../ultils/myColors'
+import { myWidth, myHeight, Spacer } from '../../../../common'
+import { myFontSize, myFonts, myLetSpacing } from '../../../../../ultils/myFonts'
 
 export const RestaurantInfo = ({ item }) => {
 
@@ -26,7 +26,7 @@ export const RestaurantInfo = ({ item }) => {
                     {
                         item.verified &&
                         <View style={styles.containerVeri}>
-                            <Image style={styles.imageVeri} source={require('../../../assets/home_main/dashboards/foods/check.png')} />
+                            <Image style={styles.imageVeri} source={require('../../../../assets/home_main/dashboards/foods/check.png')} />
                         </View>
                     }
                 </View>
@@ -34,11 +34,11 @@ export const RestaurantInfo = ({ item }) => {
                 <View style={styles.containerRating}>
                     <Text style={styles.textRating}>{item.rating}</Text>
                     <Spacer paddingEnd={myWidth(1)} />
-                    <Image style={styles.imageStar} source={require('../../../assets/home_main/star.png')} />
+                    <Image style={styles.imageStar} source={require('../../../../assets/home_main/star.png')} />
                 </View>
                 {/* Heart */}
                 <TouchableOpacity activeOpacity={0.7} style={styles.containerHeart}>
-                    <Image style={styles.imageHeart} source={require('../../../assets/home_main/dashboards/heart.png')} />
+                    <Image style={styles.imageHeart} source={require('../../../../assets/home_main/dashboards/heart.png')} />
                 </TouchableOpacity>
             </View>
             <Spacer paddingT={myHeight(1)} />
@@ -54,7 +54,7 @@ export const RestaurantInfo = ({ item }) => {
             <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
                 {/* Delivery */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image style={styles.imageDelivery_Time} source={require('../../../assets/home_main/dashboards/foods/bike.png')} />
+                    <Image style={styles.imageDelivery} source={require('../../../../assets/home_main/dashboards/foods/bike.png')} />
                     <Spacer paddingEnd={myWidth(1.5)} />
                     <Text numberOfLines={1} style={styles.textDelivery_Time}>{item.delivery}</Text>
                 </View>
@@ -62,7 +62,7 @@ export const RestaurantInfo = ({ item }) => {
 
                 {/* Time */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image style={styles.imageDelivery_Time} source={require('../../../assets/home_main/dashboards/foods/clock.png')} />
+                    <Image style={styles.imageTime} source={require('../../../../assets/home_main/dashboards/foods/clock.png')} />
                     <Spacer paddingEnd={myWidth(1.5)} />
                     <Text numberOfLines={1} style={styles.textDelivery_Time}>{item.deliveryTime}</Text>
                 </View>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 
     //Text
     textName: {
-        fontSize: myFontSize.body2,
+        fontSize: myFontSize.xBody,
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textItems: {
-        fontSize: myFontSize.small,
+        fontSize: myFontSize.small3,
         fontFamily: myFonts.bodyBold,
         color: myColors.textL4,
         letterSpacing: myLetSpacing.common,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
     textDelivery_Time: {
         // flex: 1,
-        fontSize: myFontSize.small2,
+        fontSize: myFontSize.small3,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -161,9 +161,14 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: myWidth(2.5),
     },
-    imageDelivery_Time: {
+    imageDelivery: {
         height: myHeight(2),
         width: myHeight(2),
+        resizeMode: 'contain',
+    },
+    imageTime: {
+        height: myHeight(1.6),
+        width: myHeight(1.6),
         resizeMode: 'contain',
     },
     imageIcon: {

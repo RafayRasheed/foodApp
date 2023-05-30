@@ -2,31 +2,87 @@ import React, { useEffect, useRef, useState } from "react"
 import { View, Text, Keyboard, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
-import { Spacer, ios, myHeight, myWidth } from "../common";
+import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common";
 
 export const Verification = ({ navigation }) => {
     const lenCode = 4;
     const [focus, setFocus] = useState(0)
     const arrayVer = []
-    const arrayVer2 = []
+    // const arrayVer2 = []
 
     const [varValues, setVarValues] = useState([null, null, null, null])
     const focusKey = useRef(null)
     // const refArr = useRef([null, null, null, null])
     const [valInp, setValInp] = useState('')
     const [finalVeriVal, setFinalVeriVal] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [verify, setVerify] = useState(false)
 
+    const [minutes, setMinutes] = useState(1);
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
+        }
+    }, [errorMessage])
+
+    useEffect(() => {
+        let myInterval = setInterval(() => {
+            if (seconds > 0) {
+                setSeconds(seconds - 1);
+            }
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(myInterval)
+                } else {
+                    setMinutes(minutes - 1);
+                    setSeconds(59);
+                }
+            }
+        }, 1000)
+        return () => {
+            clearInterval(myInterval);
+        };
+    });
     useEffect(() => {
         setTimeout(() => openKey(), 100);
     }, [])
 
     useEffect(() => {
-        if (finalVeriVal) {
-            setTimeout(() => navigation.replace("SignIn"), 500);
+        if (verify) {
+            setTimeout(() => {
+                setIsLoading(false)
+                navigation.replace("HomeBottomNavigator")
+            }, 1500);
+        }
+    }, [verify])
 
+    function onVerify() {
+        if (finalVeriVal) {
+
+            if (finalVeriVal.length == lenCode) {
+                if (/^\d+$/.test(finalVeriVal)) {
+                    setIsLoading(true)
+                    setVerify(true)
+                    return
+                }
+                else {
+                    setErrorMessage("Invalid Verification Code")
+                }
+            }
+            else {
+                setErrorMessage("Please Enter a Complete Code")
+            }
+        }
+        else {
+            setErrorMessage("Please Enter a Code")
 
         }
-    }, [finalVeriVal])
+    }
 
     function openKey() {
         if (focusKey) {
@@ -44,19 +100,19 @@ export const Verification = ({ navigation }) => {
                 v = v + val
             }
         }
-        if (v.length == lenCode) {
-            if (/^\d+$/.test(v)) {
+        // if (v.length == lenCode) {
+        //     setIsLoading(true)
+        //     if (/^\d+$/.test(v)) {
+        //         setFinalVeriVal(v)
+        //         return
+        //     }
+        //     else {
+        //         setIsLoading(false)
+        //         setErrorMessage("Invalid Verification Code")
+        //     }
+        // }
 
-                setFinalVeriVal(v)
-                return
-            }
-            else {
-
-                console.log("Invalid Verification Code")
-            }
-        }
-
-        setFinalVeriVal(null)
+        setFinalVeriVal(v)
 
     }
 
@@ -123,6 +179,8 @@ export const Verification = ({ navigation }) => {
     // }
     return (
         <SafeAreaView style={styles.container}>
+            {isLoading && <Loader />}
+            {errorMessage && <MyError message={errorMessage} />}
             {/* Invisible Input for Keyboard */}
             <TextInput
                 ref={focusKey}
@@ -156,15 +214,27 @@ export const Verification = ({ navigation }) => {
                 <Spacer paddingT={myHeight(2)} />
 
                 {/* Resend text*/}
-                <View style={{ flexDirection: 'row', paddingStart: myWidth(8.5) }}>
+                <View style={{ flexDirection: 'row', paddingStart: myWidth(8.5), alignItems: 'center' }}>
                     <Text style={styles.textDidC}>Didn't receive code? </Text>
 
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('SignUp')}>
-                        <Text style={styles.textResC}>Resend it.</Text>
-                    </TouchableOpacity>
+                    {minutes === 0 && seconds === 0
+                        ? <TouchableOpacity activeOpacity={0.6} onPress={() => setMinutes(1)}>
+                            <Text style={styles.textResC}>Resend it.</Text>
+                        </TouchableOpacity>
+                        : <Text style={styles.textResC}> {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</Text>
+                    }
+
                 </View>
 
             </View>
+
+            <Spacer paddingT={myHeight(4.3)} />
+            {/* Verify Button */}
+            <TouchableOpacity activeOpacity={0.6} onPress={onVerify} style={styles.containerVerify}
+                onLongPress={() => navigation.replace('HomeBottomNavigator')}>
+                <Text style={styles.textVerify}>VERIFY</Text>
+            </TouchableOpacity>
+
         </SafeAreaView>
     )
 }
@@ -173,21 +243,30 @@ export const Verification = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: myColors.background
     },
     containerAllInput: {
-        flexDirection: 'row', paddingHorizontal: myWidth(8.5), justifyContent: 'space-between', alignItems: 'center'
+        flexDirection: 'row', paddingHorizontal: myWidth(8.5),
+        justifyContent: 'space-between', alignItems: 'center'
     },
     containerInput: {
         backgroundColor: myColors.primaryL,
-        paddingHorizontal: myWidth(7),
-        alignItems: 'center',
-        width: myWidth(18.6),
+        // paddingHorizontal: myWidth(7),
         paddingVertical: myHeight(1.8),
+        alignItems: 'center',
         borderRadius: myWidth(3),
         // elevation: 0.5,
         // borderWidth:1, borderColor:myColors.primaryT
     },
 
+    containerVerify: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: myColors.primaryT,
+        paddingVertical: myHeight(1),
+        borderRadius: myWidth(3.2),
+        marginHorizontal: myWidth(7)
+    },
     // containerInputFocus: {
     //     backgroundColor: myColors.primaryL,
     //     paddingHorizontal: myWidth(6.4),
@@ -224,6 +303,10 @@ const styles = StyleSheet.create({
         fontSize: myFontSize.xMedium,
         fontFamily: myFonts.body,
         includeFontPadding: false,
+        padding: 0,
+        width: myWidth(18.6),
+        textAlign: 'center',
+        // backgroundColor: 'red'
 
     },
     textVer: {
@@ -245,7 +328,7 @@ const styles = StyleSheet.create({
     textDidC: {
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
-        color: myColors.text,
+        color: myColors.offColor,
         includeFontPadding: false,
 
         letterSpacing: myLetSpacing.common,
@@ -257,6 +340,16 @@ const styles = StyleSheet.create({
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
+
+    },
+
+    textVerify: {
+        fontSize: myFontSize.xBody,
+        fontFamily: myFonts.heading,
+        color: myColors.background,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
 
     },
 

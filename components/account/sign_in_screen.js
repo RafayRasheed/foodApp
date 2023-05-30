@@ -18,7 +18,6 @@ export const SignIn = ({ navigation }) => {
 
     useEffect(() => {
         if (errorMessage) {
-            console.log(errorMessage.length)
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2000)
@@ -113,7 +112,7 @@ export const SignIn = ({ navigation }) => {
                                 />
 
                             </View>
-                            <Spacer paddingT={myHeight(2.4)} />
+                            <Spacer paddingT={myHeight(2)} />
 
                             {/* Password Portion */}
                             <View style={styles.containerInputPortion}>
@@ -131,10 +130,12 @@ export const SignIn = ({ navigation }) => {
                                 />
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
                                     <Image style={styles.imageEye}
-                                        source={hidePass ? require('../assets/account/eyeO.png') : require('../assets/account/eyeC.png')} />
+                                        source={hidePass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingEnd: myWidth(1) }}
+                            {/* <Spacer paddingT={myHe ight(0.5)} /> */}
+
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingEnd: myWidth(1), paddingVertical: myHeight(0.7) }}
                                 onPress={() => navigation.navigate('ForgotPassword')} activeOpacity={0.6} >
                                 <Spacer paddingT={myHeight(0.5)} />
                                 <Text style={styles.textForgot}>Forgot Password?</Text>
@@ -142,10 +143,11 @@ export const SignIn = ({ navigation }) => {
 
                             </TouchableOpacity>
                         </View>
-                        <Spacer paddingT={myHeight(4.3)} />
+                        <Spacer paddingT={myHeight(2.6)} />
 
                         {/* Sign Button */}
-                        <TouchableOpacity activeOpacity={0.6} onPress={onLogin} style={styles.containerSign}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={onLogin} style={styles.containerSign}
+                            onLongPress={() => navigation.replace('HomeBottomNavigator')}>
                             <Text style={styles.textSignInBu}>Sign in</Text>
                         </TouchableOpacity>
                     </View>
@@ -216,7 +218,7 @@ export const SignIn = ({ navigation }) => {
 
                         <Text style={styles.textTermCond}>and </Text>
 
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('HomeBottomNavigator')}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
                             <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Privacy Policy</Text>
                         </TouchableOpacity>
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.25),
+        paddingVertical: myHeight(1),
         borderRadius: myWidth(3.2),
     },
     containerOrSignWith: {
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
 
     },
     textForgot: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.body,
         color: myColors.textL4,
         letterSpacing: myLetSpacing.common,
@@ -355,7 +357,7 @@ const styles = StyleSheet.create({
 
     },
     textSignInBu: {
-        fontSize: myFontSize.body2,
+        fontSize: myFontSize.xBody,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
@@ -384,7 +386,7 @@ const styles = StyleSheet.create({
 
     textSignUp: {
         fontSize: myFontSize.xxSmall,
-        fontFamily: myFonts.body,
+        fontFamily: myFonts.heading,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,

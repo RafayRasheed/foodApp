@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         letterSpacing: myLetSpacing.common,
         textAlignVertical: 'bottom',
         includeFontPadding: false,
-        marginBottom: ios ? -myHeight(0.09) : 0
+        // marginBottom: ios ? -myHeight(0) : 0
         // paddingVertical: 0,
         // backgroundColor: myColors.blue
     },

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, View, TextInput } from 'react-native';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
@@ -7,11 +7,12 @@ import Flag from './account.component/phone_select';
 import Lottie from 'lottie-react-native';
 
 export const DonePassword = ({ navigation }) => {
-    const [password, setPassword] = useState(null)
-    const flagRef = useRef(null)
-    const [confirmPass, setConfirmPass] = useState(null)
+    const [showDone, setShoeDone] = useState(false)
 
 
+    useEffect(() => {
+        setTimeout(() => setShoeDone(true), 100)
+    }, [])
     return (
         <SafeAreaView style={styles.container}>
 
@@ -25,13 +26,16 @@ export const DonePassword = ({ navigation }) => {
                 <Text style={styles.textDes}>Your Password Successfully Update</Text>
 
                 <Spacer paddingT={myHeight(10)} />
-                <Lottie
-                    autoPlay={true}
-                    loop={false}
-                    source={require('../assets/lottie/check.json')}
-                    style={{ height: myHeight(19), width: myHeight(19), }}
+                <View style={{ height: myHeight(19) }}>
 
-                />
+                    {showDone && <Lottie
+                        autoPlay={true}
+                        loop={false}
+                        source={require('../assets/lottie/check.json')}
+                        style={{ height: myHeight(19), width: myHeight(19), }}
+
+                    />}
+                </View>
                 {/* <Image style={styles.imageDone} source={require('../assets/account/done.png')} /> */}
                 <Spacer paddingT={myHeight(5)} />
                 <Text style={styles.textInst}>You can login your account with your new password.</Text>

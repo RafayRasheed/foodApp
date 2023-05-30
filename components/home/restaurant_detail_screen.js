@@ -78,7 +78,7 @@ export const RestaurantDetail = ({ route, navigation }) => {
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1 }}>
                                 {/* name */}
-                                <Text numberOfLines={1} style={styles.textRating}>{main.name}</Text>
+                                <Text numberOfLines={1} style={styles.textMainName}>{main.name}</Text>
 
                                 <Spacer paddingT={myHeight(0.5)} />
                                 {/* Price & Cal */}
@@ -165,8 +165,16 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textMain: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.medium0,
         fontFamily: myFonts.heading,
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+    textMainName: {
+        fontSize: myFontSize.xBody,
+        fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,

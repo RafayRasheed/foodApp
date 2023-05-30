@@ -13,6 +13,7 @@ export const SignUp = ({ navigation }) => {
     const [name, setName] = useState(null)
     const [phone, setPhone] = useState(null)
     const [code, setCode] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const flagRef = useRef(null)
@@ -29,15 +30,21 @@ export const SignUp = ({ navigation }) => {
 
     useEffect(() => {
         if (verifyLog) {
-            navigation.replace('HomeBottomNavigator')
+            navigation.navigate('Verification')
         }
     }, [verifyLog])
 
     const onSignUp = () => {
+        setIsLoading(true)
         if (verifyPhone() && verifyName() && verifyEmail() && verifyPass() && verifyCode()) {
-            setVerifyLog(true)
+            setTimeout(() => {
+                setIsLoading(false)
+                setVerifyLog(true)
+            }, 2000)
+        } else {
+            setIsLoading(false)
+            return false
         }
-        return false
     }
 
     function onChangePhone(val) {
@@ -100,7 +107,7 @@ export const SignUp = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {<Loader />}
+            {isLoading && <Loader />}
             {errorMessage && <MyError message={errorMessage} />}
             <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}>
                 <View>
@@ -115,7 +122,7 @@ export const SignUp = ({ navigation }) => {
                             <Text style={styles.textWelcome}>Please enter your details</Text>
                         </View>
 
-                        <Spacer paddingT={myHeight(6)} />
+                        <Spacer paddingT={myHeight(4.3)} />
                         {/* Input Portion */}
                         <View>
                             {/* Phone Portion */}
@@ -176,7 +183,7 @@ export const SignUp = ({ navigation }) => {
                                     autoCorrect={false} />
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
                                     <Image style={styles.imageEye}
-                                        source={hidePass ? require('../assets/account/eyeO.png') : require('../assets/account/eyeC.png')} />
+                                        source={hidePass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
                                 </TouchableOpacity>
                             </View>
                             <Spacer paddingT={myHeight(1.5)} />
@@ -194,10 +201,11 @@ export const SignUp = ({ navigation }) => {
                                     value={code} onChangeText={setCode}
                                     autoCorrect={false} />
                             </View>
-                            <Spacer paddingT={myHeight(2.8)} />
+                            <Spacer paddingT={myHeight(3.4)} />
 
                             {/* Sign Button */}
-                            <TouchableOpacity activeOpacity={0.6} onPress={onSignUp} style={styles.containerSign}>
+                            <TouchableOpacity activeOpacity={0.6} onLongPress={() => navigation.navigate('Verification')}
+                                onPress={onSignUp} style={styles.containerSign}>
                                 <Text style={styles.textSignBu}>Sign Up</Text>
                             </TouchableOpacity>
                         </View>
@@ -259,7 +267,6 @@ export const SignUp = ({ navigation }) => {
                     {/* First line */}
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                            <Spacer paddingT={myHeight(1)} />
                             <Text style={styles.textTermCondColor}>Terms & Conditions </Text>
                         </TouchableOpacity>
 
@@ -327,7 +334,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.25),
+        paddingVertical: myHeight(1),
         borderRadius: myWidth(3.2)
     },
     containerOrSignWith: {
@@ -390,7 +397,7 @@ const styles = StyleSheet.create({
     },
 
     textSignBu: {
-        fontSize: myFontSize.body2,
+        fontSize: myFontSize.xBody,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
@@ -399,7 +406,7 @@ const styles = StyleSheet.create({
 
     },
     textWelcome: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.bodyBold,
         color: myColors.offColor,
         letterSpacing: myLetSpacing.common,
@@ -428,7 +435,7 @@ const styles = StyleSheet.create({
     },
     textSignIn: {
         fontSize: myFontSize.xxSmall,
-        fontFamily: myFonts.body,
+        fontFamily: myFonts.heading,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,

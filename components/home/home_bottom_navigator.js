@@ -6,6 +6,7 @@ import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
 import { HomeNavigator } from "./home_navigator";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator()
 
@@ -63,7 +64,9 @@ const Xr = ({ navigation }) => (
     </SafeAreaView>
 )
 
+
 export const HomeBottomNavigator = ({ route, navigation }) => {
+    console.log("--- " + getFocusedRouteNameFromRoute(route))
     return (
         <Tab.Navigator
             tabBarActiveTintColor={myColors.primary}

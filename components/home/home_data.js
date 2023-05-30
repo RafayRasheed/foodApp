@@ -19,36 +19,36 @@ export const notifications = [
         estimateTime: '30 mins - 3:40pm',
         status: 'Driver On The Way',
     },
-    {
-        orderID: '1233436',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233437',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233438',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233439',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233440',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
-    {
-        orderID: '1233442',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
-    },
+    // {
+    //     orderID: '1233436',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233437',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233438',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233439',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233440',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
+    // {
+    //     orderID: '1233442',
+    //     estimateTime: '30 mins - 3:40pm',
+    //     status: 'Driver On The Way',
+    // },
 
 
 ]
@@ -68,12 +68,12 @@ export const category = [
     {
         name: 'RIDE',
         image: require('../assets/home_main/category/ride.png'),
-        navigate: 'FoodDashboard',
+        navigate: 'RideNavigator',
     },
     {
         name: 'FOOD',
         image: require('../assets/home_main/category/food.png'),
-        navigate: 'FoodDashboard',
+        navigate: 'FoodNavigator',
     },
     {
         name: 'SHOP',

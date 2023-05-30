@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Animated, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
 import { DailySpecial } from './home.component/daily_special';
 import LinearGradient from 'react-native-linear-gradient';
+import Animated, { BounceInUp, SlideInRight } from 'react-native-reanimated';
 // import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 // import SwipeUpDown from 'react-native-swipe-up-down';
 
@@ -86,9 +87,10 @@ export const HomeScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
 
+
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
 
-                <Spacer paddingT={myHeight(3)} />
+                <Spacer paddingT={myHeight(3.4)} />
 
                 {/* Morning & Loca */}
                 <View style={{ paddingHorizontal: myWidth(6.75) }}>
@@ -100,25 +102,26 @@ export const HomeScreen = ({ navigation }) => {
                     </View> */}
                 </View>
 
-                <Spacer paddingT={myHeight(1)} />
+                <Spacer paddingT={myHeight(1.2)} />
 
                 {/* Category */}
                 <View style={styles.containerCategory}>
                     {category.map((cat, index) =>
-                        <TouchableOpacity key={index} onPress={() => navigation.navigate(cat.navigate)} style={{ paddingTop: myHeight(2.5), flexBasis: '23.5%', }} activeOpacity={0.8}>
+                        <TouchableOpacity key={index} onPress={() => navigation.navigate(cat.navigate)}
+                            style={{ paddingTop: myHeight(1.2), flexBasis: '24%', }} activeOpacity={0.8}>
                             <View style={{ flexDirection: 'row' }}>
-                                <View style={{ alignItems: 'center' }}>
+                                <View style={{ width: myWidth(23), alignItems: 'center', }}>
                                     <View style={styles.containerEachCate}>
                                         <Image style={styles.imageCate} source={cat.image} />
                                     </View>
-                                    <Spacer paddingT={myHeight(0.3)} />
+                                    <Spacer paddingT={myHeight(1)} />
                                     <Text style={styles.textCat}>{cat.name}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
                     )}
                 </View>
-                <Spacer paddingT={myHeight(4.44)} />
+                <Spacer paddingT={myHeight(2.3)} />
 
                 {/* Book Now */}
                 <View style={styles.containerTry}>
@@ -148,16 +151,16 @@ export const HomeScreen = ({ navigation }) => {
                 </View>
 
 
-                <Spacer paddingT={myHeight(3.5)} />
+                <Spacer paddingT={myHeight(2.5)} />
                 {/* Daily Special */}
                 <View style={{ paddingHorizontal: myWidth(4), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.textHeading}>Daily Special</Text>
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                        <Text style={[styles.textHeading, { color: myColors.primaryT }]}>See all</Text>
+                    <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
+                        <Text style={styles.textSeeAll}>See all</Text>
                     </TouchableOpacity>
                 </View>
 
-                <Spacer paddingT={myHeight(1.15)} />
+                <Spacer paddingT={myHeight(1.5)} />
                 {/* Row */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ paddingHorizontal: myWidth(3.72) }}>
@@ -268,8 +271,9 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.background
     },
     containerCategory: {
+
         flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'flex-end',
-        backgroundColor: myColors.background,
+        alignItems: 'center', justifyContent: 'center', paddingHorizontal: myWidth(2)
 
     },
     containerEachCate: {
@@ -378,7 +382,7 @@ const styles = StyleSheet.create({
 
     //Text
     textGoodM: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.medium0,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -394,7 +398,7 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textCat: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -418,9 +422,17 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textHeading: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.xxBody,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    },
+    textSeeAll: {
+        fontSize: myFontSize.body2,
+        fontFamily: myFonts.heading,
+        color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,

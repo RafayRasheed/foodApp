@@ -82,7 +82,9 @@ export const ForgotPassword = ({ navigation }) => {
                 <Spacer paddingT={myHeight(2.2)} />
 
                 {/* Sign Button */}
-                <TouchableOpacity activeOpacity={0.6} onPress={onSend} style={styles.containerSign}>
+                <TouchableOpacity activeOpacity={0.6} onPress={onSend}
+                    onLongPress={() => navigation.navigate('NewPassword')}
+                    style={styles.containerSign}>
                     <Text style={styles.textSendBu}>Send</Text>
                 </TouchableOpacity>
             </View>

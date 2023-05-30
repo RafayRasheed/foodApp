@@ -1,8 +1,8 @@
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { myColors } from '../../../ultils/myColors'
-import { Spacer, myHeight, myWidth } from '../../common'
-import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts'
+import { myColors } from '../../../../ultils/myColors'
+import { Spacer, myHeight, myWidth } from '../../../common'
+import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
 
 export const FilterScreen = ({ navigation }) => {
     const [i, setI] = useState(0)
@@ -22,7 +22,7 @@ export const FilterScreen = ({ navigation }) => {
                 <View style={styles.containerTop}>
                     <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}
                         style={{ paddingHorizontal: myWidth(2.5), paddingVertical: myHeight(0.5), }}>
-                        <Image style={styles.imageBack} source={require('../../assets/home_main/dashboards/back2.png')} />
+                        <Image style={styles.imageBack} source={require('../../../assets/home_main/dashboards/back2.png')} />
                     </TouchableOpacity>
                     <Text style={styles.textCommon}>Filter</Text>
                 </View>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between', alignItems: 'center',
         paddingVertical: myHeight(1.1)
     },
+
 
 
     //Text

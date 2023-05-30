@@ -37,7 +37,7 @@ export const Loader = () => (
         style={{
             height: myHeight(100), width: myWidth(100), position: 'absolute', zIndex: 10,
             justifyContent: 'center', alignItems: 'center',
-            backgroundColor: '#00000025'
+            backgroundColor: '#00000010'
         }}>
         <Circle size={myHeight(10)} color='#d16402' />
 
@@ -50,11 +50,13 @@ export const MyError = ({ message = '' }) => {
             entering={FadeInUp}
             exiting={FadeOutUp}
         >
-            <View style={{ zIndex: 1, position: 'absolute' }}>
+            <View style={{ marginTop: myHeight(1), zIndex: 1, position: 'absolute', alignItems: 'center', width: '100%' }}>
                 <View
                     style={{
-                        paddingVertical: myHeight(0.7), paddingHorizontal: myWidth(3),
-                        width: myWidth(100), backgroundColor: myColors.red, alignItems: 'center'
+                        paddingVertical: myHeight(0.4), paddingHorizontal: myWidth(3),
+                        width: myWidth(90), backgroundColor: myColors.red,
+                        alignItems: 'center', alignSelf: 'center',
+                        borderRadius: myWidth(100)
                     }}
                 >
                     <Text

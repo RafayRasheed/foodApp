@@ -136,7 +136,7 @@ export const StartupScreen = ({ navigation }) => {
             <View style={styles.containerTopSkip}>
 
                 {i < lenStartup - 1 &&
-                    <TouchableOpacity activeOpacity={0.6} onPress={scrollToLast} style={styles.containerSkip}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('Started')} style={styles.containerSkip}>
                         <Text style={styles.textSkip}>Skip</Text>
                         <Spacer paddingEnd={myWidth(1)} />
                         <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />
