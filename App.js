@@ -5,7 +5,9 @@ import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
 import { StartupScreen } from './components/startup/startup_screens';
 import { AppNavigator } from './components/app_navigator';
+// import { enableLatestRenderer } from 'react-native-maps';
 
+// enableLatestRenderer();
 const storage = new MMKV()
 
 
@@ -25,7 +27,6 @@ export default function App() {
     // const get = storage.getString('mberr')
     // printWithPlat(get)
   }
-
   return (
     <>
       {isAndroid ? OsVer >= 23 &&

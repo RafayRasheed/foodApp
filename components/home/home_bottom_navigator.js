@@ -66,7 +66,6 @@ const Xr = ({ navigation }) => (
 
 
 export const HomeBottomNavigator = ({ route, navigation }) => {
-    console.log("--- " + getFocusedRouteNameFromRoute(route))
     return (
         <Tab.Navigator
             tabBarActiveTintColor={myColors.primary}

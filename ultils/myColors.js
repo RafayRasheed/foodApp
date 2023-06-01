@@ -24,6 +24,8 @@ export const myColors = {
     offColor3: '#F3F3F3',
     offColor4: '#F1F1F1',
     offColor5: '#F5F5F5',
+    offColor6: '#F4F4F4',
+    offColor7: '#E9E9E9',
     darkBlue: '#0066FF',
 
 

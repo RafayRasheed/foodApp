@@ -25,10 +25,8 @@ function useHideBottomBar() {
 }
 
 export const HomeNavigator = ({ navigation, route }) => {
-    console.log(getFocusedRouteNameFromRoute(route))
     React.useLayoutEffect(() => {
         if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
-            console.log('hide')
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
 
             // navigation.setOptions({ tabBarStyle: { display: 'none' } });

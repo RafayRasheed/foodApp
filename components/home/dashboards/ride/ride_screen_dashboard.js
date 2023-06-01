@@ -3,11 +3,25 @@ import React from 'react'
 import { myColors } from '../../../../ultils/myColors'
 import { Spacer, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export const RideScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <SafeAreaView>
+            <MapView
+                zoomEnabled
+                style={{
+                    ...StyleSheet.absoluteFillObject,
+                }}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            />
+            <SafeAreaView style={{ positions: 'absolute', top: 0, }}>
                 <Spacer paddingT={myHeight(0.7)} />
                 <TouchableOpacity style={styles.containerImageBack}
                     onPress={() => navigation.goBack()} activeOpacity={0.7}>
@@ -37,8 +51,10 @@ export const RideScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
+        // ...StyleSheet.absoluteFillObject,
         flex: 1,
         backgroundColor: myColors.primary,
+
     },
     containerBoStart: {
         position: 'absolute',

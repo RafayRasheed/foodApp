@@ -4,7 +4,7 @@ import { myColors } from '../../../../ultils/myColors';
 import { Spacer, ios, myHeight, myWidth } from '../../../common';
 import { myFonts, myLetSpacing, myFontSize } from '../../../../ultils/myFonts';
 import { FoodOpenNow } from './food_data';
-import { RestaurantInfo } from './dashboard_component/restuarant_info';
+import { RestaurantInfo } from './food_component/restuarant_info';
 
 export const FoodScreen = ({ navigation }) => {
     const [i, setI] = useState(0)
@@ -103,7 +103,7 @@ export const FoodScreen = ({ navigation }) => {
                         showsHorizontalScrollIndicator={false} >
                         {
                             FoodOpenNow.map((item, i) =>
-                                <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => null}>
+                                <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => navigation.navigate("RestaurantDetail", { item })}>
                                     <RestaurantInfo item={item} />
                                 </TouchableOpacity>
                             )
@@ -128,7 +128,7 @@ export const FoodScreen = ({ navigation }) => {
                         showsHorizontalScrollIndicator={false} >
                         {
                             FoodOpenNow.map((item, i) =>
-                                <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => null}>
+                                <TouchableOpacity key={i} activeOpacity={0.8} onPress={() => navigation.navigate("RestaurantDetail", { item })}>
                                     <RestaurantInfo item={item} />
                                 </TouchableOpacity>
                             )
