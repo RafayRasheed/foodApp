@@ -5,6 +5,7 @@ import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
 import { StartupScreen } from './components/startup/startup_screens';
 import { AppNavigator } from './components/app_navigator';
+import { enableScreens } from 'react-native-screens';
 // import { enableLatestRenderer } from 'react-native-maps';
 
 // enableLatestRenderer();
@@ -16,7 +17,9 @@ export default function App() {
 
   useEffect(() => {
     printWithPlat('Started Successfully')
-    storage.set("mberr", 'Hello')
+    if (Platform.OS === "ios") {
+      enableScreens(false);
+    }
     // printWithPlat("Is MMKV store successful? " + storage.contains('mberr'))
   }, [])
   const isAndroid = Platform.OS == 'android'

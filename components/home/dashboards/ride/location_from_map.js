@@ -3,22 +3,27 @@ import React from 'react'
 import { myColors } from '../../../../ultils/myColors'
 import { Spacer, myHeight, myWidth } from '../../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../../ultils/myFonts'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export const LocationFromMap = ({ navigation }) => {
     return (
         <>
             <SafeAreaView style={{ backgroundColor: myColors.primaryT }}></SafeAreaView>
             <SafeAreaView style={styles.container}>
-                <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primaryL }}>
-                    <View>
-                        <Spacer paddingT={myHeight(0.7)} />
-                        <TouchableOpacity style={styles.containerImageBack}
-                            onPress={() => navigation.goBack()} activeOpacity={0.7}>
-                            <Image style={styles.imageBack} source={require('../../../assets/home_main/dashboards/back2.png')} />
-                        </TouchableOpacity>
-                    </View>
+                <MapView
+                    zoomEnabled
+                    style={{
+                        ...StyleSheet.absoluteFillObject,
+                    }}
+                    provider={PROVIDER_GOOGLE}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
 
-                </SafeAreaView>
 
                 {/* Bottom Start Container */}
                 <View style={styles.containerBoStart}>
@@ -30,12 +35,29 @@ export const LocationFromMap = ({ navigation }) => {
                     <Spacer paddingT={myHeight(2.5)} />
 
                     <TouchableOpacity style={styles.containerConfirmLoc}
-                        onPress={() => navigation.navigate('DestinationScreen')} activeOpacity={0.7}>
+                        onPress={() => navigation.navigate('RideHome')} activeOpacity={0.7}>
                         <Text style={styles.textConLoc}>Confirm Location</Text>
                     </TouchableOpacity>
 
                     <Spacer paddingT={myHeight(4)} />
 
+                </View>
+                <View style={{ position: 'absolute' }}>
+                    <Spacer paddingT={myHeight(0.7)} />
+                    <TouchableOpacity style={{
+                        height: myHeight(5),
+                        width: myHeight(7),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                        onPress={() => navigation.goBack()} activeOpacity={0.7}>
+                        <Image style={{
+                            height: myHeight(3),
+                            width: myHeight(3) * 1.4,
+                            resizeMode: "contain",
+                            tintColor: myColors.text
+                        }} source={require('../../../assets/home_main/dashboards/back2.png')} />
+                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
         </>
@@ -45,7 +67,6 @@ export const LocationFromMap = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: myColors.background,
     },
     containerBoStart: {
         position: 'absolute',

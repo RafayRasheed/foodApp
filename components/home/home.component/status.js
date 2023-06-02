@@ -63,7 +63,10 @@ export const Status = ({ notifications }) => {
                         const s = event.nativeEvent.translationY
                         if (s < -25) {
                             if (!notificationExpand) {
+                                console.log('ok')
                                 setNotificationExpand(true)
+                                // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
+
                                 LayoutAnimation.configureNext({
                                     "create": { "property": "opacity", "type": "linear" },
                                     "delete": { "property": "opacity", "type": "linear" },
@@ -87,7 +90,10 @@ export const Status = ({ notifications }) => {
                     }}
                 >
                     <View
-                        style={{ alignItems: 'center', marginBottom: myHeight(1) }}>
+                        style={{
+                            alignItems: 'center', marginBottom: myHeight(1),
+                            width: '100%'
+                        }}>
                         <View
                         // onPress={() => {
                         //     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);

@@ -2,9 +2,10 @@ export const myColors = {
     primary: '#FFAF66',
     primaryT: '#FF881B',
     primaryL: '#fce4cc',
-    // primaryL: '#FFAF6659',
     primaryL2: '#FFE4CC',
     primaryL3: '#FFAF6635',
+    primaryL5: '#FF9A6230', //30%
+    primaryL4: '#FF9A6250', //50%
     star: '#FFC700',
     textL: '#8F8F8F',
     textL2: '#9E9C9C',

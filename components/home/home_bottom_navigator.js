@@ -43,8 +43,10 @@ const screenOptions = ({ route }) => {
             height: myHeight(9.5),
             paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
             paddingTop: myHeight(2.5),
+            // position: 'absolute',
         },
         tabBarLabelStyle: {
+
             fontSize: myFontSize.xSmall,
             fontFamily: myFonts.bodyBold,
             letterSpacing: myLetSpacing.common,
