@@ -76,8 +76,8 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
             tabBarShowLabel={false}
             initialRouteName="HOME"
         >
-            <Tab.Screen name="HOME" component={HomeNavigator} />
-            <Tab.Screen name="ACTIVITY" component={ActivityScreen} />
+            <Tab.Screen name="HOME" component={Xr} />
+            <Tab.Screen name="ACTIVITY" component={Xr} />
             <Tab.Screen name="CART" component={Xr} />
             {/* <Tab.Screen name="WALLET" component={Xr} /> */}
             <Tab.Screen name="ACCOUNT" component={Xr} />

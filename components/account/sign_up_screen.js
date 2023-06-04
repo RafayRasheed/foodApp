@@ -4,7 +4,6 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import Flag from './account.component/phone_select';
 
 
 
@@ -16,7 +15,6 @@ export const SignUp = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
-    const flagRef = useRef(null)
     const [hidePass, setHidePass] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null)
 
@@ -49,7 +47,6 @@ export const SignUp = ({ navigation }) => {
 
     function onChangePhone(val) {
         setPhone(val)
-        flagRef.current.setNumber(val)
     }
 
     function verifyEmail() {
@@ -73,12 +70,8 @@ export const SignUp = ({ navigation }) => {
     }
     function verifyPhone() {
         if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
                 return true
-            }
-            setErrorMessage('Please Enter a Valid Number')
-            return false
+          
         }
         setErrorMessage('Please Enter a Number')
         return false
@@ -127,8 +120,6 @@ export const SignUp = ({ navigation }) => {
                         <View>
                             {/* Phone Portion */}
                             <View style={styles.containerInputPortion}>
-
-                                <Flag ref={flagRef} />
                                 <Spacer paddingEnd={myWidth(1.8)} />
                                 <TextInput placeholder=" Enter Number"
                                     keyboardType='phone-pad'

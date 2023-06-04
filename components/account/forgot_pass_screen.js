@@ -3,17 +3,14 @@ import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, Vie
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
-import Flag from './account.component/phone_select';
 
 export const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState(null)
-    const flagRef = useRef(null)
     const [phone, setPhone] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         if (errorMessage) {
-            console.log(errorMessage.length)
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2000)
@@ -23,12 +20,9 @@ export const ForgotPassword = ({ navigation }) => {
 
     function verifyPhone() {
         if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
+
                 return true
-            }
-            setErrorMessage('Please Enter a Valid Number')
-            return false
+ 
         }
 
         setErrorMessage('Please Enter a Number')
@@ -36,7 +30,6 @@ export const ForgotPassword = ({ navigation }) => {
     }
     function onChangePhone(val) {
         setPhone(val)
-        flagRef.current.setNumber(val)
     }
     function onSend() {
         if (verifyPhone()) {
@@ -58,7 +51,6 @@ export const ForgotPassword = ({ navigation }) => {
 
                 {/* Phone Portion */}
                 <View style={styles.containerInputPortion}>
-                    <Flag ref={flagRef} />
                     <Spacer paddingEnd={myWidth(1.8)} />
                     <TextInput placeholder="Phone Number"
                         keyboardType='phone-pad'

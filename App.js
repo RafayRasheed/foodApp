@@ -3,7 +3,6 @@ import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleS
 import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
-import { StartupScreen } from './components/startup/startup_screens';
 import { AppNavigator } from './components/app_navigator';
 import { enableScreens } from 'react-native-screens';
 // import { enableLatestRenderer } from 'react-native-maps';
@@ -17,9 +16,6 @@ export default function App() {
 
   useEffect(() => {
     printWithPlat('Started Successfully')
-    if (Platform.OS === "ios") {
-      enableScreens(false);
-    }
     // printWithPlat("Is MMKV store successful? " + storage.contains('mberr'))
   }, [])
   const isAndroid = Platform.OS == 'android'
@@ -32,13 +28,9 @@ export default function App() {
   }
   return (
     <>
-      {isAndroid ? OsVer >= 23 &&
-
-        <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
-        :
-        <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+      {OsVer >= 23 &&
+      <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
       }
-
       <AppNavigator />
     </>
   );

@@ -25,9 +25,6 @@ export const AccountNavigator = () => {
             <AccountTAB.Screen component={ForgotPassword} name="ForgotPassword" />
             <AccountTAB.Screen component={NewPassword} name="NewPassword" />
             <AccountTAB.Screen component={DonePassword} name="DonePassword" />
-
-
-
         </AccountTAB.Navigator>
     )
 } 

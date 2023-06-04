@@ -4,7 +4,6 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { MyError, Spacer, ios, myHeight, myWidth, printWithPlat } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import Flag from './account.component/phone_select';
 
 
 export const SignIn = ({ navigation }) => {
@@ -13,7 +12,6 @@ export const SignIn = ({ navigation }) => {
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const [hidePass, setHidePass] = useState(true);
-    const flagRef = useRef(null)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
@@ -40,21 +38,11 @@ export const SignIn = ({ navigation }) => {
         }
     }
 
-    function onChangePhone(val) {
-        setPhone(val)
-        flagRef.current.setNumber(val)
-    }
-
     function verifyPhone() {
         if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
+        
                 return true
-            }
-            setErrorMessage('Please Enter a Valid Number')
-            return false
         }
-
         setErrorMessage('Please Enter a Number')
         return false
     }
@@ -75,8 +63,6 @@ export const SignIn = ({ navigation }) => {
     //     }
     // }, [phone, password])
 
-    TextInput.defaultProps = TextInput.defaultProps || {};
-    TextInput.defaultProps.selectionColor = 'red';
 
     return (
         <SafeAreaView style={styles.container}>
@@ -98,7 +84,6 @@ export const SignIn = ({ navigation }) => {
                         <View>
                             {/* Phone Portion */}
                             <View style={styles.containerInputPortion}>
-                                <Flag ref={flagRef} />
                                 <Spacer paddingEnd={myWidth(1.8)} />
                                 <TextInput placeholder="Enter Number"
                                     keyboardType='phone-pad'
@@ -108,7 +93,7 @@ export const SignIn = ({ navigation }) => {
                                     style={styles.containerInput}
                                     cursorColor={myColors.primaryT}
                                     autoCorrect={false}
-                                    value={phone} onChangeText={(val) => onChangePhone(val)}
+                                    value={phone} onChangeText={setPhone}
                                 />
 
                             </View>
