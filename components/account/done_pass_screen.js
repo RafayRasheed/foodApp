@@ -3,7 +3,6 @@ import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, Vie
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Spacer, ios, myHeight, myWidth } from '../common';
-import Flag from './account.component/phone_select';
 import Lottie from 'lottie-react-native';
 
 export const DonePassword = ({ navigation }) => {

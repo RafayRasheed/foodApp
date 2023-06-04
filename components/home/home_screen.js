@@ -4,84 +4,17 @@ import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
-import { DailySpecial } from './home.component/daily_special';
-import LinearGradient from 'react-native-linear-gradient';
-import Animated, { BounceInUp, SlideInRight } from 'react-native-reanimated';
-// import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-// import SwipeUpDown from 'react-native-swipe-up-down';
 
-import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
-import { Status } from './home.component/status';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 export const HomeScreen = ({ navigation }) => {
-    const name = "MBE";
-    const dotArr = []
-    const [notiLen, setNotiLen] = useState(notifications.length.toString())
-    const [notificationVisible, setNotificationVisible] = useState(notifications.length != 0 ? [notifications[0]] : null)
-    const [notificationExpand, setNotificationExpand] = useState(false)
-    const [notificationsFocusID, setNotificationsFocusID] = useState(notifications.length != 0 ? notifications[0].orderID : null)
-
+    const name = "Someone";
+   
     const [i, setI] = useState(0)
     const lenBook = bookNow.length;
-    const width = myWidth(92)
-    for (let j = 0; j < lenBook; j++) {
-        dotArr.push(<View key={j} style={[styles.containerDot, { backgroundColor: j == i ? myColors.text : myColors.dot, }]} />)
-    }
-
-
-    function handleScroll(event) {
-
-        const a = (event.nativeEvent.contentOffset.x) / width
-        var getDecimal = a.toString().split(".")[1];
-        if (getDecimal) {
-            if (getDecimal[0] < 5 || getDecimal[0] > 5) {
-                const r = Math.round(a)
-                setI(r)
-            }
-        }
-    }
-    function onNotificationsFocus(orderID) {
-        if (orderID == notificationsFocusID) {
-            setNotificationExpand(false)
-            return
-        }
-        setNotificationsFocusID(orderID)
-    }
-    function settingNotification() {
-        const s = notifications.filter((item) => item.orderID == notificationsFocusID)
-        if (s.length) {
-            setNotificationVisible(s)
-        } else if (notifications.length) {
-            setNotificationVisible([notifications[0]])
-        } else {
-            setNotificationVisible([])
-        }
-    }
-    useEffect(() => {
-        if (notificationExpand) {
-            setNotificationVisible(notifications)
-        }
-        else {
-            settingNotification()
-        }
-
-    }, [notificationExpand])
-
-    useEffect(() => {
-        settingNotification()
-        setNotificationExpand(false)
-    }, [notificationsFocusID])
-
-    useEffect(() => {
-        settingNotification()
-        const l = notifications.length
-        if (l) {
-            setNotiLen(l.toString())
-        }
-    }, [notifications])
+   
 
     // return (<Test />)
     return (
@@ -95,60 +28,11 @@ export const HomeScreen = ({ navigation }) => {
                 {/* Morning & Loca */}
                 <View style={{ paddingHorizontal: myWidth(6.75) }}>
                     <Text style={styles.textGoodM}>{`Good Morning ${name}!`}</Text>
-                    {/* <Spacer paddingT={myHeight(0.4)} />
-                    <View style={{ flexDirection: 'row' }}>
-                        <Image style={styles.imageLoc} source={require('../assets/home_main/location.png')} />
-                        <Text style={styles.textLoc}>  Work - 100 Dynamic Drive</Text>
-                    </View> */}
                 </View>
 
-                <Spacer paddingT={myHeight(1.2)} />
 
-                {/* Category */}
-                <View style={styles.containerCategory}>
-                    {category.map((cat, index) =>
-                        <TouchableOpacity key={index} onPress={() => navigation.navigate(cat.navigate)}
-                            style={{ paddingTop: myHeight(1.2), flexBasis: '24%', }} activeOpacity={0.8}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ width: myWidth(23), alignItems: 'center', }}>
-                                    <View style={styles.containerEachCate}>
-                                        <Image style={styles.imageCate} source={cat.image} />
-                                    </View>
-                                    <Spacer paddingT={myHeight(1)} />
-                                    <Text style={styles.textCat}>{cat.name}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                </View>
-                <Spacer paddingT={myHeight(2.3)} />
+              
 
-                {/* Book Now */}
-                <View style={styles.containerTry}>
-                    <LinearGradient style={styles.containerBookNow} colors={['#FFEBCD', 'rgba(255, 235, 205, 0)']} >
-                        <ScrollView scrollEventThrottle={1} onScroll={handleScroll} style={{ width: myWidth(92) }} pagingEnabled horizontal showsHorizontalScrollIndicator={false}>
-                            {
-                                bookNow.map((item, ind) =>
-                                    <View key={ind} style={{ width: myWidth(92) - 0, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <View style={styles.containerBookNowText}>
-                                            <Text numberOfLines={2} style={styles.textBookNowName}>{item.name}</Text>
-                                            <Spacer paddingT={myHeight(3.2)} />
-                                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'baseline' }} activeOpacity={0.6} onPress={() => null}>
-                                                <Text style={styles.textBookNow}>Book Now    </Text>
-                                                <Image style={styles.imageArrow} source={require('../assets/home_main/arrow.png')} />
-                                            </TouchableOpacity>
-                                        </View>
-                                        <Image style={styles.imageMan} source={require('../assets/home_main/man.png')} />
-                                    </View>
-                                )
-                            }
-                        </ScrollView>
-                        {/* Dot */}
-                        <View style={{ position: 'absolute', zIndex: 1, left: myWidth(4.2), bottom: myHeight(1.6), flexDirection: 'row' }}>
-                            {dotArr}
-                        </View>
-                    </LinearGradient>
-                </View>
 
 
                 <Spacer paddingT={myHeight(2.5)} />
@@ -167,86 +51,17 @@ export const HomeScreen = ({ navigation }) => {
                     <View style={styles.containerDailyS}>
                         {dailySpecial.map((item, i) =>
                             <TouchableOpacity key={i} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantDetail', { item })} >
-                                <DailySpecial item={item} />
+                                {/* <DailySpecial item={item} /> */}
                             </TouchableOpacity>
                         )}
                     </View>
 
                 </ScrollView>
 
-                {/* Rewards */}
-                <View style={{ paddingHorizontal: myWidth(4) }}>
-                    <Spacer paddingT={myHeight(3)} />
-                    <Text style={styles.textHeading}>Exclusive Reward</Text>
-                    <Spacer paddingT={myHeight(1.15)} />
-                    {rewards.map((item, i) =>
-                        <View key={i}>
-                            <View style={styles.containerReward}>
-                                <Image style={styles.imageSpeaker} source={require('../assets/home_main/speaker.png')} />
-                                <Spacer paddingEnd={myWidth(3)} />
-                                <Text numberOfLines={1} style={styles.textRewardTitle}>{item.title}</Text>
-                                <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                                    <Spacer paddingT={myHeight(2.15)} />
-                                    <Image style={styles.imageGoReward} source={require('../assets/home_main/go.png')} />
-                                    <Spacer paddingT={myHeight(2.15)} />
-                                </TouchableOpacity>
-                            </View>
-                            <Spacer paddingT={myHeight(1.15)} />
+            
 
-                        </View>
-                    )}
-                </View>
-
-                {/* Near Drivers */}
-                <View style={{ paddingHorizontal: myWidth(4) }}>
-                    <Spacer paddingT={myHeight(3)} />
-                    <Text style={styles.textHeading}>Nearby Drivers</Text>
-                    <Spacer paddingT={myHeight(0.15)} />
-                    {nearDrivers.map((item, i) =>
-                        <View key={i}>
-                            {i != 0 && <View style={{ borderColor: myColors.textL4, borderTopWidth: myHeight(0.1) }} />}
-                            <TouchableOpacity activeOpacity={0.6} onPress={() => null}
-                                style={styles.containerNearDriver}>
-                                <Image style={styles.imageDriver} source={item.image} />
-                                <Spacer paddingEnd={myWidth(3)} />
-                                <View style={{ flex: 1 }}>
-                                    <Text numberOfLines={1} style={styles.textDriverName}>{item.name}</Text>
-                                    <Text numberOfLines={1} style={styles.textDriverTime}>{item.time}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    {/* <ScrollView bounces={false} horizontal contentContainerStyle={{ width: '100%' }}>
-
-                        <FlatList
-                            data={nearDrivers}
-                            ItemSeparatorComponent={() => (
-                                <View style={{ borderColor: myColors.textL4, borderTopWidth: myHeight(0.1) }} />
-                            )}
-
-                            renderItem={({ item }) => {
-                                return (
-                                    <TouchableOpacity activeOpacity={0.6} onPress={() => null}
-                                        style={styles.containerNearDriver}>
-                                        <Image style={styles.imageDriver} source={item.image} />
-                                        <Spacer paddingEnd={myWidth(3)} />
-                                        <View style={{ flex: 1 }}>
-                                            <Text numberOfLines={1} style={styles.textDriverName}>{item.name}</Text>
-                                            <Text numberOfLines={1} style={styles.textDriverTime}>{item.time}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )
-                            }
-                            }
-                            keyExtractor={item => item.name}
-                        />
-                    </ScrollView> */}
-
-                </View>
-                {notifications.length > 0 && <Spacer paddingT={myHeight(20)} />}
             </ScrollView>
 
-            <Status notifications={notifications} />
             {/* Notification Section */}
 
         </SafeAreaView>
@@ -268,6 +83,7 @@ export const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         backgroundColor: myColors.background
     },
     containerCategory: {

@@ -3,7 +3,6 @@ import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, Vie
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
-import Flag from './account.component/phone_select';
 
 export const NewPassword = ({ navigation }) => {
     const [password, setPassword] = useState(null)
