@@ -20,7 +20,7 @@ const Icons = {
         style: { width: myWidth(6.2), height: myHeight(2.15) }
     },
     HOT: {
-        image: require('../assets/home_main/navigator/cart.png'),
+        image: require('../assets/home_main/navigator/fire.png'),
         style: { width:  myHeight(3), height: myHeight(3) }
     },
 
@@ -64,11 +64,11 @@ const screenOptions = ({ route }) => {
             if(name=='HOT') {
                 return(
                     <View style={{
-                        padding:myHeight(2.5), backgroundColor:color,
+                        padding:myHeight(2.5), backgroundColor:'black',
                         borderRadius:myHeight(4),
                         marginTop:-myHeight(8) 
                         }}>
-                        <Image style={[Icons[name].style, { tintColor: myColors.background, resizeMode: 'contain',}]}
+                        <Image style={[Icons[name].style, { resizeMode: 'contain',}]}
                         source={Icons[name].image} /> 
                     </View>
                     )

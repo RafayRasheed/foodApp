@@ -3,78 +3,234 @@ import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Te
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data';
-
+import { Categories, Restaurants, bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data'
+import { ResturantH } from './home.component/resturant_hori';
+import { Banners } from './home.component/banner';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
-   
-    const [i, setI] = useState(0)
-    const lenBook = bookNow.length;
-   
-
-    // return (<Test />)
+    
+    // re.turn (<Test />)
     return (
+        
         <SafeAreaView style={styles.container}>
 
+            <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false} >
 
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
+                <Spacer paddingT={myHeight(1.4)} />
+                <Text style={[styles.textCommon,{
+                        fontSize: myFontSize.medium2,
+                        fontFamily: myFonts.heading, 
+                        alignSelf:'center',
 
-                <Spacer paddingT={myHeight(3.4)} />
+                    }]}>Food<Text style={{color:myColors.primaryT}}>app</Text></Text>
 
-                {/* Morning & Loca */}
-                <View style={{ paddingHorizontal: myWidth(6.75) }}>
-                    <Text style={styles.textGoodM}>{`Good Morning ${name}!`}</Text>
-                </View>
+                <Spacer paddingT={myHeight(0.8)} />
 
+                {/* Morning */}
+                <View style={{ paddingHorizontal: myWidth(3) }}>
+                    <Text style={[styles.textCommon,{
+                        fontSize: myFontSize.body2,
+                        fontFamily: myFonts.bodyBold, 
 
-              
-
-
-
-                <Spacer paddingT={myHeight(2.5)} />
-                {/* Daily Special */}
-                <View style={{ paddingHorizontal: myWidth(4), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={styles.textHeading}>Daily Special</Text>
-                    <TouchableOpacity style={{ paddingVertical: myHeight(0.4), paddingStart: myWidth(2) }} activeOpacity={0.6} onPress={() => null}>
-                        <Text style={styles.textSeeAll}>See all</Text>
-                    </TouchableOpacity>
+                    }]}>{`Good Morning ${name}!`}</Text>
                 </View>
 
                 <Spacer paddingT={myHeight(1.5)} />
-                {/* Row */}
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ paddingHorizontal: myWidth(3.72) }}>
-                    <View style={styles.containerDailyS}>
-                        {dailySpecial.map((item, i) =>
-                            <TouchableOpacity key={i} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantDetail', { item })} >
-                                {/* <DailySpecial item={item} /> */}
-                            </TouchableOpacity>
-                        )}
+                
+                {/* Search */}
+                <TouchableOpacity activeOpacity={0.8} style={{
+                    flexDirection:'row', alignItems:'center', width:myWidth(85),
+                    backgroundColor:myColors.divider, alignSelf:'center', paddingVertical:myHeight(1.3),
+                    borderRadius:myWidth(2.5)
+                    }}>
+                    <Spacer paddingEnd={myWidth(4)}/>
+                    <Image style={{
+                        height: myHeight(2.2), width: myHeight(2.2), resizeMode: 'contain', tintColor:myColors.offColor
+                    }} source={require('../assets/home_main/home/search.png')} />
+                    <Spacer paddingEnd={myWidth(3)}/>
+
+                    <Text style={[styles.textCommon,{
+                        fontSize: myFontSize.body,
+                        fontFamily: myFonts.bodyBold, 
+                        color:myColors.offColor
+                    }]}>Search dishes, restaurants</Text>
+                </TouchableOpacity>
+        
+                <Spacer paddingT={myHeight(3)} />
+                {/* Banner */}
+                <Banners/>
+                <Spacer paddingT={myHeight(2.5)} />
+                {/* CAtegories*/}
+                <View>
+                    {/* Categories & see all*/}
+                    <View style={{ paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={[styles.textCommon,{
+                            fontSize: myFontSize.xxBody,
+                            fontFamily: myFonts.bodyBold, 
+                        }]}>Categories</Text>
+                        
+                        {/* See all */}
+                        <TouchableOpacity style={{
+                            flexDirection:'row', alignItems:'center', paddingVertical: myHeight(0.4), 
+                            paddingStart: myWidth(2) 
+                            }} activeOpacity={0.6} onPress={() => null}>
+
+                            <Text 
+                                style={[styles.textCommon,{
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                                color:myColors.primaryT 
+                            }]}>See All</Text>
+                             <Image style={{
+                                height: myHeight(1.5), width: myHeight(1.5), marginStart:myWidth(1),
+                                resizeMode: 'contain', tintColor:myColors.primaryT
+                            }} source={require('../assets/home_main/home/go.png')} />
+                        </TouchableOpacity>
                     </View>
 
-                </ScrollView>
+                    <Spacer paddingT={myHeight(1.5)} />
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
 
-            
+                        {Categories.map((item, i)=>
+                        
+                        <View key={i} style={{paddingBottom:myHeight(1.4),}}>
+                            <TouchableOpacity style={{
+                                flexDirection:'row', alignItems:'center', borderRadius:myHeight(15),
+                                // backgroundColor:myColors.background,
+                                backgroundColor:myColors.primaryL,  
+                                padding:myHeight(0.8), elevation:8
+                                }}>
+                                <View style={{
+                                        height: myHeight(5), width: myHeight(5),borderRadius:myHeight(5),
+                                        // backgroundColor:'#00000010'
+                                        backgroundColor:myColors.background, 
+                                        alignItems:'center',justifyContent:'center'
+                                    }} >
+                                    <Image style={{
+                                        height: myHeight(3.2), width: myHeight(3.2),
+                                        resizeMode: 'contain',
+                                    }} source={require('../assets/home_main/home/category/fast.png')} />
+                                </View>
+
+                                <Spacer paddingEnd={myWidth(3)}/>
+                                <Text 
+                                    style={[styles.textCommon,{
+                                    fontSize: myFontSize.body2,
+                                    fontFamily: myFonts.heading,
+                                }]}>Fast Food</Text>
+                                <Spacer paddingEnd={myWidth(2.7)}/>
+
+                            </TouchableOpacity>
+                        </View>
+                        )}
+                    </ScrollView>
+                 
+                </View>
+
+                <Spacer paddingT={myHeight(2)} />
+                {/* New Arrival  Complete*/}
+                <View>
+                    {/* New Arrivals*/}
+                    <View style={{ paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={[styles.textCommon,{
+                            fontSize: myFontSize.xBody,
+                            fontFamily: myFonts.bodyBold, 
+                        }]}>New Arrivals</Text>
+                        
+                        {/* See all */}
+                        <TouchableOpacity style={{
+                            flexDirection:'row', alignItems:'center', paddingVertical: myHeight(0.4), 
+                            paddingStart: myWidth(2) 
+                            }} activeOpacity={0.6} onPress={() => null}>
+
+                            <Text 
+                                style={[styles.textCommon,{
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                                color:myColors.primaryT 
+                            }]}>See All</Text>
+                             <Image style={{
+                                height: myHeight(1.5), width: myHeight(1.5), marginStart:myWidth(1),
+                                resizeMode: 'contain', tintColor:myColors.primaryT
+                            }} source={require('../assets/home_main/home/go.png')} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Spacer paddingT={myHeight(1)} />
+                    {/* Restuarant */}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
+                        <View style={{
+                            flexDirection: 'row',
+                        }}>
+                            {Restaurants.map((item, i) =>
+                                <TouchableOpacity key={i} activeOpacity={0.95}  
+                                onPress={() => navigation.navigate('RestaurantDetail', { item })} >
+                                    <ResturantH item={item}/>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+
+                    </ScrollView>
+                </View>
+
+                <Spacer paddingT={myHeight(1.5)} />
+                {/*Nearby Restaurants  Complete*/}
+                <View>
+                    {/* Nearby Restaurants*/}
+                    <View style={{ paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={[styles.textCommon,{
+                            fontFamily: myFonts.bodyBold, 
+                            fontSize: myFontSize.xBody,
+                        }]}>Nearby Restaurants</Text>
+                        
+                        <TouchableOpacity style={{
+                            flexDirection:'row', alignItems:'center', paddingVertical: myHeight(0.4), 
+                            paddingStart: myWidth(2) 
+                            }} activeOpacity={0.6} onPress={() => null}>
+
+                            <Text 
+                                style={[styles.textCommon,{
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.bodyBold,
+                                color:myColors.primaryT 
+                            }]}>See All</Text>
+                             <Image style={{
+                                height: myHeight(1.5), width: myHeight(1.5), marginStart:myWidth(1),
+                                resizeMode: 'contain', tintColor:myColors.primaryT
+                            }} source={require('../assets/home_main/home/go.png')} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Spacer paddingT={myHeight(1)} />
+                    {/* Restuarant */}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
+                        <View style={{
+                            flexDirection: 'row',
+                        }}>
+                            {Restaurants.map((item, i) =>
+                                <TouchableOpacity key={i} activeOpacity={0.95} 
+                                onPress={() => navigation.navigate('RestaurantDetail', { item })} >
+                                    <ResturantH item={item}/>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+
+                    </ScrollView>
+                </View>
+                
 
             </ScrollView>
-
-            {/* Notification Section */}
 
         </SafeAreaView>
     )
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -86,284 +242,14 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor: myColors.background
     },
-    containerCategory: {
-
-        flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'flex-end',
-        alignItems: 'center', justifyContent: 'center', paddingHorizontal: myWidth(2)
-
-    },
-    containerEachCate: {
-        padding: myHeight(1.4),
-        borderRadius: myHeight(5),
-        backgroundColor: myColors.primaryL,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.5,
-        shadowRadius: 1,
-    },
-
-    containerBookNow: {
-        // width: myWidth(92),
-        alignSelf: 'center', height: myHeight(19),
-        borderRadius: myWidth(3),
-        overflow: 'hidden',
-        borderColor: myColors.textL4,
-
-
-    },
-    containerTry: {
-        alignSelf: 'center',
-        borderRadius: myWidth(3),
-        backgroundColor: myColors.background,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.3,
-        shadowRadius: 1,
-    },
-    containerBookNowText: {
-        flex: 1,
-        paddingVertical: myHeight(1.8),
-        paddingHorizontal: myWidth(4.7),
-    },
-    containerDailyS: {
-        flexDirection: 'row',
-    },
-    containerDot: {
-        width: myHeight(1.18),
-        height: myHeight(1.18),
-        borderRadius: myHeight(1.18),
-        marginEnd: myWidth(1.1),
-    },
-    containerReward: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        alignItems: 'center',
-        backgroundColor: myColors.offColor3,
-        paddingHorizontal: myWidth(2.5),
-        borderRadius: myHeight(2.2),
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-
-    },
-    containerNearDriver: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        alignItems: 'center',
-        backgroundColor: myColors.background,
-        paddingVertical: myHeight(1.8),
-
-    },
-    containerNotification: {
-        backgroundColor: myColors.background,
-        width: myWidth(100),
-        maxHeight: myHeight(80),
-        alignItems: 'center',
-        position: 'absolute',
-        zIndex: 1,
-        bottom: 0,
-        borderTopStartRadius: myWidth(6),
-        borderTopEndRadius: myWidth(6),
-    },
-    containerNotiCount: {
-        paddingHorizontal: myHeight(1.2),
-        paddingVertical: myHeight(0.4),
-        position: 'absolute',
-        backgroundColor: myColors.primaryT,
-        bottom: 0,
-        borderRadius: myWidth(10),
-
-    },
-    containerNotiItem: {
-        flexDirection: 'row',
-        width: myWidth(100),
-        backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.3),
-        paddingHorizontal: myWidth(4.6),
-
-    },
-
-
-
-
-
-
-
-
 
 
     //Text
-    textGoodM: {
-        fontSize: myFontSize.medium0,
-        fontFamily: myFonts.bodyBold,
+    textCommon:{
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,
     },
-    textLoc: {
-        fontSize: myFontSize.xSmall,
-        fontFamily: myFonts.heading,
-        color: myColors.textL3,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textCat: {
-        fontSize: myFontSize.body2,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textBookNowName: {
-        fontSize: myFontSize.xBody,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textBookNow: {
-        fontSize: myFontSize.xxSmall,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textHeading: {
-        fontSize: myFontSize.xxBody,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textSeeAll: {
-        fontSize: myFontSize.body2,
-        fontFamily: myFonts.heading,
-        color: myColors.primaryT,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-
-    textRewardTitle: {
-        flex: 1,
-        fontSize: myFontSize.body,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-
-    },
-    textDriverName: {
-        flex: 1,
-        fontSize: myFontSize.body2,
-        fontFamily: myFonts.bodyBold,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textDriverTime: {
-        flex: 1,
-        fontSize: myFontSize.xxSmall,
-        fontFamily: myFonts.body,
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textNotiSwipe: {
-        fontSize: myFontSize.body,
-        fontFamily: myFonts.heading,
-        color: myColors.primaryT,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-        alignSelf: 'center'
-    },
-    textNotiCount: {
-        fontSize: myFontSize.body,
-        fontFamily: myFonts.heading,
-        color: myColors.background,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-    textNotiItem: {
-        fontSize: myFontSize.xSmall,
-        fontFamily: myFonts.body,
-        color: myColors.background,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-
-
-
-
-
-
-
-
-
-
-    //Image
-    imageLoc: {
-        height: myHeight(1.93),
-        width: myWidth(3.25),
-        resizeMode: 'contain',
-    },
-    imageCate: {
-        height: myWidth(11),
-        width: myWidth(11),
-        resizeMode: 'contain',
-
-        // height: myHeight(5.37),
-        // width: myHeight(5.37),
-        // resizeMode: 'cover',
-    },
-
-    imageMan: {
-        borderRadius: myWidth(3),
-        height: myHeight(19),
-        width: myWidth(43.2),
-        resizeMode: 'stretch',
-    },
-    imageArrow: {
-        height: myHeight(1),
-        width: myWidth(3),
-        resizeMode: 'stretch',
-    },
-    imageSpeaker: {
-        height: myHeight(3),
-        width: myHeight(3),
-        resizeMode: 'contain',
-    },
-    imageGoReward: {
-        height: myHeight(1.72),
-        paddingHorizontal: myWidth(1.86),
-        resizeMode: 'contain',
-    },
-    imageDriver: {
-        height: myHeight(4.3),
-        width: myHeight(4.3),
-        borderRadius: myHeight(4.3),
-        resizeMode: 'contain',
-    },
-    imageUp: {
-        height: myHeight(3.8),
-        width: myHeight(3.8),
-        resizeMode: 'contain',
-    }
 
 })

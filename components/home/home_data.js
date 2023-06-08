@@ -1,227 +1,151 @@
-export const notifications = [
+export const Categories = [
     {
-        orderID: '1233432',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
+        name:'BBQ',
+        image:require('../assets/home_main/home/category/bbq.png'),
     },
     {
-        orderID: '1233433',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
+        name:'Chineese',
+        image:require('../assets/home_main/home/category/chineese.png'),
     },
     {
-        orderID: '1233434',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
+        name:'Deserts',
+        image:require('../assets/home_main/home/category/desert.png'),
     },
     {
-        orderID: '1233435',
-        estimateTime: '30 mins - 3:40pm',
-        status: 'Driver On The Way',
+        name:'Desi',
+        image:require('../assets/home_main/home/category/desi.png'),
     },
-    // {
-    //     orderID: '1233436',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
-    // {
-    //     orderID: '1233437',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
-    // {
-    //     orderID: '1233438',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
-    // {
-    //     orderID: '1233439',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
-    // {
-    //     orderID: '1233440',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
-    // {
-    //     orderID: '1233442',
-    //     estimateTime: '30 mins - 3:40pm',
-    //     status: 'Driver On The Way',
-    // },
+    {
+        name:'Drinks',
+        image:require('../assets/home_main/home/category/drink.png'),
+    },
+    {
+        name:'Fast Foods',
+        image:require('../assets/home_main/home/category/fast.png'),
+    },
+    {
+        name:'Fish',
+        image:require('../assets/home_main/home/category/fish.png'),
+    },
+    {
+        name:'Pizza',
+        image:require('../assets/home_main/home/category/pizza.png'),
+    },
 
 
 ]
 
-export const rewards = [
+export const offers=[
     {
-        title: 'Enjoy Discount on your First Order'
+        id:1,
+        logo: require('../assets/home_main/home/loc.png'),
+        title: 'Flash Offer',
+        des: 'We are here with the best deserts intown.',
+        image: require('../assets/home_main/home/burger.png'),
+        colors: ['#FF9F06', '#FFE1B4']
     },
     {
-        title: 'Enjoy Discount on your First Order'
+        id:2,
+        logo: require('../assets/home_main/home/loc.png'),
+        title: 'New Arrival',
+        des: 'We are here with the best deserts intown.',
+        image: require('../assets/home_main/home/burger.png'),
+        colors: ['#00D756', '#018AC5']
     },
     {
-        title: 'Enjoy Discount on your First Order'
-    },
-]
-export const category = [
-    {
-        name: 'RIDE',
-        image: require('../assets/home_main/category/ride.png'),
-        navigate: 'RideNavigator',
+        id:3,
+        logo: require('../assets/home_main/home/loc.png'),
+        title: 'Flash Offer',
+        des: 'We are here with the best deserts intown.',
+        image: require('../assets/home_main/home/burger.png'),
+        colors: ['#FF9F06', '#FFE1B4']
     },
     {
-        name: 'FOOD',
-        image: require('../assets/home_main/category/food.png'),
-        navigate: 'FoodNavigator',
-    },
-    {
-        name: 'SHOP',
-        image: require('../assets/home_main/category/shop.png'),
-        navigate: 'FoodDashboard',
-    },
-    {
-        name: 'COURIER',
-        image: require('../assets/home_main/category/corrier.png'),
-        navigate: 'FoodDashboard',
-    },
-    {
-        name: 'HOMES',
-        image: require('../assets/home_main/category/homes.png'),
-        navigate: 'FoodDashboard',
-
-    },
-    {
-        name: 'SERVICES',
-        image: require('../assets/home_main/category/services.png'),
-        navigate: 'FoodDashboard',
-
-    },
-    {
-        name: 'LOCAL',
-        image: require('../assets/home_main/category/local.png'),
-        navigate: 'FoodDashboard',
-
-    },
-    {
-        name: 'PHARMACY',
-        image: require('../assets/home_main/category/pharmacy.png'),
-        navigate: 'FoodDashboard',
-
-    },
-]
-export const dailySpecial = [
-    {
-        name: 'McDonalds - King St',
-        distance: '6.6 km',
-        rating: 4.4,
-        country: 'America',
-        totalRating: '200+',
-        image: require('../assets/home_main/daily_special/dailyS1.jpg')
-    },
-    {
-        name: 'KFC - Lawrence Ave',
-        distance: '5.1 km',
-        rating: 4.3,
-        country: 'America',
-        totalRating: '200+',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg')
-    },
-    {
-        name: 'Freshii - Markha',
-        distance: '3.1 km',
-        rating: 4.9,
-        country: 'America',
-        totalRating: '200+',
-        image: require('../assets/home_main/daily_special/dailyS3.jpg')
-    },
-    {
-        name: 'McDonalds - King St',
-        distance: '6.6 km',
-        rating: 4.4,
-        country: 'America',
-        totalRating: '200+',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg')
+        id:4,
+        logo: require('../assets/home_main/home/loc.png'),
+        title: 'Flash Offer',
+        des: 'We are here with the best deserts intown.',
+        image: require('../assets/home_main/home/burger.png'),
+        colors: ['#FF9F06', '#FFE1B4']
     },
 
 ]
 
-export const bookNow = [
+export const Restaurants=[
     {
-        name: 'Save $10 off your rides',
-        image: require('../assets/home_main/man.png')
+        id:'resetaurant1',
+        name:'Axha Restaurant',
+        images:[require('../assets/home_main/home/biryani.png'),require('../assets/home_main/home/salan.png')],
+        location:'Ambrosia Hotel & Restaurant',
+        rating:'4.4',
+        noOfRatings:'4545',
+        timings:{
+            0:'9:00 AM - 9:00 PM',
+            1:'9:00 AM - 9:00 PM',
+            2:'9:00 AM - 9:00 PM',
+            3:'9:00 AM - 9:00 PM',
+            4:'9:00 AM - 9:00 PM',
+            5:'9:00 AM - 9:00 PM',
+        },
+        category:[
+            
+        ]
     },
     {
-        name: 'Save $10 off your rides',
-        image: require('../assets/home_main/man.png')
+        id:'resetaurant1',
+        name:'Axha Restaurant',
+        images:[require('../assets/home_main/home/salan.png')],
+        location:'Ambrosia Hotel & Other ',
+        rating:'4.4',
+        noOfRatings:'4545',
+        timings:{
+            0:'9:00 AM - 9:00 PM',
+            1:'9:00 AM - 9:00 PM',
+            2:'9:00 AM - 9:00 PM',
+            3:'9:00 AM - 9:00 PM',
+            4:'9:00 AM - 9:00 PM',
+            5:'9:00 AM - 9:00 PM',
+        },
+        category:[
+            
+        ]
     },
     {
-        name: 'Save $10 off your rides',
-        image: require('../assets/home_main/man.png')
+        id:'resetaurant1',
+        name:'Axha Restaurant',
+        images:[require('../assets/home_main/home/biryani.png'),require('../assets/home_main/home/salan.png')],
+        location:'Ambrosia Hotel ',
+        rating:'4.4',
+        noOfRatings:'4545',
+        timings:{
+            0:'9:00 AM - 9:00 PM',
+            1:'9:00 AM - 9:00 PM',
+            2:'9:00 AM - 9:00 PM',
+            3:'9:00 AM - 9:00 PM',
+            4:'9:00 AM - 9:00 PM',
+            5:'9:00 AM - 9:00 PM',
+        },
+        category:[
+            
+        ]
     },
     {
-        name: 'Save $10 off your rides',
-        image: require('../assets/home_main/man.png')
-    },
-    {
-        name: 'Save $10 off your rides',
-        image: require('../assets/home_main/man.png')
-    },
-]
-
-export const nearDrivers = [
-    {
-        name: 'John Doe',
-        time: '2 - 4 min away from your location',
-        image: require('../assets/home_main/driver.png'),
-    },
-    {
-        name: 'Millar',
-        time: '2 - 4 min away from your location',
-        image: require('../assets/home_main/man.png'),
-    },
-    {
-        name: 'David',
-        time: '2 - 4 min away from your location',
-        image: require('../assets/home_main/man.png'),
-    },
-
-]
-
-export const mainCourse = [
-    {
-        name: 'Classic Sandwich',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
-        price: '$8.25',
-        cals: '640',
-        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
-    },
-    {
-        name: 'Classic Sandwich',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
-        price: '$8.25',
-        cals: '640',
-        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
-    },
-    {
-        name: 'Classic Sandwich',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
-        price: '$8.25',
-        cals: '640',
-        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
-    },
-    {
-        name: 'Classic Sandwich',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
-        price: '$8.25',
-        cals: '640',
-        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
-    },
-    {
-        name: 'Classic Sandwich',
-        image: require('../assets/home_main/daily_special/dailyS2.jpg'),
-        price: '$8.25',
-        cals: '640',
-        description: 'Certified Angus Beef, American cheese, lettuce, tomatoes, red onions, pickles, sauce, and toasted bun.'
+        id:'resetaurant1',
+        name:'Axha Restaurant',
+        images:[require('../assets/home_main/home/salan.png')],
+        location:'Ambrosia Hotel & Restaurant',
+        rating:'4.4',
+        noOfRatings:'4545',
+        timings:{
+            0:'9:00 AM - 9:00 PM',
+            1:'9:00 AM - 9:00 PM',
+            2:'9:00 AM - 9:00 PM',
+            3:'9:00 AM - 9:00 PM',
+            4:'9:00 AM - 9:00 PM',
+            5:'9:00 AM - 9:00 PM',
+        },
+        category:[
+            
+        ]
     },
 ]

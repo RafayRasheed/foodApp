@@ -1,7 +1,7 @@
 export const myColors = {
-    primary: '#FFAF66',
-    primaryT: '#FF881B',
-    primaryL: '#fce4cc',
+    primary: '#32B768',
+    primaryT: '#04C000',
+    primaryL: '#a7faa5',
     primaryL2: '#FFE4CC',
     primaryL3: '#FFAF6635',
     primaryL5: '#FF9A6230', //30%
@@ -20,7 +20,7 @@ export const myColors = {
     text3: '#242424',
     dot: '#D9D9D9',
     background: '#FFFFFF',
-    offColor: '#9B9B9B',
+    offColor: '#9CA3AF',
     offColor2: "#B7B7B7",
     offColor3: '#F3F3F3',
     offColor4: '#F1F1F1',

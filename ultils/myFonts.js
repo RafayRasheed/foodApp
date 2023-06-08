@@ -40,7 +40,6 @@ export const myFontSize = {
     xMedium: RFValue(26), // done 32
     large: RFValue(28), //done 36
 
-
     // tiny: RFValue(10, myHeight),
     // small: RFValue(11, myHeight),
     // xSmall: RFValue(13, myHeight),
