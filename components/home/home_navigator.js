@@ -1,44 +1,33 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 import { HomeScreen } from "./home_screen";
+import { Categories } from './home_data';
+import { CategoryFull } from './category_full_screen';
+import { myColors } from '../../ultils/myColors';
+import { StatusBar } from 'react-native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { RestaurantDetail } from './restaurant_detail_screen';
 
 
 
 const HomeTAB = createNativeStackNavigator();
-
+const hideStatusScreens=['RestaurantDetail']
 export const HomeNavigator = ({ navigation, route }) => {
-    // React.useLayoutEffect(() => {
-    //     if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
-    //         navigation.setOptions({ tabBarStyle: { display: 'none' } })
+    const [hideStatus, setHideState] = useState(false)
+    React.useLayoutEffect(() => {
+        if (hideStatusScreens.includes(getFocusedRouteNameFromRoute(route))) {
+            setHideState(true)
 
-    //         // navigation.setOptions({ tabBarStyle: { display: 'none' } });
-    //     } else {
-    //         // navigation.setOptions({ tabBarStyle: { display: 'flex' } })
-
-    //         navigation.setOptions({
-    //             tabBarStyle: {
-    //                 display: 'flex',
-    //                 backgroundColor: myColors.background,
-    //                 paddingHorizontal: myWidth(3.5),
-    //                 alignItems: 'center',
-    //                 justifyContent: 'center',
-    //                 height: myHeight(9.5),
-    //                 paddingBottom: ios ? myHeight(2.2) : myHeight(1.5),
-    //                 paddingTop: myHeight(2.5),
-    //             },
-    //         })
-
-    //         // navigation.setOptions({
-    //         //     // tabBarStyle: {
-    //         //     //     // borderTopLeftRadius: responsiveScreenWidth(8),
-    //         //     //     // borderTopRightRadius: responsiveScreenWidth(8),
-    //         //     //     // backgroundColor: myColors.background,
-    //         //     //     // height: responsiveScreenHeight(7.8),
-    //         //     // }
-    //         // });
-    //     }
-    // }, [navigation, route]);
+            // navigation.setOptions({ tabBarStyle: { display: 'none' } });
+        } else {
+            // navigation.setOptions({ tabBarStyle: { display: 'flex' } })
+setHideState(false)
+        }
+    }, [navigation, route]);
     return (
+        <>
+         <StatusBar backgroundColor={hideStatus?'transparent':myColors.background} translucent={hideStatus?true:false}/>
+       
         <HomeTAB.Navigator
             screenOptions={{
                 animation: 'fade',
@@ -47,7 +36,10 @@ export const HomeNavigator = ({ navigation, route }) => {
             initialRouteName="HomeScreen"
         >
             <HomeTAB.Screen component={HomeScreen} name="HomeScreen" />
+            <HomeTAB.Screen component={CategoryFull} name="CategoryFull" />
+            <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
 
         </HomeTAB.Navigator>
+        </>
     )
 } 

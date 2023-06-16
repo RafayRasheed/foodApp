@@ -12,25 +12,25 @@ const Tab = createBottomTabNavigator()
 
 const Icons = {
     HOME: {
-        image: require('../assets/home_main/navigator/home.png'),
+        image: require('../assets/home_main/home/navigator/home.png'),
         style: { width: myWidth(6.5), height: myHeight(2.68) }
     },
     ACTIVITY: {
-        image: require('../assets/home_main/navigator/activity.png'),
+        image: require('../assets/home_main/home/navigator/activity.png'),
         style: { width: myWidth(6.2), height: myHeight(2.15) }
     },
     HOT: {
-        image: require('../assets/home_main/navigator/fire.png'),
-        style: { width:  myHeight(3), height: myHeight(3) }
+        image: require('../assets/home_main/home/navigator/fire.png'),
+        style: { width: myHeight(3.8), height: myHeight(3.8) }
     },
 
     // WALLET: require('../assets/home_main/navigator/wallet.png'),
     CART: {
-        image: require('../assets/home_main/navigator/cart.png'),
+        image: require('../assets/home_main/home/navigator/cart.png'),
         style: { width: myWidth(5.5), height: myHeight(2.68) }
     },
     ACCOUNT: {
-        image: require('../assets/home_main/navigator/account.png'),
+        image: require('../assets/home_main/home/navigator/account.png'),
         style: { width: myWidth(6.2), height: myHeight(2.68) }
     },
 }
@@ -51,7 +51,7 @@ const screenOptions = ({ route }) => {
             // position: 'absolute',
         },
         tabBarLabelStyle: {
-            display:name=='HOT'?'none':'flex',
+            display: name == 'HOT' ? 'none' : 'flex',
             fontSize: myFontSize.xSmall,
             fontFamily: myFonts.bodyBold,
             letterSpacing: myLetSpacing.common,
@@ -60,20 +60,20 @@ const screenOptions = ({ route }) => {
         tabBarActiveTintColor: myColors.primaryT,
         tabBarInactiveTintColor: myColors.text,
         // tabBarShowLabel:name=='HOT'?true:false,
-        tabBarIcon: ({ color }) =>{
-            if(name=='HOT') {
-                return(
+        tabBarIcon: ({ color }) => {
+            if (name == 'HOT') {
+                return (
                     <View style={{
-                        padding:myHeight(2.5), backgroundColor:'black',
-                        borderRadius:myHeight(4),
-                        marginTop:-myHeight(8) 
-                        }}>
-                        <Image style={[Icons[name].style, { resizeMode: 'contain',}]}
-                        source={Icons[name].image} /> 
+                        padding: myHeight(2), backgroundColor: color == myColors.primaryT ? myColors.primaryL3 : myColors.primaryL5, borderWidth: myHeight(0.1), borderColor: myColors.offColor7,
+                        borderRadius: myHeight(10), elevation: 3,
+                        marginTop: -myHeight(7.5)
+                    }}>
+                        <Image style={[Icons[name].style, { resizeMode: 'contain', }]}
+                            source={Icons[name].image} />
                     </View>
-                    )
+                )
             }
-            return(
+            return (
                 <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain', }]}
                     source={Icons[name].image} />
             )

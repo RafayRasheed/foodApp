@@ -6,18 +6,19 @@ import { myColors } from "../../../ultils/myColors"
 import { offers } from "../home_data";
 import LinearGradient from "react-native-linear-gradient";
 
-export const Banners =()=>{
+export const Banners = () => {
     const [i, setI] = useState(0)
     const dotArr = []
-    const offerWidthSScroll = myWidth(85)
+    const offerWidthSScroll = myWidth(95)
     const lenOffers = Object.keys(offers).length
 
     // Loop for dots
     for (let j = 0; j < lenOffers; j++) {
         dotArr.push(<View key={j} style={[{
-            height: myHeight(1.3), width: myHeight(1.3),
+            height: myHeight(1), width: j == i? myHeight(1.5):myHeight(1),
             margin: 3, borderRadius: myHeight(0.8),
-        backgroundColor: j == i ? myColors.primary : myColors.dot, }]} />)
+            backgroundColor: j == i ? myColors.primary : myColors.dot,
+        }]} />)
     }
 
     //Offer Scroll
@@ -29,7 +30,7 @@ export const Banners =()=>{
         }
     }
 
-    return(
+    return (
         <View>
             <ScrollView
                 onScroll={handleScroll}
@@ -37,21 +38,21 @@ export const Banners =()=>{
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     flexGrow: 1, justifyContent: 'center',
-                    paddingHorizontal: myWidth(10)
+                    paddingHorizontal: myWidth(5)
                 }}
                 pagingEnabled
                 snapToInterval={offerWidthSScroll}
                 scrollEventThrottle={1}
             >
                 {offers.map((item, i) =>
-                    <View key={i} style={{flex:1}}>
+                    <View key={i} style={{ flex: 1 }}>
                         {/* Offers */}
                         <LinearGradient
-                            colors={item.colors} 
+                            colors={item.colors}
                             style={{
                                 flexDirection: 'row', justifyContent: 'space-between',
-                                width: myWidth(80), height: myHeight(16),
-                                borderRadius: myHeight(4), backgroundColor: '#FFE1B4',
+                                width: myWidth(90), height: myHeight(20),
+                                borderRadius: myHeight(5), backgroundColor: '#FFE1B4',
                                 marginEnd: myWidth(5), elevation: 1, overflow: 'hidden'
                             }}
                             // for horizontal
@@ -60,14 +61,14 @@ export const Banners =()=>{
                         >
                             {/* Content Offers */}
                             <View style={{ maxWidth: '45%', paddingStart: '7.1%', justifyContent: 'center' }}>
-                               
-                                <Text style={{        
-                                    fontFamily: myFonts.headingBold, fontSize: myFontSize.body2, color: myColors.background,
+
+                                <Text style={{
+                                    fontFamily: myFonts.headingBold, fontSize: myFontSize.xBody, color: myColors.background,
                                 }}>{item.title}</Text>
 
                                 <Text numberOfLines={2} style={{
-                                    fontFamily: myFonts.heading, fontSize: myFontSize.tiny, color: myColors.background,
-                                    }}>{item.des}</Text>
+                                    fontFamily: myFonts.heading, fontSize: myFontSize.small, color: myColors.background,
+                                }}>{item.des}</Text>
 
                                 <Spacer paddingT={myHeight(1)} />
                                 {/* Order */}
@@ -75,35 +76,35 @@ export const Banners =()=>{
                                     style={{ flexDirection: 'row', alignItems: 'center' }}
                                     onPress={() => null}>
                                     <Text style={{
-                                        fontFamily: myFonts.headingBold, fontSize: myFontSize.small, color: myColors.background,
-                                    }}>Order <Image style={{
-                                        height: myHeight(1), width: myHeight(1), resizeMode: 'contain', tintColor:myColors.background
-                                        }} source={require('../../assets/home_main/home/go.png')} /></Text>
+                                        fontFamily: myFonts.headingBold, fontSize: myFontSize.small3, color: myColors.background,
+                                    }}>Details <Image style={{
+                                        height: myHeight(1), width: myHeight(1), resizeMode: 'contain', tintColor: myColors.background
+                                    }} source={require('../../assets/home_main/home/go.png')} /></Text>
                                 </TouchableOpacity>
                             </View>
 
                             {/* Image Offers */}
                             <Image style={{
-                                width: '55%', height: '100%',justifyContent:'flex-end',
-                                resizeMode: 'contain', 
-                    }} source={item.image} />
+                                maxWidth: '55%', maxHeight: '100%', justifyContent: 'flex-end',
+                                resizeMode: 'contain',
+                            }} source={item.image} />
                         </LinearGradient>
 
                     </View>
                 )
                 }
             </ScrollView>
-             <Spacer paddingT={myHeight(1.6)} />
-             {/*Dots */}
-             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                 {dotArr}
-             </View>
+            <Spacer paddingT={myHeight(1.6)} />
+            {/*Dots */}
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                {dotArr}
+            </View>
         </View>
 
     )
 }
 const styles = StyleSheet.create({
-    textCommon:{
+    textCommon: {
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,

@@ -7,7 +7,7 @@ import { myColors } from "../../../ultils/myColors"
 
 export const ResturantH = ({ item }) => {
     return (
-        <View style={{paddingBottom:myHeight(1.3)}}>
+        <View style={{paddingBottom:myHeight(1.3),}}>
 
         <View style={styles.container}>
                 <Image style={styles.image} source={item.images[0]} />
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     container: {
         width: myWidth(40),
         height: myHeight(24),
-        marginEnd: myWidth(3.5),
+        marginEnd: myWidth(4.5),
         borderRadius: myWidth(2.5),
         backgroundColor: myColors.background,
         // justifyContent:'space-between',
