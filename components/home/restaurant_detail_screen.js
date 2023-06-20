@@ -1,128 +1,431 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+  Text,
+  FlatList,
+  Modal,
+  UIManager,
+  LayoutAnimation,
+} from 'react-native';
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { Categories, Restaurants, bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data'
+import {
+  Categories,
+  Restaurants,
+  bookNow,
+  category,
+  dailySpecial,
+  nearDrivers,
+  notifications,
+  rewards,
+} from './home_data';
 import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
 import { ImagesShortViewer } from './home.component/images_short_viewer';
+import { ItemInfo } from './home.component/item_info';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true)
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 export const RestaurantDetail = ({ navigation, route }) => {
-
-    const restaurant = route.params.item
-    return (
-
-        <View style={styles.container}>
-
-        <ImagesShortViewer images={restaurant.images}/>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
-
-                <Spacer paddingT={myHeight(1.4)} />
+  const restaurant = route.params.item;
+  const catRef = useRef(null)
+  const { foodCategory } = restaurant;
+  const [mainScroll, setMainScroll] = useState(true)
+  const [selectCat, setSelectCat] = useState(null);
+  const [currentItem, setCurrentItems] = useState([]);
+  const [AllItem, setAllItems] = useState([]);
 
 
-                <Spacer paddingT={myHeight(1.5)} />
+  return (
+    <View style={{ flex: 1, backgroundColor: myColors.background }}>
+      <ImagesShortViewer images={restaurant.images} />
 
+      {/* Content */}
+      <View style={{}}>
+        {/* Restuarant Info */}
+        <View
+          style={{
+            // height:'100%',
+            //    position:'absolute', left:0,
+            backgroundColor: myColors.background,
+            marginTop: -myHeight(3.5),
+            borderRadius: myHeight(3),
+            borderTopStartRadius: myHeight(3),
+            borderTopEndRadius: myHeight(3),
+            marginHorizontal: myWidth(3.5),
+            elevation: 10,
+            paddingHorizontal: myWidth(4),
 
-                <Spacer paddingT={myHeight(1.5)} />
-                {/* CAtegories*/}
-                <View>
-                    {/* Categories & see all*/}
-                    <View style={{
-                        paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}>
-                        <Text style={[styles.textCommon, {
-                            fontSize: myFontSize.xxBody,
-                            fontFamily: myFonts.bodyBold,
-                        }]}>Categories</Text>
+            //    backgroundColor:'#ffffff30'
+          }}>
+          {/* Icon */}
+          <Image
+            style={{
+              width: myHeight(6.5),
+              height: myHeight(6.5),
+              resizeMode: 'contain',
+              borderRadius: myHeight(6),
+              borderWidth: myHeight(0.15),
+              marginTop: -myHeight(3),
+              borderColor: myColors.primaryT,
+              alignSelf: 'center',
+            }}
+            source={restaurant.icon}
+          />
+          <Spacer paddingT={myHeight(0.3)} />
+          {/* name */}
+          <Text
+            numberOfLines={2}
+            style={[
+              styles.textCommon,
+              {
+                textAlign: 'center',
+                fontSize: myFontSize.medium0,
+                fontFamily: myFonts.heading,
+              },
+            ]}>
+            {restaurant.name}
+          </Text>
+          <Spacer paddingT={myHeight(1)} />
 
-                        {/* See all */}
-                        <TouchableOpacity style={{
-                            flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
-                            paddingStart: myWidth(2)
-                        }} activeOpacity={0.6} onPress={() => navigation.navigate('CategoryFull')}>
+          {/* Rating & Rate Us */}
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              alignSelf: 'center',
+              justifyContent: 'space-between',
+            }}>
+            {/* Rating */}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              {/* Star */}
+              <Image
+                style={{
+                  width: myHeight(2.1),
+                  height: myHeight(2.1),
+                  resizeMode: 'contain',
+                }}
+                source={require('../assets/home_main/home/star.png')}
+              />
+              <Spacer paddingEnd={myWidth(1.2)} />
+              {/* Rating */}
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.textCommon,
+                  {
+                    fontSize: myFontSize.body2,
+                    fontFamily: myFonts.heading,
+                    color: myColors.text,
+                  },
+                ]}>
+                {`${restaurant.rating}  `}
+              </Text>
+              {/* Rate us */}
+              <TouchableOpacity activeOpacity={0.7} onPress={() => null}>
+                <Text
+                  numberOfLines={2}
+                  style={[
+                    styles.textCommon,
+                    {
+                      fontSize: myFontSize.body2,
+                      fontFamily: myFonts.heading,
+                      color: myColors.primary,
+                    },
+                  ]}>
+                  {`Reviews (${restaurant.noOfRatings})`}
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-                            <Text
-                                style={[styles.textCommon, {
-                                    fontSize: myFontSize.body2,
-                                    fontFamily: myFonts.bodyBold,
-                                    color: myColors.primaryT
-                                }]}>See All</Text>
-                            <Image style={{
-                                height: myHeight(1.5), width: myHeight(1.5), marginStart: myWidth(1),
-                                resizeMode: 'contain', tintColor: myColors.primaryT
-                            }} source={require('../assets/home_main/home/go.png')} />
-                        </TouchableOpacity>
-                    </View>
+            {/* Rate us */}
+            <TouchableOpacity activeOpacity={0.8} onPress={() => null}>
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.textCommon,
+                  {
+                    fontSize: myFontSize.body2,
+                    fontFamily: myFonts.heading,
+                    color: myColors.primary,
+                  },
+                ]}>
+                {'Contact Us'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Spacer paddingT={myHeight(0.8)} />
 
-                    <Spacer paddingT={myHeight(0.3)} />
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: myWidth(1) }}>
-
-                        {Categories.slice(0, 4).map((item, i) =>
-
-                            <View key={i} style={{ padding: myHeight(1.4), paddingEnd: myWidth(2) }}>
-                                <TouchableOpacity activeOpacity={0.8} style={{
-                                    flexDirection: 'row', alignItems: 'center', borderRadius: myHeight(15),
-                                    backgroundColor: myColors.background,
-                                    // backgroundColor:myColors.primaryL,  
-                                    padding: myHeight(0.8), elevation: 8
-                                }}>
-                                    <View style={{
-                                        height: myHeight(5), width: myHeight(5), borderRadius: myHeight(5),
-                                        backgroundColor: '#00000008',
-                                        // backgroundColor:myColors.background, 
-                                        alignItems: 'center', justifyContent: 'center'
-                                    }} >
-                                        <Image style={{
-                                            maxHeight: myHeight(4.2), maxWidth: myHeight(4.2),
-                                            resizeMode: 'contain',
-                                        }} source={item.image} />
-                                    </View>
-
-                                    <Spacer paddingEnd={myWidth(2)} />
-                                    <Text
-                                        style={[styles.textCommon, {
-                                            fontSize: myFontSize.body2,
-                                            fontFamily: myFonts.heading,
-                                        }]}>{item.name}</Text>
-                                    <Spacer paddingEnd={myWidth(2.7)} />
-
-                                </TouchableOpacity>
-                            </View>
-                        )}
-                    </ScrollView>
-
-                </View>
-
-            </ScrollView>
-
+          {/*Img Loc & Location */}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{
+                width: myHeight(2.5),
+                height: myHeight(2.5),
+                resizeMode: 'contain',
+              }}
+              source={require('../assets/home_main/home/loc.png')}
+            />
+            <Spacer paddingEnd={myWidth(0.8)} />
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.textCommon,
+                {
+                  fontSize: myFontSize.body2,
+                  fontFamily: myFonts.bodyBold,
+                  color: myColors.text,
+                },
+              ]}>
+              {'item location near bahadurabad'}
+            </Text>
+          </View>
+          <Spacer paddingT={myHeight(2)} />
         </View>
-    )
-}
+
+        <View ref={catRef}>
+          <Spacer paddingT={myHeight(3)} />
+        </View>
+        {/*Text Categories*/}
+        <Text
+          style={[
+            styles.textCommon,
+            {
+              fontSize: myFontSize.xxBody,
+              fontFamily: myFonts.bodyBold,
+              paddingHorizontal: myWidth(3),
+            },
+          ]}>
+          Categories
+        </Text>
+
+        <Spacer paddingT={myHeight(0.3)} />
+
+        {/* Food Category */}
+        <ScrollView showsVerticalScrollIndicator={false}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: myWidth(1) }}>
+
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: myWidth(4) }}>
+            <View>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  setSelectCat(null)
+                  setCurrentItems(null)
+                }}
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: myHeight(15),
+                  backgroundColor: selectCat == null ? myColors.primaryL : myColors.background,
+                  // backgroundColor:myColors.primaryL,
+                  paddingVertical: myHeight(1.5),
+                  paddingHorizontal: myWidth(4),
+                  marginEnd: myWidth(2.7),
+                  elevation: 8,
+                }}>
+                <Text
+                  style={[
+                    styles.textCommon,
+                    {
+                      fontSize: myFontSize.body2,
+                      fontFamily: myFonts.heading,
+                    },
+                  ]}>
+                  {'All'}
+                </Text>
+                <Spacer paddingEnd={myWidth(2.7)} />
+              </TouchableOpacity>
+            </View>
+            {foodCategory?.map((cat, i) => {
+              return (
+                <View
+                  key={i}
+                  style={{ padding: myHeight(1.4), paddingEnd: myWidth(2) }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      setSelectCat(i)
+                      setCurrentItems(cat.items)
+                    }}
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: myHeight(15),
+                      backgroundColor: selectCat == i ? myColors.primaryL : myColors.background,
+                      // backgroundColor:myColors.primaryL,
+                      paddingVertical: myHeight(1.5),
+                      paddingHorizontal: myWidth(4),
+                      elevation: 8,
+                    }}>
+                    <Text
+                      style={[
+                        styles.textCommon,
+                        {
+                          fontSize: myFontSize.body2,
+                          fontFamily: myFonts.heading,
+                        },
+                      ]}>
+                      {cat?.name}
+                    </Text>
+                    <Spacer paddingEnd={myWidth(2.7)} />
+                  </TouchableOpacity>
+                </View>
+              )
+            }
+
+            )}
+
+          </View>
 
 
 
+        </ScrollView>
+
+      </View>
 
 
+      <ScrollView
+        scrollEnabled
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: myWidth(4)
+        }}>
+        <View>
+          {currentItem ?
+            <View>
+              {
+                currentItem?.map((item, i) => {
+                  return (
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: myColors.background,
+                        elevation: 4, marginVertical: myHeight(1.5),
+                        borderRadius: myWidth(2)
+                      }}
+                      key={i} activeOpacity={0.9} onPress={() => null}>
+
+                      <ItemInfo item={item} />
+
+
+                    </TouchableOpacity>
+                  )
+
+                })
+              }
+
+            </View>
+            :
+            <View>
+              {
+                foodCategory.map((subCat) => {
+                  const items = subCat.items
+                  return (
+                    <>
+                      {items?.map((item, i) =>
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: myColors.background,
+                            elevation: 4, marginVertical: myHeight(1.5),
+                            borderRadius: myWidth(2)
+                          }}
+                          key={i} activeOpacity={0.9} onPress={() => null}>
+
+                          <ItemInfo item={item} />
+
+
+                        </TouchableOpacity>
+                      )
+                      }
+                    </>
+                  )
+
+
+                }
+
+                )
+              }
+            </View>
+          }
+        </View>
+      </ScrollView>
+
+      {/* Back */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: myColors.background,
+          padding: myHeight(1),
+          borderRadius: myHeight(5),
+          position: 'absolute',
+          top: myHeight(4),
+          left: myWidth(4),
+        }}
+        activeOpacity={0.8}
+        onPress={() => navigation.goBack()}>
+        <Image
+          style={{
+            width: myHeight(2.6),
+            height: myHeight(2.6),
+            resizeMode: 'contain',
+          }}
+          source={require('../assets/home_main/home/back.png')}
+        />
+      </TouchableOpacity>
+
+      {/* Search */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: myColors.background,
+          padding: myHeight(1),
+          borderRadius: myHeight(5),
+          position: 'absolute',
+          top: myHeight(4),
+          right: myWidth(4),
+        }}
+        activeOpacity={0.8}
+        onPress={() => navigation.goBack()}>
+        <Image
+          style={{
+            width: myHeight(2.6),
+            height: myHeight(2.6),
+            resizeMode: 'contain',
+          }}
+          source={require('../assets/home_main/home/search.png')}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: myColors.background
-    },
+  container: {
+    flex: 1,
+    backgroundColor: myColors.background,
+  },
 
-
-    //Text
-    textCommon: {
-        color: myColors.text,
-        letterSpacing: myLetSpacing.common,
-        includeFontPadding: false,
-        padding: 0,
-    },
-
-})
+  //Text
+  textCommon: {
+    color: myColors.text,
+    letterSpacing: myLetSpacing.common,
+    includeFontPadding: false,
+    padding: 0,
+  },
+});

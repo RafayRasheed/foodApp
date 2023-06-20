@@ -43,7 +43,7 @@ export const CategoryFull = ({ navigation }) => {
             <View style={{
                 flexDirection: 'row', alignItems: 'center', width: myWidth(90),
                 backgroundColor: myColors.divider, alignSelf: 'center', paddingVertical: myHeight(1.3),
-                borderRadius: myHeight(2.5)
+                borderRadius: myHeight(1.2)
             }}>
                 <Spacer paddingEnd={myWidth(4)} />
                 <Image style={{
