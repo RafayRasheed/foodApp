@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 import { HomeScreen } from "./home_screen";
 import { Categories } from './home_data';
@@ -7,11 +7,12 @@ import { myColors } from '../../ultils/myColors';
 import { StatusBar } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { RestaurantDetail } from './restaurant_detail_screen';
+import { RestaurantMoreDetails } from './rest_more_info_screen';
 
 
 
 const HomeTAB = createNativeStackNavigator();
-const hideStatusScreens=['RestaurantDetail']
+const hideStatusScreens = ['RestaurantDetail', 'RestaurantMoreDetails']
 export const HomeNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideState] = useState(false)
     React.useLayoutEffect(() => {
@@ -21,25 +22,26 @@ export const HomeNavigator = ({ navigation, route }) => {
             // navigation.setOptions({ tabBarStyle: { display: 'none' } });
         } else {
             // navigation.setOptions({ tabBarStyle: { display: 'flex' } })
-setHideState(false)
+            setHideState(false)
         }
     }, [navigation, route]);
     return (
         <>
-         <StatusBar backgroundColor={hideStatus?'transparent':myColors.background} translucent={hideStatus?true:false}/>
-       
-        <HomeTAB.Navigator
-            screenOptions={{
-                animation: 'fade',
-                headerShown: false
-            }}
-            initialRouteName="HomeScreen"
-        >
-            <HomeTAB.Screen component={HomeScreen} name="HomeScreen" />
-            <HomeTAB.Screen component={CategoryFull} name="CategoryFull" />
-            <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
+            <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus ? true : false} />
 
-        </HomeTAB.Navigator>
+            <HomeTAB.Navigator
+                screenOptions={{
+                    animation: 'fade',
+                    headerShown: false
+                }}
+                initialRouteName="HomeScreen"
+            >
+                <HomeTAB.Screen component={HomeScreen} name="HomeScreen" />
+                <HomeTAB.Screen component={CategoryFull} name="CategoryFull" />
+                <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
+                <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
+
+            </HomeTAB.Navigator>
         </>
     )
 } 

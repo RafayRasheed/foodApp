@@ -122,14 +122,17 @@ export const Restaurants = [
         comment: 'All ',
       },
     ],
-    timings: {
-      0: '9:00 AM - 9:00 PM',
-      1: '9:00 AM - 9:00 PM',
-      2: '9:00 AM - 9:00 PM',
-      3: '9:00 AM - 9:00 PM',
-      4: '9:00 AM - 9:00 PM',
-      5: '9:00 AM - 9:00 PM',
-    },
+    timmings: [
+      {
+        day: 'Sunday',
+        times: ["9:00 AM - 10:19 AM . Morning Menu", "10:20 AM - 11:59 PM . Afternoon Menu", "12:00 AM - 01:30 PM . Afternoon Menu"]
+      },
+      {
+        day: 'Monday - Saturday',
+        times: ["9:00 AM - 10:19 AM . Morning Menu", "10:20 AM - 11:59 PM . Afternoon Menu", "12:00 AM - 01:30 PM . Afternoon Menu"]
+      },
+    ],
+
     foodCategory: [
       {
         name: 'Deals',
@@ -140,6 +143,16 @@ export const Restaurants = [
             price: 'Rs 300',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger1',
+            images: [require('../assets/home_main/home/category/fast2.png')],
+            rating: '3.0',
+            noOfRatings: '100',
+            likes: '10',
+          },
+          {
+            resId: 'Resturant1',
+            price: 'Rs 3000',
+            id: 'Resturant1Pizza1',
+            name: 'Beaf Burger100',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
             noOfRatings: '100',

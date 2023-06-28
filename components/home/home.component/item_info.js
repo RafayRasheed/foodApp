@@ -11,7 +11,12 @@ export const ItemInfo = ({ item }) => {
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingEnd: myWidth(3)
+            paddingEnd: myWidth(3),
+            backgroundColor: myColors.background,
+            elevation: 5, marginVertical: myHeight(1),
+            borderRadius: myWidth(2),
+            borderWidth: myHeight(0.15),
+            borderColor: myColors.divider
         }} >
 
             <Image
@@ -61,7 +66,7 @@ export const ItemInfo = ({ item }) => {
                             styles.textCommon,
                             {
                                 fontSize: myFontSize.xBody,
-                                fontFamily: myFonts.heading,
+                                fontFamily: myFonts.bodyBold,
                                 color: myColors.primaryT,
                                 borderRadius: 100,
                                 // paddingHorizontal: myWidth(2.3),
