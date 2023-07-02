@@ -200,20 +200,21 @@ export const RestaurantDetail = ({ navigation, route }) => {
             </View>
 
             {/*more */}
-            <TouchableOpacity activeOpacity={0.8} onPress={() => null}>
-              <Text
-                numberOfLines={2}
-                style={[
-                  styles.textCommon,
-                  {
-                    fontSize: myFontSize.body2,
-                    fontFamily: myFonts.body,
-                    color: myColors.text,
-                  },
-                ]}>
-                {'Tap for more info'}
-              </Text>
+            {/* <TouchableOpacity activeOpacity={0.8} onPress={() => null}> 
             </TouchableOpacity>
+            */}
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.textCommon,
+                {
+                  fontSize: myFontSize.body2,
+                  fontFamily: myFonts.bodyBold,
+                  color: myColors.primary,
+                },
+              ]}>
+              {'Tap for more info'}
+            </Text>
           </View>
           <Spacer paddingT={myHeight(0.8)} />
 
@@ -233,7 +234,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             />
             <Spacer paddingEnd={myWidth(0.8)} />
             <Text
-              numberOfLines={2}
+              numberOfLines={1}
               style={[
                 styles.textCommon,
                 {
@@ -242,7 +243,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
                   color: myColors.text,
                 },
               ]}>
-              {'item location near bahadurabad'}
+              {restaurant.location}
             </Text>
           </View>
           <Spacer paddingT={myHeight(2)} />
@@ -251,18 +252,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
         <View ref={catRef}>
           <Spacer paddingT={myHeight(1.5)} />
         </View>
-        {/*Text Categories*/}
-        {/* <Text
-          style={[
-            styles.textCommon,
-            {
-              fontSize: myFontSize.xxBody,
-              fontFamily: myFonts.bodyBold,
-              paddingHorizontal: myWidth(3),
-            },
-          ]}>
-          Categories
-        </Text> */}
+
 
         {/* <Spacer paddingT={myHeight(0.3)} /> */}
 
@@ -411,6 +401,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             </View>
           }
         </View>
+        <Spacer paddingT={myHeight(4)} />
       </ScrollView>
 
 

@@ -6,6 +6,7 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Categories, Restaurants, bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data'
 import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
+import { RestaurantInfo } from './home.component/restaurant_info';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -28,19 +29,7 @@ export const HomeScreen = ({ navigation }) => {
 
                 }]}>Food<Text style={{ color: myColors.primaryT }}>app</Text></Text>
 
-                {/* <Spacer paddingT={myHeight(0.8)} /> */}
-
-                {/* Morning */}
-                {/* <View style={{ paddingHorizontal: myWidth(3) }}>
-                    <Text style={[styles.textCommon,{
-                        fontSize: myFontSize.body2,
-                        fontFamily: myFonts.bodyBold, 
-
-                    }]}>{`Good Morning ${name}!`}</Text>
-                </View> */}
-
                 <Spacer paddingT={myHeight(1.5)} />
-
                 {/* Search */}
                 <TouchableOpacity activeOpacity={0.8} style={{
                     flexDirection: 'row', alignItems: 'center', width: myWidth(85),
@@ -61,9 +50,11 @@ export const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(3)} />
+
                 {/* Banner */}
                 <Banners />
-                <Spacer paddingT={myHeight(1.5)} />
+
+                <Spacer paddingT={myHeight(2.5)} />
                 {/* CAtegories*/}
                 <View>
                     {/* Categories & see all*/}
@@ -135,7 +126,7 @@ export const HomeScreen = ({ navigation }) => {
 
                 </View>
 
-                <Spacer paddingT={myHeight(2.5)} />
+                <Spacer paddingT={myHeight(3)} />
                 {/* New Arrival  Complete*/}
                 <View>
                     {/* New Arrivals*/}
@@ -164,7 +155,7 @@ export const HomeScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <Spacer paddingT={myHeight(1)} />
+                    <Spacer paddingT={myHeight(1.3)} />
                     {/* Restuarant */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
@@ -174,7 +165,7 @@ export const HomeScreen = ({ navigation }) => {
                             {Restaurants.map((item, i) =>
                                 <TouchableOpacity key={i} activeOpacity={0.95}
                                     onPress={() => navigation.navigate('RestaurantDetail', { item })} >
-                                    <ResturantH item={item} />
+                                    <RestaurantInfo restaurant={item} />
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -182,7 +173,7 @@ export const HomeScreen = ({ navigation }) => {
                     </ScrollView>
                 </View>
 
-                <Spacer paddingT={myHeight(2.5)} />
+                <Spacer paddingT={myHeight(3)} />
                 {/*Nearby Restaurants  Complete*/}
                 <View>
                     {/* Nearby Restaurants*/}
@@ -210,7 +201,7 @@ export const HomeScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <Spacer paddingT={myHeight(1)} />
+                    <Spacer paddingT={myHeight(1.3)} />
                     {/* Restuarant */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
@@ -220,7 +211,7 @@ export const HomeScreen = ({ navigation }) => {
                             {Restaurants.map((item, i) =>
                                 <TouchableOpacity key={i} activeOpacity={0.95}
                                     onPress={() => navigation.navigate('RestaurantDetail', { item })} >
-                                    <ResturantH item={item} />
+                                    <RestaurantInfo restaurant={item} />
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -229,6 +220,7 @@ export const HomeScreen = ({ navigation }) => {
                 </View>
 
 
+                <Spacer paddingT={myHeight(4)} />
             </ScrollView>
 
         </SafeAreaView>
