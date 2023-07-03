@@ -8,6 +8,7 @@ import { StatusBar } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { RestaurantDetail } from './restaurant_detail_screen';
 import { RestaurantMoreDetails } from './rest_more_info_screen';
+import { RestaurantAll } from './res_all_screen';
 
 
 
@@ -40,6 +41,7 @@ export const HomeNavigator = ({ navigation, route }) => {
                 <HomeTAB.Screen component={CategoryFull} name="CategoryFull" />
                 <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
                 <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
+                <HomeTAB.Screen component={RestaurantAll} name="RestaurantAll" />
 
             </HomeTAB.Navigator>
         </>

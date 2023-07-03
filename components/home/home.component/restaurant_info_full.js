@@ -3,22 +3,20 @@ import React from 'react'
 import { Spacer, myHeight, myWidth } from "../../common"
 import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
-export const RestaurantInfo = ({ restaurant }) => {
-
-
+export const RestaurantInfoFull = ({ restaurant }) => {
 
     return (
-        <View style={{ paddingBottom: myHeight(1) }}>
+        <View style={{ paddingVertical: myHeight(1.5) }}>
             <View style={styles.container}>
                 {/* Image & Others*/}
 
                 <ImageBackground style={{
-                    height: myHeight(14.5),
+                    height: myHeight(16),
                     width: '100%',
                     resizeMode: 'cover',
                     // borderRadius: myWidth(2.5),
-                    borderTopRightRadius: myWidth(2.5),
-                    borderTopLeftRadius: myWidth(2.5),
+                    borderTopRightRadius: myWidth(3.5),
+                    borderTopLeftRadius: myWidth(3.5),
                     overflow: 'hidden'
                 }} source={restaurant.images[0]}>
 
@@ -52,6 +50,8 @@ export const RestaurantInfo = ({ restaurant }) => {
                     </View>
 
                 </ImageBackground>
+
+
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* Icon */}
                     <View style={styles.containerIcon}>
@@ -59,25 +59,28 @@ export const RestaurantInfo = ({ restaurant }) => {
                     </View>
 
                     {/* Rating & Delivery Time */}
-                    <View style={{ paddingTop: myHeight(0.2), flexDirection: 'row', alignItems: "center" }}>
+                    <View style={{
+                        paddingTop: myHeight(0.5), flexDirection: 'row',
+                        alignItems: "center"
+                    }}>
                         <Image style={styles.imageStar} source={require('../../assets/home_main/home/star.png')} />
 
-                        <Spacer paddingEnd={myWidth(1.2)} />
+                        <Spacer paddingEnd={myWidth(1.5)} />
                         <Text style={styles.textRating}>{restaurant.rating}</Text>
 
-                        <Spacer paddingEnd={myWidth(3)} />
+                        <Spacer paddingEnd={myWidth(5)} />
                         {/* Bike */}
                         <Image style={{
-                            height: myHeight(2.7),
-                            width: myHeight(2.7),
+                            height: myHeight(3.2),
+                            width: myHeight(3.2),
                             resizeMode: 'contain',
                             tintColor: myColors.primaryT
                         }} source={require('../../assets/home_main/home/bike.png')} />
 
-                        <Spacer paddingEnd={myWidth(0.8)} />
+                        <Spacer paddingEnd={myWidth(1.2)} />
                         {/* Time */}
                         <Text numberOfLines={2} style={{
-                            fontSize: myFontSize.body2,
+                            fontSize: myFontSize.xBody,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
                             letterSpacing: myLetSpacing.common,
@@ -86,11 +89,11 @@ export const RestaurantInfo = ({ restaurant }) => {
                         }}
                         >{restaurant.delivery} min</Text>
 
-                        <Spacer paddingEnd={myWidth(1.5)} />
+                        <Spacer paddingEnd={myWidth(3)} />
                     </View>
                 </View>
 
-                <Spacer paddingT={myHeight(0.4)} />
+                <Spacer paddingT={myHeight(0.2)} />
                 {/* Detals */}
                 <View style={{ paddingHorizontal: myWidth(2) }}>
 
@@ -98,7 +101,6 @@ export const RestaurantInfo = ({ restaurant }) => {
                     <Text numberOfLines={1}
                         style={styles.textName}>{restaurant.name}</Text>
 
-                    <Spacer paddingT={myHeight(0.3)} />
                     {/* Location */}
                     <View style={{ flexDirection: 'row', }}>
                         <Image style={styles.imageLoc}
@@ -106,7 +108,7 @@ export const RestaurantInfo = ({ restaurant }) => {
                         <Spacer paddingEnd={myWidth(0.8)} />
                         <Text numberOfLines={1} style={[styles.textCommon, {
                             flex: 1,
-                            fontSize: myFontSize.small2,
+                            fontSize: myFontSize.body2,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
 
@@ -125,12 +127,12 @@ export const RestaurantInfo = ({ restaurant }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: myWidth(62),
+        width: myWidth(92),
         backgroundColor: myColors.background,
-        marginEnd: myWidth(5.5),
         overflow: 'hidden',
-        borderRadius: myWidth(2.5),
+        borderRadius: myWidth(3.5),
         elevation: 4,
+        alignSelf: 'center',
 
     },
 
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
         // zIndex: 12,
         marginStart: myWidth(4),
         alignSelf: 'flex-start',
-        marginTop: -myHeight(3),
+        marginTop: -myHeight(3.5),
     },
     containerVeri: {
         position: 'absolute',
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
 
     //Text
     textName: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.xxBody,
         fontFamily: myFonts.heading,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     },
     textRating: {
         // flex: 1,
-        fontSize: myFontSize.body2,
+        fontSize: myFontSize.xBody,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
         padding: 0,
     },
     textDeal: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body3,
         fontFamily: myFonts.bodyBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
@@ -237,8 +239,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageIcon: {
-        height: myHeight(5.5),
-        width: myHeight(5.5),
+        height: myHeight(7),
+        width: myHeight(7),
         borderRadius: myHeight(4),
         resizeMode: 'contain',
         borderWidth: myHeight(0.2),
@@ -250,8 +252,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageStar: {
-        height: myHeight(1.9),
-        width: myHeight(1.9),
+        height: myHeight(2.2),
+        width: myHeight(2.2),
         tintColor: myColors.primaryT,
         resizeMode: 'contain',
     },
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageLoc: {
-        width: myHeight(2), height: myHeight(2),
+        width: myHeight(2.3), height: myHeight(2.3),
         resizeMode: 'contain', marginTop: myHeight(0.2)
 
     }

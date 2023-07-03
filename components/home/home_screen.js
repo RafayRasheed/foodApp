@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Te
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
-import { Categories, Restaurants, bookNow, category, dailySpecial, nearDrivers, notifications, rewards } from './home_data'
+import { Categories, Restaurants, } from './home_data'
 import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
 import { RestaurantInfo } from './home.component/restaurant_info';
@@ -98,7 +98,7 @@ export const HomeScreen = ({ navigation }) => {
                                     backgroundColor: myColors.background,
                                     // backgroundColor:myColors.primaryL,  
                                     padding: myHeight(0.8), elevation: 8
-                                }}>
+                                }} onPress={() => navigation.navigate('RestaurantAll', { name: item.name, restaurants: Restaurants })}>
                                     <View style={{
                                         height: myHeight(5), width: myHeight(5), borderRadius: myHeight(5),
                                         backgroundColor: '#00000008',
@@ -140,7 +140,7 @@ export const HomeScreen = ({ navigation }) => {
                         <TouchableOpacity style={{
                             flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                             paddingStart: myWidth(2)
-                        }} activeOpacity={0.6} onPress={() => null}>
+                        }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'New Arrivals', restaurants: Restaurants })}>
 
                             <Text
                                 style={[styles.textCommon, {
@@ -186,7 +186,7 @@ export const HomeScreen = ({ navigation }) => {
                         <TouchableOpacity style={{
                             flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                             paddingStart: myWidth(2)
-                        }} activeOpacity={0.6} onPress={() => null}>
+                        }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'Nearby Restaurants', restaurants: Restaurants })}>
 
                             <Text
                                 style={[styles.textCommon, {

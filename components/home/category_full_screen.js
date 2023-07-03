@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
-import { Categories, offers } from "./home_data";
+import { Categories, Restaurants, offers } from "./home_data";
 import { Spacer, myHeight, myWidth } from "../common";
 
 export const CategoryFull = ({ navigation }) => {
@@ -41,13 +41,17 @@ export const CategoryFull = ({ navigation }) => {
             <Spacer paddingT={myHeight(1.5)} />
             {/* Search */}
             <View style={{
-                flexDirection: 'row', alignItems: 'center', width: myWidth(90),
-                backgroundColor: myColors.divider, alignSelf: 'center', paddingVertical: myHeight(1.3),
+                flexDirection: 'row', alignItems: 'center', width: myWidth(92),
+                backgroundColor: myColors.divider, alignSelf: 'center',
+                paddingVertical: myHeight(0.8),
                 borderRadius: myHeight(1.2)
             }}>
                 <Spacer paddingEnd={myWidth(4)} />
                 <Image style={{
-                    height: myHeight(2.2), width: myHeight(2.2), resizeMode: 'contain', tintColor: myColors.offColor
+                    height: myHeight(2.2),
+                    width: myHeight(2.2),
+                    resizeMode: 'contain',
+                    tintColor: myColors.textL4
                 }} source={require('../assets/home_main/home/search.png')} />
                 <Spacer paddingEnd={myWidth(3)} />
 
@@ -67,10 +71,12 @@ export const CategoryFull = ({ navigation }) => {
                 />
             </View>
             <Spacer paddingT={myHeight(1.5)} />
+            <View style={{
+                borderTopWidth: myHeight(0.1),
+                borderColor: myColors.offColor, width: "100%"
+            }} />
 
             <ScrollView showsVerticalScrollIndicator={false}>
-
-
                 {/* Categories */}
                 <View style={{
                     flexWrap: 'wrap', flexDirection: 'row',
@@ -81,9 +87,10 @@ export const CategoryFull = ({ navigation }) => {
 
                     {filterList.map((item, i) =>
                         <TouchableOpacity key={i} activeOpacity={0.95} style={{
-                            flexBasis: '43%', marginHorizontal: myWidth(3), marginVertical: myHeight(1),
+                            flexBasis: '43%', marginHorizontal: myWidth(3),
+                            marginVertical: myHeight(1),
                             justifyContent: 'center', alignItems: 'center'
-                        }} onPress={() => null}>
+                        }} onPress={() => navigation.navigate('RestaurantAll', { name: item.name, restaurants: Restaurants })}>
                             <View style={{ paddingBottom: myHeight(1), }}>
                                 <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: myColors.background, elevation: 3, borderRadius: myWidth(5), width: myWidth(43), height: myWidth(36), }}>
                                     <Image style={{

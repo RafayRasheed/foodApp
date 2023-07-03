@@ -91,7 +91,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                             includeFontPadding: false,
                             padding: 0
                         }}
-                        >Delivery in {restaurant.delivery}</Text>
+                        >Delivery in {restaurant.delivery} minutes</Text>
 
                         <Spacer paddingEnd={myWidth(1)} />
                         {/* Open */}
