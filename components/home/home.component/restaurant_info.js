@@ -125,9 +125,9 @@ export const RestaurantInfo = ({ restaurant }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: myWidth(62),
+        width: myWidth(72),
         backgroundColor: myColors.background,
-        marginEnd: myWidth(5.5),
+        marginEnd: myWidth(5),
         overflow: 'hidden',
         borderRadius: myWidth(2.5),
         elevation: 4,
