@@ -71,10 +71,10 @@ export const CategoryFull = ({ navigation }) => {
                 />
             </View>
             <Spacer paddingT={myHeight(1.5)} />
-            <View style={{
+            {/* <View style={{
                 borderTopWidth: myHeight(0.1),
                 borderColor: myColors.offColor, width: "100%"
-            }} />
+            }} /> */}
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Categories */}
