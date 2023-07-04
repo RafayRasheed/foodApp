@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     container: {
         width: myWidth(72),
         backgroundColor: myColors.background,
-        marginEnd: myWidth(5),
+        marginEnd: myWidth(5.1),
         overflow: 'hidden',
         borderRadius: myWidth(2.5),
         elevation: 4,
