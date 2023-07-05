@@ -3,14 +3,7 @@ import {
   Image,
   View,
   Dimensions,
-  Animated,
   StyleSheet,
-  Platform,
-  StatusBar,
-  SafeAreaView,
-  Text,
-  Modal,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 // import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
@@ -23,40 +16,49 @@ const wid = Dimensions.get('window').width;
 export const ImagesShortViewer = ({ navigate, images }) => {
   const i = 0;
   const [index, setIndex] = useState(i);
-  // const [ratio, setRatio] = useState(1)
-  const image = images[index];
-  const length = images.length
 
+  function handleScroll(event) {
+    const a = (event.nativeEvent.contentOffset.x) / myWidth(100)
+    let b = Math.round(a)
+
+    if (index != b && b < images.length) {
+      setIndex(b)
+    }
+  }
 
   return (
 
     <View style={styles.container}>
-      <ScrollView horizontal={true}
+      <ScrollView
+        onScroll={handleScroll}
+
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1, }}
+        horizontal
+        pagingEnabled
+        snapToInterval={myWidth((100))}
+        scrollEventThrottle={1}
+        //  style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, flexDirection: 'row' }}
       >
-
-
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          {
-            images.map((image, i) =>
-              <View key={i} style={{ width: '100%', }}>
-                <Image
-                  // onLoadEnd={handlePressIn}
-                  style={{
-                    width: '100%',
-                    height: myHeight(28),
-                    resizeMode: "cover",
-                    borderBottomLeftRadius: myWidth(5),
-                    borderBottomRightRadius: myWidth(5),
-                  }}
-                  source={image}
-                />
-              </View>
-            )
-          }
-        </View>
+        {
+          images.map((image, i) =>
+            <View key={i} style={{ width: myWidth(100), }}>
+              <Image
+                // onLoadEnd={handlePressIn}
+                style={{
+                  width: '100%',
+                  height: myHeight(28),
+                  resizeMode: "cover",
+                  borderBottomLeftRadius: myWidth(5),
+                  borderBottomRightRadius: myWidth(5),
+                }}
+                source={image}
+              />
+            </View>
+          )
+        }
       </ScrollView>
+
       {/* Dot */}
       <View style={{
         position: 'absolute', alignSelf: 'center', flexDirection: 'row',
@@ -78,7 +80,6 @@ export const ImagesShortViewer = ({ navigate, images }) => {
           )
         }
       </View>
-
     </View>
 
 
