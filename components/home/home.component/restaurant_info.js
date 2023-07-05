@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     imageStar: {
         height: myHeight(1.7),
         width: myHeight(1.7),
-        tintColor: myColors.primaryT,
+        tintColor: myColors.st,
         resizeMode: 'contain',
     },
     imageHeart: {
