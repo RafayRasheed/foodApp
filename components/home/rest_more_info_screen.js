@@ -50,21 +50,32 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(1.5)} />
-                {/* name */}
-                <Text
-                    numberOfLines={2}
-                    style={[
-                        styles.textCommon,
-                        {
-                            paddingHorizontal: myWidth(4),
-                            fontSize: myFontSize.medium,
-                            fontFamily: myFonts.heading,
-                        },
-                    ]}>
-                    {restaurant.name}
-                </Text>
 
-                <Spacer paddingT={myHeight(2)} />
+                <View style={{ paddingHorizontal: myWidth(4), }}>
+                    {/* name */}
+                    <Text
+                        numberOfLines={2}
+                        style={[
+                            styles.textCommon,
+                            {
+                                fontSize: myFontSize.medium,
+                                fontFamily: myFonts.heading,
+                            },
+                        ]}>
+                        {restaurant.name}
+                    </Text>
+
+                    <Spacer paddingT={myHeight(0.5)} />
+                    {/* Type */}
+                    <Text numberOfLines={1} style={[styles.textCommon, {
+                        fontSize: myFontSize.body3,
+                        fontFamily: myFonts.bodyBold,
+                        color: myColors.primaryT,
+
+                    }]}>{restaurant.dineIn && '● Dine In        '}{restaurant.takeAway && '● Take Away       '}{restaurant.homeDelivery && '● Delivery'}</Text>
+                </View>
+
+                <Spacer paddingT={myHeight(2.5)} />
                 {/* Divider */}
                 <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
 

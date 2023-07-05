@@ -58,28 +58,23 @@ export const RestaurantInfoFull = ({ restaurant }) => {
                         <Image style={styles.imageIcon} source={restaurant.icon} />
                     </View>
 
-                    {/* Rating & Delivery Time */}
+
+                    {/* Types */}
                     <View style={{
                         paddingTop: myHeight(0.5), flexDirection: 'row',
                         alignItems: "center"
                     }}>
-                        <Image style={styles.imageStar} source={require('../../assets/home_main/home/star.png')} />
-
-                        <Spacer paddingEnd={myWidth(1.5)} />
-                        <Text style={styles.textRating}>{restaurant.rating}</Text>
-
-                        <Spacer paddingEnd={myWidth(5)} />
                         {/* Bike */}
-                        <Image style={{
+                        {/* <Image style={{
                             height: myHeight(3.2),
                             width: myHeight(3.2),
                             resizeMode: 'contain',
                             tintColor: myColors.primaryT
-                        }} source={require('../../assets/home_main/home/bike.png')} />
+                        }} source={require('../../assets/home_main/home/bike.png')} /> */}
 
                         <Spacer paddingEnd={myWidth(1.2)} />
                         {/* Time */}
-                        <Text numberOfLines={2} style={{
+                        {/* <Text numberOfLines={2} style={{
                             fontSize: myFontSize.xBody,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
@@ -87,19 +82,42 @@ export const RestaurantInfoFull = ({ restaurant }) => {
                             includeFontPadding: false,
                             padding: 0
                         }}
-                        >{restaurant.delivery} min</Text>
+                        >{restaurant.delivery} min</Text> */}
+                        {/* Type */}
+
+                        <Text numberOfLines={1} style={[styles.textCommon, {
+                            fontSize: myFontSize.body,
+                            fontFamily: myFonts.bodyBold,
+                            color: myColors.primaryT,
+
+                        }]}>{restaurant.dineIn && '● Dine In    '}{restaurant.takeAway && '● Take Away    '}{restaurant.homeDelivery && '● Delivery'}</Text>
 
                         <Spacer paddingEnd={myWidth(3)} />
                     </View>
                 </View>
 
-                <Spacer paddingT={myHeight(0.2)} />
+                <Spacer paddingT={myHeight(0.5)} />
                 {/* Detals */}
                 <View style={{ paddingHorizontal: myWidth(2) }}>
 
-                    {/* Name */}
-                    <Text numberOfLines={1}
-                        style={styles.textName}>{restaurant.name}</Text>
+                    {/* Name & Rating */}
+                    <View style={{ flexDirection: 'row', }}>
+
+                        {/* Name */}
+                        <Text numberOfLines={1}
+                            style={styles.textName}>{restaurant.name}</Text>
+
+                        <Spacer paddingEnd={myWidth(1)} />
+
+                        {/* Rating */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image style={styles.imageStar} source={require('../../assets/home_main/home/star.png')} />
+
+                            <Spacer paddingEnd={myWidth(1.6)} />
+                            <Text style={styles.textRating}>{restaurant.rating}</Text>
+                        </View>
+                    </View>
+                    <Spacer paddingT={myHeight(0.3)} />
 
                     {/* Location */}
                     <View style={{ flexDirection: 'row', }}>
@@ -108,7 +126,7 @@ export const RestaurantInfoFull = ({ restaurant }) => {
                         <Spacer paddingEnd={myWidth(0.8)} />
                         <Text numberOfLines={1} style={[styles.textCommon, {
                             flex: 1,
-                            fontSize: myFontSize.body2,
+                            fontSize: myFontSize.body,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
 
@@ -178,6 +196,7 @@ const styles = StyleSheet.create({
 
     //Text
     textName: {
+        flex: 1,
         fontSize: myFontSize.xxBody,
         fontFamily: myFonts.heading,
         color: myColors.text,
@@ -252,8 +271,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageStar: {
-        height: myHeight(2.2),
-        width: myHeight(2.2),
+        height: myHeight(2.1),
+        width: myHeight(2.1),
         tintColor: myColors.primaryT,
         resizeMode: 'contain',
     },
@@ -263,7 +282,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageLoc: {
-        width: myHeight(2.3), height: myHeight(2.3),
+        width: myHeight(2.2), height: myHeight(2.2),
         resizeMode: 'contain', marginTop: myHeight(0.2)
 
     }

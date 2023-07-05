@@ -1,5 +1,5 @@
 import React from "react"
-import {Text,View, Image, StyleSheet } from "react-native"
+import { Text, View, Image, StyleSheet } from "react-native"
 import { Spacer, myHeight, myWidth } from "../../common"
 import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
@@ -7,37 +7,40 @@ import { myColors } from "../../../ultils/myColors"
 
 export const ResturantH = ({ item }) => {
     return (
-        <View style={{paddingBottom:myHeight(1.3),}}>
+        <View style={{ paddingBottom: myHeight(1.3), }}>
 
-        <View style={styles.container}>
+            <View style={styles.container}>
                 <Image style={styles.image} source={item.images[0]} />
-                {/* Text Portion */} 
-                <View style={{paddingHorizontal:myHeight(0.7)}}>
+                {/* Text Portion */}
+                <View style={{ paddingHorizontal: myHeight(0.7) }}>
 
-                    <Spacer paddingT={myHeight(1)}/>
-                    <Text numberOfLines={1} 
-                    style={[styles.textCommon,{
-                        fontSize: myFontSize.body2,
-                        fontFamily: myFonts.bodyBold, 
+                    <Spacer paddingT={myHeight(1)} />
+                    <Text numberOfLines={1}
+                        style={[styles.textCommon, {
+                            fontSize: myFontSize.body2,
+                            fontFamily: myFonts.bodyBold,
 
-                    }]}>{item.name}</Text>
-                    <Spacer paddingT={myHeight(0.2)}/>
+                        }]}>{item.name}</Text>
+                    <Spacer paddingT={myHeight(0.2)} />
 
+                    {/* Location */}
                     <View style={styles.containerLocation}>
                         <Image style={styles.imageLoc}
                             source={require('../../assets/home_main/home/loc.png')} />
-                            <Spacer paddingEnd={myWidth(0.8)}/>
-                        <Text numberOfLines={2} style={[styles.textCommon,{
-                            flex:1,
-                            fontSize: myFontSize.small2, 
-                            fontFamily: myFonts.body, 
+                        <Spacer paddingEnd={myWidth(0.8)} />
+                        <Text numberOfLines={2} style={[styles.textCommon, {
+                            flex: 1,
+                            fontSize: myFontSize.small2,
+                            fontFamily: myFonts.body,
                             color: myColors.text,
 
                         }]}>{item.location}</Text>
                     </View>
+
+
                 </View>
 
-        </View>
+            </View>
         </View>
 
     )
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
         borderRadius: myWidth(2.5),
         backgroundColor: myColors.background,
         // justifyContent:'space-between',
-        margin:1,
+        margin: 1,
         elevation: 3,
     },
 
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.medium, fontSize: myFontSize.tiny, color: myColors.text,
         width: '89%'
     },
-    textCommon:{
+    textCommon: {
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         borderRadius: myWidth(3), resizeMode: 'cover'
     },
     imageLoc: {
-        width:myHeight(2), height: myHeight(2),
+        width: myHeight(2), height: myHeight(2),
         resizeMode: 'contain', marginTop: myHeight(0.2)
 
     }

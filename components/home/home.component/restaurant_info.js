@@ -60,23 +60,18 @@ export const RestaurantInfo = ({ restaurant }) => {
 
                     {/* Rating & Delivery Time */}
                     <View style={{ paddingTop: myHeight(0.2), flexDirection: 'row', alignItems: "center" }}>
-                        <Image style={styles.imageStar} source={require('../../assets/home_main/home/star.png')} />
 
-                        <Spacer paddingEnd={myWidth(1.2)} />
-                        <Text style={styles.textRating}>{restaurant.rating}</Text>
-
-                        <Spacer paddingEnd={myWidth(3)} />
                         {/* Bike */}
-                        <Image style={{
+                        {/* <Image style={{
                             height: myHeight(2.7),
                             width: myHeight(2.7),
                             resizeMode: 'contain',
                             tintColor: myColors.primaryT
-                        }} source={require('../../assets/home_main/home/bike.png')} />
+                        }} source={require('../../assets/home_main/home/bike.png')} /> */}
 
                         <Spacer paddingEnd={myWidth(0.8)} />
                         {/* Time */}
-                        <Text numberOfLines={2} style={{
+                        {/* <Text numberOfLines={2} style={{
                             fontSize: myFontSize.body2,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
@@ -84,7 +79,15 @@ export const RestaurantInfo = ({ restaurant }) => {
                             includeFontPadding: false,
                             padding: 0
                         }}
-                        >{restaurant.delivery} min</Text>
+                        >{restaurant.delivery} min</Text> */}
+                        {/* Type */}
+                        <Text numberOfLines={1} style={[styles.textCommon, {
+                            fontSize: myFontSize.xSmall,
+                            fontFamily: myFonts.bodyBold,
+                            color: myColors.primaryT,
+
+                        }]}>{restaurant.dineIn && '● Dine In    '}{restaurant.takeAway && '● Take Away    '}{restaurant.homeDelivery && '● Delivery'}</Text>
+
 
                         <Spacer paddingEnd={myWidth(1.5)} />
                     </View>
@@ -94,11 +97,27 @@ export const RestaurantInfo = ({ restaurant }) => {
                 {/* Detals */}
                 <View style={{ paddingHorizontal: myWidth(2) }}>
 
-                    {/* Name */}
-                    <Text numberOfLines={1}
-                        style={styles.textName}>{restaurant.name}</Text>
+                    {/* Name & Rating */}
+                    <View style={{ flexDirection: 'row', }}>
 
-                    <Spacer paddingT={myHeight(0.3)} />
+                        {/* Name */}
+                        <Text numberOfLines={1}
+                            style={styles.textName}>{restaurant.name}</Text>
+
+                        <Spacer paddingEnd={myWidth(1)} />
+
+                        {/* Rating */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image style={styles.imageStar} source={require('../../assets/home_main/home/star.png')} />
+
+                            <Spacer paddingEnd={myWidth(1.2)} />
+                            <Text style={styles.textRating}>{restaurant.rating}</Text>
+                        </View>
+                    </View>
+
+                    {/* <Spacer paddingT={myHeight(0.3)} /> */}
+
+
                     {/* Location */}
                     <View style={{ flexDirection: 'row', }}>
                         <Image style={styles.imageLoc}
@@ -106,12 +125,13 @@ export const RestaurantInfo = ({ restaurant }) => {
                         <Spacer paddingEnd={myWidth(0.8)} />
                         <Text numberOfLines={1} style={[styles.textCommon, {
                             flex: 1,
-                            fontSize: myFontSize.small2,
+                            fontSize: myFontSize.small3,
                             fontFamily: myFonts.bodyBold,
                             color: myColors.text,
 
                         }]}>{restaurant.location}</Text>
                     </View>
+
 
                     {/* restaurants */}
                     {/* <Text numberOfLines={1} style={styles.textrestaurants}>{restaurants}</Text> */}
@@ -125,7 +145,8 @@ export const RestaurantInfo = ({ restaurant }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: myHeight(14.5) * 2.72,
+        width: myHeight(14.5) * 2.85,
+        // width: myHeight(14.5) + myWidth(52),
         backgroundColor: myColors.background,
         marginEnd: myWidth(5.1),
         overflow: 'hidden',
@@ -142,7 +163,7 @@ const styles = StyleSheet.create({
         // zIndex: 12,
         marginStart: myWidth(4),
         alignSelf: 'flex-start',
-        marginTop: -myHeight(3),
+        marginTop: -myHeight(3.3),
     },
     containerVeri: {
         position: 'absolute',
@@ -176,6 +197,7 @@ const styles = StyleSheet.create({
 
     //Text
     textName: {
+        flex: 1,
         fontSize: myFontSize.xBody,
         fontFamily: myFonts.heading,
         color: myColors.text,
@@ -237,8 +259,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageIcon: {
-        height: myHeight(5.5),
-        width: myHeight(5.5),
+        height: myHeight(6),
+        width: myHeight(6),
         borderRadius: myHeight(4),
         resizeMode: 'contain',
         borderWidth: myHeight(0.2),
@@ -250,8 +272,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageStar: {
-        height: myHeight(1.9),
-        width: myHeight(1.9),
+        height: myHeight(1.7),
+        width: myHeight(1.7),
         tintColor: myColors.primaryT,
         resizeMode: 'contain',
     },

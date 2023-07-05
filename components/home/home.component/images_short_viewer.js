@@ -45,7 +45,7 @@ export const ImagesShortViewer = ({ navigate, images }) => {
                   // onLoadEnd={handlePressIn}
                   style={{
                     width: '100%',
-                    height: myHeight(30),
+                    height: myHeight(28),
                     resizeMode: "cover",
                     borderBottomLeftRadius: myWidth(5),
                     borderBottomRightRadius: myWidth(5),

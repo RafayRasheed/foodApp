@@ -44,7 +44,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
       <ImageBackground style={{
         width: '100%',
-        height: myHeight(30),
+        height: myHeight(28),
 
         borderBottomLeftRadius: myWidth(4),
         borderBottomRightRadius: myWidth(4),
@@ -343,6 +343,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
       {/* HAnde items */}
       <ScrollView
         scrollEnabled
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           flexGrow: 1,
           paddingHorizontal: myWidth(4)
