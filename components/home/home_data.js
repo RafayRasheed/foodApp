@@ -211,9 +211,10 @@ export const Restaurants = [
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 300',
+            description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger1',
-            images: [require('../assets/home_main/home/category/fast2.png')],
+            images: [require('../assets/home_main/home/category/fast2.png'), require('../assets/home_main/home/res.png')],
             rating: '3.0',
             noOfRatings: '100',
             likes: '10',
@@ -221,18 +222,9 @@ export const Restaurants = [
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 3000',
+            description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger100',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 500',
-            id: 'Resturant1Pizza2',
-            name: 'Beaf Burger2',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
             noOfRatings: '100',
@@ -247,6 +239,7 @@ export const Restaurants = [
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger1',
             price: 'Rs 600',
+            description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             name: 'Beaf Burger3',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
@@ -257,6 +250,7 @@ export const Restaurants = [
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger2',
             price: 'Rs 700',
+            description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             name: 'Beaf Burger4',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
@@ -272,174 +266,5 @@ export const Restaurants = [
   },
 
 
-  {
-    id: 'Resturant1',
-    name: 'Ambrosia Hotel',
-    description: 'A restaurant is a business that. Meals are generally served and eaten on the premises, but many restaurants also offer take-out and food delivery services',
-    dineIn: false,
-    takeAway: false,
-    homeDelivery: true,
-    icon: require('../assets/home_main/home/resI.jpg'),
-    images: [
-      require('../assets/home_main/home/res.png'),
-      require('../assets/home_main/home/salan.png'),
-      require('../assets/home_main/home/res.png'),
-
-    ],
-    location: '538 PIB Colony Main Rd, PIB Colony, Karachi',
-    locationLink: 'https://www.google.com/maps/place/Noor+Cafe+%26+Grill/@24.8919439,67.0506977,17z/data=!3m1!4b1!4m6!3m5!1s0x3eb33f1d8be21b51:0x9170a92f5a4585f0!8m2!3d24.8919391!4d67.0532726!16s%2Fg%2F11gnhw_llt?entry=ttu',
-    delivery: '15',
-    deliveryCharges: 'Rs 120',
-    rating: '3.0',
-    noOfRatings: '100',
-    likes: '10',
-    views: '1000',
-    reviews: [
-      {
-        name: "John",
-        rating: 5,
-        date: '20/5/2019',
-        review: "I had an incredible dining expecious, and the presentation was top-notch. The staff was friendly and attentive, ensuring that everything was perfect. I highly recommend this place for a memorable culinary experience."
-      },
-      {
-        name: "Emily",
-        review: "This restaurant is a hidden . Each dish is bursting with flavor and beautifully plated. The service is impeccable, with knowledgeable servers who are passionate about the menu. I can't wait to go back!",
-        rating: 4,
-        date: '20/5/2009',
-      },
-      {
-
-        rating: 5,
-        date: '20/5/2019',
-        name: "Michael",
-        review: "If you're a seafood lover, this place is a must-visit. The selection of fresh seafood is incredible, and the flavors are out of this world. The restaurant has a relaxed atmosphere, and the staff is welcoming. Be sure to try their signature crab dish – it's divine!"
-      },
-      {
-
-        rating: 3,
-        date: '20/5/2019',
-        name: "Sarah",
-        review: "This restaurant is a fantastic fusion spot. The combination of flavors from different cuisines is truly remarkable. The dishes are inventive and beautifully executed. The staff is friendly, and the service is prompt. I left this place feeling satisfied and impressed."
-      },
-      {
-
-        rating: 5,
-        date: '20/5/2019',
-        name: "David",
-        review: "This is a vegetarian's paradise. The menu offers a wide range of flavorful and wholesome vegetarian options. The ingredients are fresh, and the dishes are prepared with care. The restaurant has a peaceful atmosphere, making it a perfect place to unwind."
-      },
-      {
-
-        rating: 2,
-        date: '20/5/2019',
-        name: "Jennifer",
-        review: "This is the go-to place for burger enthusiasts. The burgers are juicy and packed with flavor. The menu offers a variety of options to cater to different tastes. The staff is friendly and attentive, ensuring a pleasant dining experience. Don't forget to try their sweet potato fries!"
-      },
-      {
-
-        rating: 5,
-        date: '25/9/2019',
-        name: "Daniel",
-        review: "This is my favorite sushi spot in town. The sushi rolls are always fresh and delicious. The chefs are skilled and take great pride in their creations. The restaurant has a cozy and inviting atmosphere. If you're a sushi lover, this place won't disappoint."
-      },
-      {
-
-        rating: 1,
-        date: '20/5/2009',
-        name: "Olivia",
-        review: "This Italian restaurant captures the essence of Italy. The pasta dishes are cooked to perfection, and the flavors are rich and satisfying. The restaurant has a warm and welcoming ambiance, and the staff is attentive. Save room for their tiramisu – it's heavenly!"
-      },
-      {
-
-        rating: 5,
-        date: '20/5/2019',
-        name: "Ben",
-        review: "Taco Fiesta is a vibrant and fun Mexican restaurant. The tacos are bursting with flavor and made with fresh ingredients. The menu offers a variety of options to suit different preferences. The staff is friendly and provides excellent service. Don't miss their homemade guacamole!"
-      },
-      {
-        rating: 5,
-        date: '01/1/2009',
-        name: "Sophia",
-        review: "The Breakfast Club is the ultimate breakfast spot. The menu has a wide range of options, from classic favorites to innovative dishes. The food is always delicious, and the portions are generous. The staff is efficient, ensuring a quick and satisfying start to the day."
-      }
-    ],
-    timmings: [
-      {
-        day: 'Sunday',
-        times: ["9:00 AM - 10:19 AM . Morning Menu", "10:20 AM - 11:59 PM . Afternoon Menu", "12:00 AM - 01:30 PM . Afternoon Menu"]
-      },
-      {
-        day: 'Monday - Saturday',
-        times: ["9:00 AM - 10:19 AM . Morning Menu", "10:20 AM - 11:59 PM . Afternoon Menu", "12:00 AM - 01:30 PM . Afternoon Menu"]
-      },
-    ],
-
-    foodCategory: [
-      {
-        name: 'Deals',
-        catName: 'Fast Food',
-        items: [
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 300',
-            id: 'Resturant1Pizza1',
-            name: 'Beaf Burger1',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 3000',
-            id: 'Resturant1Pizza1',
-            name: 'Beaf Burger100',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 500',
-            id: 'Resturant1Pizza2',
-            name: 'Beaf Burger2',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-        ],
-      },
-      {
-        name: 'Burger',
-        items: [
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            id: 'Resturant1Burger1',
-            price: 'Rs 600',
-            name: 'Beaf Burger3',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-          {
-            resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            id: 'Resturant1Burger2',
-            price: 'Rs 700',
-            name: 'Beaf Burger4',
-            images: [require('../assets/home_main/home/category/fast2.png')],
-            rating: '3.0',
-            noOfRatings: '100',
-            likes: '10',
-          },
-        ],
-      },
-
-
-
-    ],
-  },
 
 ];
