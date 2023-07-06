@@ -12,15 +12,22 @@ import { ImagesShortViewer } from './home.component/images_short_viewer';
 import Collapsible from 'react-native-collapsible';
 import { Stars } from './home.component/star';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
+import { Rating } from './home.component/rating';
 
 export const RestaurantMoreDetails = ({ navigation, route }) => {
     const { restaurant } = route.params;
     const [timmingClose, setTimingClose] = useState(true)
+
+
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
-
     const [review, setReview] = useState(null)
-    const [reviewUpdate, setReviewUpdate] = useState(null)
+    function hideModal() {
+        setRatinModal(false)
+    }
+    function onDone() {
+        hideModal()
+    }
 
     return (
         <>
@@ -51,8 +58,8 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
 
                 <Spacer paddingT={myHeight(1.5)} />
 
+                {/* name */}
                 <View style={{ paddingHorizontal: myWidth(4), }}>
-                    {/* name */}
                     <Text
                         numberOfLines={2}
                         style={[
@@ -407,15 +414,6 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                             paddingHorizontal: myWidth(8), width: myWidth(85),
                             backgroundColor: myColors.background, borderRadius: myWidth(6)
                         }}>
-                        {/* Rate Content */}
-                        {/* <Spacer paddingT={myHeight(1.5)} />
-
-                        <Text numberOfLines={2} style={[styles.textCommon, {
-                            fontSize: myFontSize.medium,
-                            fontFamily: myFonts.bodyBold,
-                            alignSelf: 'center'
-
-                        }]}>Rate Us</Text> */}
 
                         {/* <Spacer paddingT={myHeight(3)} /> */}
                         <Image
@@ -428,6 +426,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                                 marginTop: -myHeight(5),
                                 borderColor: myColors.primaryT,
                                 alignSelf: 'center',
+                                backgroundColor: myColors.background,
                             }}
                             source={restaurant.icon}
                         />
@@ -520,30 +519,10 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                         />
 
                         <Spacer paddingT={myHeight(2.5)} />
-                        {/* <TouchableOpacity activeOpacity={0.8} onPress={null}
-                            style={{
-                                backgroundColor: myColors.primaryT,
-                                borderRadius: myHeight(1),
-                                paddingVertical: myHeight(1),
-                                alignItems: 'center',
-                                width: '100%', justifyContent: 'center',
-                            }}>
 
-                            <Text style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body,
-                                    fontFamily: myFonts.heading,
-                                    color: myColors.background,
-                                }
-                            ]}>Done</Text>
-
-                        </TouchableOpacity> */}
+                        {/* Cancle & Done Buttons */}
                         <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
-                            <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                                setRatinModal(false)
-
-                            }}>
+                            <TouchableOpacity activeOpacity={0.8} onPress={hideModal}>
                                 <Text style={[
                                     styles.textCommon,
                                     {
@@ -555,9 +534,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                                 ]}>Cancel</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                                setRatinModal(false)
-                            }}>
+                            <TouchableOpacity activeOpacity={0.8} onPress={onDone}>
                                 <Text style={[
                                     styles.textCommon,
                                     {
