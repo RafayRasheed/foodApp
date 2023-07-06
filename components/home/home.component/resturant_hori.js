@@ -15,6 +15,7 @@ export const ResturantH = ({ item }) => {
                 <View style={{ paddingHorizontal: myHeight(0.7) }}>
 
                     <Spacer paddingT={myHeight(1)} />
+                    {/* Name */}
                     <Text numberOfLines={1}
                         style={[styles.textCommon, {
                             fontSize: myFontSize.body2,

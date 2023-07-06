@@ -357,7 +357,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
 
                       }}
-                      key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item })}>
+                      key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
 
                       <ItemInfo item={item} />
 
@@ -381,7 +381,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
                           style={{
 
                           }}
-                          key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item })}>
+                          key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
 
                           <ItemInfo item={item} />
 

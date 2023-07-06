@@ -17,6 +17,7 @@ import { Rating } from './home.component/rating';
 export const RestaurantMoreDetails = ({ navigation, route }) => {
     const { restaurant } = route.params;
     const [timmingClose, setTimingClose] = useState(true)
+    const [infoClose, setInfoClose] = useState(true)
 
 
     const [RatingModal, setRatinModal] = useState(false)
@@ -74,46 +75,14 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                     <Spacer paddingT={myHeight(0.7)} />
 
                 </View>
-                {/* Divider */}
-                <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.dot, width: "100%" }} />
 
+                <Spacer paddingT={myHeight(0.5)} />
+                {/* Divider */}
+                <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
 
                 <ScrollView showsVerticalScrollIndicator={false}>
-
-                    {/* Type & Description */}
-                    <View style={{ paddingHorizontal: myWidth(4) }}>
-                        <Spacer paddingT={myHeight(0.7)} />
-
-                        {/* Type */}
-                        <Text numberOfLines={1} style={[styles.textCommon, {
-                            fontSize: myFontSize.body3,
-                            fontFamily: myFonts.bodyBold,
-                            color: myColors.primaryT,
-
-                        }]}>{restaurant.dineIn && '● Dine In        '}{restaurant.takeAway && '● Take Away       '}{restaurant.homeDelivery && '● Delivery'}</Text>
-
-                        <Spacer paddingT={myHeight(1)} />
-
-                        {/* Description */}
-                        <Text
-                            style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body,
-                                    fontFamily: myFonts.bodyBold,
-                                    color: myColors.textL4,
-                                },
-                            ]}>
-                            {restaurant.description}
-                        </Text>
-                    </View>
-
-                    <Spacer paddingT={myHeight(1.5)} />
-                    {/* Divider */}
-                    <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
-
                     <Spacer paddingT={myHeight(2)} />
-                    {/* loc & open */}
+                    {/* Delivry & charges */}
                     <View style={{ flexDirection: "row", }}>
                         <View style={{ width: myWidth(15), alignItems: 'center' }}>
                             {/* loc */}
@@ -151,6 +120,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                     </View>
 
                     <Spacer paddingT={myHeight(2)} />
+
                     {/* Divider */}
                     <View style={{
                         borderTopWidth: myHeight(0.13), alignSelf: 'flex-end',
@@ -255,14 +225,15 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                     <Spacer paddingT={myHeight(2)} />
                     {/* clock & open at && go */}
                     <TouchableOpacity activeOpacity={0.85} onPress={() => setTimingClose(!timmingClose)}
-                        style={{ flexDirection: "row", }}>
+                        style={{ flexDirection: "row", alignItems: 'center' }}>
                         {/* Clock */}
                         <View style={{ width: myWidth(15), alignItems: 'center' }}>
                             {/* clock */}
                             <Image style={{
-                                height: myHeight(3),
-                                width: myHeight(3),
+                                height: myHeight(3.2),
+                                width: myHeight(3.2),
                                 resizeMode: 'contain',
+                                // marginTop: myHeight(0.2),
                                 tintColor: myColors.primaryT
                             }} source={require('../assets/home_main/home/clockF.png')} />
                         </View>
@@ -329,13 +300,106 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                     </Collapsible>
 
 
+                    <Spacer paddingT={myHeight(2)} />
+                    {/* Divider */}
+                    <View style={{
+                        borderTopWidth: myHeight(0.13), alignSelf: 'flex-end',
+                        borderColor: myColors.offColor, width: "85%"
+                    }} />
+                    <Spacer paddingT={myHeight(2)} />
+                    {/* info & facilities && go */}
+                    <TouchableOpacity activeOpacity={0.85} onPress={() => setInfoClose(!infoClose)}
+                        style={{ flexDirection: "row", alignItems: 'center' }}>
+                        {/* Clock */}
+                        <View style={{ width: myWidth(15), alignItems: 'center' }}>
+                            {/* clock */}
+                            <Image style={{
+                                height: myHeight(2.6),
+                                width: myHeight(2.6),
+                                resizeMode: 'contain',
+                                marginTop: myHeight(0.2),
+                                tintColor: myColors.primaryT
+                            }} source={require('../assets/home_main/home/info.png')} />
+                        </View>
 
+                        {/* Open at */}
+                        <Text numberOfLines={2} style={{
+                            flex: 1,
+                            fontSize: myFontSize.xBody,
+                            fontFamily: myFonts.bodyBold,
+                            color: myColors.text,
+                            letterSpacing: myLetSpacing.common,
+                            includeFontPadding: false,
+                            padding: 0
+                        }}
+                        >Facilities & Details</Text>
+                        {/*Go */}
+                        <View>
+                            <Image style={{
+                                height: myHeight(2.6),
+                                width: myHeight(2.6),
+                                resizeMode: 'contain',
+                                transform: [{ rotate: timmingClose ? '90deg' : '270deg' }],
+                                tintColor: timmingClose ? myColors.primaryT : myColors.offColor
+                            }} source={
+                                require('../assets/home_main/home/go.png')
+                            } />
+                        </View>
+                        <Spacer paddingEnd={myWidth(4)} />
+                    </TouchableOpacity>
+                    {/* Timmings Collapse */}
+                    <Collapsible style={{ paddingStart: myWidth(15), paddingEnd: myWidth(4) }}
+                        collapsed={infoClose}>
+                        <Spacer paddingT={myHeight(1)} />
+                        {/* Type & Description */}
+                        <View style={{}}>
+                            <Spacer paddingT={myHeight(0.7)} />
+                            <Text numberOfLines={2} style={[styles.textCommon, {
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.heading,
+                                paddingEnd: myWidth(3)
+                            }]}>Facilities</Text>
+
+                            <Spacer paddingT={myHeight(0.4)} />
+                            {/* Type */}
+                            <Text style={[styles.textCommon, {
+                                fontSize: myFontSize.body3,
+                                fontFamily: myFonts.bodyBold,
+                                color: myColors.primaryT,
+
+                            }]}>{restaurant.dineIn && '● Dine In     '}{restaurant.takeAway && '● Take Away     '}{restaurant.homeDelivery && '● Delivery'}</Text>
+
+                            <Spacer paddingT={myHeight(1.5)} />
+
+
+                            <Text numberOfLines={2} style={[styles.textCommon, {
+                                fontSize: myFontSize.body2,
+                                fontFamily: myFonts.heading,
+                                paddingEnd: myWidth(3)
+                            }]}>Details</Text>
+
+                            <Spacer paddingT={myHeight(0.3)} />
+                            {/* Description */}
+                            <Text
+                                style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.body,
+                                        fontFamily: myFonts.bodyBold,
+                                        color: myColors.textL4,
+                                    },
+                                ]}>
+                                {restaurant.description}
+                            </Text>
+                        </View>
+
+                    </Collapsible>
                     <Spacer paddingT={myHeight(2.5)} />
                     {/* Divider */}
                     <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
 
-                    <Spacer paddingT={myHeight(2)} />
 
+                    <Spacer paddingT={myHeight(1)} />
                     {/* Reviews */}
                     <View style={{ paddingHorizontal: myWidth(4) }}>
                         <Text numberOfLines={2} style={[styles.textCommon, {
@@ -343,7 +407,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                             fontFamily: myFonts.bodyBold,
                             paddingEnd: myWidth(3)
                         }]}>Reviews</Text>
-                        <Spacer paddingT={myHeight(0.5)} />
+                        {/* <Spacer paddingT={myHeight(0.5)} /> */}
 
                         <FlatList
                             showsVerticalScrollIndicator={false}

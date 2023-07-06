@@ -10,6 +10,7 @@ import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
+    const { restaurant } = route.params
 
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
@@ -23,7 +24,7 @@ export const ItemDetails = ({ navigation, route }) => {
     return (
         <>
 
-            <View style={{ flex: 1, backgroundColor: myColors.primaryL3, }}>
+            <View style={{ flex: 1, backgroundColor: myColors.primaryL2, }}>
                 {/* Top */}
                 <View style={{
                     paddingHorizontal: myWidth(4), position: 'absolute', width: '100%',
@@ -72,7 +73,7 @@ export const ItemDetails = ({ navigation, route }) => {
                         <View style={{
                             alignSelf: 'center', marginBottom: myHeight(3),
                             overflow: 'hidden', backgroundColor: myColors.background,
-                            elevation: 12, borderRadius: myHeight(60),
+                            elevation: 15, borderRadius: myHeight(60),
                             marginTop: StatusBar.currentHeight + myHeight(1.5)
                         }}>
 
@@ -212,15 +213,93 @@ export const ItemDetails = ({ navigation, route }) => {
                             {item.description}
                         </Text>
 
-                        <Spacer paddingT={myHeight(1.5)} />
+                        <Spacer paddingT={myHeight(2)} />
 
-
+                        {/* Divider */}
                         <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} />
 
-                        {/* <View style={{
-                        width: myWidth(100), marginStart: -myWidth(4),
-                        height: myHeight(1), backgroundColor: myColors.dot
-                    }} /> */}
+                        <Spacer paddingT={myHeight(1.2)} />
+                        {/* Restaurant Info */}
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+                            activeOpacity={0.85} onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}>
+
+                            {/* Image */}
+                            <View style={{
+                                backgroundColor: myColors.background,
+                                borderRadius: myHeight(60), overflow: 'hidden',
+                                borderWidth: myHeight(0.15), borderColor: myColors.primaryT
+                            }}>
+                                <Image style={{
+                                    height: myHeight(7),
+                                    width: myHeight(7),
+                                    resizeMode: 'cover',
+                                }}
+                                    source={restaurant?.images[0]}
+                                />
+                            </View>
+
+                            {/* Details */}
+                            <View style={{ paddingHorizontal: myWidth(2), flex: 1 }}>
+                                {/* Name & Rating */}
+                                <View style={{ flexDirection: 'row', }}>
+                                    {/* Name */}
+                                    <Spacer paddingEnd={myWidth(0.6)} />
+                                    <Text numberOfLines={1}
+                                        style={[styles.textCommon, {
+                                            flex: 1,
+                                            fontSize: myFontSize.xxBody,
+                                            fontFamily: myFonts.heading,
+                                        }]}>{restaurant.name}</Text>
+
+                                    <Spacer paddingEnd={myWidth(1)} />
+
+                                    {/* Rating */}
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <Image style={{
+                                            height: myHeight(2),
+                                            width: myHeight(2),
+                                            tintColor: myColors.star,
+                                            resizeMode: 'contain',
+                                        }} source={require('../assets/home_main/home/star.png')} />
+
+                                        <Spacer paddingEnd={myWidth(1.4)} />
+                                        <Text style={[styles.textCommon, {
+                                            fontSize: myFontSize.body3,
+                                            fontFamily: myFonts.heading,
+                                            color: myColors.text,
+
+                                        }]}>{restaurant.rating}</Text>
+                                    </View>
+                                </View>
+
+                                <Spacer paddingT={myHeight(0.2)} />
+                                {/* Location */}
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image style={{
+                                        width: myHeight(2), height: myHeight(2),
+                                        resizeMode: 'contain', marginTop: myHeight(0.2)
+                                    }}
+                                        source={require('../assets/home_main/home/loc.png')} />
+                                    <Spacer paddingEnd={myWidth(0.8)} />
+                                    <Text numberOfLines={1} style={[styles.textCommon, {
+                                        flex: 1,
+                                        fontSize: myFontSize.xxSmall,
+                                        fontFamily: myFonts.bodyBold,
+                                        color: myColors.text,
+
+                                    }]}>{restaurant.location}</Text>
+                                </View>
+
+                                {/* restaurants */}
+                                {/* <Text numberOfLines={1} style={styles.textrestaurants}>{restaurants}</Text> */}
+                                <Spacer paddingT={myHeight(1)} />
+
+                            </View>
+                        </TouchableOpacity>
+
+                        <Spacer paddingT={myHeight(1.2)} />
+                        {/* Divider */}
+                        <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} />
 
                     </View>
 
