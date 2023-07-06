@@ -13,10 +13,8 @@ export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
   const catRef = useRef(null)
   const { foodCategory } = restaurant;
-  const [mainScroll, setMainScroll] = useState(true)
   const [selectCat, setSelectCat] = useState(null);
   const [currentItem, setCurrentItems] = useState([]);
-  const [AllItem, setAllItems] = useState([]);
   function doThos() {
 
     const url = "https://www.google.com/maps/place/Millennium+Mall/@24.9094679,67.0433966,13z/data=!3m1!5s0x3eb339223612bfc7:0xc67329732f68fc6e!4m6!3m5!1s0x3eb33922488f3725:0x3bfde63eb356ebc0!8m2!3d24.901187!4d67.1155004!16s%2Fg%2F11bv1cb635?entry=ttu";
@@ -58,7 +56,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             padding: myHeight(1),
             borderRadius: myHeight(5),
             position: 'absolute',
-            top: StatusBar.currentHeight,
+            top: StatusBar.currentHeight + myHeight(0.6),
             left: myWidth(4),
           }}
           activeOpacity={0.8}
@@ -80,7 +78,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             padding: myHeight(1),
             borderRadius: myHeight(5),
             position: 'absolute',
-            top: StatusBar.currentHeight,
+            top: StatusBar.currentHeight + myHeight(0.6),
             right: myWidth(4),
           }}
           activeOpacity={0.8}
@@ -359,7 +357,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
 
                       }}
-                      key={i} activeOpacity={0.9} onPress={() => null}>
+                      key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item })}>
 
                       <ItemInfo item={item} />
 
@@ -383,7 +381,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
                           style={{
 
                           }}
-                          key={i} activeOpacity={0.9} onPress={() => null}>
+                          key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item })}>
 
                           <ItemInfo item={item} />
 

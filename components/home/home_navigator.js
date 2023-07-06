@@ -9,11 +9,12 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { RestaurantDetail } from './restaurant_detail_screen';
 import { RestaurantMoreDetails } from './rest_more_info_screen';
 import { RestaurantAll } from './res_all_screen';
+import { ItemDetails } from './item_detail_screen';
 
 
 
 const HomeTAB = createNativeStackNavigator();
-const hideStatusScreens = ['RestaurantDetail', 'RestaurantMoreDetails']
+const hideStatusScreens = ['RestaurantDetail', 'RestaurantMoreDetails', 'ItemDetails']
 export const HomeNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideState] = useState(false)
     React.useLayoutEffect(() => {
@@ -42,6 +43,7 @@ export const HomeNavigator = ({ navigation, route }) => {
                 <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
                 <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
                 <HomeTAB.Screen component={RestaurantAll} name="RestaurantAll" />
+                <HomeTAB.Screen component={ItemDetails} name="ItemDetails" />
 
             </HomeTAB.Navigator>
         </>

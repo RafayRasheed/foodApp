@@ -111,10 +111,11 @@ export const ItemInfo = ({ item }) => {
                                 fontSize: myFontSize.xxSmall,
                                 fontFamily: myFonts.bodyBold,
                                 color: myColors.text,
+                                maxWidth: myWidth(30),
 
                             },
                         ]}>
-                        {'Restaurant Name'}
+                        {item.resName}
                     </Text>
                 </View>
             </View>

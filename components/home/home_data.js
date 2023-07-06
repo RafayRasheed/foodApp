@@ -104,6 +104,7 @@ export const Restaurants = [
   {
     id: 'Resturant1',
     name: 'Ambrosia Hotel',
+    description: 'A restaurant is a business that prepares and serves food and drinks to customers. Meals are generally served and eaten on the premises, but many restaurants also offer take-out and food delivery services',
     icon: require('../assets/home_main/home/resI.jpg'),
     dineIn: true,
     takeAway: true,
@@ -208,7 +209,7 @@ export const Restaurants = [
         catName: 'Fast Food',
         items: [
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 300',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger1',
@@ -218,7 +219,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 3000',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger100',
@@ -228,7 +229,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 500',
             id: 'Resturant1Pizza2',
             name: 'Beaf Burger2',
@@ -243,7 +244,7 @@ export const Restaurants = [
         name: 'Burger',
         items: [
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger1',
             price: 'Rs 600',
             name: 'Beaf Burger3',
@@ -253,7 +254,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger2',
             price: 'Rs 700',
             name: 'Beaf Burger4',
@@ -274,6 +275,7 @@ export const Restaurants = [
   {
     id: 'Resturant1',
     name: 'Ambrosia Hotel',
+    description: 'A restaurant is a business that. Meals are generally served and eaten on the premises, but many restaurants also offer take-out and food delivery services',
     dineIn: false,
     takeAway: false,
     homeDelivery: true,
@@ -378,7 +380,7 @@ export const Restaurants = [
         catName: 'Fast Food',
         items: [
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 300',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger1',
@@ -388,7 +390,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 3000',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger100',
@@ -398,7 +400,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: 'Rs 500',
             id: 'Resturant1Pizza2',
             name: 'Beaf Burger2',
@@ -413,7 +415,7 @@ export const Restaurants = [
         name: 'Burger',
         items: [
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger1',
             price: 'Rs 600',
             name: 'Beaf Burger3',
@@ -423,7 +425,7 @@ export const Restaurants = [
             likes: '10',
           },
           {
-            resId: 'Resturant1',
+            resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger2',
             price: 'Rs 700',
             name: 'Beaf Burger4',

@@ -34,7 +34,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                         padding: myHeight(1),
                         borderRadius: myHeight(5),
                         position: 'absolute',
-                        top: StatusBar.currentHeight,
+                        top: StatusBar.currentHeight + myHeight(0.6),
                         left: myWidth(4),
                     }}
                     activeOpacity={0.8}
@@ -64,22 +64,47 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                         ]}>
                         {restaurant.name}
                     </Text>
+                    <Spacer paddingT={myHeight(0.7)} />
 
-                    <Spacer paddingT={myHeight(0.5)} />
-                    {/* Type */}
-                    <Text numberOfLines={1} style={[styles.textCommon, {
-                        fontSize: myFontSize.body3,
-                        fontFamily: myFonts.bodyBold,
-                        color: myColors.primaryT,
-
-                    }]}>{restaurant.dineIn && '● Dine In        '}{restaurant.takeAway && '● Take Away       '}{restaurant.homeDelivery && '● Delivery'}</Text>
                 </View>
-
-                <Spacer paddingT={myHeight(2.5)} />
                 {/* Divider */}
-                <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
+                <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.dot, width: "100%" }} />
+
 
                 <ScrollView showsVerticalScrollIndicator={false}>
+
+                    {/* Type & Description */}
+                    <View style={{ paddingHorizontal: myWidth(4) }}>
+                        <Spacer paddingT={myHeight(0.7)} />
+
+                        {/* Type */}
+                        <Text numberOfLines={1} style={[styles.textCommon, {
+                            fontSize: myFontSize.body3,
+                            fontFamily: myFonts.bodyBold,
+                            color: myColors.primaryT,
+
+                        }]}>{restaurant.dineIn && '● Dine In        '}{restaurant.takeAway && '● Take Away       '}{restaurant.homeDelivery && '● Delivery'}</Text>
+
+                        <Spacer paddingT={myHeight(1)} />
+
+                        {/* Description */}
+                        <Text
+                            style={[
+                                styles.textCommon,
+                                {
+                                    fontSize: myFontSize.body,
+                                    fontFamily: myFonts.bodyBold,
+                                    color: myColors.textL4,
+                                },
+                            ]}>
+                            {restaurant.description}
+                        </Text>
+                    </View>
+
+                    <Spacer paddingT={myHeight(1.5)} />
+                    {/* Divider */}
+                    <View style={{ borderTopWidth: myHeight(0.13), borderColor: myColors.offColor, width: "100%" }} />
+
                     <Spacer paddingT={myHeight(2)} />
                     {/* loc & open */}
                     <View style={{ flexDirection: "row", }}>
