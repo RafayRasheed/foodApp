@@ -15,6 +15,8 @@ export const ItemDetails = ({ navigation, route }) => {
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
     const [review, setReview] = useState(null)
+
+    const price = parseInt(item.price)
     function hideModal() {
         setRatinModal(false)
     }
@@ -24,7 +26,7 @@ export const ItemDetails = ({ navigation, route }) => {
     return (
         <>
 
-            <View style={{ flex: 1, backgroundColor: myColors.primaryL2, }}>
+            <View style={{ flex: 1, backgroundColor: myColors.offColor3, }}>
                 {/* Top */}
                 <View style={{
                     paddingHorizontal: myWidth(4), position: 'absolute', width: '100%',
@@ -78,8 +80,8 @@ export const ItemDetails = ({ navigation, route }) => {
                         }}>
 
                             <Image style={{
-                                height: myHeight(26),
-                                width: myHeight(26),
+                                height: myHeight(22),
+                                width: myHeight(22),
                                 resizeMode: 'cover',
                             }}
                                 source={item?.images[0]}
@@ -91,8 +93,8 @@ export const ItemDetails = ({ navigation, route }) => {
                             style={[
                                 styles.textCommon,
                                 {
-                                    fontSize: myFontSize.medium2,
-                                    fontFamily: myFonts.heading,
+                                    fontSize: myFontSize.medium,
+                                    fontFamily: myFonts.headingBold,
                                     color: myColors.text,
                                     textAlign: 'center',
                                     marginTop: -myHeight(1)
@@ -122,12 +124,13 @@ export const ItemDetails = ({ navigation, route }) => {
                                     styles.textCommon,
                                     {
                                         flex: 1,
-                                        fontSize: myFontSize.medium3,
+                                        fontSize: myFontSize.medium0,
                                         fontFamily: myFonts.heading,
                                         color: myColors.primaryT,
                                     },
-                                ]}>{item.price}
-                            </Text>
+                                ]}>Rs  <Text style={{
+                                    fontSize: myFontSize.medium3,
+                                }}>{price}</Text></Text>
 
                             {/* Rating */}
                             <View
@@ -188,7 +191,7 @@ export const ItemDetails = ({ navigation, route }) => {
                             </View>
                         </View>
 
-                        <Spacer paddingT={myHeight(1.5)} />
+                        <Spacer paddingT={myHeight(1.3)} />
                         <Text
                             style={[
                                 styles.textCommon,
@@ -213,25 +216,30 @@ export const ItemDetails = ({ navigation, route }) => {
                             {item.description}
                         </Text>
 
-                        <Spacer paddingT={myHeight(2)} />
+                        <Spacer paddingT={myHeight(2.5)} />
 
                         {/* Divider */}
-                        <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} />
+                        {/* <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} />
 
-                        <Spacer paddingT={myHeight(1.2)} />
+                        <Spacer paddingT={myHeight(1)} /> */}
                         {/* Restaurant Info */}
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+                        <TouchableOpacity style={{
+                            flexDirection: 'row', alignItems: 'center',
+                            backgroundColor: myColors.background, elevation: 3, borderRadius: myWidth(2.5),
+                            paddingHorizontal: myWidth(2), paddingTop: myHeight(1.3), paddingBottom: myHeight(1),
+                            borderWidth: myHeight(0.08), borderColor: myColors.divider,
+                        }}
                             activeOpacity={0.85} onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}>
 
                             {/* Image */}
                             <View style={{
                                 backgroundColor: myColors.background,
                                 borderRadius: myHeight(60), overflow: 'hidden',
-                                borderWidth: myHeight(0.15), borderColor: myColors.primaryT
+                                borderWidth: myHeight(0.15), borderColor: myColors.offColor
                             }}>
                                 <Image style={{
-                                    height: myHeight(7),
-                                    width: myHeight(7),
+                                    height: myHeight(6),
+                                    width: myHeight(6),
                                     resizeMode: 'cover',
                                 }}
                                     source={restaurant?.images[0]}
@@ -247,7 +255,7 @@ export const ItemDetails = ({ navigation, route }) => {
                                     <Text numberOfLines={1}
                                         style={[styles.textCommon, {
                                             flex: 1,
-                                            fontSize: myFontSize.xxBody,
+                                            fontSize: myFontSize.xBody,
                                             fontFamily: myFonts.heading,
                                         }]}>{restaurant.name}</Text>
 
@@ -283,7 +291,7 @@ export const ItemDetails = ({ navigation, route }) => {
                                     <Spacer paddingEnd={myWidth(0.8)} />
                                     <Text numberOfLines={1} style={[styles.textCommon, {
                                         flex: 1,
-                                        fontSize: myFontSize.xxSmall,
+                                        fontSize: myFontSize.xSmall,
                                         fontFamily: myFonts.bodyBold,
                                         color: myColors.text,
 
@@ -297,13 +305,113 @@ export const ItemDetails = ({ navigation, route }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <Spacer paddingT={myHeight(1.2)} />
+                        {/* <Spacer paddingT={myHeight(1)} /> */}
                         {/* Divider */}
-                        <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} />
+                        {/* <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} /> */}
 
                     </View>
 
                 </ScrollView>
+
+
+                {/* Cart */}
+                <View style={{ backgroundColor: myColors.background }}>
+
+                    <View style={{
+                        flexDirection: 'row', alignItems: 'center', backgroundColor: myColors.background,
+                        paddingVertical: myHeight(1.3), paddingHorizontal: myWidth(3),
+                        borderWidth: myHeight(0.15), borderColor: myColors.dot, justifyContent: 'space-between',
+                        // borderTopRightRadius: myWidth(5), borderTopLeftRadius: myWidth(5)
+                    }}>
+                        {/* Price */}
+                        <View>
+                            <Text
+                                style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.xxSmall,
+                                        fontFamily: myFonts.bodyBold,
+                                        color: myColors.textL4,
+                                    },
+                                ]}>Total Price</Text>
+                            <Text
+                                style={[
+                                    styles.textCommon,
+                                    {
+                                        fontSize: myFontSize.xBody,
+                                        fontFamily: myFonts.heading,
+                                        color: myColors.text,
+                                    },
+                                ]}>Rs  <Text style={{
+                                    fontSize: myFontSize.medium2,
+                                }}>{price}</Text></Text>
+                        </View>
+
+
+                        {/* Plus Minus & Add To Cart */}
+                        <View style={{
+                            flexDirection: 'row', alignItems: 'center',
+                        }}>
+                            {/* Plus Minus */}
+                            <View style={{
+                                flexDirection: 'row', alignItems: 'center',
+                            }}>
+                                {/* minus */}
+                                <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                    <Image style={{
+                                        height: myHeight(4.1),
+                                        width: myHeight(4.1),
+                                        resizeMode: 'contain',
+                                        marginTop: myHeight(0.7),
+
+                                    }} source={require('../assets/home_main/home/minusBtn.png')} />
+                                </TouchableOpacity>
+
+                                <Spacer paddingEnd={myWidth(1.8)} />
+                                {/* count */}
+                                <Text numberOfLines={1} style={[styles.textCommon, {
+                                    fontSize: myFontSize.medium,
+                                    fontFamily: myFonts.bodyBold,
+                                }]}>3</Text>
+
+                                <Spacer paddingEnd={myWidth(1.8)} />
+                                {/* plus */}
+                                <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                    <Image style={{
+                                        height: myHeight(4.25),
+                                        width: myHeight(4.25),
+                                        marginTop: myHeight(0.7),
+                                        resizeMode: 'contain',
+                                    }} source={require('../assets/home_main/home/plusBtn.png')} />
+                                </TouchableOpacity>
+                            </View>
+
+                            <Spacer paddingEnd={myWidth(5)} />
+                            {/* Add To Cart */}
+                            <TouchableOpacity activeOpacity={0.85} onPress={() => null}
+                                style={{
+                                    paddingHorizontal: myWidth(4),
+                                    paddingVertical: myHeight(1.2),
+                                    backgroundColor: myColors.black,
+                                    borderRadius: myWidth(100)
+
+                                }}>
+                                <Text
+                                    style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.body,
+                                            fontFamily: myFonts.heading,
+                                            color: myColors.background,
+                                        },
+                                    ]}>Add To Cart</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
+                </View>
+
             </View>
 
 

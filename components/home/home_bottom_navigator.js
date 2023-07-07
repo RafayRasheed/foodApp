@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, SafeAreaView, View, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Spacer, ios, myHeight, myWidth } from "../common";
+import { Spacer, bottomTab, ios, myHeight, myWidth } from "../common";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
@@ -40,16 +40,7 @@ const screenOptions = ({ route }) => {
     const name = route.name
     return {
         headerShown: false,
-        tabBarStyle: {
-            backgroundColor: myColors.background,
-            paddingHorizontal: myWidth(3.5),
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: myHeight(7.5),
-            paddingBottom: ios ? myHeight(2.2) : myHeight(0.5),
-            paddingTop: myHeight(2),
-            // position: 'absolute',
-        },
+        tabBarStyle: bottomTab,
         tabBarLabelStyle: {
             display: name == 'HOT' ? 'none' : 'flex',
             fontSize: myFontSize.xSmall,

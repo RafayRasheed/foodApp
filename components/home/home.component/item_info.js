@@ -73,9 +73,7 @@ export const ItemInfo = ({ item }) => {
                                 // paddingVertical: myHeight(0.15),
                                 // backgroundColor: myColors.primary
                             },
-                        ]}>
-                        {item?.price}
-                    </Text>
+                        ]}>Rs {item?.price}</Text>
 
                     <Spacer paddingEnd={myWidth(2.5)} />
                     {/* Star */}

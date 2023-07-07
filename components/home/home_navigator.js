@@ -10,21 +10,28 @@ import { RestaurantDetail } from './restaurant_detail_screen';
 import { RestaurantMoreDetails } from './rest_more_info_screen';
 import { RestaurantAll } from './res_all_screen';
 import { ItemDetails } from './item_detail_screen';
+import { bottomTab } from '../common';
 
 
 
 const HomeTAB = createNativeStackNavigator();
 const hideStatusScreens = ['RestaurantDetail', 'RestaurantMoreDetails', 'ItemDetails']
+const hideBottom = ['RestaurantDetail', 'RestaurantMoreDetails', 'ItemDetails']
+
 export const HomeNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideState] = useState(false)
     React.useLayoutEffect(() => {
         if (hideStatusScreens.includes(getFocusedRouteNameFromRoute(route))) {
             setHideState(true)
-
-            // navigation.setOptions({ tabBarStyle: { display: 'none' } });
         } else {
-            // navigation.setOptions({ tabBarStyle: { display: 'flex' } })
             setHideState(false)
+        }
+        if (hideBottom.includes(getFocusedRouteNameFromRoute(route))) {
+            navigation.setOptions({ tabBarStyle: { display: 'none' } })
+        }
+        else {
+            navigation.setOptions({ tabBarStyle: bottomTab })
+
         }
     }, [navigation, route]);
     return (

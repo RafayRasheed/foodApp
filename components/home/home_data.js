@@ -100,6 +100,9 @@ export const offers = [
     colors: ['#FF9F06', '#FFE1B4'],
   },
 ];
+
+
+
 export const Restaurants = [
   {
     id: 'Resturant1',
@@ -210,25 +213,23 @@ export const Restaurants = [
         items: [
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 300',
+            price: '300',
             description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger1',
             images: [require('../assets/home_main/home/category/fast2.png'), require('../assets/home_main/home/res.png')],
             rating: '3.0',
             noOfRatings: '100',
-            likes: '10',
           },
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
-            price: 'Rs 3000',
+            price: '3000',
             description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             id: 'Resturant1Pizza1',
             name: 'Beaf Burger100',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
             noOfRatings: '100',
-            likes: '10',
           },
         ],
       },
@@ -238,7 +239,7 @@ export const Restaurants = [
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger1',
-            price: 'Rs 600',
+            price: '600',
             description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             name: 'Beaf Burger3',
             images: [require('../assets/home_main/home/category/fast2.png')],

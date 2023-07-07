@@ -230,8 +230,8 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                         <View style={{ width: myWidth(15), alignItems: 'center' }}>
                             {/* clock */}
                             <Image style={{
-                                height: myHeight(3.2),
-                                width: myHeight(3.2),
+                                height: myHeight(3),
+                                width: myHeight(3),
                                 resizeMode: 'contain',
                                 // marginTop: myHeight(0.2),
                                 tintColor: myColors.primaryT
@@ -314,8 +314,8 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                         <View style={{ width: myWidth(15), alignItems: 'center' }}>
                             {/* clock */}
                             <Image style={{
-                                height: myHeight(2.6),
-                                width: myHeight(2.6),
+                                height: myHeight(2.45),
+                                width: myHeight(2.45),
                                 resizeMode: 'contain',
                                 marginTop: myHeight(0.2),
                                 tintColor: myColors.primaryT
