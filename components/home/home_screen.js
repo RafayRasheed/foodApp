@@ -36,7 +36,7 @@ export const HomeScreen = ({ navigation }) => {
                     backgroundColor: myColors.divider, alignSelf: 'center', paddingVertical: myHeight(1.3),
                     borderRadius: myWidth(2.5)
 
-                }} onPress={() => navigation.navigate('RestaurantSearch')}>
+                }} onPress={() => navigation.navigate('Search')}>
                     <Spacer paddingEnd={myWidth(4)} />
                     <Image style={{
                         height: myHeight(2.2), width: myHeight(2.2), resizeMode: 'contain', tintColor: myColors.offColor
@@ -66,7 +66,7 @@ export const HomeScreen = ({ navigation }) => {
                         <Text style={[styles.textCommon, {
                             fontSize: myFontSize.xxBody,
                             fontFamily: myFonts.bodyBold,
-                        }]}></Text>
+                        }]}>Categories</Text>
 
                         {/* See all */}
                         <TouchableOpacity style={{

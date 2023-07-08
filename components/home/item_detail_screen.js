@@ -15,7 +15,8 @@ export const ItemDetails = ({ navigation, route }) => {
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
     const [review, setReview] = useState(null)
-
+    const [selectItems, setSelectItems] = useState({})
+    const { options } = item
     const price = parseInt(item.price)
     function hideModal() {
         setRatinModal(false)
@@ -26,7 +27,7 @@ export const ItemDetails = ({ navigation, route }) => {
     return (
         <>
 
-            <View style={{ flex: 1, backgroundColor: myColors.offColor3, }}>
+            <View style={{ flex: 1, backgroundColor: myColors.primaryL2, }}>
                 {/* Top */}
                 <View style={{
                     paddingHorizontal: myWidth(4), position: 'absolute', width: '100%',
@@ -227,7 +228,7 @@ export const ItemDetails = ({ navigation, route }) => {
                             flexDirection: 'row', alignItems: 'center',
                             backgroundColor: myColors.background, elevation: 3, borderRadius: myWidth(2.5),
                             paddingHorizontal: myWidth(2), paddingTop: myHeight(1.3), paddingBottom: myHeight(1),
-                            borderWidth: myHeight(0.08), borderColor: myColors.divider,
+                            borderWidth: myHeight(0.09), borderColor: myColors.divider,
                         }}
                             activeOpacity={0.85} onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}>
 
@@ -284,7 +285,7 @@ export const ItemDetails = ({ navigation, route }) => {
                                 {/* Location */}
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Image style={{
-                                        width: myHeight(2), height: myHeight(2),
+                                        width: myHeight(1.8), height: myHeight(1.8),
                                         resizeMode: 'contain', marginTop: myHeight(0.2)
                                     }}
                                         source={require('../assets/home_main/home/loc.png')} />
@@ -305,9 +306,103 @@ export const ItemDetails = ({ navigation, route }) => {
                             </View>
                         </TouchableOpacity>
 
-                        {/* <Spacer paddingT={myHeight(1)} /> */}
-                        {/* Divider */}
-                        {/* <View style={{ borderTopWidth: myHeight(0.2), borderColor: myColors.dot, }} /> */}
+
+                        <Spacer paddingT={myHeight(3.5)} />
+                        {/* Divider Mota */}
+                        <View style={{
+                            marginStart: -myWidth(4), width: myWidth(100),
+                            height: myHeight(1), backgroundColor: myColors.dot
+                        }} />
+                        <Spacer paddingT={myHeight(1)} />
+
+                        {/* Options */}
+                        {
+                            options.map((option, i) => {
+
+                                return (
+
+                                    <View key={i}>
+                                        <Spacer paddingT={myHeight(1)} />
+                                        {/* Name & Required */}
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                            <Text style={[styles.textCommon, {
+                                                fontSize: myFontSize.xBody,
+                                                fontFamily: myFonts.heading,
+                                            }]}>{option.name}</Text>
+
+                                            {option.required &&
+
+                                                <View style={{ paddingHorizontal: myWidth(4), paddingVertical: myHeight(0.4), backgroundColor: myColors.dot, borderRadius: myHeight(5) }}>
+                                                    <Text style={[styles.textCommon, {
+                                                        fontSize: myFontSize.body2,
+                                                        fontFamily: myFonts.body,
+                                                    }]}>{'Required'}</Text>
+                                                </View>
+
+                                            }
+                                        </View>
+                                        <Spacer paddingT={myHeight(0.6)} />
+
+                                        {
+                                            option.list?.map((item, i) =>
+                                                <View key={i}>
+                                                    {/* Divider */}
+                                                    {
+                                                        i != 0 &&
+                                                        <View style={{
+                                                            width: '100%', borderTopWidth: myHeight(0.12),
+                                                            borderColor: myColors.dot,
+                                                        }} />
+                                                    }
+                                                    <Spacer paddingT={myHeight(1)} />
+
+                                                    {/* List name & circle */}
+                                                    <TouchableOpacity activeOpacity={0.8} style={{
+                                                        flexDirection: 'row', alignItems: 'center'
+                                                    }}
+                                                        onPress={() => {
+
+                                                            if (selectItems[option.name]) {
+                                                                setSelectItems({
+                                                                    ...selectItems,
+                                                                    [option.name]: item
+                                                                })
+                                                                return
+                                                            }
+                                                            const tem = {
+                                                                ...selectItems,
+                                                                [option.name]: item
+                                                            }
+                                                            setSelectItems(tem)
+                                                        }} >
+                                                        {/* list name */}
+                                                        <Text style={[styles.textCommon, {
+                                                            flex: 1,
+                                                            fontSize: myFontSize.xBody,
+                                                            fontFamily: myFonts.body,
+                                                        }]}>{item}</Text>
+
+
+                                                        {/* Circle */}
+                                                        <View style={{
+                                                            width: myHeight(2.8), height: myHeight(2.8),
+                                                            borderColor: myColors.primaryT, borderRadius: myHeight(3),
+                                                            borderWidth: selectItems[option.name] == item ? myHeight(0.9) : myHeight(0.2),
+                                                        }} />
+
+                                                    </TouchableOpacity>
+                                                    <Spacer paddingT={myHeight(1)} />
+
+                                                </View>
+                                            )
+                                        }
+                                        <Spacer paddingT={myHeight(1)} />
+                                    </View>
+                                )
+                            }
+                            )
+                        }
+                        <Spacer paddingT={myHeight(1)} />
 
                     </View>
 
@@ -319,9 +414,9 @@ export const ItemDetails = ({ navigation, route }) => {
 
                     <View style={{
                         flexDirection: 'row', alignItems: 'center', backgroundColor: myColors.background,
-                        paddingVertical: myHeight(1.3), paddingHorizontal: myWidth(3),
-                        borderWidth: myHeight(0.15), borderColor: myColors.dot, justifyContent: 'space-between',
-                        // borderTopRightRadius: myWidth(5), borderTopLeftRadius: myWidth(5)
+                        paddingVertical: myHeight(1), paddingHorizontal: myWidth(3),
+                        borderWidth: myHeight(0.1), borderColor: myColors.text3, justifyContent: 'space-between',
+                        borderTopRightRadius: myWidth(4), borderTopLeftRadius: myWidth(4)
                     }}>
                         {/* Price */}
                         <View>
@@ -445,7 +540,7 @@ export const ItemDetails = ({ navigation, route }) => {
                             }}
                             source={item.images[0]}
                         />
-                        <Spacer paddingT={myHeight(0.5)} />
+                        <Spacer paddingT={myHeight(1)} />
                         <Text
                             numberOfLines={1}
                             style={[
@@ -460,7 +555,7 @@ export const ItemDetails = ({ navigation, route }) => {
                             {item.name}
 
                         </Text>
-                        <Spacer paddingT={myHeight(3)} />
+                        <Spacer paddingT={myHeight(2.5)} />
 
                         {/* All Stars */}
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
@@ -506,9 +601,9 @@ export const ItemDetails = ({ navigation, route }) => {
                             </TouchableOpacity>
                         </View>
 
-                        <Spacer paddingT={myHeight(3)} />
+                        <Spacer paddingT={myHeight(3.5)} />
                         {/* Review Input */}
-                        <TextInput placeholder="Write your review"
+                        {/* <TextInput placeholder="Write your review"
                             multiline={true}
                             autoCorrect={false}
                             numberOfLines={2}
@@ -531,9 +626,8 @@ export const ItemDetails = ({ navigation, route }) => {
                                 paddingHorizontal: myWidth(3),
                                 backgroundColor: '#00000010'
                             }}
-                        />
+                        /> */}
 
-                        <Spacer paddingT={myHeight(2.5)} />
 
                         {/* Cancle & Done Buttons */}
                         <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
@@ -561,7 +655,7 @@ export const ItemDetails = ({ navigation, route }) => {
                             </TouchableOpacity>
 
                         </View>
-                        <Spacer paddingT={myHeight(4)} />
+                        <Spacer paddingT={myHeight(3)} />
 
                     </Animated.View>
 

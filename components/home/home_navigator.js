@@ -11,12 +11,16 @@ import { RestaurantMoreDetails } from './rest_more_info_screen';
 import { RestaurantAll } from './res_all_screen';
 import { ItemDetails } from './item_detail_screen';
 import { bottomTab } from '../common';
+import { Search } from './search_screen';
+import { ItemSearch } from './item_search_screen';
 
 
 
 const HomeTAB = createNativeStackNavigator();
 const hideStatusScreens = ['RestaurantDetail', 'RestaurantMoreDetails', 'ItemDetails']
-const hideBottom = ['RestaurantDetail', 'RestaurantMoreDetails', 'ItemDetails']
+const hideBottom = ['RestaurantMoreDetails',
+    'ItemDetails', 'ItemSearch', 'Search']
+const showBottom = ['RestaurantDetail']
 
 export const HomeNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideState] = useState(false)
@@ -51,6 +55,8 @@ export const HomeNavigator = ({ navigation, route }) => {
                 <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
                 <HomeTAB.Screen component={RestaurantAll} name="RestaurantAll" />
                 <HomeTAB.Screen component={ItemDetails} name="ItemDetails" />
+                <HomeTAB.Screen component={Search} name="Search" />
+                <HomeTAB.Screen component={ItemSearch} name="ItemSearch" />
 
             </HomeTAB.Navigator>
         </>

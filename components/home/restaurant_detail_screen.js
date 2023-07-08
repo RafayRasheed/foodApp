@@ -82,7 +82,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             right: myWidth(4),
           }}
           activeOpacity={0.8}
-          onPress={null}>
+          onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
           <Image
             style={{
               width: myHeight(2.6),

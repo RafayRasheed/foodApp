@@ -210,6 +210,7 @@ export const Restaurants = [
       {
         name: 'Deals',
         catName: 'Fast Food',
+
         items: [
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
@@ -220,6 +221,23 @@ export const Restaurants = [
             images: [require('../assets/home_main/home/category/fast2.png'), require('../assets/home_main/home/res.png')],
             rating: '3.0',
             noOfRatings: '100',
+            options: [
+              {
+                required: true,
+                name: 'Side Item',
+                list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
+              },
+              {
+                required: false,
+                name: 'Drink',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+              {
+                required: false,
+                name: 'Ice',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+            ],
           },
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
@@ -230,6 +248,23 @@ export const Restaurants = [
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
             noOfRatings: '100',
+            options: [
+              {
+                required: true,
+                name: 'Side Item',
+                list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
+              },
+              {
+                required: false,
+                name: 'Drink',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+              {
+                required: false,
+                name: 'Ice',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+            ],
           },
         ],
       },
@@ -246,17 +281,51 @@ export const Restaurants = [
             rating: '3.0',
             noOfRatings: '100',
             likes: '10',
+            options: [
+              {
+                required: true,
+                name: 'Side Item',
+                list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
+              },
+              {
+                required: false,
+                name: 'Drink',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+              {
+                required: false,
+                name: 'Ice',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+            ],
           },
           {
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             id: 'Resturant1Burger2',
-            price: 'Rs 700',
+            price: '700',
             description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
             name: 'Beaf Burger4',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',
             noOfRatings: '100',
             likes: '10',
+            options: [
+              {
+                required: true,
+                name: 'Side Item',
+                list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
+              },
+              {
+                required: false,
+                name: 'Drink',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+              {
+                required: false,
+                name: 'Ice',
+                list: ['Soft Drinks', 'Coffee or Tea']
+              },
+            ],
           },
         ],
       },

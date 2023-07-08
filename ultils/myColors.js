@@ -7,6 +7,7 @@ export const myColors = {
     primaryL4: '#edfaed ', //50%
     primaryL5: '#f7fcf7', //30%
     star: '#FFC700',
+    textL0: '#525252',
     textL: '#8F8F8F',
     textL2: '#9E9C9C',
     textL3: '#888888',
