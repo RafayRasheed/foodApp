@@ -4,31 +4,25 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { myHeight, myWidth, Spacer } from "../common";
 import { myFontSize, myFonts } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
-export const NewPass = ({ navigation }) => {
-    const [newPass, setNewPass] = useState()
-    const [conPass, setConPass] = useState()
+export const ForgetPassword = ({ navigation }) => {
+    const [email, setEmail] = useState()
     const [verifyPass, setVerifyPass] = useState(false)
 
-    function verifyNewPass() {
-        if (newPass) {
-            return true
-        }
-        return false
-    }
-    function verifyConPass() {
-        if (conPass) {
+    function verifyEmail() {
+        if (email) {
             return true
         }
         return false
     }
     useEffect(() => {
-        if (verifyNewPass() && verifyConPass()) {
+        if (verifyEmail()) {
             setVerifyPass(true)
+
         }
         else {
             setVerifyPass(false)
         }
-    }, [newPass, conPass])
+    }, [email])
 
     return (
         <>
@@ -38,41 +32,36 @@ export const NewPass = ({ navigation }) => {
                     <Spacer paddingT={myHeight(5.78)} />
 
                     {/* T ForgetPass */}
-                    <Text style={styles.textForget}>Change New Password</Text>
-                    <Text style={[styles.textLight, { fontSize: myFontSize.XSmall }]}>Enter a different password with the previous</Text>
+                    <Text style={styles.textForget}>Forget Password</Text>
+                    <Text style={[styles.textLight, { fontSize: myFontSize.medium }]}>Enter your registered email below</Text>
 
                     <Spacer paddingT={myHeight(6.9)} />
-                    {/* New Pass */}
+                    {/* Email Portion */}
                     <View >
-                        <Text style={[styles.heading, { color: newPass ? myColors.offColor : myColors.text }]}>New Password</Text>
-                        <TextInput placeholder="*** *** ***"
+                        <Text style={[styles.heading, { color: email ? myColors.offColor : myColors.text }]}>Email address</Text>
+                        <TextInput placeholder="Eg namaemail@emailkamu.com"
                             placeholderTextColor={myColors.offColor}
                             style={styles.input} cursorColor={myColors.primary}
-                            value={newPass} onChangeText={setNewPass}
-                            onEndEditing={() => verifyNewPass()}
+                            value={email} onChangeText={setEmail}
+                            onEndEditing={() => verifyEmail()}
                         />
                     </View>
 
-                    <Spacer paddingT={myHeight(1)} />
-                    {/* Con Pass */}
-                    <View >
-                        <Text style={[styles.heading, { color: conPass ? myColors.offColor : myColors.text }]}>Confirm Password</Text>
-                        <TextInput placeholder="*** *** ***"
-                            placeholderTextColor={myColors.offColor}
-                            style={styles.input} cursorColor={myColors.primary}
-                            value={conPass} onChangeText={setConPass}
-                            onEndEditing={() => verifyNewPass()}
-                        />
+                    <Spacer paddingT={myHeight(1.9)} />
+                    {/* T Remember Pass */}
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.textLight2}>Remember the password?</Text>
+                        <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.6}>
+                            <Text style={styles.textSign}> Sign in</Text>
+                        </TouchableOpacity>
                     </View>
-
-
 
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     {/* Button Submit */}
-                    <TouchableOpacity onPress={() => verifyPass ? navigation.replace('DonePass') : null} activeOpacity={0.8}
+                    <TouchableOpacity onPress={() => verifyPass ? navigation.navigate('DoneEmail') : null} activeOpacity={0.8}
                         style={styles2(verifyPass).button}>
-                        <Text style={styles2(verifyPass).textReg}>Reset Password</Text>
+                        <Text style={styles2(verifyPass).textReg}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAwareScrollView>
@@ -106,7 +95,7 @@ const styles = StyleSheet.create({
         paddingStart: myWidth(3.3)
     },
     textSign: {
-        fontFamily: myFonts.heading, color: myColors.textL, fontSize: myFontSize.XSmall,
+        fontFamily: myFonts.heading, color: myColors.primary, fontSize: myFontSize.XSmall,
     }
 })
 

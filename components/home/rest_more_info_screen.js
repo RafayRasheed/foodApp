@@ -339,8 +339,8 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                                 height: myHeight(2.6),
                                 width: myHeight(2.6),
                                 resizeMode: 'contain',
-                                transform: [{ rotate: timmingClose ? '90deg' : '270deg' }],
-                                tintColor: timmingClose ? myColors.primaryT : myColors.offColor
+                                transform: [{ rotate: infoClose ? '90deg' : '270deg' }],
+                                tintColor: infoClose ? myColors.primaryT : myColors.offColor
                             }} source={
                                 require('../assets/home_main/home/go.png')
                             } />

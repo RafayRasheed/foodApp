@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { myHeight, myWidth, Spacer } from "../common";
 import { myFontSize, myFonts } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
-export const DonePass = ({ navigation }) => {
+export const DoneEmail = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
@@ -20,15 +20,24 @@ export const DonePass = ({ navigation }) => {
 
                 <Spacer paddingT={myHeight(1)} />
                 {/* T Check */}
-                <Text style={styles.textCong}>Congratulations your password has been changed</Text>
+                <Text style={styles.textCheck}>Please check your email for create a new password</Text>
+
+                <Spacer paddingT={myHeight(3.4)} />
+                {/* T Resubmet */}
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.textLight}>Can't get email?</Text>
+                    <TouchableOpacity onPress={() => navigation.replace("NewPass")} activeOpacity={0.6}>
+                        <Text style={styles.textResub}> Resubmit</Text>
+                    </TouchableOpacity>
+                </View>
 
 
             </View>
             <View style={{ alignItems: 'center' }}>
                 {/* Button Submit */}
-                <TouchableOpacity onPress={() => navigation.navigate('Welcome')} activeOpacity={0.8}
+                <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.8}
                     style={styles.button}>
-                    <Text style={styles.textReg}>Sign in</Text>
+                    <Text style={styles.textReg}>Back Email</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,9 +70,15 @@ const styles = StyleSheet.create({
     textSucc: {
         fontSize: myFontSize.xLarge, fontFamily: myFonts.headingBold, color: myColors.text
     },
-    textCong: {
-        fontSize: myFontSize.XSmall, fontFamily: myFonts.bodyBold, color: myColors.textL3,
+    textCheck: {
+        fontSize: myFontSize.medium, fontFamily: myFonts.bodyBold, color: myColors.text,
         textAlign: 'center'
     },
+    textLight: {
+        fontFamily: myFonts.headingBold, color: myColors.textL, fontSize: myFontSize.medium
+    },
 
+    textResub: {
+        fontFamily: myFonts.headingBold, color: myColors.primary, fontSize: myFontSize.medium,
+    }
 })
