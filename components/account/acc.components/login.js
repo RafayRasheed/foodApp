@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { myHeight, myWidth, Spacer } from "../../common";
+import { ios, myHeight, myWidth, Spacer } from "../../common";
 import { myFontSize, myFonts } from "../../../ultils/myFonts";
 import { myColors } from "../../../ultils/myColors";
 
@@ -12,7 +12,7 @@ export const Login = ({ navigate }) => {
     const [verifyLog, setVerifyLog] = useState(false)
 
     const onLogin = () => {
-
+        navigate('HomeBottomNavigator')
     }
 
     function verifyEmail() {
@@ -45,27 +45,38 @@ export const Login = ({ navigate }) => {
         <View style={{ flex: 1, width: myWidth(87), justifyContent: 'center', }}>
             {/* email Portion */}
             <View>
-                <Text style={[styles.heading, { color: email ? myColors.offColor : myColors.text }]}>Email address</Text>
-                <TextInput placeholder="Eg namaemail@emailkamu.com"
-                    placeholderTextColor={myColors.offColor}
-                    style={styles.input} cursorColor={myColors.primary}
-                    value={email} onChangeText={setEmail}
-                    autoCapitalize='none'
-                    onEndEditing={() => verifyEmail()}
-                />
+                <Text style={[styles.heading, { color: email ? myColors.textL4 : myColors.text }]}>Email address</Text>
+                <View style={styles.containerInput}>
+
+                    <TextInput placeholder="Eg namaemail@emailkamu.com"
+                        placeholderTextColor={myColors.textL4}
+
+                        autoCorrect={false}
+                        style={styles.input} cursorColor={myColors.primary}
+                        value={email} onChangeText={setEmail}
+                        autoCapitalize='none'
+                        onEndEditing={() => verifyEmail()}
+                    />
+                </View>
             </View>
 
             <Spacer paddingT={myHeight(0.98)} />
             {/* password Portion */}
             <View>
-                <Text style={[styles.heading, { color: password ? myColors.offColor : myColors.text }]}>Password</Text>
-                <TextInput placeholder="**** **** ****"
-                    placeholderTextColor={myColors.offColor}
-                    style={styles.input} cursorColor={myColors.primary}
-                    value={password} onChangeText={setPass}
-                    onEndEditing={() => verifyPass()}
-                    secureTextEntry={true}
-                />
+                <Text style={[styles.heading, { color: password ? myColors.textL4 : myColors.text }]}>Password</Text>
+
+                <View style={styles.containerInput}>
+
+                    <TextInput placeholder="Password"
+
+                        autoCorrect={false}
+                        placeholderTextColor={myColors.textL4}
+                        style={styles.input} cursorColor={myColors.primary}
+                        value={password} onChangeText={setPass}
+                        onEndEditing={() => verifyPass()}
+                        secureTextEntry={true}
+                    />
+                </View>
                 {/* Forget Password */}
                 <TouchableOpacity activeOpacity={0.8} style={{ alignSelf: 'flex-end' }}
                     onPress={() => navigate('ForgetPass')}>
@@ -79,15 +90,15 @@ export const Login = ({ navigate }) => {
                 {/* <TouchableOpacity onPress={() => verifyLog ? navigate('HomeNavigator') : null} */}
                 <TouchableOpacity onPress={() => verifyLog ? onLogin() : null}
                     activeOpacity={0.8}
-                    style={[styles.button, { backgroundColor: verifyLog ? myColors.primary : myColors.offColor3 }]}>
+                    style={[styles.button, { backgroundColor: verifyLog ? myColors.primary : myColors.offColor4 }]}>
                     <Text style={styles2(verifyLog).textReg}>Login</Text>
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(1.5)} />
-                <View style={{ width: myWidth(47), height: 0.8, backgroundColor: myColors.offColor4 }} />
+                <View style={{ width: myWidth(47), height: 0.8, backgroundColor: myColors.textL44 }} />
                 <Spacer paddingT={myHeight(1.5)} />
 
-                <TouchableOpacity onPress={() => null} activeOpacity={0.8} style={[styles.button, { backgroundColor: myColors.offColor3 }]}>
+                <TouchableOpacity onPress={() => null} activeOpacity={0.8} style={[styles.button, { backgroundColor: myColors.offColor4 }]}>
                     <Image style={{ resizeMode: 'contain', width: myWidth(5.3), height: myWidth(5.3) }}
                         source={require('../../assets/account/google.png')} />
                     <Spacer paddingEnd={myWidth(6.4)} />
@@ -101,13 +112,27 @@ export const Login = ({ navigate }) => {
 
 const styles = StyleSheet.create({
     heading: {
-        paddingStart: myWidth(2.7), paddingVertical: myHeight(0.8),
-        fontFamily: myFonts.heading, fontSize: myFontSize.XSmall,
+        paddingVertical: myHeight(0.8),
+        fontFamily: myFonts.heading, fontSize: myFontSize.body,
     },
+    containerInput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: myWidth(2.5),
+        paddingHorizontal: myWidth(2),
+        borderWidth: myHeight(0.12),
+        borderColor: myColors.textL4,
+        backgroundColor: myColors.background,
+    },
+
     input: {
-        height: myHeight(5.9), borderWidth: 1, borderRadius: myHeight(1.47),
-        borderColor: myColors.border, paddingHorizontal: myWidth(3.3),
-        fontSize: myFontSize.XSmall, color: myColors.text, fontFamily: myFonts.bodyBold,
+        flex: 1,
+        textAlignVertical: 'center',
+        paddingVertical: ios ? myHeight(1) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.2),
+        fontSize: myFontSize.body,
+        color: myColors.text,
+        includeFontPadding: false,
+        fontFamily: myFonts.bodyBold,
     },
     button: {
         height: myHeight(6.1), width: myWidth(68.3),
@@ -116,17 +141,19 @@ const styles = StyleSheet.create({
     },
     textGoogle: {
         color: myColors.black2, fontFamily: myFonts.heading,
-        fontSize: myFontSize.XSmall
+        fontSize: myFontSize.body
     },
     textForgetP: {
-        fontFamily: myFonts.heading, fontSize: myFontSize.XSmall, color: myColors.primary,
+        fontFamily: myFonts.heading, fontSize: myFontSize.body, color: myColors.primary,
         paddingVertical: myHeight(0.8)
     }
+
 
 })
 const styles2 = (verifyLog) => StyleSheet.create({
     textReg: {
-        color: verifyLog ? myColors.background : myColors.offColor, fontFamily: myFonts.headingBold,
-        fontSize: myFontSize.xSmall
+        color: verifyLog ? myColors.background : myColors.textL4, fontFamily: myFonts.headingBold,
+        fontSize: myFontSize.body
     },
+
 })

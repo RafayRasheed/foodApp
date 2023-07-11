@@ -346,6 +346,7 @@ const styles = StyleSheet.create({
         width: myHeight(1.2),
         height: myHeight(1.2),
         resizeMode: 'contain',
+        tintColor: myColors.primaryT
     },
     imageGoLR: {
         height: myHeight(1.75),

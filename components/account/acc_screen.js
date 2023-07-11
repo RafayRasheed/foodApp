@@ -7,6 +7,7 @@ import { myColors } from "../../ultils/myColors";
 import { Login } from "./acc.components/login";
 import { CreateAcc } from "./acc.components/create_acc";
 import Animated, { SlideInDown } from "react-native-reanimated";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
 export const AccScreen = ({ navigation }) => {
@@ -14,8 +15,8 @@ export const AccScreen = ({ navigation }) => {
     const [onLogin, setOnLogin] = useState(false)
 
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor={onAcc ? '#00000030' : myColors.background} />
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+            {/* <StatusBar backgroundColor={onAcc ? '#00000029' : myColors.background} /> */}
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Spacer paddingT={myHeight(6)} />
 
@@ -70,7 +71,11 @@ export const AccScreen = ({ navigation }) => {
 
             {
                 onAcc &&
-                <TouchableOpacity activeOpacity={0.95} onPress={() => setOnAcc(false)} style={{ height: '100%', width: '100%', position: 'absolute', zIndex: 2, backgroundColor: '#00000030', justifyContent: 'flex-end' }}>
+                <TouchableOpacity activeOpacity={0.95} onPress={() => setOnAcc(false)}
+                    style={{
+                        height: '100%', width: '100%', position: 'absolute', zIndex: 2,
+                        backgroundColor: 'transparent', justifyContent: 'flex-end'
+                    }}>
                     <Animated.View entering={SlideInDown} style={{ minHeight: myHeight(71), width: myWidth(100), backgroundColor: myColors.background, borderTopStartRadius: 36, borderTopEndRadius: 36, alignItems: 'center' }}>
 
                         <Spacer paddingT={myHeight(1)} />
@@ -103,7 +108,7 @@ export const AccScreen = ({ navigation }) => {
                 </TouchableOpacity>
             }
 
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

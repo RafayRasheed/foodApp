@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { myHeight, myWidth, Spacer } from "../common";
+import { ios, myHeight, myWidth, Spacer } from "../common";
 import { myFontSize, myFonts } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 export const ForgetPassword = ({ navigation }) => {
@@ -29,22 +29,26 @@ export const ForgetPassword = ({ navigation }) => {
             <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', }} style={styles.container}>
 
                 <View style={{ paddingHorizontal: myWidth(6.4) }}>
-                    <Spacer paddingT={myHeight(5.78)} />
+                    <Spacer paddingT={myHeight(5)} />
 
                     {/* T ForgetPass */}
                     <Text style={styles.textForget}>Forget Password</Text>
-                    <Text style={[styles.textLight, { fontSize: myFontSize.medium }]}>Enter your registered email below</Text>
+                    <Text style={[styles.textLight, { fontSize: myFontSize.body3 }]}>Enter your registered email below</Text>
 
                     <Spacer paddingT={myHeight(6.9)} />
                     {/* Email Portion */}
                     <View >
-                        <Text style={[styles.heading, { color: email ? myColors.offColor : myColors.text }]}>Email address</Text>
-                        <TextInput placeholder="Eg namaemail@emailkamu.com"
-                            placeholderTextColor={myColors.offColor}
-                            style={styles.input} cursorColor={myColors.primary}
-                            value={email} onChangeText={setEmail}
-                            onEndEditing={() => verifyEmail()}
-                        />
+                        <Text style={[styles.heading]}>Email address</Text>
+                        <View style={styles.containerInput}>
+
+                            <TextInput placeholder="Eg namaemail@emailkamu.com"
+                                placeholderTextColor={myColors.offColor}
+                                style={styles.input} cursorColor={myColors.primary}
+                                value={email} onChangeText={setEmail}
+                                onEndEditing={() => verifyEmail()}
+                            />
+                        </View>
+
                     </View>
 
                     <Spacer paddingT={myHeight(1.9)} />
@@ -71,38 +75,53 @@ export const ForgetPassword = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     heading: {
-        paddingStart: myWidth(2.7), paddingVertical: myHeight(0.8),
-        fontFamily: myFonts.heading, fontSize: myFontSize.XSmall,
+        paddingStart: myWidth(0.5), paddingVertical: myHeight(0.8),
+        fontFamily: myFonts.bodyBold, fontSize: myFontSize.body,
+        color: myColors.text
     },
     container: {
         flex: 1, backgroundColor: myColors.background,
         paddingVertical: myHeight(8.6)
     },
+    containerInput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: myWidth(2.5),
+        paddingHorizontal: myWidth(2),
+        borderWidth: myHeight(0.12),
+        borderColor: myColors.textL4,
+        backgroundColor: myColors.background,
+    },
+
     input: {
-        height: myHeight(5.9), borderWidth: 1, borderRadius: myHeight(1.47),
-        borderColor: myColors.border, paddingHorizontal: myWidth(3.3),
-        fontSize: myFontSize.XSmall, color: myColors.text, fontFamily: myFonts.bodyBold,
+        flex: 1,
+        textAlignVertical: 'center',
+        paddingVertical: ios ? myHeight(1) : myHeight(100) > 600 ? myHeight(0.8) : myHeight(0.2),
+        fontSize: myFontSize.body,
+        color: myColors.text,
+        includeFontPadding: false,
+        fontFamily: myFonts.bodyBold,
     },
     textForget: {
-        fontFamily: myFonts.headingBold, fontSize: myFontSize.large, color: myColors.text,
+        fontFamily: myFonts.heading, fontSize: myFontSize.large, color: myColors.text,
         paddingVertical: myHeight(0.6)
     },
     textLight: {
-        fontFamily: myFonts.bodyBold, color: myColors.offColor, fontSize: myFontSize.medium
+        fontFamily: myFonts.bodyBold, color: myColors.offColor, fontSize: myFontSize.body
     },
     textLight2: {
-        fontFamily: myFonts.bodyBold, color: myColors.offColor, fontSize: myFontSize.XSmall,
-        paddingStart: myWidth(3.3)
+        fontFamily: myFonts.bodyBold, color: myColors.offColor, fontSize: myFontSize.body,
+        paddingStart: myWidth(0.8)
     },
     textSign: {
-        fontFamily: myFonts.heading, color: myColors.primary, fontSize: myFontSize.XSmall,
+        fontFamily: myFonts.heading, color: myColors.primary, fontSize: myFontSize.body,
     }
 })
 
 const styles2 = (verifyPass) => StyleSheet.create({
     textReg: {
         color: verifyPass ? myColors.background : myColors.offColor, fontFamily: myFonts.headingBold,
-        fontSize: myFontSize.XSmall
+        fontSize: myFontSize.body
     },
     button: {
         height: myHeight(6.1), width: myWidth(68.3),
