@@ -230,7 +230,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: myColors.background,
         justifyContent: 'space-between'
-        // paddingBottom: myHeight(8.1),
     },
 
     containerMid: {
