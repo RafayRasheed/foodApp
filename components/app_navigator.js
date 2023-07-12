@@ -4,8 +4,8 @@ import { StartupScreen } from "./startup/startup_screens"
 import { storage } from "./common"
 import { StartupNavigator } from "./startup/startup_navigator"
 import { HomeBottomNavigator } from "./home/home_bottom_navigator"
-import { AccountNavigator } from "./account/acc_stack"
 import { OnboardScreen } from "./onboard/onboard_screen"
+import { AccountNavigator } from "./account/account_navigation"
 
 const AppTAB = createNativeStackNavigator()
 

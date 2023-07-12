@@ -3,109 +3,73 @@ import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, Vie
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+// import Flag from './account.component/phone_select';
 
-export const NewPassword = ({ navigation }) => {
-    const [password, setPassword] = useState(null)
+export const ForgotPassword = ({ navigation }) => {
+    const [email, setEmail] = useState(null)
     const flagRef = useRef(null)
-    const [confirmPass, setConfirmPass] = useState(null)
-    const [verifyDone, setverifyDone] = useState(false)
-    const [hidePass, setHidePass] = useState(true);
-    const [hideConPass, setHideConPass] = useState(true);
+    const [phone, setPhone] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         if (errorMessage) {
+            console.log(errorMessage.length)
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2000)
         }
     }, [errorMessage])
+    // { errorMessage && <MyError message={errorMessage} /> }
 
-    useEffect(() => {
-        if (verifyDone) {
-            navigation.navigate('DonePassword')
-        }
-    }, [verifyDone])
-
-    function onSubmit() {
-        if (verifyPass() && verifyConPass()) {
-            setverifyDone(true)
-        }
-        // navigation.navigate('DonePassword')
-
-    }
-    function verifyPass() {
-        if (password) {
-            return true
-        }
-        setErrorMessage('Please Enter a Password')
-        return false
-    }
-
-    function verifyConPass() {
-        if (confirmPass) {
-            if (password === confirmPass) {
+    function verifyPhone() {
+        if (phone) {
+            const s = flagRef.current.checkNumber()
+            if (s) {
                 return true
             }
-            setErrorMessage('Password Do Not Match')
+            setErrorMessage('Please Enter a Valid Number')
             return false
         }
-        setErrorMessage('Please Enter a Password Again')
+
+        setErrorMessage('Please Enter a Number')
         return false
+    }
+    function onChangePhone(val) {
+        setPhone(val)
+        flagRef.current.setNumber(val)
+    }
+    function onSend() {
+        if (verifyPhone()) {
+            navigation.navigate('NewPassword')
+        }
     }
     return (
         <SafeAreaView style={styles.container}>
-
             {errorMessage && <MyError message={errorMessage} />}
             <Spacer paddingT={myHeight(7)} />
 
             <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>
-                {/* New Password */}
-                <Text style={styles.textNewPass}>New Password</Text>
+                {/* Forgot Password */}
+                <Text style={styles.textForgotPass}>Forgot Password</Text>
                 <Spacer paddingT={myHeight(1.1)} />
-                <Text style={styles.textDes}>Enter your new password</Text>
+                <Text style={styles.textDes}>Enter your Email Address to get link for resetting password</Text>
 
-                <Spacer paddingT={myHeight(5.2)} />
-                {/* Password Portion */}
+                <Spacer paddingT={myHeight(3.2)} />
+
+                {/* Phone Portion */}
                 <View style={styles.containerInputPortion}>
-                    <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
+                    {/* <Flag ref={flagRef} /> */}
                     <Spacer paddingEnd={myWidth(1.8)} />
-                    <TextInput placeholder="Password"
-                        secureTextEntry={hidePass}
-                        password={true}
-                        clearTextOnFocus={false}
-                        textContentType='password'
-                        autoCorrect={false}
+                    <TextInput placeholder="Phone Number"
+                        keyboardType='phone-pad'
+                        maxLength={14}
                         placeholderTextColor={myColors.offColor}
                         selectionColor={myColors.primaryT}
-                        style={styles.containerInput} cursorColor={myColors.primaryT}
-                        value={password} onChangeText={setPassword}
+                        style={styles.containerInput}
+                        cursorColor={myColors.primaryT}
+                        value={phone} onChangeText={(val) => onChangePhone(val)}
+                        onEndEditing={() => verifyPhone()}
                     />
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
-                        <Image style={styles.imageEye}
-                            source={hidePass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
-                    </TouchableOpacity>
-                </View>
-                <Spacer paddingT={myHeight(2.15)} />
-                {/* Confirm Password Portion */}
-                <View style={styles.containerInputPortion}>
-                    <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
-                    <Spacer paddingEnd={myWidth(1.8)} />
-                    <TextInput placeholder="Confirm Password"
-                        secureTextEntry={hideConPass}
-                        password={true}
-                        clearTextOnFocus={false}
-                        textContentType='password'
-                        autoCorrect={false}
-                        placeholderTextColor={myColors.offColor}
-                        selectionColor={myColors.primaryT}
-                        style={styles.containerInput} cursorColor={myColors.primaryT}
-                        value={confirmPass} onChangeText={setConfirmPass}
-                    />
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => setHideConPass(!hideConPass)}>
-                        <Image style={styles.imageEye}
-                            source={hideConPass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
-                    </TouchableOpacity>
                 </View>
                 <Spacer paddingT={myHeight(2.2)} />
 
@@ -118,9 +82,10 @@ export const NewPassword = ({ navigation }) => {
                 <Spacer paddingT={myHeight(2.2)} />
 
                 {/* Sign Button */}
-                <TouchableOpacity activeOpacity={0.6} onPress={onSubmit}
-                    onLongPress={() => navigation.navigate('DonePassword')} style={styles.containerSign}>
-                    <Text style={styles.textSendBu}>Submit</Text>
+                <TouchableOpacity activeOpacity={0.6} onPress={onSend}
+                    onLongPress={() => navigation.navigate('NewPassword')}
+                    style={styles.containerSign}>
+                    <Text style={styles.textSendBu}>Send</Text>
                 </TouchableOpacity>
             </View>
 
@@ -158,6 +123,7 @@ const styles = StyleSheet.create({
         includeFontPadding: false,
         fontFamily: myFonts.bodyBold,
 
+
         // lineHeight: 0,
 
 
@@ -174,7 +140,7 @@ const styles = StyleSheet.create({
     },
 
     // Text
-    textNewPass: {
+    textForgotPass: {
         fontSize: myFontSize.large,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
@@ -191,6 +157,7 @@ const styles = StyleSheet.create({
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,
+        paddingHorizontal: myWidth(9.5),
         textAlign: 'center',
 
     },
@@ -211,7 +178,6 @@ const styles = StyleSheet.create({
         letterSpacing: myLetSpacing.common,
         includeFontPadding: false,
         padding: 0,
-
     },
 
 
@@ -227,11 +193,6 @@ const styles = StyleSheet.create({
         width: myHeight(2.2),
         resizeMode: 'contain',
     },
-    imageEye: {
-        height: myHeight(2.5),
-        width: myHeight(2.5),
-        resizeMode: 'contain'
-    }
 
 
 })
