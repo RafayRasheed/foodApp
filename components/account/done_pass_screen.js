@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
 
     },
     containerSign: {
+        width: myWidth(80),
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.3),
-        paddingHorizontal: myWidth(7.2),
-        borderRadius: myWidth(3.2),
+        paddingVertical: myHeight(1.25),
+        borderRadius: myWidth(2.2),
 
 
     },

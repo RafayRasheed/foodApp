@@ -13,7 +13,6 @@ export const SignIn = ({ navigation }) => {
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const [hidePass, setHidePass] = useState(true);
-    const flagRef = useRef(null)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
@@ -273,7 +272,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1),
+        paddingVertical: myHeight(1.2),
         borderRadius: myWidth(2.2),
     },
     containerOrSignWith: {
@@ -284,8 +283,8 @@ const styles = StyleSheet.create({
     },
     containerLine: {
         flex: 1,
-        borderTopWidth: myHeight(0.085),
-        borderColor: myColors.text,
+        borderTopWidth: myHeight(0.15),
+        borderColor: myColors.dot,
     },
     containerSocial: {
         paddingHorizontal: myWidth(4.18),
@@ -304,7 +303,7 @@ const styles = StyleSheet.create({
 
     //Text
     textTermCond: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -313,7 +312,7 @@ const styles = StyleSheet.create({
     },
 
     textTermCondColor: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.bodyBold,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
@@ -358,7 +357,7 @@ const styles = StyleSheet.create({
 
     },
     textSignWith: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
         paddingHorizontal: myWidth(2.3),
@@ -368,7 +367,7 @@ const styles = StyleSheet.create({
 
     },
     textDontHaveAcc: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -377,7 +376,7 @@ const styles = StyleSheet.create({
     },
 
     textSignUp: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body,
         fontFamily: myFonts.heading,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,

@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
         paddingVertical: myHeight(1.25),
-        borderRadius: myWidth(3.2),
+        borderRadius: myWidth(2.2),
 
 
     },
@@ -221,16 +221,21 @@ const styles = StyleSheet.create({
         width: myHeight(2.25),
         marginStart: myWidth(7.4),
         resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
     },
     imageInput: {
         height: myHeight(2.2),
         width: myHeight(2.2),
         resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
     },
     imageEye: {
         height: myHeight(2.5),
         width: myHeight(2.5),
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
     }
 
 

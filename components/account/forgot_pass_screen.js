@@ -7,39 +7,31 @@ import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 
 export const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState(null)
-    const flagRef = useRef(null)
-    const [phone, setPhone] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         if (errorMessage) {
-            console.log(errorMessage.length)
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2000)
         }
     }, [errorMessage])
-    // { errorMessage && <MyError message={errorMessage} /> }
 
-    function verifyPhone() {
-        if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
+
+    function verifyEmail() {
+        if (email) {
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
                 return true
             }
-            setErrorMessage('Please Enter a Valid Number')
+            setErrorMessage('Please Enter a Valid Email')
             return false
         }
-
-        setErrorMessage('Please Enter a Number')
+        setErrorMessage('Please Enter a Email')
         return false
     }
-    function onChangePhone(val) {
-        setPhone(val)
-        flagRef.current.setNumber(val)
-    }
     function onSend() {
-        if (verifyPhone()) {
+        if (verifyEmail()) {
             navigation.navigate('NewPassword')
         }
     }
@@ -56,20 +48,17 @@ export const ForgotPassword = ({ navigation }) => {
 
                 <Spacer paddingT={myHeight(3.2)} />
 
-                {/* Phone Portion */}
+                {/* Email Portion */}
                 <View style={styles.containerInputPortion}>
-                    {/* <Flag ref={flagRef} /> */}
-                    <Spacer paddingEnd={myWidth(1.8)} />
-                    <TextInput placeholder="Phone Number"
-                        keyboardType='phone-pad'
-                        maxLength={14}
+                    <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
+                    <Spacer paddingEnd={myWidth(2.5)} />
+                    <TextInput placeholder=" Email Address"
+                        autoCapitalize='none'
                         placeholderTextColor={myColors.offColor}
                         selectionColor={myColors.primaryT}
-                        style={styles.containerInput}
-                        cursorColor={myColors.primaryT}
-                        value={phone} onChangeText={(val) => onChangePhone(val)}
-                        onEndEditing={() => verifyPhone()}
-                    />
+                        style={styles.containerInput} cursorColor={myColors.primaryT}
+                        value={email} onChangeText={setEmail}
+                        autoCorrect={false} />
                 </View>
                 <Spacer paddingT={myHeight(2.2)} />
 
@@ -133,8 +122,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.25),
-        borderRadius: myWidth(3.2),
+        paddingVertical: myHeight(1.2),
+        borderRadius: myWidth(2.2),
 
 
     },
@@ -187,11 +176,13 @@ const styles = StyleSheet.create({
         width: myHeight(2.25),
         marginStart: myWidth(7.4),
         resizeMode: 'contain',
+
     },
     imageInput: {
         height: myHeight(2.2),
         width: myHeight(2.2),
         resizeMode: 'contain',
+        tintColor: myColors.primaryT
     },
 
 

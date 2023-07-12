@@ -166,7 +166,7 @@ export const SignUp = ({ navigation }) => {
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder=" Enter Password Again"
+                                <TextInput placeholder=" Confirm Password"
                                     secureTextEntry={hideConPass}
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1),
+        paddingVertical: myHeight(1.2),
         borderRadius: myWidth(2.2)
     },
     containerOrSignWith: {
@@ -318,8 +318,8 @@ const styles = StyleSheet.create({
     },
     containerLine: {
         flex: 1,
-        borderTopWidth: myHeight(0.09),
-        borderColor: myColors.text,
+        borderTopWidth: myHeight(0.15),
+        borderColor: myColors.dot,
     },
     containerSocial: {
         paddingHorizontal: myWidth(4.18),
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
 
     //Text
     textTermCond: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.bodyBold,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     },
 
     textTermCondColor: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.bodyBold,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
 
     },
     textSignWith: {
-        fontSize: myFontSize.xSmall,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.heading,
         color: myColors.text,
         paddingHorizontal: myWidth(2.3),
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
 
     },
     textAlreHaveAcc: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.text,
         letterSpacing: myLetSpacing.common,
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
 
     },
     textSignIn: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.body,
         fontFamily: myFonts.heading,
         color: myColors.primaryT,
         letterSpacing: myLetSpacing.common,
