@@ -174,6 +174,7 @@ export const StartupScreen = ({ navigation }) => {
                                 </View>
                                 <Text style={styles.textDes}>{item.des}</Text>
                                 <Spacer paddingT={myHeight(12.5)} />
+                                {/* <View style={{ flex: 1 }} /> */}
                             </View>
                         )
                     }
@@ -183,8 +184,10 @@ export const StartupScreen = ({ navigation }) => {
 
             {/* Bottom * => Start Button & Change*/}
             <View style={styles.containerBottom}>
+
                 {/* {!getStart? */}
                 <View style={styles.containerChange}>
+
                     {/* Arrow Left */}
                     <View style={{ width: myHeight(3) }}>
                         {i > 0 &&
@@ -212,9 +215,7 @@ export const StartupScreen = ({ navigation }) => {
                     <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerStart}>
                         <Text style={styles.textStart}>Get Started</Text>
                     </TouchableOpacity> */}
-                {/* } */}
-                <Spacer paddingT={myHeight(15)} />
-
+                <Spacer paddingT={myHeight(8)} />
 
             </View>
 
@@ -259,6 +260,9 @@ const styles = StyleSheet.create({
     },
     containerBottom: {
         width: myWidth(100),
+
+
+        // backgroundColor: 'red'
         // flex:1,
         // height: myHeight(10),
         // position: 'absolute',

@@ -27,7 +27,7 @@ export const Started = ({ navigation }) => {
             <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('AccountNavigator')} style={styles.containerStart}>
                 <Text style={styles.textStart}>Get Started</Text>
             </TouchableOpacity>
-            <Spacer paddingT={myHeight(15)} />
+            <Spacer paddingT={myHeight(8)} />
         </SafeAreaView>
     )
 }

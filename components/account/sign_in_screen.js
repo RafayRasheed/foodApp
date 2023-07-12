@@ -8,7 +8,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 
 export const SignIn = ({ navigation }) => {
-
+    const ref = useRef()
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
@@ -90,7 +90,6 @@ export const SignIn = ({ navigation }) => {
                         <Spacer paddingT={myHeight(4.4)} />
                         {/* Input Portion */}
                         <View>
-                            {/* Email Portion */}
                             {/* Email Portion */}
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
@@ -226,7 +225,7 @@ export const SignIn = ({ navigation }) => {
                     </View>
                 </View>
             </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
