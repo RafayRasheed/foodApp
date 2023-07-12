@@ -5,10 +5,10 @@ import { Spacer, myHeight, myWidth } from "../common"
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 
 const item = {
-    title: 'Earn Coins',
-    des: 'Earn coins from all our services to use in app!',
-    image: require('../assets/startup/startup5.png'),
-    style: { width: myWidth(84), height: myWidth(84) * 0.8 },
+    title: 'Welcome',
+    des: 'Before enjoying Food media services Please register first',
+    image: require('../assets/startup/welcome.png'),
+    style: { width: myWidth(70), height: myWidth(70) * 0.8, marginBottom: myHeight(4) },
 }
 export const Started = ({ navigation }) => {
     return (
@@ -72,6 +72,8 @@ const styles = StyleSheet.create({
         fontSize: myFontSize.body,
         fontFamily: myFonts.body,
         color: myColors.text,
+        textAlign: 'center',
+        paddingHorizontal: myWidth(10),
         includeFontPadding: false,
         padding: 0,
 

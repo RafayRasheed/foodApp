@@ -6,29 +6,24 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 
 const startupData = [
     {
-        title: 'Shop Local',
-        des: 'Shop anything, anytime, anywhere!',
-        image: require('../assets/startup/startup1.png'),
-        style: { width: myWidth(70), height: myWidth(70) * 0.8, marginBottom: -myHeight(0.5) },
+        title: 'Nearby restaurants',
+        des: 'You dont have to go far to find a good restaurant, we provided all the restaurants that is near you',
+        image: require('../assets/startup/maps.png'),
+        style: { width: myWidth(70), height: myWidth(70) * 0.6, marginBottom: myHeight(5) },
     },
     {
-        title: 'Book Rides',
-        des: 'Use M-Rides to get anywhere in your city!',
-        image: require('../assets/startup/startup2.png'),
-        style: { width: myWidth(84), height: myWidth(84) * 0.62, marginBottom: -myHeight(2) },
+        title: 'Select Favorites Menu',
+        des: 'Now eat well, dont leave the house,You can choose your favorite food only with one click',
+        image: require('../assets/startup/order.png'),
+        style: { width: myWidth(60), height: myWidth(60), marginBottom: myHeight(2) },
     },
     {
-        title: 'Order Food',
-        des: 'Order all your favorite cuisines & cravings!',
-        image: require('../assets/startup/startup3.png'),
-        style: { width: myWidth(73), height: myWidth(73) * 0.85, },
+        title: 'Good food, Cheap price',
+        des: 'You can eat at expensive restaurants with affordable price',
+        image: require('../assets/startup/food.png'),
+        style: { width: myWidth(60), height: myWidth(60), marginBottom: myHeight(3) },
     },
-    {
-        title: 'Send Parcel',
-        des: 'Send parcels to anywhere in your city!',
-        image: require('../assets/startup/startup4.png'),
-        style: { width: myWidth(84), height: myWidth(84) * 0.62, },
-    },
+
 
 
 ]
@@ -153,7 +148,6 @@ export const StartupScreen = ({ navigation }) => {
                     onTouchStart={() => setScrollTouch(true)}
                     onScroll={handleScroll}
                     overScrollMode='never'
-                    // scrollEnabled={i < lenStartup - 1}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ alignItems: 'flex-end' }}
                     pagingEnabled
@@ -162,18 +156,22 @@ export const StartupScreen = ({ navigation }) => {
                 >
                     {
                         startupData.map((item, i) =>
-                            <View
-                                onLayout={(event) => {
-                                    const layout = event.nativeEvent.layout;
-                                    posX[i] = layout.x;
-                                    setPosX(posX);
-                                }}
-                                style={styles.containerMid} key={i}>
-                                {/* <Image /> */}
-                                <Image style={[styles.imageMid, item.style]} source={item.image} />
-                                {/* <Spacer paddingT={myHeight(0.8)} /> */}
-                                <Text style={styles.textTitle}> {item.title}</Text>
-                                <Spacer paddingT={myHeight(0.8)} />
+                            <View style={{
+                                width: myWidth(100),
+                            }}>
+                                <View
+                                    onLayout={(event) => {
+                                        const layout = event.nativeEvent.layout;
+                                        posX[i] = layout.x;
+                                        setPosX(posX);
+                                    }}
+                                    style={styles.containerMid} key={i}>
+                                    {/* <Image /> */}
+                                    <Image style={[styles.imageMid, item.style]} source={item.image} />
+                                    {/* <Spacer paddingT={myHeight(0.8)} /> */}
+                                    <Text style={styles.textTitle}> {item.title}</Text>
+                                    <Spacer paddingT={myHeight(1.5)} />
+                                </View>
                                 <Text style={styles.textDes}>{item.des}</Text>
                                 <Spacer paddingT={myHeight(12.5)} />
                             </View>
@@ -308,17 +306,19 @@ const styles = StyleSheet.create({
 
     },
     textTitle: {
-        fontSize: myFontSize.large,
-        fontFamily: myFonts.bodyBold,
+        fontSize: myFontSize.medium2,
+        fontFamily: myFonts.heading,
         color: myColors.text,
         includeFontPadding: false,
         padding: 0,
 
     },
     textDes: {
-        fontSize: myFontSize.body,
+        fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.body,
         color: myColors.text,
+        textAlign: 'center',
+        paddingHorizontal: myWidth(8),
         includeFontPadding: false,
         padding: 0,
 
