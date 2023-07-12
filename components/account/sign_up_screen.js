@@ -4,20 +4,20 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-// import Flag from './account.component/phone_select';
+// import Flag from './account.component/conPass_select';
 
 
 
 export const SignUp = ({ navigation }) => {
     const [email, setEmail] = useState(null)
     const [name, setName] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [code, setCode] = useState(null)
+    const [conPass, setconPass] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const flagRef = useRef(null)
     const [hidePass, setHidePass] = useState(true);
+    const [hideConPass, setHideConPass] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const SignUp = ({ navigation }) => {
 
     const onSignUp = () => {
         setIsLoading(true)
-        if (verifyPhone() && verifyName() && verifyEmail() && verifyPass() && verifyCode()) {
+        if (verifyName() && verifyEmail() && verifyPass() && verifyconPass()) {
             setTimeout(() => {
                 setIsLoading(false)
                 setVerifyLog(true)
@@ -47,10 +47,6 @@ export const SignUp = ({ navigation }) => {
         }
     }
 
-    function onChangePhone(val) {
-        setPhone(val)
-        flagRef.current.setNumber(val)
-    }
 
     function verifyEmail() {
         if (email) {
@@ -71,25 +67,18 @@ export const SignUp = ({ navigation }) => {
         setErrorMessage('Please Enter a Name')
         return false
     }
-    function verifyPhone() {
-        if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
+    function verifyconPass() {
+        if (conPass) {
+            if (conPass == password) {
                 return true
             }
-            setErrorMessage('Please Enter a Valid Number')
+            setErrorMessage('Password do not match')
             return false
         }
-        setErrorMessage('Please Enter a Number')
+        setErrorMessage('Please Enter a Password Again')
         return false
     }
 
-    function verifyCode() {
-        if (code) {
-            return true
-        }
-        return true
-    }
     function verifyPass() {
         if (password) {
             return true
@@ -125,22 +114,6 @@ export const SignUp = ({ navigation }) => {
                         <Spacer paddingT={myHeight(4.3)} />
                         {/* Input Portion */}
                         <View>
-                            {/* Phone Portion */}
-                            <View style={styles.containerInputPortion}>
-
-                                {/* <Flag ref={flagRef} /> */}
-                                <Spacer paddingEnd={myWidth(1.8)} />
-                                <TextInput placeholder=" Enter Number"
-                                    keyboardType='phone-pad'
-                                    maxLength={14}
-                                    placeholderTextColor={myColors.offColor}
-                                    selectionColor={myColors.primaryT}
-                                    style={styles.containerInput}
-                                    cursorColor={myColors.primaryT}
-                                    value={phone} onChangeText={(val) => onChangePhone(val)}
-                                    autoCorrect={false} />
-                            </View>
-                            <Spacer paddingT={myHeight(1.5)} />
                             {/* Name Portion */}
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
@@ -168,8 +141,8 @@ export const SignUp = ({ navigation }) => {
                                     value={email} onChangeText={setEmail}
                                     autoCorrect={false} />
                             </View>
-                            <Spacer paddingT={myHeight(1.5)} />
 
+                            <Spacer paddingT={myHeight(1.5)} />
                             {/* Password Portion */}
                             <View style={styles.containerInputPortion}>
                                 <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
@@ -186,20 +159,24 @@ export const SignUp = ({ navigation }) => {
                                         source={hidePass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
                                 </TouchableOpacity>
                             </View>
-                            <Spacer paddingT={myHeight(1.5)} />
 
-                            {/* Code Portion */}
+
+                            <Spacer paddingT={myHeight(1.5)} />
+                            {/*Confirm Password Portion */}
                             <View style={styles.containerInputPortion}>
-                                <Image style={styles.imageInput} source={require('../assets/account/iName.png')} />
+                                <Image style={styles.imageInput} source={require('../assets/account/iPass.png')} />
                                 <Spacer paddingEnd={myWidth(2.5)} />
-                                <TextInput placeholder=" Referral Code (Optional)"
-                                    keyboardType='numeric'
-                                    autoCapitalize='none'
+                                <TextInput placeholder=" Enter Password Again"
+                                    secureTextEntry={hideConPass}
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
                                     style={styles.containerInput} cursorColor={myColors.primaryT}
-                                    value={code} onChangeText={setCode}
+                                    value={conPass} onChangeText={setconPass}
                                     autoCorrect={false} />
+                                <TouchableOpacity activeOpacity={0.6} onPress={() => setHideConPass(!hideConPass)}>
+                                    <Image style={styles.imageEye}
+                                        source={hideConPass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
+                                </TouchableOpacity>
                             </View>
                             <Spacer paddingT={myHeight(3.4)} />
 
@@ -212,15 +189,11 @@ export const SignUp = ({ navigation }) => {
                     </View>
 
 
-
                     <Spacer paddingT={myHeight(4.2)} />
-
                     {/* Or sign with */}
                     <View style={styles.containerOrSignWith}>
                         <View style={styles.containerLine} />
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => null}>
-                            <Text style={styles.textSignWith}>Or sign up with</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.textSignWith}>Or sign up with</Text>
                         <View style={styles.containerLine} />
                     </View>
 
@@ -290,7 +263,7 @@ export const SignUp = ({ navigation }) => {
                 </View>
                 {/* </ScrollView> */}
             </KeyboardAwareScrollView>
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 
@@ -309,8 +282,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: myHeight(1.47),
         paddingHorizontal: myWidth(2.5),
-        borderWidth: myHeight(0.09),
-        borderColor: myColors.primaryT,
+        borderWidth: myHeight(0.1),
+        borderColor: myColors.primary,
         backgroundColor: myColors.background,
         elevation: 3,
         shadowColor: '#000',
@@ -335,7 +308,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
         paddingVertical: myHeight(1),
-        borderRadius: myWidth(3.2)
+        borderRadius: myWidth(2.2)
     },
     containerOrSignWith: {
         alignItems: 'center',
@@ -345,7 +318,7 @@ const styles = StyleSheet.create({
     },
     containerLine: {
         flex: 1,
-        borderTopWidth: myHeight(0.085),
+        borderTopWidth: myHeight(0.09),
         borderColor: myColors.text,
     },
     containerSocial: {
@@ -397,7 +370,7 @@ const styles = StyleSheet.create({
     },
 
     textSignBu: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
@@ -454,6 +427,7 @@ const styles = StyleSheet.create({
     imageInput: {
         height: myHeight(2.2),
         width: myHeight(2.2),
+        tintColor: myColors.primaryT,
         resizeMode: 'contain',
     },
     imageSocial: {
@@ -464,7 +438,8 @@ const styles = StyleSheet.create({
     imageEye: {
         height: myHeight(2.5),
         width: myHeight(2.5),
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
     }
 
 

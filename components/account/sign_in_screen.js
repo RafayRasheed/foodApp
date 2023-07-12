@@ -4,12 +4,12 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { MyError, Spacer, ios, myHeight, myWidth, printWithPlat } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-// import Flag from './account.component/phone_select';
+// import Flag from './account.component/Email_select';
 
 
 export const SignIn = ({ navigation }) => {
 
-    const [phone, setPhone] = useState(null)
+    const [email, setEmail] = useState(null)
     const [password, setPass] = useState(null)
     const [verifyLog, setVerifyLog] = useState(false)
     const [hidePass, setHidePass] = useState(true);
@@ -32,7 +32,7 @@ export const SignIn = ({ navigation }) => {
     }, [verifyLog])
 
     const onLogin = () => {
-        if (verifyPhone() && verifyPass()) {
+        if (verifyEmail() && verifyPass()) {
             setVerifyLog(true)
         }
         else {
@@ -40,22 +40,17 @@ export const SignIn = ({ navigation }) => {
         }
     }
 
-    function onChangePhone(val) {
-        setPhone(val)
-        flagRef.current.setNumber(val)
-    }
 
-    function verifyPhone() {
-        if (phone) {
-            const s = flagRef.current.checkNumber()
-            if (s) {
+    function verifyEmail() {
+        if (email) {
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
                 return true
             }
-            setErrorMessage('Please Enter a Valid Number')
+            setErrorMessage('Please Enter a Valid Email')
             return false
         }
-
-        setErrorMessage('Please Enter a Number')
+        setErrorMessage('Please Enter a Email')
         return false
     }
     function verifyPass() {
@@ -67,13 +62,13 @@ export const SignIn = ({ navigation }) => {
     }
 
     // useEffect(() => {
-    //     if (verifyPhone() && verifyPass()) {
+    //     if (verifyEmail() && verifyPass()) {
     //         setVerifyLog(true)
     //     }
     //     else {
     //         setVerifyLog(false)
     //     }
-    // }, [phone, password])
+    // }, [Email, password])
 
     TextInput.defaultProps = TextInput.defaultProps || {};
     TextInput.defaultProps.selectionColor = 'red';
@@ -96,21 +91,18 @@ export const SignIn = ({ navigation }) => {
                         <Spacer paddingT={myHeight(4.4)} />
                         {/* Input Portion */}
                         <View>
-                            {/* Phone Portion */}
+                            {/* Email Portion */}
+                            {/* Email Portion */}
                             <View style={styles.containerInputPortion}>
-                                {/* <Flag ref={flagRef} /> */}
-                                <Spacer paddingEnd={myWidth(1.8)} />
-                                <TextInput placeholder="Enter Number"
-                                    keyboardType='phone-pad'
-                                    maxLength={14}
+                                <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
+                                <Spacer paddingEnd={myWidth(2.5)} />
+                                <TextInput placeholder=" Email Address"
+                                    autoCapitalize='none'
                                     placeholderTextColor={myColors.offColor}
                                     selectionColor={myColors.primaryT}
-                                    style={styles.containerInput}
-                                    cursorColor={myColors.primaryT}
-                                    autoCorrect={false}
-                                    value={phone} onChangeText={(val) => onChangePhone(val)}
-                                />
-
+                                    style={styles.containerInput} cursorColor={myColors.primaryT}
+                                    value={email} onChangeText={setEmail}
+                                    autoCorrect={false} />
                             </View>
                             <Spacer paddingT={myHeight(2)} />
 
@@ -256,8 +248,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: myHeight(1.47),
         paddingHorizontal: myWidth(2.5),
-        borderWidth: myHeight(0.09),
-        borderColor: myColors.primaryT,
+        borderWidth: myHeight(0.1),
+        borderColor: myColors.primary,
         backgroundColor: myColors.background,
         elevation: 3,
         shadowColor: '#000',
@@ -282,7 +274,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: myColors.primaryT,
         paddingVertical: myHeight(1),
-        borderRadius: myWidth(3.2),
+        borderRadius: myWidth(2.2),
     },
     containerOrSignWith: {
         alignItems: 'center',
@@ -357,7 +349,7 @@ const styles = StyleSheet.create({
 
     },
     textSignInBu: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.body2,
         fontFamily: myFonts.headingBold,
         color: myColors.background,
         letterSpacing: myLetSpacing.common,
@@ -401,6 +393,9 @@ const styles = StyleSheet.create({
         height: myHeight(2.2),
         width: myHeight(2.2),
         resizeMode: 'contain',
+
+        tintColor: myColors.primaryT
+
     },
     imageSocial: {
         height: myHeight(3.76),
@@ -410,7 +405,9 @@ const styles = StyleSheet.create({
     imageEye: {
         height: myHeight(2.5),
         width: myHeight(2.5),
-        resizeMode: 'contain'
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
     }
 
 

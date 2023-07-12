@@ -153,9 +153,9 @@ export const Verification = ({ navigation }) => {
                     // setFocus(j)
                     openKey()
                 }}
-                style={[styles.containerInput, { borderWidth: 1, borderColor: focus == j ? myColors.primaryT : myColors.primaryL }]}>
+                style={[styles.containerInput, { borderWidth: 1, borderColor: focus == j ? myColors.primaryT : myColors.primaryL3 }]}>
                 <Text
-                    style={[styles.textInput, val == null ? { color: myColors.primaryL } : { color: myColors.primaryT }]}
+                    style={[styles.textInput, val == null ? { color: myColors.primaryL3 } : { color: myColors.primaryT }]}
                 >{val == null ? 0 : val}</Text>
             </TouchableOpacity>
         )
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between', alignItems: 'center'
     },
     containerInput: {
-        backgroundColor: myColors.primaryL,
+        backgroundColor: myColors.primaryL3,
         // paddingHorizontal: myWidth(7),
         paddingVertical: myHeight(1.8),
         alignItems: 'center',
