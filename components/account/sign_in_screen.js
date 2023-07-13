@@ -5,6 +5,7 @@ import { myColors } from "../../ultils/myColors"
 import { MyError, Spacer, ios, myHeight, myWidth, printWithPlat } from "../common"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 // import Flag from './account.component/Email_select';
+import firestore from '@react-native-firebase/firestore';
 
 
 export const SignIn = ({ navigation }) => {
@@ -33,6 +34,7 @@ export const SignIn = ({ navigation }) => {
     const onLogin = () => {
         if (verifyEmail() && verifyPass()) {
             setVerifyLog(true)
+            onLoginFirebase()
         }
         else {
             setVerifyLog(false)
@@ -71,7 +73,11 @@ export const SignIn = ({ navigation }) => {
 
     TextInput.defaultProps = TextInput.defaultProps || {};
     TextInput.defaultProps.selectionColor = 'red';
-
+    function onLoginFirebase() {
+        firestore().collection('users').doc('ABD').set({
+            name: 'matg'
+        }).then((res) => console.log('y')).catch((err) => console.log(err))
+    }
     return (
         <SafeAreaView style={styles.container}>
             {errorMessage && <MyError message={errorMessage} />}
