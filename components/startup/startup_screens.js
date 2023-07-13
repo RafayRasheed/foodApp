@@ -98,14 +98,7 @@ export const StartupScreen = ({ navigation }) => {
 
         }
     }
-    function onContinue() {
-        storage.set('isFirstTime', false)
-        if (storage.contains('isFirstTime')) {
-            navigation.replace('AccountNavigator')
-            return
-        }
-        console.log('Error!: storage On continue')
-    }
+
     useEffect(() => {
         if (i == lenStartup - 1) {
             const timer = setTimeout(() => {
@@ -121,7 +114,7 @@ export const StartupScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (getStart) {
-            navigation.replace('Started')
+            navigation.replace('AccountNavigator')
         }
     }, [getStart])
 
@@ -133,7 +126,7 @@ export const StartupScreen = ({ navigation }) => {
                 <View style={styles.containerTopSkip}>
 
                     {i < lenStartup - 1 &&
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('Started')} style={styles.containerSkip}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('AccountNavigator')} style={styles.containerSkip}>
                             <Text style={styles.textSkip}>Skip</Text>
                             <Spacer paddingEnd={myWidth(1)} />
                             <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />
