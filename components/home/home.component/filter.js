@@ -1,7 +1,7 @@
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { myColors } from '../../../ultils/myColors'
-import { Spacer, myHeight, myWidth } from '../../common'
+import { Spacer, StatusbarH, myHeight, myWidth } from '../../common'
 import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts'
 
 export const Filter = ({ setModal }) => {
@@ -15,6 +15,7 @@ export const Filter = ({ setModal }) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusbarH />
             <Spacer paddingT={myHeight(0.5)} />
             {/* Top Container */}
             <View>

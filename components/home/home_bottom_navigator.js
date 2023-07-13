@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { Text, SafeAreaView, View, Image, StatusBar } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Spacer, bottomTab, ios, myHeight, myWidth } from "../common";
+import { Spacer, StatusbarH, bottomTab, ios, myHeight, myWidth } from "../common";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
@@ -75,6 +75,7 @@ const screenOptions = ({ navigator, route }) => {
 
 const Xr = ({ navigation }) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: myColors.blue }}>
+        <StatusbarH />
         <Spacer paddingT={myHeight(2)} />
         <Text onPress={() => navigation.navigate('AccountNavigator')} style={{ color: 'black' }}>Sign Out</Text>
     </SafeAreaView>

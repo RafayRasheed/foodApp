@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { Spacer, myHeight, myWidth, storage } from '../common';
+import { Spacer, StatusbarH, myHeight, myWidth, storage } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 
@@ -128,95 +128,99 @@ export const StartupScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             {/* Top --> Skip */}
-            <View style={styles.containerTopSkip}>
+            <StatusbarH />
+            <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                <View style={styles.containerTopSkip}>
 
-                {i < lenStartup - 1 &&
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('Started')} style={styles.containerSkip}>
-                        <Text style={styles.textSkip}>Skip</Text>
-                        <Spacer paddingEnd={myWidth(1)} />
-                        <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />
-                        <Image style={[styles.imageGo, { marginStart: -myWidth(1) }]} source={require('../assets/startup/go.png')} />
-                    </TouchableOpacity>
-                }
-            </View>
-
-            {/* Mid */}
-            <View>
-                <ScrollView
-                    // onScroll={handleScroll}
-                    horizontal
-                    onTouchStart={() => setScrollTouch(true)}
-                    onScroll={handleScroll}
-                    overScrollMode='never'
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ alignItems: 'flex-end' }}
-                    pagingEnabled
-                    scrollEventThrottle={10}
-                    ref={ref => setRef(ref)}
-                >
-                    {
-                        startupData.map((item, i) =>
-                            <View style={{
-                                width: myWidth(100),
-                            }}>
-                                <View
-                                    onLayout={(event) => {
-                                        const layout = event.nativeEvent.layout;
-                                        posX[i] = layout.x;
-                                        setPosX(posX);
-                                    }}
-                                    style={styles.containerMid} key={i}>
-                                    {/* <Image /> */}
-                                    <Image style={[styles.imageMid, item.style]} source={item.image} />
-                                    {/* <Spacer paddingT={myHeight(0.8)} /> */}
-                                    <Text style={styles.textTitle}> {item.title}</Text>
-                                    <Spacer paddingT={myHeight(1.5)} />
-                                </View>
-                                <Text style={styles.textDes}>{item.des}</Text>
-                                <Spacer paddingT={myHeight(12.5)} />
-                                {/* <View style={{ flex: 1 }} /> */}
-                            </View>
-                        )
+                    {i < lenStartup - 1 &&
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('Started')} style={styles.containerSkip}>
+                            <Text style={styles.textSkip}>Skip</Text>
+                            <Spacer paddingEnd={myWidth(1)} />
+                            <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />
+                            <Image style={[styles.imageGo, { marginStart: -myWidth(1) }]} source={require('../assets/startup/go.png')} />
+                        </TouchableOpacity>
                     }
-
-                </ScrollView>
-            </View>
-
-            {/* Bottom * => Start Button & Change*/}
-            <View style={styles.containerBottom}>
-
-                {/* {!getStart? */}
-                <View style={styles.containerChange}>
-
-                    {/* Arrow Left */}
-                    <View style={{ width: myHeight(3) }}>
-                        {i > 0 &&
-                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
-                                <Image style={styles.imageGoLR} source={require('../assets/startup/goL.png')} />
-                            </TouchableOpacity>
-                        }
-                    </View>
-
-                    <View style={{ flexDirection: 'row' }}>
-                        {dotArr}
-                    </View>
-
-                    {/* Arrow Right */}
-                    <View style={{ width: myHeight(3) }}>
-                        {i < lenStartup - 1 &&
-                            <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
-                                <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
-                            </TouchableOpacity>
-
-                        }
-                    </View>
                 </View>
-                {/* :
+
+
+                {/* Mid */}
+                <View>
+                    <ScrollView
+                        // onScroll={handleScroll}
+                        horizontal
+                        onTouchStart={() => setScrollTouch(true)}
+                        onScroll={handleScroll}
+                        overScrollMode='never'
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ alignItems: 'flex-end' }}
+                        pagingEnabled
+                        scrollEventThrottle={10}
+                        ref={ref => setRef(ref)}
+                    >
+                        {
+                            startupData.map((item, i) =>
+                                <View style={{
+                                    width: myWidth(100),
+                                }}>
+                                    <View
+                                        onLayout={(event) => {
+                                            const layout = event.nativeEvent.layout;
+                                            posX[i] = layout.x;
+                                            setPosX(posX);
+                                        }}
+                                        style={styles.containerMid} key={i}>
+                                        {/* <Image /> */}
+                                        <Image style={[styles.imageMid, item.style]} source={item.image} />
+                                        {/* <Spacer paddingT={myHeight(0.8)} /> */}
+                                        <Text style={styles.textTitle}> {item.title}</Text>
+                                        <Spacer paddingT={myHeight(1.5)} />
+                                    </View>
+                                    <Text style={styles.textDes}>{item.des}</Text>
+                                    <Spacer paddingT={myHeight(12.5)} />
+                                    {/* <View style={{ flex: 1 }} /> */}
+                                </View>
+                            )
+                        }
+
+                    </ScrollView>
+                </View>
+
+                {/* Bottom * => Start Button & Change*/}
+                <View style={styles.containerBottom}>
+
+                    {/* {!getStart? */}
+                    <View style={styles.containerChange}>
+
+                        {/* Arrow Left */}
+                        <View style={{ width: myHeight(3) }}>
+                            {i > 0 &&
+                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i > 0) { onBack() } }} >
+                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goL.png')} />
+                                </TouchableOpacity>
+                            }
+                        </View>
+
+                        <View style={{ flexDirection: 'row' }}>
+                            {dotArr}
+                        </View>
+
+                        {/* Arrow Right */}
+                        <View style={{ width: myHeight(3) }}>
+                            {i < lenStartup - 1 &&
+                                <TouchableOpacity style={styles.containerGoLR} activeOpacity={0.6} onPress={() => { if (i < lenStartup - 1) { onForward() } }} >
+                                    <Image style={styles.imageGoLR} source={require('../assets/startup/goR.png')} />
+                                </TouchableOpacity>
+
+                            }
+                        </View>
+                    </View>
+                    {/* :
                     <TouchableOpacity activeOpacity={0.6} onPress={onContinue} style={styles.containerStart}>
                         <Text style={styles.textStart}>Get Started</Text>
                     </TouchableOpacity> */}
-                <Spacer paddingT={myHeight(8)} />
+                    <Spacer paddingT={myHeight(8)} />
 
+                </View>
             </View>
 
         </SafeAreaView>
@@ -227,9 +231,9 @@ export const StartupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         backgroundColor: myColors.background,
-        justifyContent: 'space-between'
+        // justifyContent: 'space-between'
     },
 
     containerMid: {

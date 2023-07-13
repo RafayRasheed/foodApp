@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
-import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+import { MyError, Spacer, StatusbarH, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Categories, Restaurants, } from './home_data'
@@ -18,7 +18,7 @@ export const HomeScreen = ({ navigation }) => {
     return (
 
         <SafeAreaView style={styles.container}>
-
+            <StatusbarH />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} >
 
                 <Spacer paddingT={myHeight(1.4)} />

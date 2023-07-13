@@ -3,7 +3,7 @@ import { View, ScrollView, Text, StyleSheet, Image, TouchableOpacity, TextInput 
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Categories, Restaurants, offers } from "./home_data";
-import { Spacer, myHeight, myWidth } from "../common";
+import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
 
 export const CategoryFull = ({ navigation }) => {
     const [search, setSearch] = useState(null)
@@ -19,6 +19,7 @@ export const CategoryFull = ({ navigation }) => {
     }, [search])
     return (
         <View style={{ paddingHorizontal: myWidth(0), flex: 1, backgroundColor: myColors.background }}>
+            <StatusbarH />
             <Spacer paddingT={myHeight(1)} />
             {/* Top */}
             <View style={{ paddingHorizontal: myWidth(4.5), flexDirection: 'row', alignItems: 'center' }}>

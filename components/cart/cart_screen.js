@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
-import { Spacer, StatusBarShow, ios, myHeight, myWidth } from '../common';
+import { Spacer, StatusBarShow, StatusbarH, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFonts, myLetSpacing, myFontSize } from '../../ultils/myFonts';
 
@@ -27,7 +27,7 @@ export const Cart = ({ navigation }) => {
         <>
             {/* <StatusBar backgroundColor={orderModal ? '#00000030' : myColors.background} /> */}
             <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
-
+                <StatusbarH />
                 <Spacer paddingT={myHeight(2)} />
 
                 {/* Content */}

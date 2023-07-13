@@ -4,7 +4,7 @@ import {
     View, Text, StatusBar, TextInput,
     Linking, Platform, ImageBackground, SafeAreaView,
 } from 'react-native';
-import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+import { MyError, Spacer, StatusbarH, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { Restaurants } from './home_data';
@@ -63,6 +63,7 @@ export const Search = ({ navigation }) => {
             <SafeAreaView style={{
                 flex: 1, backgroundColor: myColors.background,
             }}>
+                <StatusbarH />
                 <Spacer paddingT={myHeight(1)} />
                 {/* Top */}
                 {/* Search */}

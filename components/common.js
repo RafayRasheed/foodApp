@@ -95,3 +95,7 @@ export const StatusBarBlack = () => (
 export const StatusBarHide = () => (
     <StatusBar backgroundColor={'transparent'} translucent={true} />
 )
+
+export const StatusbarH = () => (
+    <View style={{ height: StatusBar.currentHeight }} />
+)

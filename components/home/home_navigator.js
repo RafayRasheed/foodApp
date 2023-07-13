@@ -25,11 +25,11 @@ const showBottom = ['RestaurantDetail']
 export const HomeNavigator = ({ navigation, route }) => {
     const [hideStatus, setHideState] = useState(false)
     React.useLayoutEffect(() => {
-        if (hideStatusScreens.includes(getFocusedRouteNameFromRoute(route))) {
-            setHideState(true)
-        } else {
-            setHideState(false)
-        }
+        // if (hideStatusScreens.includes(getFocusedRouteNameFromRoute(route))) {
+        //     setHideState(true)
+        // } else {
+        //     setHideState(false)
+        // }
         if (hideBottom.includes(getFocusedRouteNameFromRoute(route))) {
             navigation.setOptions({ tabBarStyle: { display: 'none' } })
         }
@@ -40,7 +40,7 @@ export const HomeNavigator = ({ navigation, route }) => {
     }, [navigation, route]);
     return (
         <>
-            <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus ? true : false} />
+            {/* <StatusBar backgroundColor={hideStatus ? 'transparent' : myColors.background} translucent={hideStatus ? true : false} /> */}
 
             <HomeTAB.Navigator
                 screenOptions={{

@@ -117,6 +117,11 @@ export const Restaurants = [
       require('../assets/home_main/home/res.png'),
       require('../assets/home_main/home/salan.png'),
     ],
+    menu: [
+      require('../assets/home_main/home/res.png'),
+      require('../assets/home_main/home/res.png'),
+      require('../assets/home_main/home/salan.png'),
+    ],
     location: '538 PIB Colony Main Rd, PIB Colony, Karachi',
     locationLink: 'https://www.google.com/maps/place/Noor+Cafe+%26+Grill/@24.8919439,67.0506977,17z/data=!3m1!4b1!4m6!3m5!1s0x3eb33f1d8be21b51:0x9170a92f5a4585f0!8m2!3d24.8919391!4d67.0532726!16s%2Fg%2F11gnhw_llt?entry=ttu',
     delivery: '15',

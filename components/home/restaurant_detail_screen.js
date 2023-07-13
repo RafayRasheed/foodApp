@@ -40,6 +40,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
+
       <ImageBackground style={{
         width: '100%',
         height: myHeight(28),

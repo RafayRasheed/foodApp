@@ -29,7 +29,7 @@ export default function App() {
   return (
     <>
       {OsVer >= 23 &&
-        <StatusBar barStyle="dark-content" backgroundColor={myColors.background} translucent={false} />
+        <StatusBar barStyle="dark-content" backgroundColor={'transparent'} translucent={true} />
       }
       <AppNavigator />
     </>

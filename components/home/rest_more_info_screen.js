@@ -318,6 +318,26 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
                     <Collapsible style={{ paddingStart: myWidth(15), paddingEnd: myWidth(4) }}
                         collapsed={menuClose}>
                         <Spacer paddingT={myHeight(1)} />
+                        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+                            {
+                                restaurant.menu?.map((image, i) =>
+                                    <TouchableOpacity activeOpacity={0.97}
+                                        onPress={() => navigation.navigate('ImageViewer', { images: restaurant.menu, i })} key={i}
+                                        style={{ marginHorizontal: myWidth(3) }}>
+                                        <Image
+                                            // onLoadEnd={handlePressIn}
+                                            style={{
+                                                height: myHeight(15),
+                                                // width: 'auto',
+                                                aspectRatio: 1,
+                                                resizeMode: "contain",
+                                            }}
+                                            source={image}
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                        </ScrollView>
                     </Collapsible>
 
                     <Spacer paddingT={myHeight(2)} />
