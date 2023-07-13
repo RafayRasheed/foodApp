@@ -1,6 +1,7 @@
 export const myColors = {
     primary: '#32B768',
     primaryT: '#04C000',
+    // primaryT: '#03DAC5',
     primaryL: '#a7faa5',
     primaryL2: '#d1f7d0',
     primaryL3: '#e6fce6',

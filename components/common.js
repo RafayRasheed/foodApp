@@ -85,3 +85,13 @@ export const bottomTab = {
     paddingTop: myHeight(2),
 }
 export const storage = new MMKV()
+
+export const StatusBarShow = () => (
+    <StatusBar backgroundColor={myColors.background} translucent={false} />
+)
+export const StatusBarBlack = () => (
+    <StatusBar backgroundColor={myColors.text} translucent={false} />
+)
+export const StatusBarHide = () => (
+    <StatusBar backgroundColor={'transparent'} translucent={true} />
+)

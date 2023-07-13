@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
 
     //Text
     textSkip: {
-        fontSize: myFontSize.xBody,
+        fontSize: myFontSize.body3,
         fontFamily: myFonts.body,
         color: myColors.primaryT,
         includeFontPadding: false,

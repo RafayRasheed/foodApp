@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, SafeAreaView, View, Image } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { Text, SafeAreaView, View, Image, StatusBar } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Spacer, bottomTab, ios, myHeight, myWidth } from "../common";
 import { myColors } from "../../ultils/myColors";
@@ -7,6 +7,7 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
 import { HomeNavigator } from "./home_navigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { CartNavigator } from "../cart/cart_navigator";
 
 const Tab = createBottomTabNavigator()
 
@@ -36,7 +37,7 @@ const Icons = {
 }
 
 
-const screenOptions = ({ route }) => {
+const screenOptions = ({ navigator, route }) => {
     const name = route.name
     return {
         headerShown: false,
@@ -81,21 +82,28 @@ const Xr = ({ navigation }) => (
 
 
 export const HomeBottomNavigator = ({ route, navigation }) => {
+    // useLayoutEffect(() => {
+    //     StatusBar.setTranslucent(false)
+    //     StatusBar.setBackgroundColor(myColors.background)
+    // }, [route, navigation])
     return (
-        <Tab.Navigator
-            tabBarActiveTintColor={myColors.primary}
-            headerShown={false}
-            screenOptions={screenOptions}
-            tabBarShowLabel={false}
-            initialRouteName="HOME"
-        >
-            <Tab.Screen name="HOME" component={HomeNavigator} />
-            <Tab.Screen name="ACTIVITY" component={Xr} />
-            <Tab.Screen name="HOT" component={Xr} />
-            <Tab.Screen name="CART" component={Xr} />
-            <Tab.Screen name="ACCOUNT" component={Xr} />
 
-        </Tab.Navigator>
+        <>
+            <Tab.Navigator
+                tabBarActiveTintColor={myColors.primary}
+                headerShown={false}
+                screenOptions={screenOptions}
+                tabBarShowLabel={false}
+                initialRouteName="HOME"
+            >
+                <Tab.Screen name="HOME" component={HomeNavigator} />
+                <Tab.Screen name="ACTIVITY" component={Xr} />
+                <Tab.Screen name="HOT" component={Xr} />
+                <Tab.Screen name="CART" component={CartNavigator} />
+                <Tab.Screen name="ACCOUNT" component={Xr} />
+
+            </Tab.Navigator>
+        </>
 
 
     )

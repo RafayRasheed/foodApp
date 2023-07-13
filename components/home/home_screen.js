@@ -60,7 +60,7 @@ export const HomeScreen = ({ navigation }) => {
                 <View>
                     {/* Categories & see all*/}
                     <View style={{
-                        paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row',
+                        paddingHorizontal: myWidth(4), alignItems: 'center', flexDirection: 'row',
                         justifyContent: 'space-between'
                     }}>
                         <Text style={[styles.textCommon, {
@@ -131,7 +131,7 @@ export const HomeScreen = ({ navigation }) => {
                 {/* New Arrival  Complete*/}
                 <View>
                     {/* New Arrivals*/}
-                    <View style={{ paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ paddingHorizontal: myWidth(4), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={[styles.textCommon, {
                             fontSize: myFontSize.xxBody,
                             fontFamily: myFonts.bodyBold,
@@ -159,7 +159,7 @@ export const HomeScreen = ({ navigation }) => {
                     <Spacer paddingT={myHeight(1.3)} />
                     {/* Restuarant */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
+                        contentContainerStyle={{ paddingHorizontal: myWidth(4) }}>
                         <View style={{
                             flexDirection: 'row',
                         }}>
@@ -178,7 +178,7 @@ export const HomeScreen = ({ navigation }) => {
                 {/*Nearby Restaurants  Complete*/}
                 <View>
                     {/* Nearby Restaurants*/}
-                    <View style={{ paddingHorizontal: myWidth(3), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ paddingHorizontal: myWidth(4), alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={[styles.textCommon, {
                             fontSize: myFontSize.xxBody,
                             fontFamily: myFonts.bodyBold,
@@ -205,7 +205,7 @@ export const HomeScreen = ({ navigation }) => {
                     <Spacer paddingT={myHeight(1.3)} />
                     {/* Restuarant */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: myWidth(3) }}>
+                        contentContainerStyle={{ paddingHorizontal: myWidth(4) }}>
                         <View style={{
                             flexDirection: 'row',
                         }}>
