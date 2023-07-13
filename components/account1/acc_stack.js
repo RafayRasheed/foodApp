@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { AccScreen } from "./acc_screen";
 import { ForgetPassword } from "./forget_p_screen";
 import { DoneEmail } from "./done_email_screen";
-import { DonePass } from "./done_pass_screen";
+import { DonePass, DonePassword } from "./done_pass_screen";
 import { NewPass } from "./new_pass_screen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "react-native";
@@ -29,7 +29,7 @@ export const AccountNavigator2 = ({ navigation, route }) => {
             />
             <AccountStack.Screen
                 name="DoneEmail"
-                component={DoneEmail}
+                component={DonePassword}
             />
             <AccountStack.Screen
                 name="NewPass"
@@ -37,7 +37,7 @@ export const AccountNavigator2 = ({ navigation, route }) => {
             />
             <AccountStack.Screen
                 name="DonePass"
-                component={DonePass}
+                component={DonePassword}
             />
 
         </AccountStack.Navigator>
