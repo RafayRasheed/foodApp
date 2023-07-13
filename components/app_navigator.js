@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StartupNavigator } from "./startup/startup_navigator"
 import { HomeBottomNavigator } from "./home/home_bottom_navigator"
 import { AccountNavigator } from "./account/account_navigation"
+import { ImageViewer } from "./common/image_viewer"
 
 const AppTAB = createNativeStackNavigator()
 
@@ -20,6 +21,7 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={StartupNavigator} name="StartupNavigator" />
                 <AppTAB.Screen component={AccountNavigator} name="AccountNavigator" />
                 <AppTAB.Screen component={HomeBottomNavigator} name="HomeBottomNavigator" />
+                <AppTAB.Screen component={ImageViewer} name="ImageViewer" />
 
             </AppTAB.Navigator>
         </NavigationContainer>

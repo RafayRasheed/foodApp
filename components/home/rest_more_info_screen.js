@@ -34,7 +34,7 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
         <>
 
             <View style={{ flex: 1, backgroundColor: myColors.background }}>
-                <ImagesShortViewer images={restaurant.images} />
+                <ImagesShortViewer navigate={navigation.navigate} images={restaurant.images} />
                 {/* Back */}
                 <TouchableOpacity
                     style={{

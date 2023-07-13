@@ -10,6 +10,7 @@ import {
 import { myColors } from '../../../ultils/myColors';
 import { Spacer, myHeight, myWidth } from '../../common';
 import { myFontSize, myFonts, myLetSpacing } from '../../../ultils/myFonts';
+import { TouchableOpacity } from 'react-native';
 
 const wid = Dimensions.get('window').width;
 
@@ -42,7 +43,8 @@ export const ImagesShortViewer = ({ navigate, images }) => {
       >
         {
           images.map((image, i) =>
-            <View key={i} style={{ width: myWidth(100), }}>
+            <TouchableOpacity activeOpacity={0.97}
+              onPress={() => navigate('ImageViewer', { images, i })} key={i} style={{ width: myWidth(100), }}>
               <Image
                 // onLoadEnd={handlePressIn}
                 style={{
@@ -54,7 +56,7 @@ export const ImagesShortViewer = ({ navigate, images }) => {
                 }}
                 source={image}
               />
-            </View>
+            </TouchableOpacity>
           )
         }
       </ScrollView>

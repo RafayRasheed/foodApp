@@ -275,10 +275,10 @@ const styles = StyleSheet.create({
     },
 
     containerDot: {
-        width: myHeight(1.2),
-        height: myHeight(1.2),
-        borderRadius: myHeight(0.6),
-        marginStart: myWidth(1.2),
+        width: myHeight(1.5),
+        height: myHeight(1.5),
+        borderRadius: myHeight(1),
+        marginHorizontal: myWidth(1.2),
     },
     containerStart: {
         backgroundColor: myColors.primaryT,
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
 
     //Text
     textSkip: {
-        fontSize: myFontSize.xxSmall,
+        fontSize: myFontSize.xBody,
         fontFamily: myFonts.body,
         color: myColors.primaryT,
         includeFontPadding: false,
@@ -346,8 +346,8 @@ const styles = StyleSheet.create({
 
     },
     imageGo: {
-        width: myHeight(1.2),
-        height: myHeight(1.2),
+        width: myHeight(1.6),
+        height: myHeight(1.6),
         resizeMode: 'contain',
         tintColor: myColors.primaryT
     },
