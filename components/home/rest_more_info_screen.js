@@ -4,6 +4,7 @@ import {
     View, Text, LayoutAnimation, StatusBar, TextInput,
     Linking, Platform, ImageBackground, FlatList,
 } from 'react-native';
+
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';

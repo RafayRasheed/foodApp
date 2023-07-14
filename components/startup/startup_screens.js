@@ -51,20 +51,21 @@ export const StartupScreen = ({ navigation }) => {
             if (getDecimal) {
                 if (getDecimal[0] < 3 || getDecimal[0] > 7) {
                     const r = Math.round(a)
-                    const pos = posX[r]
-                    if (pos != undefined) {
-                        setI(r)
-
-
-                    }
+                    console.log(r)
+                    setI(r)
+                    // const pos = posX[r]
+                    // if (pos != undefined) {
+                    // }
                 }
             }
         }
     }
 
     function onForward() {
+        console.log(pos)
         setScrollTouch(false)
-        const pos = posX[i + 1]
+        // const pos = posX[i + 1]
+        const pos = myWidth(100) * (i + 1)
         setI(i + 1)
         ref.scrollTo({
             x: pos,
@@ -77,7 +78,9 @@ export const StartupScreen = ({ navigation }) => {
         setScrollTouch(false)
 
         setI(i - 1)
-        const pos = posX[i - 1]
+        // const pos = posX[i - 1]
+        const pos = myWidth(100) * (i - 1)
+
         ref.scrollTo({
             x: pos,
             y: 0,
@@ -139,7 +142,6 @@ export const StartupScreen = ({ navigation }) => {
                 {/* Mid */}
                 <View>
                     <ScrollView
-                        // onScroll={handleScroll}
                         horizontal
                         onTouchStart={() => setScrollTouch(true)}
                         onScroll={handleScroll}
@@ -152,14 +154,15 @@ export const StartupScreen = ({ navigation }) => {
                     >
                         {
                             startupData.map((item, i) =>
-                                <View style={{
+                                <View key={i} style={{
                                     width: myWidth(100),
                                 }}>
                                     <View
                                         onLayout={(event) => {
                                             const layout = event.nativeEvent.layout;
-                                            posX[i] = layout.x;
-                                            setPosX(posX);
+                                            // posX[i] = layout.x;
+                                            // setPosX(posX);
+                                            // console.log(posX)
                                         }}
                                         style={styles.containerMid} key={i}>
                                         {/* <Image /> */}
