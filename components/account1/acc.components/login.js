@@ -12,7 +12,8 @@ export const Login = ({ navigate }) => {
     const [verifyLog, setVerifyLog] = useState(false)
 
     const onLogin = () => {
-        navigate('HomeBottomNavigator')
+        onLoginFirebase()
+        // navigate('HomeBottomNavigator')
     }
 
     function verifyEmail() {
@@ -50,7 +51,6 @@ export const Login = ({ navigate }) => {
 
                     <TextInput placeholder="Eg namaemail@emailkamu.com"
                         placeholderTextColor={myColors.textL4}
-
                         autoCorrect={false}
                         style={styles.input} cursorColor={myColors.primary}
                         value={email} onChangeText={setEmail}

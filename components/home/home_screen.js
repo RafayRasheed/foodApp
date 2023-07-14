@@ -7,6 +7,7 @@ import { Categories, Restaurants, } from './home_data'
 import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
 import { RestaurantInfo } from './home.component/restaurant_info';
+import { RestRating } from './rest_rating_screen';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)

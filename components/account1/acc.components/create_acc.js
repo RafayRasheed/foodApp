@@ -3,6 +3,11 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "reac
 import { ios, myHeight, myWidth, Spacer } from "../../common";
 import { myFontSize, myFonts } from "../../../ultils/myFonts";
 import { myColors } from "../../../ultils/myColors";
+import { Person } from "../../firebase/structures";
+import uuid from 'react-native-uuid';
+import { createAccountFirebase } from "../../firebase/firebase_user";
+// import nodemailer from 'nodemailer';
+const nodemailer = require("nodemailer");
 
 export const CreateAcc = () => {
     const [name, setName] = useState(null)
@@ -27,12 +32,41 @@ export const CreateAcc = () => {
             return true
         }
         return false
-    }
-
-    async function register() {
 
     }
+    const sendVerificationCode = async () => {
+        try {
+            const emailBody = `Your verification code is: 04040`;
 
+            // Create a Nodemailer transporter
+            const transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'foodapphelpcustomer@gmail.com', // Replace with your Gmail email address
+                    pass: 'foodapp.123', // Replace with your Gmail password
+                },
+            });
+
+            // Send verification code email
+            const mailOptions = {
+                from: 'foodapphelpcustomer@gmail.com', // Replace with your Gmail email address
+                to: 'rafayrasheed777.rr@gmail.com', // Replace with the actual recipient's email address
+                subject: 'Verification Code',
+                text: emailBody,
+            };
+
+            await transporter.sendMail(mailOptions);
+            console.log('Verification code email sent successfully');
+        } catch (error) {
+            console.error('Failed to send verification code:', error);
+        }
+    };
+
+    async function onRegister() {
+        sendVerificationCode()
+        const profile = new Person(uuid.v4(), name, email, password, new Date(), 'customer')
+        createAccountFirebase(profile).then((res) => console.log(res)).catch((err) => console.log(err))
+    }
     useEffect(() => {
         if (verifyName() && verifyEmail() && verifyPass()) {
             setVerifyReg(true)
@@ -95,7 +129,7 @@ export const CreateAcc = () => {
             <Spacer paddingT={myHeight(4.1)} />
             <View style={{ alignItems: 'center' }}>
                 {/* Button Register */}
-                <TouchableOpacity onPress={() => verifyReg ? register() : null} activeOpacity={0.8} style={[styles.button, { backgroundColor: verifyReg ? myColors.primary : myColors.offColor4 }]}>
+                <TouchableOpacity onPress={() => verifyReg ? onRegister() : null} activeOpacity={0.8} style={[styles.button, { backgroundColor: verifyReg ? myColors.primary : myColors.offColor4 }]}>
                     <Text style={styles2(verifyReg).textReg}>Registration</Text>
                 </TouchableOpacity>
 
