@@ -7,6 +7,7 @@ import { NewPass } from "./new_pass_screen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "react-native";
 import { myColors } from "../../ultils/myColors";
+import { Verification } from "./verification_screen";
 
 const AccountStack = createNativeStackNavigator()
 
@@ -38,6 +39,10 @@ export const AccountNavigator2 = ({ navigation, route }) => {
             <AccountStack.Screen
                 name="DonePass"
                 component={DonePassword}
+            />
+            <AccountStack.Screen
+                name="Verification"
+                component={Verification}
             />
 
         </AccountStack.Navigator>

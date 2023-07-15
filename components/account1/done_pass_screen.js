@@ -26,19 +26,19 @@ export const DonePassword = ({ navigation }) => {
                     <Spacer paddingT={myHeight(1.1)} />
                     <Text style={styles.textDes}>Your Password Successfully Update</Text>
 
-                    <Spacer paddingT={myHeight(10)} />
+                    <Spacer paddingT={myHeight(2)} />
                     <View style={{ height: myHeight(19) }}>
 
                         {showDone && <Lottie
                             autoPlay={true}
                             loop={false}
                             source={require('../assets/lottie/check.json')}
-                            style={{ height: myHeight(19), width: myHeight(19), }}
+                            style={{ height: myHeight(30), width: myHeight(30), }}
 
                         />}
                     </View>
                     {/* <Image style={styles.imageDone} source={require('../assets/account/done.png')} /> */}
-                    <Spacer paddingT={myHeight(5)} />
+                    <Spacer paddingT={myHeight(12)} />
                     <Text style={styles.textInst}>You can login your account with your new password.</Text>
 
 
@@ -51,7 +51,7 @@ export const DonePassword = ({ navigation }) => {
                         style={styles.containerSign}>
                         <Text style={styles.textSendBu}>Back to Sign In</Text>
                     </TouchableOpacity>
-                    <Spacer paddingT={myHeight(8)} />
+                    <Spacer paddingT={myHeight(8.6)} />
                 </View>
             </View>
 
@@ -89,12 +89,16 @@ const styles = StyleSheet.create({
 
     },
     containerSign: {
-        width: myWidth(80),
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1.25),
-        borderRadius: myWidth(2.2),
+        // width: myWidth(80),
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        // backgroundColor: myColors.primaryT,
+        // paddingVertical: myHeight(1.25),
+        // borderRadius: myWidth(2.2),
+        height: myHeight(6.1), width: myWidth(86),
+        borderRadius: myHeight(1.47), alignItems: 'center',
+        justifyContent: 'center', flexDirection: 'row',
+        backgroundColor: myColors.primary
 
 
     },

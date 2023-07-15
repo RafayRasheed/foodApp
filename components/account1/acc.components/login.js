@@ -43,48 +43,54 @@ export const Login = ({ navigate }) => {
     //     storeData("yes")
     // },[])
     return (
-        <View style={{ flex: 1, width: myWidth(87), justifyContent: 'center', }}>
-            {/* email Portion */}
+        <View style={{
+            flex: 1, width: myWidth(87),
+            justifyContent: 'center', justifyContent: 'space-between',
+            marginVertical: myHeight(4)
+        }}>
             <View>
-                <Text style={[styles.heading, { color: email ? myColors.textL4 : myColors.text }]}>Email address</Text>
-                <View style={styles.containerInput}>
+                {/* email Portion */}
+                <View>
+                    <Text style={[styles.heading, { color: email ? myColors.textL4 : myColors.text }]}>Email address</Text>
+                    <View style={styles.containerInput}>
 
-                    <TextInput placeholder="Eg namaemail@emailkamu.com"
-                        placeholderTextColor={myColors.textL4}
-                        autoCorrect={false}
-                        style={styles.input} cursorColor={myColors.primary}
-                        value={email} onChangeText={setEmail}
-                        autoCapitalize='none'
-                        onEndEditing={() => verifyEmail()}
-                    />
+                        <TextInput placeholder="Eg namaemail@emailkamu.com"
+                            placeholderTextColor={myColors.textL4}
+                            autoCorrect={false}
+                            style={styles.input} cursorColor={myColors.primary}
+                            value={email} onChangeText={setEmail}
+                            autoCapitalize='none'
+                            onEndEditing={() => verifyEmail()}
+                        />
+                    </View>
+                </View>
+
+                <Spacer paddingT={myHeight(0.98)} />
+                {/* password Portion */}
+                <View>
+                    <Text style={[styles.heading, { color: password ? myColors.textL4 : myColors.text }]}>Password</Text>
+
+                    <View style={styles.containerInput}>
+
+                        <TextInput placeholder="Password"
+
+                            autoCorrect={false}
+                            placeholderTextColor={myColors.textL4}
+                            style={styles.input} cursorColor={myColors.primary}
+                            value={password} onChangeText={setPass}
+                            onEndEditing={() => verifyPass()}
+                            secureTextEntry={true}
+                        />
+                    </View>
+                    {/* Forget Password */}
+                    <TouchableOpacity activeOpacity={0.8} style={{ alignSelf: 'flex-end' }}
+                        onPress={() => navigate('ForgetPass')}>
+                        <Text style={styles.textForgetP}>Forget Password?</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
-            <Spacer paddingT={myHeight(0.98)} />
-            {/* password Portion */}
-            <View>
-                <Text style={[styles.heading, { color: password ? myColors.textL4 : myColors.text }]}>Password</Text>
-
-                <View style={styles.containerInput}>
-
-                    <TextInput placeholder="Password"
-
-                        autoCorrect={false}
-                        placeholderTextColor={myColors.textL4}
-                        style={styles.input} cursorColor={myColors.primary}
-                        value={password} onChangeText={setPass}
-                        onEndEditing={() => verifyPass()}
-                        secureTextEntry={true}
-                    />
-                </View>
-                {/* Forget Password */}
-                <TouchableOpacity activeOpacity={0.8} style={{ alignSelf: 'flex-end' }}
-                    onPress={() => navigate('ForgetPass')}>
-                    <Text style={styles.textForgetP}>Forget Password?</Text>
-                </TouchableOpacity>
-            </View>
-
-            <Spacer paddingT={myHeight(4.1)} />
+            {/* <Spacer paddingT={myHeight(4.1)} /> */}
             <View style={{ alignItems: 'center' }}>
                 {/* Button Login */}
                 {/* <TouchableOpacity onPress={() => verifyLog ? navigate('HomeNavigator') : null} */}
@@ -94,9 +100,9 @@ export const Login = ({ navigate }) => {
                     <Text style={styles2(verifyLog).textReg}>Login</Text>
                 </TouchableOpacity>
 
-                <Spacer paddingT={myHeight(1.5)} />
-                <View style={{ width: myWidth(47), height: 0.8, backgroundColor: myColors.textL44 }} />
-                <Spacer paddingT={myHeight(1.5)} />
+                <Spacer paddingT={myHeight(1.2)} />
+                <View style={{ width: myWidth(75), height: 0.8, backgroundColor: myColors.divider }} />
+                <Spacer paddingT={myHeight(1.2)} />
 
                 <TouchableOpacity onPress={() => null} activeOpacity={0.8} style={[styles.button, { backgroundColor: myColors.offColor4 }]}>
                     <Image style={{ resizeMode: 'contain', width: myWidth(5.3), height: myWidth(5.3) }}
@@ -113,7 +119,8 @@ export const Login = ({ navigate }) => {
 const styles = StyleSheet.create({
     heading: {
         paddingVertical: myHeight(0.8),
-        fontFamily: myFonts.heading, fontSize: myFontSize.body,
+        fontFamily: myFonts.heading,
+        fontSize: myFontSize.body,
     },
     containerInput: {
         flexDirection: 'row',
@@ -135,7 +142,7 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.bodyBold,
     },
     button: {
-        height: myHeight(6.1), width: myWidth(68.3),
+        height: myHeight(6.1), width: myWidth(86),
         borderRadius: myHeight(1.47), alignItems: 'center', justifyContent: 'center',
         flexDirection: 'row',
     },

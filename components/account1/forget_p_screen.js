@@ -64,7 +64,7 @@ export const ForgetPassword = ({ navigation }) => {
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         {/* Button Submit */}
-                        <TouchableOpacity onPress={() => verifyPass ? navigation.navigate('DoneEmail') : null} activeOpacity={0.8}
+                        <TouchableOpacity onPress={() => verifyPass ? navigation.navigate('NewPass') : null} activeOpacity={0.8}
                             style={styles2(verifyPass).button}>
                             <Text style={styles2(verifyPass).textReg}>Submit</Text>
                         </TouchableOpacity>
@@ -126,7 +126,7 @@ const styles2 = (verifyPass) => StyleSheet.create({
         fontSize: myFontSize.body
     },
     button: {
-        height: myHeight(6.1), width: myWidth(68.3),
+        height: myHeight(6.1), width: myWidth(86),
         borderRadius: myHeight(1.47), alignItems: 'center',
         justifyContent: 'center', flexDirection: 'row',
         backgroundColor: verifyPass ? myColors.primary : myColors.offColor3

@@ -72,38 +72,45 @@ export const AccScreen = ({ navigation }) => {
 
             {
                 onAcc &&
-                <TouchableOpacity activeOpacity={0.95} onPress={() => setOnAcc(false)}
+                <TouchableOpacity activeOpacity={1} onPress={() => setOnAcc(false)}
                     style={{
                         height: '100%', width: '100%', position: 'absolute', zIndex: 2,
                         backgroundColor: '#00000050', justifyContent: 'flex-end'
                     }}>
-                    <Animated.View entering={SlideInDown} style={{ minHeight: myHeight(71), width: myWidth(100), backgroundColor: myColors.background, borderTopStartRadius: 36, borderTopEndRadius: 36, alignItems: 'center' }}>
 
-                        <Spacer paddingT={myHeight(1)} />
-                        {/* Back line */}
-                        <View style={{ width: myWidth(15), height: myHeight(0.8), borderRadius: 20, backgroundColor: myColors.dot }} />
+                    <Animated.View entering={SlideInDown}
+                        style={{
+                            minHeight: myHeight(75), width: myWidth(100),
+                            backgroundColor: myColors.background, borderTopStartRadius: 36,
+                            borderTopEndRadius: 36,
+                        }}>
+                        <TouchableOpacity activeOpacity={1} style={{ flex: 1, alignItems: 'center' }}>
+                            <Spacer paddingT={myHeight(1)} />
+                            {/* Back line */}
+                            <View style={{ width: myWidth(15), height: myHeight(0.8), borderRadius: 20, backgroundColor: myColors.dot }} />
 
-                        <Spacer paddingT={myHeight(3)} />
-                        {/* Navigator */}
-                        <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
-                            <Spacer paddingEnd={myWidth(9.6)} />
-                            <View style={{ flexDirection: 'row', width: myWidth(63.5), justifyContent: 'space-between' }}>
-                                <TouchableOpacity activeOpacity={0.7} onPress={() => setOnLogin(false)} style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ fontSize: myFontSize.xBody, fontFamily: myFonts.heading, color: onLogin ? myColors.textL4 : myColors.primary }}>Create Account</Text>
-                                    <Spacer paddingT={myHeight(0.2)} />
-                                    <View style={{ width: '80%', height: 3, backgroundColor: onLogin ? myColors.background : myColors.primary }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity activeOpacity={0.7} onPress={() => setOnLogin(true)} style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ fontSize: myFontSize.xBody, fontFamily: myFonts.heading, color: onLogin ? myColors.primary : myColors.textL4 }}>Login</Text>
-                                    <Spacer paddingT={myHeight(0.2)} />
-                                    <View style={{ width: '80%', height: 3, backgroundColor: onLogin ? myColors.primary : myColors.background }} />
-                                </TouchableOpacity>
+                            <Spacer paddingT={myHeight(3)} />
+                            {/* Navigator */}
+                            <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
+                                <Spacer paddingEnd={myWidth(9.6)} />
+                                <View style={{ flexDirection: 'row', width: myWidth(63.5), justifyContent: 'space-between' }}>
+                                    <TouchableOpacity activeOpacity={0.7} onPress={() => setOnLogin(false)} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ fontSize: myFontSize.xBody, fontFamily: myFonts.heading, color: onLogin ? myColors.textL4 : myColors.primary }}>Create Account</Text>
+                                        <Spacer paddingT={myHeight(0.2)} />
+                                        <View style={{ width: '80%', height: 3, backgroundColor: onLogin ? myColors.background : myColors.primary }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity activeOpacity={0.7} onPress={() => setOnLogin(true)} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ fontSize: myFontSize.xBody, fontFamily: myFonts.heading, color: onLogin ? myColors.primary : myColors.textL4 }}>Login</Text>
+                                        <Spacer paddingT={myHeight(0.2)} />
+                                        <View style={{ width: '80%', height: 3, backgroundColor: onLogin ? myColors.primary : myColors.background }} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
 
-                        {/* <Spacer paddingT={myHeight(4.4)}/> */}
-                        {onLogin ? <Login navigate={navigation.navigate} /> : <CreateAcc />}
-                        {/* <Spacer paddingT={myHeight(4)}/> */}
+                            {/* <Spacer paddingT={myHeight(4.4)}/> */}
+                            {onLogin ? <Login navigate={navigation.navigate} /> : <CreateAcc />}
+                            {/* <Spacer paddingT={myHeight(4)}/> */}
+                        </TouchableOpacity>
 
                     </Animated.View>
                 </TouchableOpacity>
