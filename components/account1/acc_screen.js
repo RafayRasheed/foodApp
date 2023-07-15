@@ -1,22 +1,60 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import { Image, ScrollView } from "react-native";
-import { View, Text, Dimensions, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
-import { myHeight, myWidth, Spacer, StatusbarH } from "../common";
-import { myFontSize, myFonts } from "../../ultils/myFonts";
+import { View, Text, Dimensions, StyleSheet, StatusBar, TouchableOpacity, BackHandler } from "react-native";
+import { Loader, MyError, myHeight, myWidth, Spacer, StatusbarH } from "../common";
+import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Login } from "./acc.components/login";
 import { CreateAcc } from "./acc.components/create_acc";
 import Animated, { SlideInDown } from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+// import Animated, { SlideInDown, FadeInUp, FadeOutUp } from 'react-native-reanimated';
+
 
 export const AccScreen = ({ navigation }) => {
     const [onAcc, setOnAcc] = useState(false)
     const [onLogin, setOnLogin] = useState(false)
 
+    const [errorMsg, setErrorMsg] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+    const onBackPress = () => {
+        if (onAcc) {
+            setOnAcc(false)
+            return true
+        }
+        return false
+    };
+
+    function showError(message) {
+        setErrorMsg(message)
+    }
+
+    useEffect(() => {
+        if (errorMsg) {
+            setTimeout(() => {
+                setLoading(false)
+                setErrorMsg(null)
+            }
+                , 2000)
+        }
+    }, [errorMsg])
+
+    useLayoutEffect(
+        React.useCallback(() => {
+
+            BackHandler.addEventListener(
+                'hardwareBackPress', onBackPress
+            );
+            return () =>
+                BackHandler.removeEventListener(
+                    'hardwareBackPress', onBackPress
+                );
+        }, [onAcc])
+    );
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-            {/* <StatusBar backgroundColor={onAcc ? '#00000029' : myColors.background} /> */}
             <StatusbarH />
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Spacer paddingT={myHeight(6)} />
@@ -59,7 +97,7 @@ export const AccScreen = ({ navigation }) => {
 
                 <View style={{ flex: 1 }} />
                 {/* T Term & Policy */}
-                <Text style={styles.textTerm}>By logging in or registering, you have agreed to
+                <Text style={styles.textTerm}>By logging in or registering, you have agreed to{'\n'}
                     <Text onPress={() => null} style={{ color: myColors.primary }}> The Terms and Conditions</Text> And
                     <Text onPress={() => null} style={{ color: myColors.primary }}> Privacy Policy</Text>
                 </Text>
@@ -108,13 +146,20 @@ export const AccScreen = ({ navigation }) => {
                             </View>
 
                             {/* <Spacer paddingT={myHeight(4.4)}/> */}
-                            {onLogin ? <Login navigate={navigation.navigate} /> : <CreateAcc />}
+                            {onLogin ?
+                                <Login navigate={navigation.navigate} showError={setErrorMsg} showLoading={setLoading} />
+                                :
+                                <CreateAcc navigate={navigation.navigate} showError={setErrorMsg} showLoading={setLoading} />}
                             {/* <Spacer paddingT={myHeight(4)}/> */}
                         </TouchableOpacity>
 
                     </Animated.View>
                 </TouchableOpacity>
             }
+
+
+            {loading && <Loader />}
+            {errorMsg && <MyError message={errorMsg} />}
 
         </KeyboardAwareScrollView>
     )
@@ -130,7 +175,7 @@ const styles = StyleSheet.create({
 
     textTerm: {
         maxWidth: myWidth(85), textAlign: 'center',
-        color: myColors.text, fontSize: myFontSize.body,
+        color: myColors.text, fontSize: myFontSize.xxSmall,
         textTransform: 'capitalize',
     },
 
@@ -143,14 +188,14 @@ const styles = StyleSheet.create({
         color: myColors.black, fontSize: myFontSize.large, fontFamily: myFonts.heading
     },
     textDetail: {
-        maxWidth: myWidth(66.6), color: myColors.textL4, fontSize: myFontSize.body2,
+        maxWidth: myWidth(66.6), color: myColors.textL4, fontSize: myFontSize.xxSmall,
         fontFamily: myFonts.bodyBold, textTransform: 'capitalize', textAlign: 'center'
     },
     textCreateAcc: {
-        color: myColors.background, fontSize: myFontSize.XSmall, fontFamily: myFonts.headingBold,
+        color: myColors.background, fontSize: myFontSize.body, fontFamily: myFonts.headingBold,
     },
     textLogin: {
-        color: myColors.primary, fontSize: myFontSize.XSmall, fontFamily: myFonts.headingBold
+        color: myColors.primary, fontSize: myFontSize.body, fontFamily: myFonts.headingBold
     },
 
 

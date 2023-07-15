@@ -5,6 +5,7 @@ import { HomeBottomNavigator } from "./home/home_bottom_navigator"
 import { AccountNavigator } from "./account/account_navigation"
 import { ImageViewer } from "./common/image_viewer"
 import { AccountNavigator2 } from "./account1/acc_stack"
+import { storage } from "./common"
 
 const AppTAB = createNativeStackNavigator()
 
@@ -12,8 +13,8 @@ export const AppNavigator = () => {
     return (
         <NavigationContainer>
             <AppTAB.Navigator
-                initialRouteName="AccountNavigator"
-                // initialRouteName={storage.contains('isFirstTime') ? "AccountNavigator" : "StartupScreen"}
+                initialRouteName="StartupNavigator"
+                // initialRouteName={storage.getBoolean('isFirstTime') ? "AccountNavigator" : "StartupScreen"}
                 screenOptions={{
                     animation: 'fade',
                     headerShown: false

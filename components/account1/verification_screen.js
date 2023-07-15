@@ -4,8 +4,9 @@ import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common";
 
-export const Verification = ({ navigation }) => {
-    const lenCode = 4;
+export const Verification = ({ navigation, route }) => {
+    const { code } = route.params
+    const lenCode = 6;
     const [focus, setFocus] = useState(0)
     const arrayVer = []
     // const arrayVer2 = []
@@ -65,7 +66,7 @@ export const Verification = ({ navigation }) => {
         if (finalVeriVal) {
 
             if (finalVeriVal.length == lenCode) {
-                if (/^\d+$/.test(finalVeriVal)) {
+                if (/^\d+$/.test(finalVeriVal) && code == finalVeriVal) {
                     setIsLoading(true)
                     setVerify(true)
                     return
@@ -86,7 +87,10 @@ export const Verification = ({ navigation }) => {
 
     function openKey() {
         if (focusKey) {
-            focusKey.current.focus()
+            focusKey.current?.blur();
+            focusKey.current?.focus()
+
+
             return
         }
         setTimeout(() => openKey(), 100);
@@ -179,8 +183,7 @@ export const Verification = ({ navigation }) => {
     // }
     return (
         <SafeAreaView style={styles.container}>
-            {isLoading && <Loader />}
-            {errorMessage && <MyError message={errorMessage} />}
+
             {/* Invisible Input for Keyboard */}
             <TextInput
                 ref={focusKey}
@@ -232,9 +235,11 @@ export const Verification = ({ navigation }) => {
             {/* Verify Button */}
             <TouchableOpacity activeOpacity={0.6} onPress={onVerify} style={styles.containerVerify}
                 onLongPress={() => navigation.replace('HomeBottomNavigator')}>
-                <Text style={styles.textVerify}>VERIFY</Text>
+                <Text style={styles.textVerify}>Verify</Text>
             </TouchableOpacity>
 
+            {isLoading && <Loader />}
+            {errorMessage && <MyError message={errorMessage} />}
         </SafeAreaView>
     )
 }
@@ -246,12 +251,13 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.background
     },
     containerAllInput: {
-        flexDirection: 'row', paddingHorizontal: myWidth(8.5),
+        flexDirection: 'row', paddingHorizontal: myWidth(5),
         justifyContent: 'space-between', alignItems: 'center'
     },
     containerInput: {
         backgroundColor: myColors.primaryL3,
         // paddingHorizontal: myWidth(7),
+        width: myWidth(13),
         paddingVertical: myHeight(1.8),
         alignItems: 'center',
         borderRadius: myWidth(3),
@@ -262,8 +268,8 @@ const styles = StyleSheet.create({
     containerVerify: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: myColors.primaryT,
-        paddingVertical: myHeight(1),
+        backgroundColor: myColors.primary,
+        paddingVertical: myHeight(1.2),
         borderRadius: myWidth(3.2),
         marginHorizontal: myWidth(7)
     },
@@ -300,11 +306,10 @@ const styles = StyleSheet.create({
     // },
     //Text
     textInput: {
-        fontSize: myFontSize.xMedium,
+        fontSize: myFontSize.xxBody,
         fontFamily: myFonts.body,
         includeFontPadding: false,
         padding: 0,
-        width: myWidth(18.6),
         textAlign: 'center',
         // backgroundColor: 'red'
 

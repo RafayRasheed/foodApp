@@ -10,7 +10,7 @@ export const DonePassword = ({ navigation }) => {
 
 
     useEffect(() => {
-        setTimeout(() => setShoeDone(true), 100)
+        // setTimeout(() => setShoeDone(true))
     }, [])
     return (
         <SafeAreaView style={styles.container}>
@@ -29,13 +29,13 @@ export const DonePassword = ({ navigation }) => {
                     <Spacer paddingT={myHeight(2)} />
                     <View style={{ height: myHeight(19) }}>
 
-                        {showDone && <Lottie
+                        <Lottie
                             autoPlay={true}
-                            loop={false}
+                            loop={true}
                             source={require('../assets/lottie/check.json')}
                             style={{ height: myHeight(30), width: myHeight(30), }}
 
-                        />}
+                        />
                     </View>
                     {/* <Image style={styles.imageDone} source={require('../assets/account/done.png')} /> */}
                     <Spacer paddingT={myHeight(12)} />

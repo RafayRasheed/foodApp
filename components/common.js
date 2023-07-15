@@ -8,7 +8,7 @@ import Animated, { BounceInUp, FadeInUp, FadeOutUp } from 'react-native-reanimat
 const { height, width } = Dimensions.get('window')
 export const ios = Platform.OS == 'ios'
 export const stutusH = StatusBar.currentHeight
-import { Circle } from "react-native-animated-spinkit"
+import { Chase, Fold, Grid, Swing } from "react-native-animated-spinkit"
 
 export function printWithPlat(print) {
     console.log(`${Platform.OS} => ${print} ${height} ${StatusBar.currentHeight}`)
@@ -35,11 +35,11 @@ export const Spacer = ({ paddingEnd = 0, paddingT = 0 }) => (
 export const Loader = () => (
     <View
         style={{
-            height: myHeight(100), width: myWidth(100), position: 'absolute', zIndex: 10,
+            height: '100%', width: myWidth(100), position: 'absolute', zIndex: 10,
             justifyContent: 'center', alignItems: 'center',
-            backgroundColor: '#00000010'
+            backgroundColor: '#00000020'
         }}>
-        <Circle size={myHeight(10)} color='#d16402' />
+        <Grid size={myHeight(12)} color={myColors.primaryT} />
 
     </View>
 )
@@ -49,28 +49,25 @@ export const MyError = ({ message = '' }) => {
         <Animated.View
             entering={FadeInUp}
             exiting={FadeOutUp}
-        >
-            <View style={{ marginTop: myHeight(1), zIndex: 1, position: 'absolute', alignItems: 'center', width: '100%' }}>
-                <View
-                    style={{
-                        paddingVertical: myHeight(0.4), paddingHorizontal: myWidth(3),
-                        width: myWidth(90), backgroundColor: myColors.red,
-                        alignItems: 'center', alignSelf: 'center',
-                        borderRadius: myWidth(100)
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontSize: myFontSize.body,
-                            fontFamily: myFonts.bodyBold,
-                            color: myColors.background,
-                            letterSpacing: myLetSpacing.common,
-                            includeFontPadding: false,
-                            padding: 0,
-                        }}
-                    >{message}</Text>
-                </View>
-            </View>
+            style={{
+                marginTop: StatusBar.currentHeight + myHeight(1.5),
+                zIndex: 100, position: 'absolute',
+                paddingVertical: myHeight(0.7), paddingHorizontal: myWidth(4),
+                width: myWidth(90), backgroundColor: myColors.ligRed,
+                alignItems: 'center', alignSelf: 'center',
+                borderRadius: myWidth(100)
+            }}>
+
+            <Text
+                style={{
+                    fontSize: myFontSize.body,
+                    fontFamily: myFonts.heading,
+                    color: myColors.background,
+                    letterSpacing: myLetSpacing.common,
+                    includeFontPadding: false,
+                    padding: 0,
+                }}
+            >{message}</Text>
         </Animated.View>
     )
 }

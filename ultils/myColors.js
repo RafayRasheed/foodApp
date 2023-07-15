@@ -1,7 +1,7 @@
 export const myColors = {
     primary: '#32B768',
-    primaryT: '#04C000',
-    // primaryT: '#03DAC5',
+    // primaryT: '#04C000',
+    primaryT: '#2aa85e',
     primaryL: '#a7faa5',
     primaryL2: '#d1f7d0',
     primaryL3: '#e6fce6',
@@ -35,7 +35,7 @@ export const myColors = {
 
 
     ligBlue: '#66D1FF',
-    ligRed: 'rgba(255, 102, 102, 0.78)',
+    ligRed: '#ff3333',
     purple: '#66A3FF',
 
 

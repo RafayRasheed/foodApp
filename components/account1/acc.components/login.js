@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { ios, myHeight, myWidth, Spacer } from "../../common";
+import { ios, Loader, myHeight, myWidth, Spacer } from "../../common";
 import { myFontSize, myFonts } from "../../../ultils/myFonts";
 import { myColors } from "../../../ultils/myColors";
 
-
-export const Login = ({ navigate }) => {
+export const Login = ({ navigate, showError, showLoading }) => {
 
     const [email, setEmail] = useState()
     const [password, setPass] = useState()
     const [verifyLog, setVerifyLog] = useState(false)
 
     const onLogin = () => {
-        onLoginFirebase()
+        // onLoginFirebase()
+        showError('drtt dry dy dy dy dy ')
         // navigate('HomeBottomNavigator')
     }
 

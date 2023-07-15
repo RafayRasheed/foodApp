@@ -115,10 +115,12 @@ export const StartupScreen = ({ navigation }) => {
 
     }, [i])
 
+    function getReady() {
+        storage.set('isFirstTime', true)
+        navigation.replace('AccountNavigator')
+    }
     useEffect(() => {
-        if (getStart) {
-            navigation.replace('AccountNavigator')
-        }
+
     }, [getStart])
 
     return (
@@ -129,7 +131,7 @@ export const StartupScreen = ({ navigation }) => {
                 <View style={styles.containerTopSkip}>
 
                     {i < lenStartup - 1 &&
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.replace('AccountNavigator')} style={styles.containerSkip}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={getReady()} style={styles.containerSkip}>
                             <Text style={styles.textSkip}>Skip</Text>
                             <Spacer paddingEnd={myWidth(1)} />
                             <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />

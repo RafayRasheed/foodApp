@@ -7,14 +7,19 @@ import { Person } from "../../firebase/structures";
 import uuid from 'react-native-uuid';
 import { createAccountFirebase } from "../../firebase/firebase_user";
 import RNSmtpMailer from "react-native-smtp-mailer";
+import { Base64 } from 'js-base64';
+import { verificationCode } from "../../firebase/functions";
 
 
-export const CreateAcc = () => {
+export const CreateAcc = ({ navigate, showError, showLoading }) => {
     const [name, setName] = useState(null)
     const [email, setEmail] = useState()
     const [password, setPass] = useState()
     const [verifyReg, setVerifyReg] = useState(false)
 
+    function onGoogle() {
+
+    }
     function verifyName() {
         if (name) {
             return true
@@ -35,8 +40,14 @@ export const CreateAcc = () => {
 
     }
 
+
+    function goToVerification(code) {
+        navigate('Verification', { code })
+    }
+
     function onRegister() {
-        const code = '020945'
+        showLoading(true)
+        const code = verificationCode()
         const username = 'foodapphelpcustomer@gmail.com'
         const password = "louajmoowfxcdmgn"
         const from = 'Food App'
@@ -45,6 +56,7 @@ export const CreateAcc = () => {
         const subject = 'Verification'
         const light = 'Explore a world of delicious flavors and culinary experiences. Our Food App brings you a wide range of mouthwatering dishes, recipes, and dining recommendations. Whether you are a foodie searching for new recipes to try at home, a traveler looking for the best local cuisines, or simply seeking inspiration for your next meal, we have got you covered. Discover the finest restaurants, street food vendors, and hidden gems in your area. Browse through our extensive collection of recipes from different cultures and cooking styles. Get ready to embark on a delightful gastronomic journey with our Food App! Start exploring now and satisfy your cravings with our curated selection of culinary delights.'
         const main = `Your Verification Code: ${code}`
+
         try {
             RNSmtpMailer.sendMail({
                 mailhost: "smtp.gmail.com",
@@ -58,11 +70,15 @@ export const CreateAcc = () => {
                 htmlBody: `<p><span style="font-size: 24px; font-weight: 500">${heading}</span></p><h1>${main}</h1> <p><span></span></span><span>${light}</span></span></p>`,
 
             })
-                .then(success => console.log('su', success))
-                .catch(err => console.log('Internal error While  sending an Email'));
+                .then(success => {
+                    showLoading(false)
+                    goToVerification(code)
+
+                })
+                .catch(err => showError('Internal error While  sending an Email'));
         }
         catch (err) {
-            console.log('External error While  sending an Email', err)
+            showError('External error While  sending an Email', err)
         }
         // sendVerificationCode()
         const profile = new Person(uuid.v4(), name, email, password, new Date(), 'customer')
@@ -142,7 +158,7 @@ export const CreateAcc = () => {
                 <View style={{ width: myWidth(75), height: 0.8, backgroundColor: myColors.divider }} />
                 <Spacer paddingT={myHeight(1.2)} />
 
-                <TouchableOpacity onPress={() => null} activeOpacity={0.8} style={[styles.button, { backgroundColor: myColors.offColor4 }]}>
+                <TouchableOpacity onPress={onGoogle} activeOpacity={0.8} style={[styles.button, { backgroundColor: myColors.offColor4 }]}>
                     <Image style={{ resizeMode: 'contain', width: myWidth(5.3), height: myWidth(5.3) }}
                         source={require('../../assets/account/google.png')} />
                     <Spacer paddingEnd={myWidth(6.4)} />
