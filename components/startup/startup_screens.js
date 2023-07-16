@@ -102,18 +102,15 @@ export const StartupScreen = ({ navigation }) => {
     //     }
     // }
 
-    // useEffect(() => {
-    //     if (i == lenStartup - 1) {
-    //         const timer = setTimeout(() => {
-    //             setGetStart(true)
-    //         }, 1500)
-    //         return () => clearTimeout(timer);
-    //     }
-    //     else {
-    //         setGetStart(false)
-    //     }
+    useEffect(() => {
+        if (i == lenStartup - 1) {
+            const timer = setTimeout(() => {
+                getReady()
+            }, 1500)
+            return () => clearTimeout(timer);
+        }
 
-    // }, [i])
+    }, [i])
 
     function getReady() {
         storage.set('isFirstTime', true)
