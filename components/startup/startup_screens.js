@@ -36,8 +36,8 @@ export const StartupScreen = ({ navigation }) => {
     const [ref, setRef] = useState(null);
     const [posX, setPosX] = useState([]);
     const [scrollTouch, setScrollTouch] = useState(false)
-    const [isScrollLas, setIsScrollLas] = useState(false)
-    const [getStart, setGetStart] = useState(false)
+    // const [isScrollLas, setIsScrollLas] = useState(false)
+    // const [getStart, setGetStart] = useState(false)
 
     // Loop for dots
     for (let j = 0; j < lenStartup; j++) {
@@ -45,7 +45,7 @@ export const StartupScreen = ({ navigation }) => {
     }
 
     function handleScroll(event) {
-        if (scrollTouch && !isScrollLas) {
+        if (scrollTouch) {
             const a = (event.nativeEvent.contentOffset.x) / width
             var getDecimal = a.toString().split(".")[1];
             if (getDecimal) {
@@ -88,40 +88,38 @@ export const StartupScreen = ({ navigation }) => {
         });
     }
 
-    function scrollToLast() {
-        const pos = posX[lenStartup - 1]
-        if (pos) {
-            setIsScrollLas(true)
-            ref.scrollTo({
-                x: pos,
-                y: 0,
-                animated: true,
-            });
-            setTimeout(() => setI(lenStartup - 1), 100);
+    // function scrollToLast() {
+    //     const pos = posX[lenStartup - 1]
+    //     if (pos) {
+    //         setIsScrollLas(true)
+    //         ref.scrollTo({
+    //             x: pos,
+    //             y: 0,
+    //             animated: true,
+    //         });
+    //         setTimeout(() => setI(lenStartup - 1), 100);
 
-        }
-    }
+    //     }
+    // }
 
-    useEffect(() => {
-        if (i == lenStartup - 1) {
-            const timer = setTimeout(() => {
-                setGetStart(true)
-            }, 1500)
-            return () => clearTimeout(timer);
-        }
-        else {
-            setGetStart(false)
-        }
+    // useEffect(() => {
+    //     if (i == lenStartup - 1) {
+    //         const timer = setTimeout(() => {
+    //             setGetStart(true)
+    //         }, 1500)
+    //         return () => clearTimeout(timer);
+    //     }
+    //     else {
+    //         setGetStart(false)
+    //     }
 
-    }, [i])
+    // }, [i])
 
     function getReady() {
         storage.set('isFirstTime', true)
         navigation.replace('AccountNavigator')
     }
-    useEffect(() => {
 
-    }, [getStart])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -131,7 +129,7 @@ export const StartupScreen = ({ navigation }) => {
                 <View style={styles.containerTopSkip}>
 
                     {i < lenStartup - 1 &&
-                        <TouchableOpacity activeOpacity={0.6} onPress={getReady()} style={styles.containerSkip}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={getReady} style={styles.containerSkip}>
                             <Text style={styles.textSkip}>Skip</Text>
                             <Spacer paddingEnd={myWidth(1)} />
                             <Image style={styles.imageGo} source={require('../assets/startup/go.png')} />

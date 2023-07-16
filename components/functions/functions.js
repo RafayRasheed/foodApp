@@ -1,7 +1,5 @@
 import { Base64 } from 'js-base64';
 
-
-
 export function verificationCode() {
     return Math.floor(Math.random() * 899999 + 100000);
 }

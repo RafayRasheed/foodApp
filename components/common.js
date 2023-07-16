@@ -96,3 +96,5 @@ export const StatusBarHide = () => (
 export const StatusbarH = () => (
     <View style={{ height: StatusBar.currentHeight }} />
 )
+
+export const errorTime = 2000

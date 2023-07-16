@@ -1,28 +1,85 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ios, myHeight, myWidth, Spacer, StatusbarH } from "../common";
+import { errorTime, ios, Loader, MyError, myHeight, myWidth, Spacer, StatusbarH } from "../common";
 import { myFontSize, myFonts } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
+import firestore from '@react-native-firebase/firestore';
+import { sendVerficationEmail } from "../functions/email";
+import { verificationCode } from "../functions/functions";
+
 export const ForgetPassword = ({ navigation }) => {
     const [email, setEmail] = useState()
-    const [verifyPass, setVerifyPass] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    function showError(message) {
+        setIsLoading(false)
+        setErrorMessage(message)
+    }
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, errorTime)
+        }
+    }, [errorMessage])
+
 
     function verifyEmail() {
         if (email) {
-            return true
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
+                return true
+            }
+            showError('Please Enter a Valid Email')
+            return false
         }
-        return false
+        showError('Please Enter a Email')
     }
-    useEffect(() => {
-        if (verifyEmail()) {
-            setVerifyPass(true)
 
+    function goToVerifiy(profile) {
+        const code = verificationCode()
+        sendVerficationEmail(profile, code)
+            .then(success => {
+                setIsLoading(false)
+                goToVerification(profile, code)
+            })
+            .catch(err => {
+                showError('Something wrong')
+                console.log('Internal error while sending an Email')
+            });
+
+    }
+    function goToVerification(profile, code) {
+        navigation.navigate('Verification', { code, profile, reset: true })
+    }
+
+    function onSubmit() {
+        if (verifyEmail()) {
+            setIsLoading(true)
+            firestore().collection('users')
+                .where('email', '==', email).get()
+                .then(result => {
+                    if (result.empty) {
+                        showError('User not exists with this email')
+                        console.log('User not exists with this email')
+                    }
+                    else {
+                        result.forEach(documentSnapshot => {
+                            goToVerifiy(documentSnapshot.data())
+
+                        });
+
+                    }
+                })
+                .catch(err => {
+                    showError('Something wrong')
+                    console.log(err)
+                })
         }
-        else {
-            setVerifyPass(false)
-        }
-    }, [email])
+
+    }
 
     return (
         <>
@@ -44,9 +101,9 @@ export const ForgetPassword = ({ navigation }) => {
 
                                 <TextInput placeholder="Eg namaemail@emailkamu.com"
                                     placeholderTextColor={myColors.offColor}
+                                    autoCapitalize='none'
                                     style={styles.input} cursorColor={myColors.primary}
                                     value={email} onChangeText={setEmail}
-                                    onEndEditing={() => verifyEmail()}
                                 />
                             </View>
 
@@ -64,13 +121,15 @@ export const ForgetPassword = ({ navigation }) => {
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         {/* Button Submit */}
-                        <TouchableOpacity onPress={() => verifyPass ? navigation.navigate('NewPass') : null} activeOpacity={0.8}
-                            style={styles2(verifyPass).button}>
-                            <Text style={styles2(verifyPass).textReg}>Submit</Text>
+                        <TouchableOpacity onPress={onSubmit} activeOpacity={0.8}
+                            style={styles.button}>
+                            <Text style={styles.textReg}>Submit</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </KeyboardAwareScrollView>
+            {isLoading && <Loader />}
+            {errorMessage && <MyError message={errorMessage} />}
         </>
     )
 }
@@ -117,6 +176,16 @@ const styles = StyleSheet.create({
     },
     textSign: {
         fontFamily: myFonts.heading, color: myColors.primary, fontSize: myFontSize.body,
+    },
+    textReg: {
+        color: myColors.background, fontFamily: myFonts.headingBold,
+        fontSize: myFontSize.body
+    },
+    button: {
+        height: myHeight(6.1), width: myWidth(86),
+        borderRadius: myHeight(1.47), alignItems: 'center',
+        justifyContent: 'center', flexDirection: 'row',
+        backgroundColor: myColors.primary
     }
 })
 

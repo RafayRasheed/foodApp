@@ -6,15 +6,17 @@ import { AccountNavigator } from "./account/account_navigation"
 import { ImageViewer } from "./common/image_viewer"
 import { AccountNavigator2 } from "./account1/acc_stack"
 import { storage } from "./common"
+import { createStackNavigator } from "@react-navigation/stack"
+import { containFirstTime, containLogin } from "./functions/storageMMKV"
 
-const AppTAB = createNativeStackNavigator()
+const AppTAB = createStackNavigator()
 
 export const AppNavigator = () => {
     return (
         <NavigationContainer>
             <AppTAB.Navigator
-                initialRouteName="StartupNavigator"
-                // initialRouteName={storage.getBoolean('isFirstTime') ? "AccountNavigator" : "StartupScreen"}
+                // initialRouteName="StartupNavigator"
+                initialRouteName={containFirstTime() ? containLogin() ? 'HomeBottomNavigator' : "AccountNavigator" : "StartupScreen"}
                 screenOptions={{
                     animation: 'fade',
                     headerShown: false

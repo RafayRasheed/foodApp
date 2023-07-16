@@ -8,8 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "react-native";
 import { myColors } from "../../ultils/myColors";
 import { Verification } from "./verification_screen";
+import { createStackNavigator } from "@react-navigation/stack"
 
-const AccountStack = createNativeStackNavigator()
+const AccountStack = createStackNavigator()
 
 export const AccountNavigator2 = ({ navigation, route }) => {
 
@@ -27,10 +28,6 @@ export const AccountNavigator2 = ({ navigation, route }) => {
             <AccountStack.Screen
                 name='ForgetPass'
                 component={ForgetPassword}
-            />
-            <AccountStack.Screen
-                name="DoneEmail"
-                component={DonePassword}
             />
             <AccountStack.Screen
                 name="NewPass"

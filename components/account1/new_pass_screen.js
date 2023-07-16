@@ -1,47 +1,106 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ios, myHeight, myWidth, Spacer } from "../common";
+import { errorTime, ios, Loader, MyError, myHeight, myWidth, Spacer } from "../common";
 import { myFontSize, myFonts } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
-export const NewPass = ({ navigation }) => {
+import { deccodeInfo, encodeInfo } from "../functions/functions";
+import firestore from '@react-native-firebase/firestore';
+
+
+export const NewPass = ({ navigation, route }) => {
     const [newPass, setNewPass] = useState()
     const [conPass, setConPass] = useState()
-    const [verifyPass, setVerifyPass] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [hidePass, setHidePass] = useState(true);
+    const [hideConPass, setHideConPass] = useState(true);
+    const { profile } = route.params
 
+
+
+    function showError(message) {
+        setIsLoading(false)
+        setErrorMessage(message)
+    }
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, errorTime)
+        }
+    }, [errorMessage])
+
+    function goToDone() {
+        setIsLoading(false)
+        navigation.replace('DonePass')
+    }
+
+    function changePassword() {
+        setIsLoading(true)
+        firestore().collection('users').doc(profile.uid)
+            .update({
+                password: encodeInfo(newPass),
+            })
+            .then(() => {
+                goToDone()
+            }).catch(err => {
+                showError('Something wrong')
+                console.log('Internal error while Updating a Password')
+            });
+    }
     function verifyNewPass() {
         if (newPass) {
-            return true
+            if (newPass.length > 5) {
+                const reg = /(?=.*[a-zA-Z])(?=.*\d)/
+                if (reg.test(newPass)) {
+                    if (newPass != deccodeInfo(profile.password)) {
+                        return true
+                    }
+                    showError('Use different password with the previous')
+                    return false
+                }
+                showError('Password must contain letter and a number')
+                return false
+            }
+            showError('Password must be at least 6 character')
+            return false
         }
+        showError('Please Enter a Password')
         return false
     }
     function verifyConPass() {
         if (conPass) {
-            return true
+            if (conPass == newPass) {
+                return true
+            }
+            showError('Password Do Not Match')
+            return false
         }
+        showError('Please a Password Again')
         return false
     }
-    useEffect(() => {
+
+
+    function onReset() {
         if (verifyNewPass() && verifyConPass()) {
-            setVerifyPass(true)
+            changePassword()
         }
-        else {
-            setVerifyPass(false)
-        }
-    }, [newPass, conPass])
+
+    }
 
     return (
         <>
             <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', }} style={styles.container}>
 
                 <View style={{ paddingHorizontal: myWidth(6.4) }}>
-                    <Spacer paddingT={myHeight(5.78)} />
+                    <Spacer paddingT={myHeight(4)} />
 
                     {/* T ForgetPass */}
                     <Text style={styles.textForget}>Change New Password</Text>
                     <Text style={[styles.textLight, { fontSize: myFontSize.body }]}>Enter a different password with the previous</Text>
 
-                    <Spacer paddingT={myHeight(6.9)} />
+                    <Spacer paddingT={myHeight(5)} />
                     {/* New Pass */}
                     <View >
                         <Text style={[styles.heading, { color: newPass ? myColors.textL4 : myColors.text }]}>New Password</Text>
@@ -49,11 +108,16 @@ export const NewPass = ({ navigation }) => {
 
                             <TextInput placeholder="New Password"
                                 placeholderTextColor={myColors.textL4}
-                                secureTextEntry
+                                secureTextEntry={hidePass}
                                 style={styles.input} cursorColor={myColors.primary}
                                 value={newPass} onChangeText={setNewPass}
-                                onEndEditing={() => verifyNewPass()}
+                                autoCapitalize="none"
+
                             />
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
+                                <Image style={styles.imageEye}
+                                    source={hidePass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
+                            </TouchableOpacity>
                         </View>
 
                     </View>
@@ -65,12 +129,17 @@ export const NewPass = ({ navigation }) => {
                         <View style={styles.containerInput}>
 
                             <TextInput placeholder="Confirm Password"
-                                secureTextEntry
+                                secureTextEntry={hideConPass}
                                 placeholderTextColor={myColors.textL4}
                                 style={styles.input} cursorColor={myColors.primary}
                                 value={conPass} onChangeText={setConPass}
-                                onEndEditing={() => verifyNewPass()}
+                                autoCapitalize="none"
+
                             />
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => setHideConPass(!hideConPass)}>
+                                <Image style={styles.imageEye}
+                                    source={hideConPass ? require('../assets/account/eyeC.png') : require('../assets/account/eyeO.png')} />
+                            </TouchableOpacity>
                         </View>
 
                     </View>
@@ -80,12 +149,14 @@ export const NewPass = ({ navigation }) => {
                 </View>
                 <View style={{ alignItems: 'center' }}>
                     {/* Button Submit */}
-                    <TouchableOpacity onPress={() => verifyPass ? navigation.replace('DonePass') : null} activeOpacity={0.8}
-                        style={styles2(verifyPass).button}>
-                        <Text style={styles2(verifyPass).textReg}>Reset Password</Text>
+                    <TouchableOpacity onPress={onReset} activeOpacity={0.8}
+                        style={styles.button}>
+                        <Text style={styles.textReg}>Reset Password</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAwareScrollView>
+            {isLoading && <Loader />}
+            {errorMessage && <MyError message={errorMessage} />}
         </>
     )
 }
@@ -119,8 +190,8 @@ const styles = StyleSheet.create({
         fontFamily: myFonts.bodyBold,
     },
     textForget: {
-        fontFamily: myFonts.headingBold, fontSize: myFontSize.large, color: myColors.text,
-        paddingVertical: myHeight(0.6)
+        fontFamily: myFonts.heading, fontSize: myFontSize.large, color: myColors.text,
+        paddingVertical: myHeight(0)
     },
     textLight: {
         fontFamily: myFonts.bodyBold, color: myColors.textL4, fontSize: myFontSize.medium
@@ -131,6 +202,24 @@ const styles = StyleSheet.create({
     },
     textSign: {
         fontFamily: myFonts.heading, color: myColors.textL, fontSize: myFontSize.body,
+    },
+    textReg: {
+        color: myColors.background, fontFamily: myFonts.headingBold,
+        fontSize: myFontSize.body
+    },
+    button: {
+        height: myHeight(6.1), width: myWidth(86),
+        borderRadius: myHeight(1.47), alignItems: 'center',
+        justifyContent: 'center', flexDirection: 'row',
+        backgroundColor: myColors.primary
+    },
+    imageEye: {
+        height: myHeight(2.8),
+        width: myHeight(2.8),
+        paddingHorizontal: myWidth(4),
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
     }
 })
 

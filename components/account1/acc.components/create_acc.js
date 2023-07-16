@@ -3,17 +3,18 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "reac
 import { ios, myHeight, myWidth, Spacer } from "../../common";
 import { myFontSize, myFonts } from "../../../ultils/myFonts";
 import { myColors } from "../../../ultils/myColors";
-import { Person } from "../../firebase/structures";
+import { Person } from "../../functions/structures";
 import uuid from 'react-native-uuid';
-import { createAccountFirebase } from "../../firebase/firebase_user";
 import RNSmtpMailer from "react-native-smtp-mailer";
-import { Base64 } from 'js-base64';
-import { verificationCode } from "../../firebase/functions";
+import { encodeInfo, verificationCode } from "../../functions/functions";
+import firestore from '@react-native-firebase/firestore';
+import { sendVerficationEmail } from "../../functions/email";
 
 
 export const CreateAcc = ({ navigate, showError, showLoading }) => {
     const [name, setName] = useState(null)
-    const [email, setEmail] = useState()
+    // const [email, setEmail] = useState('shaheerkhan777.rr@gmail.com')
+    const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
     const [verifyReg, setVerifyReg] = useState(false)
 
@@ -22,76 +23,90 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
     }
     function verifyName() {
         if (name) {
-            return true
+            if (name.length > 2) {
+                return true
+            }
+            showError('Name is to Short')
+            return false
         }
+        showError('Please Enter a Name')
         return false
     }
     function verifyEmail() {
         if (email) {
-            return true
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
+                return true
+            }
+            showError('Please Enter a Valid Email')
+            return false
         }
-        return false
+        showError('Please Enter a Email')
     }
+
     function verifyPass() {
         if (password) {
-            return true
+            if (password.length > 5) {
+                const reg = /(?=.*[a-zA-Z])(?=.*\d)/
+                if (reg.test(password)) {
+                    return true
+                }
+                showError('Password must contain letter and a number')
+                return false
+            }
+            showError('Password must be at least 6 character')
+            return false
         }
+        showError('Please Enter a Password')
         return false
-
     }
 
+    function onVerifying() {
+        if (verifyName() && verifyEmail() && verifyPass()) {
+            onRegister()
+        }
+    }
 
-    function goToVerification(code) {
-        navigate('Verification', { code })
+    function goToVerification(profile, code) {
+        navigate('Verification', { code, profile, reset: false })
+    }
+    function sendEmail() {
+        const profile = new Person(uuid.v4(), name, email, encodeInfo(password), new Date(), 'customer')
+        const code = verificationCode()
+        sendVerficationEmail(profile, code)
+            .then(success => {
+                showLoading(false)
+                goToVerification(profile, code)
+            })
+            .catch(err => {
+                showError('Something wrong')
+                console.log('Internal error while sending an Email')
+            });
+
     }
 
     function onRegister() {
         showLoading(true)
-        const code = verificationCode()
-        const username = 'foodapphelpcustomer@gmail.com'
-        const password = "louajmoowfxcdmgn"
-        const from = 'Food App'
-        const heading = `Welcome To ${from}!`
-        const to = 'rafayrasheed777.rr@gmail.com'
-        const subject = 'Verification'
-        const light = 'Explore a world of delicious flavors and culinary experiences. Our Food App brings you a wide range of mouthwatering dishes, recipes, and dining recommendations. Whether you are a foodie searching for new recipes to try at home, a traveler looking for the best local cuisines, or simply seeking inspiration for your next meal, we have got you covered. Discover the finest restaurants, street food vendors, and hidden gems in your area. Browse through our extensive collection of recipes from different cultures and cooking styles. Get ready to embark on a delightful gastronomic journey with our Food App! Start exploring now and satisfy your cravings with our curated selection of culinary delights.'
-        const main = `Your Verification Code: ${code}`
-
-        try {
-            RNSmtpMailer.sendMail({
-                mailhost: "smtp.gmail.com",
-                port: "465",
-                ssl: true, // optional. if false, then TLS is enabled. Its true by default in android. In iOS TLS/SSL is determined automatically, and this field doesn't affect anything
-                username: username,
-                password: password,
-                fromName: from,
-                recipients: to,
-                subject: subject,
-                htmlBody: `<p><span style="font-size: 24px; font-weight: 500">${heading}</span></p><h1>${main}</h1> <p><span></span></span><span>${light}</span></span></p>`,
-
+        firestore().collection('users')
+            .where('email', '==', email).get()
+            .then(result => {
+                if (result.empty) {
+                    sendEmail()
+                }
+                else {
+                    showError('User already exists with this email')
+                }
             })
-                .then(success => {
-                    showLoading(false)
-                    goToVerification(code)
+            .catch(err => {
+                showError('Something wrong')
+                console.log('Internal error on getting data')
+            })
 
-                })
-                .catch(err => showError('Internal error While  sending an Email'));
-        }
-        catch (err) {
-            showError('External error While  sending an Email', err)
-        }
+
         // sendVerificationCode()
-        const profile = new Person(uuid.v4(), name, email, password, new Date(), 'customer')
         // createAccountFirebase(profile).then((res) => console.log(res)).catch((err) => console.log(err))
     }
-    useEffect(() => {
-        if (verifyName() && verifyEmail() && verifyPass()) {
-            setVerifyReg(true)
-        }
-        else {
-            setVerifyReg(false)
-        }
-    }, [name, email, password])
+
 
     return (
         <View style={{
@@ -111,7 +126,6 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                             autoCorrect={false}
                             style={styles.input} cursorColor={myColors.primary}
                             value={name} onChangeText={setName}
-                            onEndEditing={() => verifyName()}
                         />
                     </View>
                 </View>
@@ -127,7 +141,6 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                             style={styles.input} cursorColor={myColors.primary}
                             value={email} onChangeText={setEmail}
                             autoCapitalize='none'
-                            onEndEditing={() => verifyEmail()}
                         />
                     </View>
 
@@ -142,16 +155,18 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                             placeholderTextColor={myColors.textL4}
                             style={styles.input} cursorColor={myColors.primary}
                             value={password} onChangeText={setPass}
-                            onEndEditing={() => verifyPass()}
                             secureTextEntry={true}
+                            autoCapitalize='none'
                         />
                     </View>
                 </View>
             </View>
             <View style={{ alignItems: 'center' }}>
                 {/* Button Register */}
-                <TouchableOpacity onPress={() => verifyReg ? onRegister() : null} activeOpacity={0.8} style={[styles.button, { backgroundColor: verifyReg ? myColors.primary : myColors.offColor4 }]}>
-                    <Text style={styles2(verifyReg).textReg}>Registration</Text>
+                <TouchableOpacity onPress={onVerifying}
+                    activeOpacity={0.8}
+                    style={[styles.button]}>
+                    <Text style={styles.textReg}>Registration</Text>
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(1.2)} />
@@ -197,10 +212,14 @@ const styles = StyleSheet.create({
     button: {
         height: myHeight(6.1), width: myWidth(86),
         borderRadius: myHeight(1.47), alignItems: 'center', justifyContent: 'center',
-        flexDirection: 'row',
+        flexDirection: 'row', backgroundColor: myColors.primary
     },
     textGoogle: {
         color: myColors.black2, fontFamily: myFonts.heading,
+        fontSize: myFontSize.body
+    },
+    textReg: {
+        color: myColors.background, fontFamily: myFonts.headingBold,
         fontSize: myFontSize.body
     },
 

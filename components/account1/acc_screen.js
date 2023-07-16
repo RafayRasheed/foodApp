@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import { Image, ScrollView } from "react-native";
 import { View, Text, Dimensions, StyleSheet, StatusBar, TouchableOpacity, BackHandler } from "react-native";
-import { Loader, MyError, myHeight, myWidth, Spacer, StatusbarH } from "../common";
+import { errorTime, Loader, MyError, myHeight, myWidth, Spacer, StatusbarH } from "../common";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Login } from "./acc.components/login";
@@ -19,6 +19,10 @@ export const AccScreen = ({ navigation }) => {
     const [errorMsg, setErrorMsg] = useState(null)
     const [loading, setLoading] = useState(false)
 
+    function showError(message) {
+        setLoading(false)
+        setErrorMsg(message)
+    }
     const onBackPress = () => {
         if (onAcc) {
             setOnAcc(false)
@@ -27,9 +31,6 @@ export const AccScreen = ({ navigation }) => {
         return false
     };
 
-    function showError(message) {
-        setErrorMsg(message)
-    }
 
     useEffect(() => {
         if (errorMsg) {
@@ -37,7 +38,7 @@ export const AccScreen = ({ navigation }) => {
                 setLoading(false)
                 setErrorMsg(null)
             }
-                , 2000)
+                , errorTime)
         }
     }, [errorMsg])
 
@@ -147,9 +148,9 @@ export const AccScreen = ({ navigation }) => {
 
                             {/* <Spacer paddingT={myHeight(4.4)}/> */}
                             {onLogin ?
-                                <Login navigate={navigation.navigate} showError={setErrorMsg} showLoading={setLoading} />
+                                <Login navigation={navigation} showError={showError} showLoading={setLoading} />
                                 :
-                                <CreateAcc navigate={navigation.navigate} showError={setErrorMsg} showLoading={setLoading} />}
+                                <CreateAcc navigate={navigation.navigate} showError={showError} showLoading={setLoading} />}
                             {/* <Spacer paddingT={myHeight(4)}/> */}
                         </TouchableOpacity>
 

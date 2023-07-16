@@ -1,13 +1,15 @@
 import React, { useLayoutEffect } from "react";
 import { Text, SafeAreaView, View, Image, StatusBar } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Spacer, StatusbarH, bottomTab, ios, myHeight, myWidth } from "../common";
+import { Spacer, StatusbarH, bottomTab, ios, myHeight, myWidth, storage } from "../common";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { ActivityScreen } from "../activity/activity_screen";
 import { HomeNavigator } from "./home_navigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { CartNavigator } from "../cart/cart_navigator";
+import { createStackNavigator } from "@react-navigation/stack"
+import { deleteLogin } from "../functions/storageMMKV";
 
 const Tab = createBottomTabNavigator()
 
@@ -74,10 +76,18 @@ const screenOptions = ({ navigator, route }) => {
 }
 
 const Xr = ({ navigation }) => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: myColors.blue }}>
+    <SafeAreaView style={{ flex: 1, padding: 20, backgroundColor: myColors.background }}>
         <StatusbarH />
         <Spacer paddingT={myHeight(2)} />
-        <Text onPress={() => navigation.navigate('AccountNavigator')} style={{ color: 'black' }}>Sign Out</Text>
+        <Text onPress={() => {
+            const isNotDelete = deleteLogin()
+            console.log(isNotDelete)
+            if (isNotDelete) {
+                console('Error on delete user from signout mmkv')
+            } else {
+                navigation.navigate('AccountNavigator')
+            }
+        }} style={{ color: 'black' }}>Sign Out</Text>
     </SafeAreaView>
 )
 

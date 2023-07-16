@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from "react"
 import { View, Text, Keyboard, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { myColors } from "../../ultils/myColors";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
-import { Loader, MyError, Spacer, ios, myHeight, myWidth } from "../common";
+import { Loader, MyError, Spacer, errorTime, ios, myHeight, myWidth, storage } from "../common";
+import firestore from '@react-native-firebase/firestore';
+import { setLogin } from "../functions/storageMMKV";
+import { sendVerficationEmail } from "../functions/email";
+import { verificationCode } from "../functions/functions";
 
 export const Verification = ({ navigation, route }) => {
-    const { code } = route.params
+    const { code, profile, reset } = route.params
     const lenCode = 6;
     const [focus, setFocus] = useState(0)
     const arrayVer = []
-    // const arrayVer2 = []
 
     const [varValues, setVarValues] = useState([null, null, null, null])
     const focusKey = useRef(null)
@@ -18,16 +21,41 @@ export const Verification = ({ navigation, route }) => {
     const [finalVeriVal, setFinalVeriVal] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
-    const [verify, setVerify] = useState(false)
+    const [resend, setResend] = useState(false)
+    const [myCode, setMyCode] = useState(code)
 
-    const [minutes, setMinutes] = useState(1);
-    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(30);
+
+
+
+
+
+    function resendEmail() {
+        setIsLoading(true)
+        const newCode = verificationCode()
+
+        sendVerficationEmail(profile, newCode).then(success => {
+            setMyCode(newCode)
+            setIsLoading(false)
+            setResend(true)
+        })
+            .catch(err => {
+                showError('Something wrong')
+                console.log('Internal error while sending an Email')
+            });
+
+    }
+    function showError(message) {
+        setIsLoading(false)
+        setErrorMessage(message)
+    }
 
     useEffect(() => {
         if (errorMessage) {
             setTimeout(() => {
                 setErrorMessage(null)
-            }, 2000)
+            }, errorTime)
         }
     }, [errorMessage])
 
@@ -53,35 +81,59 @@ export const Verification = ({ navigation, route }) => {
         setTimeout(() => openKey(), 100);
     }, [])
 
-    useEffect(() => {
-        if (verify) {
-            setTimeout(() => {
-                setIsLoading(false)
-                navigation.replace("HomeBottomNavigator")
-            }, 1500);
+    function goToLogin() {
+        setLogin(profile)
+        setIsLoading(false)
+        navigation.replace("HomeBottomNavigator")
+    }
+
+    function goToNewPass() {
+        setIsLoading(false)
+        navigation.replace('NewPass', { profile })
+    }
+
+
+    function createAccount() {
+        firestore().collection('users').doc(profile.uid).set(profile)
+            .then(success => {
+                goToLogin()
+            })
+            .catch(err => {
+                showError('Something wrong')
+                console.log('Internal error while register user')
+            })
+    }
+
+    function goFurther() {
+        setIsLoading(true)
+        if (reset) {
+            goToNewPass()
         }
-    }, [verify])
+        else {
+            createAccount()
+
+        }
+
+
+    }
 
     function onVerify() {
         if (finalVeriVal) {
-
             if (finalVeriVal.length == lenCode) {
-                if (/^\d+$/.test(finalVeriVal) && code == finalVeriVal) {
-                    setIsLoading(true)
-                    setVerify(true)
+                if (/^\d+$/.test(finalVeriVal) && myCode == finalVeriVal) {
+                    goFurther()
                     return
                 }
                 else {
-                    setErrorMessage("Invalid Verification Code")
+                    showError("Invalid Verification Code")
                 }
             }
             else {
-                setErrorMessage("Please Enter a Complete Code")
+                showError("Please Enter a Complete Code")
             }
         }
         else {
-            setErrorMessage("Please Enter a Code")
-
+            showError("Please Enter a Code")
         }
     }
 
@@ -205,8 +257,8 @@ export const Verification = ({ navigation, route }) => {
 
                 {/* Text Portion */}
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={styles.textVer}>Phone Verification</Text>
-                    <Text style={styles.textEnterC}>Please enter 4 digits code sent to your number.</Text>
+                    <Text style={styles.textVer}>Email Verification</Text>
+                    <Text style={styles.textEnterC}>Please enter 6 digits code sent to your email.</Text>
                 </View>
 
                 <Spacer paddingT={myHeight(6)} />
@@ -217,12 +269,12 @@ export const Verification = ({ navigation, route }) => {
                 <Spacer paddingT={myHeight(2)} />
 
                 {/* Resend text*/}
-                <View style={{ flexDirection: 'row', paddingStart: myWidth(8.5), alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', paddingStart: myWidth(5), alignItems: 'center' }}>
                     <Text style={styles.textDidC}>Didn't receive code? </Text>
 
                     {minutes === 0 && seconds === 0
-                        ? <TouchableOpacity activeOpacity={0.6} onPress={() => setMinutes(1)}>
-                            <Text style={styles.textResC}>Resend it.</Text>
+                        ? <TouchableOpacity activeOpacity={resend ? 1 : 0.6} onPress={resend ? null : resendEmail}>
+                            <Text style={[styles.textResC, { color: resend ? myColors.textL4 : myColors.primaryT }]}>{!resend ? 'Resend it' : 'Email Send Successfully'}.</Text>
                         </TouchableOpacity>
                         : <Text style={styles.textResC}> {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</Text>
                     }
@@ -231,7 +283,7 @@ export const Verification = ({ navigation, route }) => {
 
             </View>
 
-            <Spacer paddingT={myHeight(4.3)} />
+            <Spacer paddingT={myHeight(10)} />
             {/* Verify Button */}
             <TouchableOpacity activeOpacity={0.6} onPress={onVerify} style={styles.containerVerify}
                 onLongPress={() => navigation.replace('HomeBottomNavigator')}>
@@ -271,7 +323,7 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.primary,
         paddingVertical: myHeight(1.2),
         borderRadius: myWidth(3.2),
-        marginHorizontal: myWidth(7)
+        marginHorizontal: myWidth(5)
     },
     // containerInputFocus: {
     //     backgroundColor: myColors.primaryL,

@@ -3,41 +3,86 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "reac
 import { ios, Loader, myHeight, myWidth, Spacer } from "../../common";
 import { myFontSize, myFonts } from "../../../ultils/myFonts";
 import { myColors } from "../../../ultils/myColors";
+import firestore from '@react-native-firebase/firestore';
+import { deccodeInfo } from "../../functions/functions";
+import { setLogin } from "../../functions/storageMMKV";
 
-export const Login = ({ navigate, showError, showLoading }) => {
+export const Login = ({ navigation, showError, showLoading }) => {
 
-    const [email, setEmail] = useState()
+    const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
-    const [verifyLog, setVerifyLog] = useState(false)
+    const [hidePass, setHidePass] = useState(true);
 
-    const onLogin = () => {
-        // onLoginFirebase()
-        showError('drtt dry dy dy dy dy ')
-        // navigate('HomeBottomNavigator')
-    }
+
 
     function verifyEmail() {
         if (email) {
-            return true
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+            if (reg.test(email)) {
+                return true
+            }
+            showError('Please Enter a Valid Email')
+            return false
         }
-        return false
+        showError('Please Enter a Email')
     }
     function verifyPass() {
         if (password) {
+            // if (password.length > 5) {
+            //     return true
+            // }
+            // showError('Password must be at least 6 character')
+            // return false
             return true
         }
+        showError('Please Enter a Password')
         return false
     }
 
-    useEffect(() => {
+    function onVerifying() {
         if (verifyEmail() && verifyPass()) {
-            setVerifyLog(true)
-
+            checkUser()
+        }
+    }
+    function goToLogin(myUser) {
+        const decodePass = deccodeInfo(myUser.password.toString())
+        if (decodePass == password) {
+            setLogin(myUser)
+            showLoading(false)
+            navigation.replace("HomeBottomNavigator")
         }
         else {
-            setVerifyLog(false)
+            showError('Incorrect email or password')
+            console.log('Internal Password')
         }
-    }, [email, password])
+    }
+
+    function checkUser() {
+        showLoading(true)
+        firestore().collection('users')
+            .where('email', '==', email).get()
+            .then(result => {
+                if (result.empty) {
+                    showError('Incorrect email or password')
+                    console.log('User not exists with this email')
+                }
+                else {
+                    result.forEach(documentSnapshot => {
+                        // console.log(documentSnapshot.data());
+                        goToLogin(documentSnapshot.data())
+
+                    });
+
+                }
+            })
+            .catch(err => {
+                showError('Something wrong')
+                console.log(err)
+            })
+    }
+
+
+
 
     // useEffect(()=>{
     //     storeData("yes")
@@ -60,7 +105,6 @@ export const Login = ({ navigate, showError, showLoading }) => {
                             style={styles.input} cursorColor={myColors.primary}
                             value={email} onChangeText={setEmail}
                             autoCapitalize='none'
-                            onEndEditing={() => verifyEmail()}
                         />
                     </View>
                 </View>
@@ -78,13 +122,19 @@ export const Login = ({ navigate, showError, showLoading }) => {
                             placeholderTextColor={myColors.textL4}
                             style={styles.input} cursorColor={myColors.primary}
                             value={password} onChangeText={setPass}
-                            onEndEditing={() => verifyPass()}
-                            secureTextEntry={true}
+                            secureTextEntry={hidePass}
+                            autoCapitalize='none'
+
                         />
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
+                            <Image style={styles.imageEye}
+                                source={hidePass ? require('../../assets/account/eyeC.png') : require('../../assets/account/eyeO.png')} />
+                        </TouchableOpacity>
                     </View>
+                    <Spacer paddingT={myHeight(0.4)} />
                     {/* Forget Password */}
                     <TouchableOpacity activeOpacity={0.8} style={{ alignSelf: 'flex-end' }}
-                        onPress={() => navigate('ForgetPass')}>
+                        onPress={() => navigation.navigate('ForgetPass')}>
                         <Text style={styles.textForgetP}>Forget Password?</Text>
                     </TouchableOpacity>
                 </View>
@@ -94,10 +144,10 @@ export const Login = ({ navigate, showError, showLoading }) => {
             <View style={{ alignItems: 'center' }}>
                 {/* Button Login */}
                 {/* <TouchableOpacity onPress={() => verifyLog ? navigate('HomeNavigator') : null} */}
-                <TouchableOpacity onPress={() => verifyLog ? onLogin() : null}
+                <TouchableOpacity onPress={onVerifying}
                     activeOpacity={0.8}
-                    style={[styles.button, { backgroundColor: verifyLog ? myColors.primary : myColors.offColor4 }]}>
-                    <Text style={styles2(verifyLog).textReg}>Login</Text>
+                    style={[styles.button, { backgroundColor: myColors.primary }]}>
+                    <Text style={styles.textReg}>Login</Text>
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(1.2)} />
@@ -153,8 +203,20 @@ const styles = StyleSheet.create({
     textForgetP: {
         fontFamily: myFonts.heading, fontSize: myFontSize.body, color: myColors.primary,
         paddingVertical: myHeight(0.8)
-    }
+    },
+    textReg: {
+        color: myColors.background, fontFamily: myFonts.headingBold,
+        fontSize: myFontSize.body
+    },
 
+    imageEye: {
+        height: myHeight(2.8),
+        width: myHeight(2.8),
+        paddingHorizontal: myWidth(4),
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
+    }
 
 })
 const styles2 = (verifyLog) => StyleSheet.create({

@@ -1,8 +1,9 @@
-import { createNativeStackNavigator, } from "@react-navigation/native-stack";
+// import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 import { StartupScreen } from "./startup_screens";
 import { Started } from "./started_screen";
+import { createStackNavigator } from "@react-navigation/stack"
 
-const AccountTAB = createNativeStackNavigator();
+const AccountTAB = createStackNavigator();
 
 export const StartupNavigator = () => {
     return (

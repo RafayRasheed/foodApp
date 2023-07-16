@@ -49,7 +49,7 @@ export const DonePassword = ({ navigation }) => {
                 <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.pop(2)}
                         style={styles.containerSign}>
-                        <Text style={styles.textSendBu}>Back to Sign In</Text>
+                        <Text style={styles.textSendBu}>Back to Login</Text>
                     </TouchableOpacity>
                     <Spacer paddingT={myHeight(8.6)} />
                 </View>

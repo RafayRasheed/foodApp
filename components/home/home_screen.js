@@ -8,6 +8,7 @@ import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
 import { RestaurantInfo } from './home.component/restaurant_info';
 import { RestRating } from './rest_rating_screen';
+import { getLogin } from '../functions/storageMMKV';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -16,6 +17,9 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
 
     // re.turn (<Test />)
+    useEffect(() =>
+        console.log(getLogin())
+        , [])
     return (
 
         <SafeAreaView style={styles.container}>
