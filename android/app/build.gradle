@@ -147,6 +147,13 @@ android {
 
         }
     }
+    packagingOptions {
+        // exclude 'META-INF/mimetypes.default'
+        // exclude 'META-INF/mailcap.default'
+    //    resources.excludes.add("META-INF/*")
+
+
+    }
 }
 
 dependencies {

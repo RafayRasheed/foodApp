@@ -17,6 +17,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
     const [verifyReg, setVerifyReg] = useState(false)
+    const [hidePass, setHidePass] = useState(true);
 
     function onGoogle() {
 
@@ -155,9 +156,13 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                             placeholderTextColor={myColors.textL4}
                             style={styles.input} cursorColor={myColors.primary}
                             value={password} onChangeText={setPass}
-                            secureTextEntry={true}
+                            secureTextEntry={hidePass}
                             autoCapitalize='none'
                         />
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => setHidePass(!hidePass)}>
+                            <Image style={styles.imageEye}
+                                source={hidePass ? require('../../assets/account/eyeC.png') : require('../../assets/account/eyeO.png')} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -222,6 +227,14 @@ const styles = StyleSheet.create({
         color: myColors.background, fontFamily: myFonts.headingBold,
         fontSize: myFontSize.body
     },
+    imageEye: {
+        height: myHeight(2.8),
+        width: myHeight(2.8),
+        paddingHorizontal: myWidth(4),
+        resizeMode: 'contain',
+        tintColor: myColors.primaryT
+
+    }
 
 })
 const styles2 = (verifyReg) => StyleSheet.create({

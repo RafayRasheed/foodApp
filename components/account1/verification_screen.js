@@ -42,7 +42,7 @@ export const Verification = ({ navigation, route }) => {
         })
             .catch(err => {
                 showError('Something wrong')
-                console.log('Internal error while sending an Email')
+                console.log('Internal error while sending an Email', err)
             });
 
     }

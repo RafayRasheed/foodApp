@@ -248,7 +248,7 @@ export const Restaurants = [
             resId: 'Resturant1', resName: 'Ambrosia Hotel',
             price: '3000',
             description: 'a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.',
-            id: 'Resturant1Pizza1',
+            id: 'Resturant1Pizza2',
             name: 'Beaf Burger100',
             images: [require('../assets/home_main/home/category/fast2.png')],
             rating: '3.0',

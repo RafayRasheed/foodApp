@@ -5,6 +5,8 @@ import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
 import { AppNavigator } from './components/app_navigator';
 import { enableScreens } from 'react-native-screens';
+import { Provider } from 'react-redux';
+import storeRedux from './redux/store_redux';
 // import { enableLatestRenderer } from 'react-native-maps';
 
 // enableLatestRenderer();
@@ -31,7 +33,9 @@ export default function App() {
       {OsVer >= 23 &&
         <StatusBar barStyle="dark-content" backgroundColor={'transparent'} translucent={true} />
       }
-      <AppNavigator />
+      <Provider store={storeRedux}>
+        <AppNavigator />
+      </Provider>
     </>
   );
 }

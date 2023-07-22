@@ -47,7 +47,7 @@ export const ForgetPassword = ({ navigation }) => {
             })
             .catch(err => {
                 showError('Something wrong')
-                console.log('Internal error while sending an Email')
+                console.log('Internal error while sending an Email', err)
             });
 
     }
@@ -99,9 +99,9 @@ export const ForgetPassword = ({ navigation }) => {
                             <Text style={[styles.heading]}>Email address</Text>
                             <View style={styles.containerInput}>
 
-                                <TextInput placeholder="Eg namaemail@emailkamu.com"
+                                <TextInput placeholder="Eg email@foodapp.com"
                                     placeholderTextColor={myColors.offColor}
-                                    autoCapitalize='none'
+                                    autoCapitalize='none' autoCorrect={false}
                                     style={styles.input} cursorColor={myColors.primary}
                                     value={email} onChangeText={setEmail}
                                 />

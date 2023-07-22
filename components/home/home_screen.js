@@ -17,9 +17,9 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
 
     // re.turn (<Test />)
-    useEffect(() =>
-        console.log(getLogin())
-        , [])
+    useEffect(() => {
+
+    }, [])
     return (
 
         <SafeAreaView style={styles.container}>

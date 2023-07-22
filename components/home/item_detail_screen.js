@@ -7,22 +7,38 @@ import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
+import { useSelector, useDispatch } from 'react-redux'
+import { addCart } from '../../redux/cart_reducer';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
     const { restaurant } = route.params
-
+    const dispatch = useDispatch()
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
     const [review, setReview] = useState(null)
     const [selectItems, setSelectItems] = useState({})
     const { options } = item
     const price = parseInt(item.price)
+    const [count, setCount] = useState(1)
+
+    function shortRestForCart() {
+        const s = {
+            id: restaurant.id,
+            image: restaurant.images[0],
+            name: restaurant.name
+        }
+        return s
+    }
     function hideModal() {
         setRatinModal(false)
     }
     function onDone() {
         hideModal()
+    }
+    function onAddToCart() {
+        dispatch(addCart({ restaurant: shortRestForCart(), item, quantity: count, totalPrice: count * price }))
+        navigation.goBack()
     }
     return (
         <>
@@ -439,7 +455,7 @@ export const ItemDetails = ({ navigation, route }) => {
                                     },
                                 ]}>Rs  <Text style={{
                                     fontSize: myFontSize.medium2,
-                                }}>{price}</Text></Text>
+                                }}>{price * count}</Text></Text>
                         </View>
 
 
@@ -452,7 +468,12 @@ export const ItemDetails = ({ navigation, route }) => {
                                 flexDirection: 'row', alignItems: 'center',
                             }}>
                                 {/* minus */}
-                                <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                <TouchableOpacity activeOpacity={0.75}
+                                    onPress={() => {
+                                        if (count > 1) {
+                                            setCount(count - 1)
+                                        }
+                                    }}>
                                     <Image style={{
                                         height: myHeight(4.1),
                                         width: myHeight(4.1),
@@ -467,11 +488,11 @@ export const ItemDetails = ({ navigation, route }) => {
                                 <Text numberOfLines={1} style={[styles.textCommon, {
                                     fontSize: myFontSize.medium,
                                     fontFamily: myFonts.bodyBold,
-                                }]}>3</Text>
+                                }]}>{count}</Text>
 
                                 <Spacer paddingEnd={myWidth(1.8)} />
                                 {/* plus */}
-                                <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                <TouchableOpacity activeOpacity={0.75} onPress={() => setCount(count + 1)}>
                                     <Image style={{
                                         height: myHeight(4.25),
                                         width: myHeight(4.25),
@@ -483,7 +504,7 @@ export const ItemDetails = ({ navigation, route }) => {
 
                             <Spacer paddingEnd={myWidth(5)} />
                             {/* Add To Cart */}
-                            <TouchableOpacity activeOpacity={0.85} onPress={() => null}
+                            <TouchableOpacity activeOpacity={0.85} onPress={onAddToCart}
                                 style={{
                                     paddingHorizontal: myWidth(4),
                                     paddingVertical: myHeight(1.2),
