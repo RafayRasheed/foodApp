@@ -92,6 +92,7 @@ export const AccScreen = ({ navigation }) => {
                     onPress={() => {
                         setOnAcc(true)
                         setOnLogin(true)
+                        // navigation.navigate('ForgetPass')
                     }}>
                     <Text style={styles.textLogin}>Login</Text>
                 </TouchableOpacity>
