@@ -5,6 +5,7 @@ import { CartDetails } from "./cart_details_screen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { myColors } from "../../ultils/myColors";
 import { ios, myHeight, myWidth, tabBarStyle } from "../common";
+import { CartDetail } from "./cart_detail_screen";
 
 
 
@@ -40,6 +41,7 @@ export const CartNavigator = ({ navigation, route }) => {
                 initialRouteName="Cart"
             >
                 <CartTAB.Screen component={Cart} name="Cart" />
+                <CartTAB.Screen component={CartDetail} name="CartDetail" />
                 {/* <CartTAB.Screen component={CartDetails} name="CartDetails" /> */}
 
 

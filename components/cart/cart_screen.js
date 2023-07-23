@@ -53,7 +53,8 @@ export const Cart = ({ navigation }) => {
 
                     {
                         cart?.map((res, i) =>
-                            <TouchableOpacity activeOpacity={0.85} onPress={() => navigation.navigate('CartDetails')}
+                            <TouchableOpacity activeOpacity={0.85}
+                                onPress={() => navigation.navigate('CartDetail', { restaurant: res.restaurant })}
                                 key={i} >
                                 {/* Divider */}
                                 {i > 0 && <View style={{ height: myHeight(0.1), backgroundColor: myColors.dot }} />}

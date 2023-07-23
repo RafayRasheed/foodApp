@@ -483,14 +483,15 @@ export const ItemDetails = ({ navigation, route }) => {
                                     }} source={require('../assets/home_main/home/minusBtn.png')} />
                                 </TouchableOpacity>
 
-                                <Spacer paddingEnd={myWidth(1.8)} />
-                                {/* count */}
-                                <Text numberOfLines={1} style={[styles.textCommon, {
-                                    fontSize: myFontSize.medium,
-                                    fontFamily: myFonts.bodyBold,
-                                }]}>{count}</Text>
+                                <View style={{ minWidth: myWidth(11), alignItems: 'center' }}>
 
-                                <Spacer paddingEnd={myWidth(1.8)} />
+                                    {/* count */}
+                                    <Text numberOfLines={1} style={[styles.textCommon, {
+                                        fontSize: myFontSize.medium,
+                                        fontFamily: myFonts.bodyBold,
+                                    }]}>{count}</Text>
+                                </View>
+
                                 {/* plus */}
                                 <TouchableOpacity activeOpacity={0.75} onPress={() => setCount(count + 1)}>
                                     <Image style={{
