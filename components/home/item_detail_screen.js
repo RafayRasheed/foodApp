@@ -37,7 +37,7 @@ export const ItemDetails = ({ navigation, route }) => {
         hideModal()
     }
     function onAddToCart() {
-        dispatch(addCart({ restaurant: shortRestForCart(), item, quantity: count, totalPrice: count * price }))
+        dispatch(addCart({ restaurant, item, quantity: count, totalPrice: count * price }))
         navigation.goBack()
     }
     return (

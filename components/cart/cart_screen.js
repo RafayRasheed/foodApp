@@ -34,6 +34,7 @@ export const Cart = ({ navigation }) => {
         })
         return items
     }
+
     return (
         <>
             {/* <StatusBar backgroundColor={orderModal ? '#00000030' : myColors.background} /> */}
@@ -71,7 +72,7 @@ export const Cart = ({ navigation }) => {
                                         borderRadius: myWidth(1),
                                         overflow: 'hidden'
 
-                                    }} source={res.restaurant.image} />
+                                    }} source={res.restaurant.images[0]} />
                                     <Spacer paddingEnd={myWidth(2.5)} />
 
                                     {/* Name & Price & Go*/}
@@ -106,14 +107,6 @@ export const Cart = ({ navigation }) => {
                                                 }]}> {res.cartItems.length}  Items</Text>
                                             </View>
 
-
-
-                                            {/* <Spacer paddingT={myHeight(0.2)} />
-                                            <Text numberOfLines={1} style={[styles.textCommon, {
-                                                fontSize: myFontSize.xxSmall,
-                                                fontFamily: myFonts.body,
-                                                color: myColors.textL4
-                                            }]}>{item.address}</Text> */}
                                         </View>
                                         <Spacer paddingEnd={myWidth(2)} />
                                         <Image style={{

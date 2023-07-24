@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { StatusBar } from "react-native";
 import { View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
+import { addCart } from "../../redux/cart_reducer";
 
 
 export const CartDetail = ({ navigation, route }) => {
@@ -16,13 +16,19 @@ export const CartDetail = ({ navigation, route }) => {
     const { cart } = useSelector(state => state.cart)
     const resCart = cart.filter(res => res.restaurant.id == restaurant.id)[0]
     const { cartItems } = resCart
+
+    function addToCart(item, quantity, totalPrice) {
+        dispatch(addCart({ restaurant, item, quantity, totalPrice }))
+        // navigation.goBack()
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
             {/* Top */}
             <View style={{
                 flex: 1, backgroundColor: myColors.background,
-                borderBottomStartRadius: myWidth(7),
-                borderBottomEndRadius: myWidth(7), elevation: 3,
+                // borderBottomStartRadius: myWidth(7),
+                // borderBottomEndRadius: myWidth(7),
+                elevation: 5,
                 shadowColor: myColors.shadow
             }}>
                 <Spacer paddingT={myHeight(1.2)} />
@@ -129,7 +135,11 @@ export const CartDetail = ({ navigation, route }) => {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                         {/* plus miunus*/}
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                            <TouchableOpacity activeOpacity={0.75} onPress={() => {
+                                                if (cartItem.quantity > 1) {
+                                                    addToCart(item, -1, item.price * (-1))
+                                                }
+                                            }}>
                                                 <Image style={{
                                                     height: myHeight(3.5),
                                                     width: myHeight(3.5),
@@ -180,7 +190,7 @@ export const CartDetail = ({ navigation, route }) => {
                     })}
 
                 </ScrollView>
-                <Spacer paddingT={myHeight(1.5)} />
+                {/* <Spacer paddingT={myHeight(1.5)} /> */}
             </View>
 
             {/* Bottom */}
