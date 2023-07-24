@@ -20,41 +20,62 @@ export const CartDetail = ({ navigation, route }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
             {/* Top */}
             <View style={{
-                flex: 1, backgroundColor: myColors.divider,
-                borderBottomStartRadius: myWidth(7), borderBottomEndRadius: myWidth(7), elevation: 5,
+                flex: 1, backgroundColor: myColors.background,
+                borderBottomStartRadius: myWidth(7),
+                borderBottomEndRadius: myWidth(7), elevation: 3,
                 shadowColor: myColors.shadow
             }}>
-                <Spacer paddingT={myHeight(1)} />
+                <Spacer paddingT={myHeight(1.2)} />
 
                 <StatusbarH />
                 {/* My Cart Heading */}
                 <View style={{
                     flexDirection: 'row', paddingHorizontal: myWidth(4),
-                    justifyContent: 'space-between', alignItems: 'center'
+                    alignItems: 'center'
                 }}>
+                    {/* Back */}
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: myColors.background,
+                            paddingEnd: myWidth(3)
+                        }}
+                        activeOpacity={0.8}
+                        onPress={() => navigation.goBack()}>
+                        <Image
+                            style={{
+                                width: myHeight(2.6),
+                                height: myHeight(2.6),
+                                resizeMode: 'contain',
+                            }}
+                            source={require('../assets/home_main/home/back.png')}
+                        />
+                    </TouchableOpacity>
+
+
                     <Text numberOfLines={1} style={[styles.textCommon, {
                         flex: 1,
-                        fontFamily: myFonts.bodyBold, fontSize: myFontSize.medium
+                        fontFamily: myFonts.bodyBold, fontSize: myFontSize.xBody2
                     }]}>{restaurant.name}</Text>
                     <TouchableOpacity style={{}} activeOpacity={0.5} onPress={() => null}>
                         <Text style={[styles.textCommon,
                         {
                             color: myColors.primaryT, fontFamily: myFonts.bodyBold,
-                            fontSize: myFontSize.xBody
+                            fontSize: myFontSize.body3
                         }]}>Clear All</Text>
                     </TouchableOpacity>
                 </View>
+                <Spacer paddingT={myHeight(1.2)} />
+
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: myWidth(4) }}>
                     {cartItems.map((cartItem, i) => {
                         const { item } = cartItem
-                        console.log(cartItem)
 
                         return (
                             <View key={i} style={{
-                                flexDirection: 'row', marginVertical: myHeight(0.9),
+                                flexDirection: 'row', marginVertical: myHeight(1.3),
                                 paddingHorizontal: myWidth(2), borderRadius: myWidth(1.5),
-                                backgroundColor: myColors.background, elevation: 2,
-                                paddingVertical: myHeight(0.7),
+                                backgroundColor: myColors.background, elevation: 4.5,
+                                paddingVertical: myHeight(0.8),
                             }}>
                                 <Image style={{
                                     width: myHeight(10),
@@ -157,8 +178,9 @@ export const CartDetail = ({ navigation, route }) => {
                             </View>
                         )
                     })}
+
                 </ScrollView>
-                <Spacer paddingT={15} />
+                <Spacer paddingT={myHeight(1.5)} />
             </View>
 
             {/* Bottom */}
@@ -175,23 +197,23 @@ export const CartDetail = ({ navigation, route }) => {
                         }]}>Amount</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Text style={[styles.textCommon, {
-                                color: myColors.primaryT, fontFamily: myFonts.heading,
+                                color: myColors.text, fontFamily: myFonts.heading,
                                 fontSize: myFontSize.medium0, marginBottom: myHeight(0.45)
                             }]}>Rs. </Text>
                             <Text style={[styles.textCommon, {
-                                color: myColors.primaryT, fontFamily: myFonts.heading,
+                                color: myColors.text, fontFamily: myFonts.heading,
                                 fontSize: myFontSize.xMedium
                             }]}>{resCart.subTotal}</Text>
                         </View>
                     </View>
-                    <View>
+                    <View style={{ alignItems: 'center' }}>
                         <Text style={[styles.textCommon, {
                             color: myColors.text, fontFamily: myFonts.bodyBold,
                             fontSize: myFontSize.body3
                         }]}>Items</Text>
 
                         <Text style={[styles.textCommon, {
-                            color: myColors.primaryT, fontFamily: myFonts.heading,
+                            color: myColors.text, fontFamily: myFonts.heading,
                             fontSize: myFontSize.medium3
                         }]}>{cartItems.length}</Text>
                     </View>
@@ -204,16 +226,16 @@ export const CartDetail = ({ navigation, route }) => {
                     width: '100%', borderRadius: myWidth(1.5),
                     flexDirection: 'row', overflow: 'hidden',
                     borderWidth: myHeight(0.15),
-                    borderColor: myColors.text
+                    borderColor: myColors.primaryT
                 }}>
-                    <TouchableOpacity activeOpacity={0.85}
+                    <TouchableOpacity activeOpacity={0.7}
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1), alignItems: 'center',
                             backgroundColor: myColors.background
                         }}>
                         <Text style={[styles.textCommon, {
-                            color: myColors.text,
+                            color: myColors.primaryT,
                             fontFamily: myFonts.heading,
                             fontSize: myFontSize.body4
                         }]}>Add More Items</Text>
@@ -222,7 +244,7 @@ export const CartDetail = ({ navigation, route }) => {
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1),
-                            alignItems: 'center', backgroundColor: myColors.text
+                            alignItems: 'center', backgroundColor: myColors.primaryT
                         }}>
                         <Text style={[styles.textCommon, {
                             color: myColors.background,

@@ -65,8 +65,8 @@ export const Cart = ({ navigation }) => {
                                     alignItems: 'center'
                                 }}>
                                     <Image style={{
-                                        height: myHeight(7.3),
-                                        width: myHeight(7.3),
+                                        height: myHeight(7.8),
+                                        width: myHeight(7.8),
                                         resizeMode: 'cover',
                                         borderRadius: myWidth(1),
                                         overflow: 'hidden'
@@ -94,11 +94,11 @@ export const Cart = ({ navigation }) => {
                                             <View style={{ flexDirection: 'row' }}>
 
                                                 <Text numberOfLines={1} style={[styles.textCommon, {
-                                                    flex: 0.9,
                                                     fontSize: myFontSize.body2,
                                                     fontFamily: myFonts.heading,
                                                     color: myColors.primaryT
                                                 }]}>Rs {res.subTotal}</Text>
+                                                <Spacer paddingEnd={myWidth(6)} />
                                                 <Text numberOfLines={1} style={[styles.textCommon, {
                                                     fontSize: myFontSize.body2,
                                                     fontFamily: myFonts.body,
