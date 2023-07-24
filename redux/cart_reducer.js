@@ -34,17 +34,12 @@ const cartReducer = createSlice({
 
                 })
                 if (checkItem != null) {
-                    checkItem.quantity += action.payload.quantity
-                    checkItem.totalPrice += action.payload.totalPrice
+                    checkRest.cartItems[itemIndex].quantity += action.payload.quantity
+                    checkRest.cartItems[itemIndex].totalPrice += action.payload.totalPrice
                     checkRest.subTotal += action.payload.totalPrice
-
-
-
-                    cartItems.push(checkItem)
-                    cartItems.reverse()
-                    checkRest.cartItems = cartItems
-
-
+                    // cartItems.push(checkItem)
+                    // cartItems.reverse()
+                    // checkRest.cartItems = cartItems
                 }
                 else {
                     const formatItem = {
@@ -76,19 +71,30 @@ const cartReducer = createSlice({
             }
 
         },
-        removeCart(state, action) {
-            state.cart = state.cart.filter(item => item.id !== action.payload.id)
-            state.amount -= action.payload.totalPrice
+        removeItemCart(state, action) {
+            restIndex = null
+            checkRes = null
+            state.cart.map((res, i) => {
+                if (res.restaurant.id == action.payload.resId) {
+                    restIndex = i
+                    checkRes = res
+                    checkRes.cartItems = checkRes.cartItems.filter(item => item.item.id !== action.payload.itemId)
+                    checkRes.subTotal -= action.payload.totalPrice
+
+                }
+            })
+            if (checkRes != null) {
+                state.cart[restIndex] = checkRes
+            }
+        },
+        removeResCart(state, action) {
+            state.cart = state.cart.filter(res => res.restaurant.id !== action.payload.id)
         },
         cartClear(state) {
             state.cart = []
-            state.amount = 0
         },
-        updateAmount(state, action) {
-            state.amount += action.payload
-        }
     },
 });
 
-export const { addCart, removeCart, cartClear, updateAmount } = cartReducer.actions;
+export const { addCart, removeItemCart, removeResCart, cartClear, updateAmount } = cartReducer.actions;
 export default cartReducer.reducer;

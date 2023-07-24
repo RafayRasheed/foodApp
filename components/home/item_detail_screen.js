@@ -8,7 +8,7 @@ import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { useSelector, useDispatch } from 'react-redux'
-import { addCart } from '../../redux/cart_reducer';
+import { addCart, removeItemCart } from '../../redux/cart_reducer';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
@@ -40,6 +40,7 @@ export const ItemDetails = ({ navigation, route }) => {
         dispatch(addCart({ restaurant, item, quantity: count, totalPrice: count * price }))
         navigation.goBack()
     }
+
     return (
         <>
 

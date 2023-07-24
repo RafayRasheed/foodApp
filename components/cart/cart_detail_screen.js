@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
-import { addCart } from "../../redux/cart_reducer";
+import { addCart, removeItemCart } from "../../redux/cart_reducer";
 
 
 export const CartDetail = ({ navigation, route }) => {
@@ -20,6 +20,9 @@ export const CartDetail = ({ navigation, route }) => {
     function addToCart(item, quantity, totalPrice) {
         dispatch(addCart({ restaurant, item, quantity, totalPrice }))
         // navigation.goBack()
+    }
+    function removeItem(itemId, totalPrice) {
+        dispatch(removeItemCart({ resId: restaurant.id, itemId, totalPrice }))
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
@@ -80,7 +83,7 @@ export const CartDetail = ({ navigation, route }) => {
                             <View key={i} style={{
                                 flexDirection: 'row', marginVertical: myHeight(1.3),
                                 paddingHorizontal: myWidth(2), borderRadius: myWidth(1.5),
-                                backgroundColor: myColors.background, elevation: 4.5,
+                                backgroundColor: myColors.background, elevation: 5,
                                 paddingVertical: myHeight(0.8),
                             }}>
                                 <Image style={{
@@ -137,7 +140,7 @@ export const CartDetail = ({ navigation, route }) => {
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <TouchableOpacity activeOpacity={0.75} onPress={() => {
                                                 if (cartItem.quantity > 1) {
-                                                    addToCart(item, -1, item.price * (-1))
+                                                    addToCart(item, -1, parseInt(item.price) * (-1))
                                                 }
                                             }}>
                                                 <Image style={{
@@ -158,7 +161,11 @@ export const CartDetail = ({ navigation, route }) => {
                                             </View>
 
                                             {/* plus */}
-                                            <TouchableOpacity activeOpacity={0.75} onPress={() => null}>
+                                            <TouchableOpacity activeOpacity={0.75} onPress={() => {
+
+                                                addToCart(item, 1, parseInt(item.price))
+
+                                            }}>
                                                 <Image style={{
                                                     height: myHeight(3.5),
                                                     width: myHeight(3.5),
@@ -175,7 +182,7 @@ export const CartDetail = ({ navigation, route }) => {
                                                 paddingHorizontal: myWidth(4), paddingVertical: myHeight(0.3),
                                                 borderRadius: myWidth(1.5)
                                             }}
-                                            onPress={() => dispatch(removeCart(cartItem))}>
+                                            onPress={() => removeItem(item.id, cartItem.totalPrice)}>
                                             <Text style={[styles.textCommon,
                                             {
                                                 fontFamily: myFonts.xxSmall,
@@ -239,6 +246,7 @@ export const CartDetail = ({ navigation, route }) => {
                     borderColor: myColors.primaryT
                 }}>
                     <TouchableOpacity activeOpacity={0.7}
+                        onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1), alignItems: 'center',
