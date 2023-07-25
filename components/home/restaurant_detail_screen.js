@@ -61,7 +61,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             left: myWidth(4),
           }}
           activeOpacity={0.8}
-          onPress={() => navigation.goBack()}>
+          onPress={() => navigation.pop()}>
           <Image
             style={{
               width: myHeight(2.6),

@@ -10,8 +10,6 @@ import Animated, { SlideInDown } from "react-native-reanimated";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 // import Animated, { SlideInDown, FadeInUp, FadeOutUp } from 'react-native-reanimated';
-
-
 export const AccScreen = ({ navigation }) => {
     const [onAcc, setOnAcc] = useState(false)
     const [onLogin, setOnLogin] = useState(false)
@@ -167,6 +165,7 @@ export const AccScreen = ({ navigation }) => {
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -174,13 +173,11 @@ const styles = StyleSheet.create({
         backgroundColor: myColors.background,
 
     },
-
     textTerm: {
         maxWidth: myWidth(85), textAlign: 'center',
         color: myColors.text, fontSize: myFontSize.xxSmall,
         textTransform: 'capitalize',
     },
-
     bigButton: {
         width: myWidth(68), height: myHeight(6.1),
         borderRadius: myHeight(1.47), justifyContent: 'center',

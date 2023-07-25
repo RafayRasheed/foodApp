@@ -8,6 +8,10 @@ import { AccountNavigator2 } from "./account1/acc_stack"
 import { storage } from "./common"
 import { createStackNavigator } from "@react-navigation/stack"
 import { containFirstTime, containLogin } from "./functions/storageMMKV"
+import { ItemDetails } from "./home/item_detail_screen"
+import { Search } from "./home/search_screen"
+import { ItemSearch } from "./home/item_search_screen"
+import { RestaurantMoreDetails } from "./home/rest_more_info_screen"
 
 const AppTAB = createStackNavigator()
 
@@ -26,6 +30,11 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={AccountNavigator2} name="AccountNavigator" />
                 <AppTAB.Screen component={HomeBottomNavigator} name="HomeBottomNavigator" />
                 <AppTAB.Screen component={ImageViewer} name="ImageViewer" />
+
+                <AppTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
+                <AppTAB.Screen component={ItemDetails} name="ItemDetails" />
+                <AppTAB.Screen component={Search} name="Search" />
+                <AppTAB.Screen component={ItemSearch} name="ItemSearch" />
 
             </AppTAB.Navigator>
         </NavigationContainer>

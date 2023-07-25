@@ -52,11 +52,12 @@ export const HomeNavigator = ({ navigation, route }) => {
                 <HomeTAB.Screen component={HomeScreen} name="HomeScreen" />
                 <HomeTAB.Screen component={CategoryFull} name="CategoryFull" />
                 <HomeTAB.Screen component={RestaurantDetail} name="RestaurantDetail" />
-                <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
                 <HomeTAB.Screen component={RestaurantAll} name="RestaurantAll" />
+
+                {/* <HomeTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
                 <HomeTAB.Screen component={ItemDetails} name="ItemDetails" />
                 <HomeTAB.Screen component={Search} name="Search" />
-                <HomeTAB.Screen component={ItemSearch} name="ItemSearch" />
+                <HomeTAB.Screen component={ItemSearch} name="ItemSearch" /> */}
 
             </HomeTAB.Navigator>
         </>
