@@ -31,6 +31,7 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={HomeBottomNavigator} name="HomeBottomNavigator" />
                 <AppTAB.Screen component={ImageViewer} name="ImageViewer" />
 
+                {/* Home */}
                 <AppTAB.Screen component={RestaurantMoreDetails} name="RestaurantMoreDetails" />
                 <AppTAB.Screen component={ItemDetails} name="ItemDetails" />
                 <AppTAB.Screen component={Search} name="Search" />
