@@ -88,7 +88,7 @@ const cartReducer = createSlice({
             }
         },
         removeResCart(state, action) {
-            state.cart = state.cart.filter(res => res.restaurant.id !== action.payload.id)
+            state.cart = state.cart.filter(res => res.restaurant.id !== action.payload.resId)
         },
         cartClear(state) {
             state.cart = []

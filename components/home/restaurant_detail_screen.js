@@ -11,6 +11,7 @@ import { ItemInfo } from './home.component/item_info';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
+  const backScreen = route.params.backScreen
   const catRef = useRef(null)
   const { foodCategory } = restaurant;
   const [selectCat, setSelectCat] = useState(null);
@@ -38,6 +39,13 @@ export const RestaurantDetail = ({ navigation, route }) => {
     Linking.openURL(url2);
   }
 
+  function back() {
+    if (backScreen) {
+      navigation.navigate(backScreen, route.params.params)
+      return
+    }
+    navigation.goBack()
+  }
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
 
@@ -61,7 +69,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             left: myWidth(4),
           }}
           activeOpacity={0.8}
-          onPress={() => navigation.pop()}>
+          onPress={back}>
           <Image
             style={{
               width: myHeight(2.6),

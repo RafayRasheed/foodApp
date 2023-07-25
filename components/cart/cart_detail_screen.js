@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
-import { addCart, removeItemCart } from "../../redux/cart_reducer";
+import { addCart, removeItemCart, removeResCart } from "../../redux/cart_reducer";
 
 
 export const CartDetail = ({ navigation, route }) => {
@@ -24,20 +24,25 @@ export const CartDetail = ({ navigation, route }) => {
     function removeItem(itemId, totalPrice) {
         dispatch(removeItemCart({ resId: restaurant.id, itemId, totalPrice }))
     }
+
+    function removeAll() {
+        dispatch(removeResCart({ resId: restaurant.id }))
+        navigation.goBack()
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
-            {/* Top */}
             <View style={{
                 flex: 1, backgroundColor: myColors.background,
-                // borderBottomStartRadius: myWidth(7),
-                // borderBottomEndRadius: myWidth(7),
-                elevation: 5,
+                // borderBottomStartRadius: myWidth(5),
+                // borderBottomEndRadius: myWidth(5),
+                // elevation: 2,
                 shadowColor: myColors.shadow
             }}>
                 <Spacer paddingT={myHeight(1.2)} />
 
                 <StatusbarH />
-                {/* My Cart Heading */}
+
+                {/*Top  My Cart Heading */}
                 <View style={{
                     flexDirection: 'row', paddingHorizontal: myWidth(4),
                     alignItems: 'center'
@@ -45,7 +50,6 @@ export const CartDetail = ({ navigation, route }) => {
                     {/* Back */}
                     <TouchableOpacity
                         style={{
-                            backgroundColor: myColors.background,
                             paddingEnd: myWidth(3)
                         }}
                         activeOpacity={0.8}
@@ -65,7 +69,7 @@ export const CartDetail = ({ navigation, route }) => {
                         flex: 1,
                         fontFamily: myFonts.bodyBold, fontSize: myFontSize.xBody2
                     }]}>{restaurant.name}</Text>
-                    <TouchableOpacity style={{}} activeOpacity={0.5} onPress={() => null}>
+                    <TouchableOpacity style={{}} activeOpacity={0.5} onPress={removeAll}>
                         <Text style={[styles.textCommon,
                         {
                             color: myColors.primaryT, fontFamily: myFonts.bodyBold,
@@ -81,9 +85,9 @@ export const CartDetail = ({ navigation, route }) => {
 
                         return (
                             <View key={i} style={{
-                                flexDirection: 'row', marginVertical: myHeight(1.3),
-                                paddingHorizontal: myWidth(2), borderRadius: myWidth(1.5),
-                                backgroundColor: myColors.background, elevation: 5,
+                                flexDirection: 'row', marginVertical: myHeight(1.15),
+                                paddingHorizontal: myWidth(2.5), borderRadius: myWidth(1.5),
+                                backgroundColor: myColors.background, elevation: 4.5,
                                 paddingVertical: myHeight(0.8),
                             }}>
                                 <Image style={{
@@ -93,7 +97,7 @@ export const CartDetail = ({ navigation, route }) => {
                                     borderRadius: myWidth(1.5)
                                 }} source={item.images[0]} />
 
-                                <Spacer paddingEnd={myWidth(2)} />
+                                <Spacer paddingEnd={myWidth(2.5)} />
                                 <View style={{ flex: 1 }}>
                                     {/* name */}
                                     <Text numberOfLines={1} style={[styles.textCommon,
@@ -102,18 +106,20 @@ export const CartDetail = ({ navigation, route }) => {
                                         fontFamily: myFonts.bodyBold,
                                     }]}>{item.name}</Text>
 
+
+
                                     {/* price & subtotal */}
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                                             <Text style={[styles.textCommon,
                                             {
                                                 color: myColors.text3,
-                                                fontSize: myFontSize.xxSmall,
+                                                fontSize: myFontSize.body,
                                                 fontFamily: myFonts.bodyBold,
                                             }]}>Price: </Text>
                                             <Text style={[styles.textCommon,
                                             {
-                                                fontSize: myFontSize.xxSmall,
+                                                fontSize: myFontSize.body,
                                                 fontFamily: myFonts.heading,
                                             }]}>{item.price}</Text>
                                         </View>
@@ -122,15 +128,29 @@ export const CartDetail = ({ navigation, route }) => {
                                             <Text style={[styles.textCommon,
                                             {
                                                 color: myColors.text3,
-                                                fontSize: myFontSize.xxSmall,
+                                                fontSize: myFontSize.body,
                                                 fontFamily: myFonts.bodyBold,
                                             }]}>Sub Total: </Text>
                                             <Text style={[styles.textCommon,
                                             {
-                                                fontSize: myFontSize.xxSmall,
+                                                fontSize: myFontSize.body,
                                                 fontFamily: myFonts.heading,
                                             }]}>{cartItem.totalPrice} </Text>
                                         </View>
+                                    </View>
+
+                                    <View style={{ paddingTop: myHeight(0.2) }}>
+                                        <View style={{ flexDirection: 'row', }}>
+                                            <Text style={[styles.textCommon,
+                                            {
+                                                fontSize: myFontSize.xSmall,
+                                                color: myColors.text,
+                                                fontFamily: myFonts.bodyBold,
+                                                paddingTop: myHeight(0.3)
+                                            }]}>Drink: <Text style={{ color: myColors.textL4 }}>Cocal Cola</Text></Text>
+                                        </View>
+
+
                                     </View>
 
                                     <Spacer paddingT={myHeight(0.3)} />
@@ -182,7 +202,14 @@ export const CartDetail = ({ navigation, route }) => {
                                                 paddingHorizontal: myWidth(4), paddingVertical: myHeight(0.3),
                                                 borderRadius: myWidth(1.5)
                                             }}
-                                            onPress={() => removeItem(item.id, cartItem.totalPrice)}>
+                                            onPress={() => {
+                                                if (cartItems.length > 1) {
+
+                                                    removeItem(item.id, cartItem.totalPrice)
+                                                    return
+                                                }
+                                                removeAll()
+                                            }}>
                                             <Text style={[styles.textCommon,
                                             {
                                                 fontFamily: myFonts.xxSmall,
@@ -196,12 +223,21 @@ export const CartDetail = ({ navigation, route }) => {
                         )
                     })}
 
+                    <Spacer paddingT={myWidth(10)} />
+
                 </ScrollView>
                 {/* <Spacer paddingT={myHeight(1.5)} /> */}
             </View>
 
             {/* Bottom */}
-            <View style={{ paddingHorizontal: myWidth(4.5), justifyContent: 'flex-end' }}>
+            <View style={{
+                paddingHorizontal: myWidth(4.5),
+                justifyContent: 'flex-end',
+                borderTopStartRadius: myWidth(7),
+                borderTopEndRadius: myWidth(7),
+                borderWidth: 1, borderColor: myColors.dot,
+                marginTop: -myWidth(7), backgroundColor: myColors.primaryL5
+            }}>
                 <Spacer paddingT={myHeight(2.5)} />
 
 
@@ -214,11 +250,11 @@ export const CartDetail = ({ navigation, route }) => {
                         }]}>Amount</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Text style={[styles.textCommon, {
-                                color: myColors.text, fontFamily: myFonts.heading,
+                                color: myColors.primaryT, fontFamily: myFonts.heading,
                                 fontSize: myFontSize.medium0, marginBottom: myHeight(0.45)
                             }]}>Rs. </Text>
                             <Text style={[styles.textCommon, {
-                                color: myColors.text, fontFamily: myFonts.heading,
+                                color: myColors.primaryT, fontFamily: myFonts.heading,
                                 fontSize: myFontSize.xMedium
                             }]}>{resCart.subTotal}</Text>
                         </View>
@@ -230,7 +266,7 @@ export const CartDetail = ({ navigation, route }) => {
                         }]}>Items</Text>
 
                         <Text style={[styles.textCommon, {
-                            color: myColors.text, fontFamily: myFonts.heading,
+                            color: myColors.primaryT, fontFamily: myFonts.heading,
                             fontSize: myFontSize.medium3
                         }]}>{cartItems.length}</Text>
                     </View>
@@ -243,17 +279,17 @@ export const CartDetail = ({ navigation, route }) => {
                     width: '100%', borderRadius: myWidth(1.5),
                     flexDirection: 'row', overflow: 'hidden',
                     borderWidth: myHeight(0.15),
-                    borderColor: myColors.primaryT
+                    borderColor: myColors.text
                 }}>
                     <TouchableOpacity activeOpacity={0.7}
-                        onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant })}
+                        onPress={() => navigation.navigate('RestaurantDetail', { item: restaurant, backScreen: 'CartDetail', params: route.params })}
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1), alignItems: 'center',
                             backgroundColor: myColors.background
                         }}>
                         <Text style={[styles.textCommon, {
-                            color: myColors.primaryT,
+                            color: myColors.text,
                             fontFamily: myFonts.heading,
                             fontSize: myFontSize.body4
                         }]}>Add More Items</Text>
@@ -262,7 +298,7 @@ export const CartDetail = ({ navigation, route }) => {
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1),
-                            alignItems: 'center', backgroundColor: myColors.primaryT
+                            alignItems: 'center', backgroundColor: myColors.text
                         }}>
                         <Text style={[styles.textCommon, {
                             color: myColors.background,
@@ -272,7 +308,7 @@ export const CartDetail = ({ navigation, route }) => {
                     </TouchableOpacity>
 
                 </View>
-                <Spacer paddingT={myHeight(4)} />
+                <Spacer paddingT={myHeight(4.5)} />
 
             </View>
         </SafeAreaView>
