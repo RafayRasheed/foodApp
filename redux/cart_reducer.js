@@ -18,12 +18,13 @@ const cartReducer = createSlice({
                     cart.push(res)
                 }
             })
+            // Item Restaurant Exists
             if (checkRest != null) {
                 let cartItems = []
                 let checkItem = null
                 let itemIndex = null
                 checkRest.cartItems.map((item, i) => {
-                    if (item.item.id == action.payload.item.id) {
+                    if (item.item.id == action.payload.item.id && (item.item.optionsId == action.payload.item.optionsId)) {
                         checkItem = item
                         itemIndex = i
                     }
@@ -33,24 +34,30 @@ const cartReducer = createSlice({
                     }
 
                 })
+                // Item Already Exists
                 if (checkItem != null) {
+
+
+
                     checkRest.cartItems[itemIndex].quantity += action.payload.quantity
                     checkRest.cartItems[itemIndex].totalPrice += action.payload.totalPrice
-                    checkRest.subTotal += action.payload.totalPrice
+                    // checkRest.subTotal += action.payload.totalPrice
                     // cartItems.push(checkItem)
                     // cartItems.reverse()
                     // checkRest.cartItems = cartItems
                 }
                 else {
+
                     const formatItem = {
                         item: action.payload.item,
                         quantity: action.payload.quantity,
-                        totalPrice: action.payload.totalPrice
+                        totalPrice: action.payload.totalPrice,
                     }
                     checkRest.cartItems.push(formatItem)
-                    checkRest.subTotal += action.payload.totalPrice
+                    checkRest.cartItems.reverse()
 
                 }
+                checkRest.subTotal += action.payload.totalPrice
                 cart.push(checkRest)
                 cart.reverse()
                 state.cart = cart
@@ -62,7 +69,7 @@ const cartReducer = createSlice({
                         {
                             item: action.payload.item,
                             quantity: action.payload.quantity,
-                            totalPrice: action.payload.totalPrice
+                            totalPrice: action.payload.totalPrice,
                         }
                     ],
                     subTotal: action.payload.totalPrice
@@ -78,7 +85,7 @@ const cartReducer = createSlice({
                 if (res.restaurant.id == action.payload.resId) {
                     restIndex = i
                     checkRes = res
-                    checkRes.cartItems = checkRes.cartItems.filter(item => item.item.id !== action.payload.itemId)
+                    checkRes.cartItems = checkRes.cartItems.filter(item => item.item.id !== action.payload.item.Id && item.item.optionsId != action.payload.item.optionsId)
                     checkRes.subTotal -= action.payload.totalPrice
 
                 }

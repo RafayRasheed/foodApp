@@ -21,8 +21,8 @@ export const CartDetail = ({ navigation, route }) => {
         dispatch(addCart({ restaurant, item, quantity, totalPrice }))
         // navigation.goBack()
     }
-    function removeItem(itemId, totalPrice) {
-        dispatch(removeItemCart({ resId: restaurant.id, itemId, totalPrice }))
+    function removeItem(item, totalPrice) {
+        dispatch(removeItemCart({ resId: restaurant.id, item, totalPrice }))
     }
 
     function removeAll() {
@@ -82,6 +82,7 @@ export const CartDetail = ({ navigation, route }) => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: myWidth(4) }}>
                     {cartItems.map((cartItem, i) => {
                         const { item } = cartItem
+                        console.log(item.selectOptions)
 
                         return (
                             <View key={i} style={{
@@ -139,19 +140,27 @@ export const CartDetail = ({ navigation, route }) => {
                                         </View>
                                     </View>
 
-                                    <View style={{ paddingTop: myHeight(0.2) }}>
-                                        <View style={{ flexDirection: 'row', }}>
-                                            <Text style={[styles.textCommon,
+                                    {item.selectOptions &&
+                                        <View style={{ paddingTop: myHeight(0.4), paddingBottom: myHeight(0.2) }}>
                                             {
-                                                fontSize: myFontSize.xSmall,
-                                                color: myColors.text,
-                                                fontFamily: myFonts.bodyBold,
-                                                paddingTop: myHeight(0.3)
-                                            }]}>Drink: <Text style={{ color: myColors.textL4 }}>Cocal Cola</Text></Text>
+                                                item.selectOptions.map((option, i) =>
+
+                                                    <View key={i} style={{ flexDirection: 'row', }}>
+                                                        <Text style={[styles.textCommon,
+                                                        {
+                                                            fontSize: myFontSize.xSmall,
+                                                            color: myColors.text,
+                                                            fontFamily: myFonts.bodyBold,
+                                                            paddingTop: myHeight(0.3)
+                                                        }]}>{option.name}: <Text style={{ color: myColors.textL4 }}>{option.value}</Text></Text>
+                                                    </View>
+                                                )
+
+                                            }
+
+
                                         </View>
-
-
-                                    </View>
+                                    }
 
                                     <Spacer paddingT={myHeight(0.3)} />
                                     {/* plus miunus & remove */}
@@ -205,7 +214,7 @@ export const CartDetail = ({ navigation, route }) => {
                                             onPress={() => {
                                                 if (cartItems.length > 1) {
 
-                                                    removeItem(item.id, cartItem.totalPrice)
+                                                    removeItem(item, cartItem.totalPrice)
                                                     return
                                                 }
                                                 removeAll()

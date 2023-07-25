@@ -3,7 +3,7 @@ import {
     ScrollView, StyleSheet, TouchableOpacity, Image,
     View, Text, StatusBar, TextInput,
 } from 'react-native';
-import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+import { MyError, Spacer, errorTime, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
@@ -21,6 +21,19 @@ export const ItemDetails = ({ navigation, route }) => {
     const { options } = item
     const price = parseInt(item.price)
     const [count, setCount] = useState(1)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    function showError(message) {
+        // setIsLoading(false)
+        setErrorMessage(message)
+    }
+    useEffect(() => {
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, errorTime)
+        }
+    }, [errorMessage])
 
     function shortRestForCart() {
         const s = {
@@ -36,9 +49,48 @@ export const ItemDetails = ({ navigation, route }) => {
     function onDone() {
         hideModal()
     }
+    function checkRequired() {
+        let s = true
+        let itemArray = []
+        let id = null
+        options?.map((option, i) => {
+            const hasSeleted = selectItems[option.name]
+            if (option.required && !hasSeleted) {
+                setErrorMessage(`Please select ${option.name}`)
+                restaurant
+                s = null
+            }
+            if (hasSeleted) {
+                itemArray.push({ name: option.name, value: hasSeleted })
+                id = id + option.name + hasSeleted
+                console.log
+            }
+        })
+        if (s) {
+            const data = {
+                selectOptions: itemArray,
+                optionsId: id
+            }
+            return data
+        }
+        return s
+    }
     function onAddToCart() {
-        dispatch(addCart({ restaurant, item, quantity: count, totalPrice: count * price }))
-        navigation.goBack()
+        const checkReq = checkRequired()
+        if (checkReq != null) {
+            const { selectOptions } = checkReq
+            const { optionsId } = checkReq
+            const cusItem = {
+                ...item,
+                selectOptions,
+                optionsId
+            }
+            // console.log(cusItem)
+
+            dispatch(addCart({ restaurant, item: cusItem, quantity: count, totalPrice: count * price, }))
+            navigation.goBack()
+        }
+
     }
 
     return (
@@ -684,6 +736,8 @@ export const ItemDetails = ({ navigation, route }) => {
 
                 </TouchableOpacity>
             }
+            {errorMessage && <MyError message={errorMessage} />}
+
         </>
 
     )

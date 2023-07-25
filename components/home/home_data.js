@@ -255,7 +255,7 @@ export const Restaurants = [
             noOfRatings: '100',
             options: [
               {
-                required: true,
+                required: false,
                 name: 'Side Item',
                 list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
               },
@@ -288,7 +288,7 @@ export const Restaurants = [
             likes: '10',
             options: [
               {
-                required: true,
+                required: false,
                 name: 'Side Item',
                 list: ['Med Fries [350.0 Cals]', 'Med Fries [30.0 Cals]', 'Med Fries [50.0 Cals]', 'Med Fries [300.0 Cals]']
               },
