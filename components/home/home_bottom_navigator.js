@@ -10,6 +10,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { CartNavigator } from "../cart/cart_navigator";
 import { createStackNavigator } from "@react-navigation/stack"
 import { deleteLogin } from "../functions/storageMMKV";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator()
 
@@ -40,7 +41,7 @@ const Icons = {
 
 
 const screenOptions = ({ navigator, route }) => {
-
+    const { cart } = useSelector(state => state.cart)
     const name = route.name
     return {
         headerShown: false,
@@ -73,12 +74,15 @@ const screenOptions = ({ navigator, route }) => {
                     <View>
                         <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain', }]}
                             source={Icons[name].image} />
-                        <View style={{
-                            position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.2), backgroundColor: myColors.red, borderRadius: 100,
-                            paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(0.9)
-                        }}>
-                            <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>1</Text>
-                        </View>
+                        {
+                            cart.length &&
+                            <View style={{
+                                position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.4), backgroundColor: myColors.red, borderRadius: 100,
+                                paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(1)
+                            }}>
+                                <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>{cart.length}</Text>
+                            </View>
+                        }
                     </View>
                 )
             }
