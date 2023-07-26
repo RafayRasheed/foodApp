@@ -75,13 +75,14 @@ const screenOptions = ({ navigator, route }) => {
                         <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain', }]}
                             source={Icons[name].image} />
                         {
-                            cart.length &&
-                            <View style={{
-                                position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.4), backgroundColor: myColors.red, borderRadius: 100,
-                                paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(1)
-                            }}>
-                                <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>{cart.length}</Text>
-                            </View>
+                            cart.length ?
+                                <View style={{
+                                    position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.4), backgroundColor: myColors.red, borderRadius: 100,
+                                    paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(1)
+                                }}>
+                                    <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>{cart.length}</Text>
+                                </View>
+                                : null
                         }
                     </View>
                 )

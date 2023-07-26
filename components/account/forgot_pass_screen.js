@@ -3,6 +3,7 @@ import { Image, Pressable, TouchableOpacity, SafeAreaView, StyleSheet, Text, Vie
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import Flag from './account.component/phone_select';
 
 export const ForgotPassword = ({ navigation }) => {
@@ -37,48 +38,49 @@ export const ForgotPassword = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={styles.container}>
-            {errorMessage && <MyError message={errorMessage} />}
-            <Spacer paddingT={myHeight(7)} />
+            <KeyboardAwareScrollView>
+                {errorMessage && <MyError message={errorMessage} />}
+                <Spacer paddingT={myHeight(7)} />
 
-            <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>
-                {/* Forgot Password */}
-                <Text style={styles.textForgotPass}>Forgot Password</Text>
-                <Spacer paddingT={myHeight(1.1)} />
-                <Text style={styles.textDes}>Enter your Email Address to get link for resetting password</Text>
+                <View style={{ paddingHorizontal: myWidth(10), alignItems: 'center' }}>
+                    {/* Forgot Password */}
+                    <Text style={styles.textForgotPass}>Forgot Password</Text>
+                    <Spacer paddingT={myHeight(1.1)} />
+                    <Text style={styles.textDes}>Enter your Email Address to get link for resetting password</Text>
 
-                <Spacer paddingT={myHeight(3.2)} />
+                    <Spacer paddingT={myHeight(3.2)} />
 
-                {/* Email Portion */}
-                <View style={styles.containerInputPortion}>
-                    <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
-                    <Spacer paddingEnd={myWidth(2.5)} />
-                    <TextInput placeholder=" Email Address"
-                        autoCapitalize='none'
-                        placeholderTextColor={myColors.offColor}
-                        selectionColor={myColors.primaryT}
-                        style={styles.containerInput} cursorColor={myColors.primaryT}
-                        value={email} onChangeText={setEmail}
-                        autoCorrect={false} />
+                    {/* Email Portion */}
+                    <View style={styles.containerInputPortion}>
+                        <Image style={styles.imageInput} source={require('../assets/account/iEmail.png')} />
+                        <Spacer paddingEnd={myWidth(2.5)} />
+                        <TextInput placeholder=" Email Address"
+                            autoCapitalize='none'
+                            placeholderTextColor={myColors.offColor}
+                            selectionColor={myColors.primaryT}
+                            style={styles.containerInput} cursorColor={myColors.primaryT}
+                            value={email} onChangeText={setEmail}
+                            autoCorrect={false} />
+                    </View>
+                    <Spacer paddingT={myHeight(2.2)} />
+
+                    {/* Back to sign in */}
+                    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('SignIn')}>
+                        <Spacer paddingT={myHeight(1)} />
+                        <Text style={styles.textBackToSign}>Back to Sign in</Text>
+                        <Spacer paddingT={myHeight(1)} />
+                    </TouchableOpacity>
+                    <Spacer paddingT={myHeight(2.2)} />
+
+                    {/* Sign Button */}
+                    <TouchableOpacity activeOpacity={0.6} onPress={onSend}
+                        onLongPress={() => navigation.navigate('NewPassword')}
+                        style={styles.containerSign}>
+                        <Text style={styles.textSendBu}>Send</Text>
+                    </TouchableOpacity>
                 </View>
-                <Spacer paddingT={myHeight(2.2)} />
 
-                {/* Back to sign in */}
-                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('SignIn')}>
-                    <Spacer paddingT={myHeight(1)} />
-                    <Text style={styles.textBackToSign}>Back to Sign in</Text>
-                    <Spacer paddingT={myHeight(1)} />
-                </TouchableOpacity>
-                <Spacer paddingT={myHeight(2.2)} />
-
-                {/* Sign Button */}
-                <TouchableOpacity activeOpacity={0.6} onPress={onSend}
-                    onLongPress={() => navigation.navigate('NewPassword')}
-                    style={styles.containerSign}>
-                    <Text style={styles.textSendBu}>Send</Text>
-                </TouchableOpacity>
-            </View>
-
-
+            </KeyboardAwareScrollView>
         </SafeAreaView>
     )
 }
