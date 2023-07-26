@@ -32,7 +32,6 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
     const long = longlat[1]; //63.6741553
     const lat = longlat[2]; //-164.9587713
-    console.log(lat, long)
     const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
     const url2 = `https://www.google.com/maps/dir/?api=1&destination=${long},${lat}&dir_action=navigate`;
 

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { Text, SafeAreaView, View, Image, StatusBar } from "react-native";
+import { Text, SafeAreaView, View, Image, StatusBar, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Spacer, StatusbarH, bottomTab, ios, myHeight, myWidth, storage } from "../common";
 import { myColors } from "../../ultils/myColors";
@@ -40,6 +40,7 @@ const Icons = {
 
 
 const screenOptions = ({ navigator, route }) => {
+
     const name = route.name
     return {
         headerShown: false,
@@ -64,6 +65,20 @@ const screenOptions = ({ navigator, route }) => {
                     }}>
                         <Image style={[Icons[name].style, { resizeMode: 'contain', }]}
                             source={Icons[name].image} />
+                    </View>
+                )
+            }
+            if (name == 'CART') {
+                return (
+                    <View>
+                        <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain', }]}
+                            source={Icons[name].image} />
+                        <View style={{
+                            position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.2), backgroundColor: myColors.red, borderRadius: 100,
+                            paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(0.9)
+                        }}>
+                            <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>1</Text>
+                        </View>
                     </View>
                 )
             }
@@ -119,3 +134,12 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
 
     )
 }
+
+const styles = StyleSheet.create({
+    textCommon: {
+        color: myColors.text,
+        letterSpacing: myLetSpacing.common,
+        includeFontPadding: false,
+        padding: 0,
+    }
+})

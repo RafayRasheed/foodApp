@@ -82,7 +82,6 @@ export const CartDetail = ({ navigation, route }) => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: myWidth(4) }}>
                     {cartItems.map((cartItem, i) => {
                         const { item } = cartItem
-                        console.log(item.selectOptions)
 
                         return (
                             <View key={i} style={{
