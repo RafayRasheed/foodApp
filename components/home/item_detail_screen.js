@@ -35,14 +35,15 @@ export const ItemDetails = ({ navigation, route }) => {
         }
     }, [errorMessage])
 
-    function shortRestForCart() {
-        const s = {
-            id: restaurant.id,
-            image: restaurant.images[0],
-            name: restaurant.name
-        }
-        return s
-    }
+    // function shortRestForCart() {
+    //     const s = {
+    //         id: restaurant.id,
+    //         image: restaurant.images[0],
+    //         name: restaurant.name
+    //     }
+    //     return s
+    // }
+
     function hideModal() {
         setRatinModal(false)
     }

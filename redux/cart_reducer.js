@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setCartLocal } from "../components/functions/storageMMKV";
 
 const cartReducer = createSlice({
     name: "cart",
@@ -76,6 +77,7 @@ const cartReducer = createSlice({
                 }
                 state.cart.push(format)
             }
+            setCartLocal(state.cart)
 
         },
         removeItemCart(state, action) {
@@ -93,15 +95,26 @@ const cartReducer = createSlice({
             if (checkRes != null) {
                 state.cart[restIndex] = checkRes
             }
+            setCartLocal(state.cart)
+
         },
         removeResCart(state, action) {
             state.cart = state.cart.filter(res => res.restaurant.id !== action.payload.resId)
+            setCartLocal(state.cart)
+
         },
         cartClear(state) {
             state.cart = []
+            setCartLocal(state.cart)
         },
+        setCart(state, action) {
+            if (action.payload) {
+                state.cart = action.payload
+            }
+
+        }
     },
 });
 
-export const { addCart, removeItemCart, removeResCart, cartClear, updateAmount } = cartReducer.actions;
+export const { addCart, removeItemCart, removeResCart, cartClear, updateAmount, setCart } = cartReducer.actions;
 export default cartReducer.reducer;

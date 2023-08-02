@@ -8,7 +8,9 @@ import { ResturantH } from './home.component/resturant_hori';
 import { Banners } from './home.component/banner';
 import { RestaurantInfo } from './home.component/restaurant_info';
 import { RestRating } from './rest_rating_screen';
-import { getLogin } from '../functions/storageMMKV';
+import { getCartLocal, getLogin } from '../functions/storageMMKV';
+import { setCart } from '../../redux/cart_reducer';
+import { useDispatch } from 'react-redux';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -16,9 +18,11 @@ if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
 
+    const dispatch = useDispatch()
     // re.turn (<Test />)
     useEffect(() => {
 
+        dispatch(setCart(getCartLocal()))
     }, [])
     return (
 
