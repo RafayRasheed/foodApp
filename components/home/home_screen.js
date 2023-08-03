@@ -10,18 +10,16 @@ import { RestaurantInfo } from './home.component/restaurant_info';
 import { RestRating } from './rest_rating_screen';
 import { getCartLocal, getLogin } from '../functions/storageMMKV';
 import { setCart } from '../../redux/cart_reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
-
     const dispatch = useDispatch()
     // re.turn (<Test />)
     useEffect(() => {
-
         dispatch(setCart(getCartLocal()))
     }, [])
     return (

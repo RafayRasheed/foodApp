@@ -8,6 +8,8 @@ import { MyError, Spacer, StatusBarHide, ios, myHeight, myWidth } from '../commo
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { ItemInfo } from './home.component/item_info';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavoriteRest, removeFavoriteRest } from '../../redux/favorite_reducer';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
@@ -45,6 +47,24 @@ export const RestaurantDetail = ({ navigation, route }) => {
     }
     navigation.goBack()
   }
+  const { favoriteRestuarnt } = useSelector(state => state.favorite)
+  const dispatch = useDispatch()
+
+  const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+  console.log(checkFav)
+  const [isFav, setIsFav] = useState(checkFav != null)
+
+  function changeFav() {
+    if (!isFav) {
+      dispatch(addFavoriteRest({ resId: restaurant.id }))
+    } else {
+      dispatch(removeFavoriteRest({ resId: restaurant.id }))
+    }
+    setIsFav(!isFav)
+  }
+  useEffect(() => {
+    setIsFav(checkFav != null)
+  }, [checkFav])
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
 
@@ -79,27 +99,35 @@ export const RestaurantDetail = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        {/* Search */}
-        <TouchableOpacity
-          style={{
-            backgroundColor: myColors.background,
-            padding: myHeight(1),
-            borderRadius: myHeight(5),
-            position: 'absolute',
-            top: StatusBar.currentHeight + myHeight(0.6),
-            right: myWidth(4),
-          }}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
-          <Image
+        <View style={{
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          top: StatusBar.currentHeight + myHeight(0.6),
+          right: myWidth(4),
+          flexDirection: 'row'
+        }}>
+
+          {/* Search */}
+          <TouchableOpacity
             style={{
-              width: myHeight(2.6),
-              height: myHeight(2.6),
-              resizeMode: 'contain',
+              backgroundColor: myColors.background,
+              padding: myHeight(1),
+              borderRadius: myHeight(5),
+
             }}
-            source={require('../assets/home_main/home/search.png')}
-          />
-        </TouchableOpacity>
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
+            <Image
+              style={{
+                width: myHeight(2.6),
+                height: myHeight(2.6),
+                resizeMode: 'contain',
+              }}
+              source={require('../assets/home_main/home/search.png')}
+            />
+          </TouchableOpacity>
+
+        </View>
 
       </ImageBackground>
 
@@ -135,6 +163,27 @@ export const RestaurantDetail = ({ navigation, route }) => {
             }}
             source={restaurant.icon}
           />
+          {/* Heart */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: myColors.background,
+              padding: myHeight(2.5),
+              paddingTop: myHeight(1.5),
+              borderRadius: myHeight(5),
+              top: myHeight(0),
+              right: myWidth(0),
+              position: 'absolute'
+            }}
+            activeOpacity={0.8}
+            onPress={changeFav}>
+            <Image style={{
+              height: myHeight(3),
+              width: myHeight(3),
+              resizeMode: 'contain',
+              tintColor: myColors.red
+            }}
+              source={isFav ? require('../assets/home_main/home/heart.png') : require('../assets/home_main/home/heart_o.png')} />
+          </TouchableOpacity>
           <Spacer paddingT={myHeight(0.3)} />
           {/* name */}
           <Text
