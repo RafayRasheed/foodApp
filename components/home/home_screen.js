@@ -10,18 +10,33 @@ import { RestaurantInfo } from './home.component/restaurant_info';
 import { RestRating } from './rest_rating_screen';
 import { getCartLocal, getLogin } from '../functions/storageMMKV';
 import { setCart } from '../../redux/cart_reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import { setFavoriteItem, setFavoriteRest } from '../../redux/favorite_reducer';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
-
     const dispatch = useDispatch()
     // re.turn (<Test />)
     useEffect(() => {
+        const profile = getLogin()
 
+        firestore().collection('users').doc(profile.uid).get()
+            .then((data) => {
+                const all = data.data()
+                const favoriteRes = all.favoriteRes
+                const favoriteItem = all.favoriteItem
+
+                if (favoriteRes && favoriteRes.length) {
+                    dispatch(setFavoriteRest(favoriteRes))
+                }
+                if (favoriteItem && favoriteItem.length) {
+                    dispatch(setFavoriteItem(favoriteItem))
+                }
+            })
         dispatch(setCart(getCartLocal()))
     }, [])
     return (

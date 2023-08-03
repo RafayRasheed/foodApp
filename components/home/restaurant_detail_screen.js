@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ScrollView, StyleSheet, TouchableOpacity, Image,
   View, Text, StatusBar,
-  Linking, Platform, ImageBackground,
+  Linking, Platform, ImageBackground, BackHandler,
 } from 'react-native';
 import { MyError, Spacer, StatusBarHide, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { ItemInfo } from './home.component/item_info';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavoriteRest, removeFavoriteRest } from '../../redux/favorite_reducer';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
@@ -16,6 +19,30 @@ export const RestaurantDetail = ({ navigation, route }) => {
   const { foodCategory } = restaurant;
   const [selectCat, setSelectCat] = useState(null);
   const [currentItem, setCurrentItems] = useState([]);
+
+  //Back Functions
+
+  const onBackPress = () => {
+
+    if (backScreen) {
+      navigation.navigate(backScreen, route.params.params)
+      return true
+    }
+
+    return false
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+
+      BackHandler.addEventListener(
+        'hardwareBackPress', onBackPress
+      );
+      return () =>
+        BackHandler.removeEventListener(
+          'hardwareBackPress', onBackPress
+        );
+    }, [backScreen])
+  );
   function doThos() {
 
     const url = "https://www.google.com/maps/place/Millennium+Mall/@24.9094679,67.0433966,13z/data=!3m1!5s0x3eb339223612bfc7:0xc67329732f68fc6e!4m6!3m5!1s0x3eb33922488f3725:0x3bfde63eb356ebc0!8m2!3d24.901187!4d67.1155004!16s%2Fg%2F11bv1cb635?entry=ttu";
@@ -45,6 +72,23 @@ export const RestaurantDetail = ({ navigation, route }) => {
     }
     navigation.goBack()
   }
+  const { favoriteRestuarnt } = useSelector(state => state.favorite)
+  const dispatch = useDispatch()
+
+  const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+  const [isFav, setIsFav] = useState(checkFav != null)
+
+  function changeFav() {
+    if (!isFav) {
+      dispatch(addFavoriteRest({ resId: restaurant.id }))
+    } else {
+      dispatch(removeFavoriteRest({ resId: restaurant.id }))
+    }
+    setIsFav(!isFav)
+  }
+  useEffect(() => {
+    setIsFav(checkFav != null)
+  }, [checkFav])
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
 
@@ -79,27 +123,35 @@ export const RestaurantDetail = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        {/* Search */}
-        <TouchableOpacity
-          style={{
-            backgroundColor: myColors.background,
-            padding: myHeight(1),
-            borderRadius: myHeight(5),
-            position: 'absolute',
-            top: StatusBar.currentHeight + myHeight(0.6),
-            right: myWidth(4),
-          }}
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
-          <Image
+        <View style={{
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          top: StatusBar.currentHeight + myHeight(0.6),
+          right: myWidth(4),
+          flexDirection: 'row'
+        }}>
+
+          {/* Search */}
+          <TouchableOpacity
             style={{
-              width: myHeight(2.6),
-              height: myHeight(2.6),
-              resizeMode: 'contain',
+              backgroundColor: myColors.background,
+              padding: myHeight(1),
+              borderRadius: myHeight(5),
+
             }}
-            source={require('../assets/home_main/home/search.png')}
-          />
-        </TouchableOpacity>
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
+            <Image
+              style={{
+                width: myHeight(2.6),
+                height: myHeight(2.6),
+                resizeMode: 'contain',
+              }}
+              source={require('../assets/home_main/home/search.png')}
+            />
+          </TouchableOpacity>
+
+        </View>
 
       </ImageBackground>
 
@@ -135,6 +187,27 @@ export const RestaurantDetail = ({ navigation, route }) => {
             }}
             source={restaurant.icon}
           />
+          {/* Heart */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: myColors.background,
+              padding: myHeight(2.5),
+              paddingTop: myHeight(1.5),
+              borderRadius: myHeight(5),
+              top: myHeight(0),
+              right: myWidth(0),
+              position: 'absolute'
+            }}
+            activeOpacity={0.8}
+            onPress={changeFav}>
+            <Image style={{
+              height: myHeight(3),
+              width: myHeight(3),
+              resizeMode: 'contain',
+              tintColor: myColors.red
+            }}
+              source={isFav ? require('../assets/home_main/home/heart.png') : require('../assets/home_main/home/heart_o.png')} />
+          </TouchableOpacity>
           <Spacer paddingT={myHeight(0.3)} />
           {/* name */}
           <Text

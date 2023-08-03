@@ -1,9 +1,29 @@
 import { Image, TouchableOpacity, SafeAreaView, StyleSheet, Text, View, ImageBackground } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Spacer, myHeight, myWidth } from "../../common"
 import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
+import { useDispatch, useSelector } from 'react-redux'
+import { addFavoriteRest, removeFavoriteRest } from '../../../redux/favorite_reducer'
 export const RestaurantInfoFull = ({ restaurant }) => {
+    const { favoriteRestuarnt } = useSelector(state => state.favorite)
+    const dispatch = useDispatch()
+
+    const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+    const [isFav, setIsFav] = useState(checkFav != null)
+
+    function changeFav() {
+        if (!isFav) {
+            dispatch(addFavoriteRest({ resId: restaurant.id }))
+        } else {
+            dispatch(removeFavoriteRest({ resId: restaurant.id }))
+        }
+        setIsFav(!isFav)
+    }
+    useEffect(() => {
+        setIsFav(checkFav != null)
+    }, [checkFav])
+
 
     return (
         <View style={{ paddingVertical: myHeight(1.5) }}>
@@ -43,9 +63,12 @@ export const RestaurantInfoFull = ({ restaurant }) => {
 
                         {/* Heart */}
                         <TouchableOpacity activeOpacity={0.85}
+                            onPress={changeFav}
                             style={styles.containerHeart}>
-                            <Text style={styles.textRating}>Dill</Text>
-                            {/* <Image style={styles.imageHeart} source={require('../../assets/home_main/dashboards/heart.png')} /> */}
+                            {/* <Text style={styles.textRating}>Dill</Text> */}
+                            <Image style={styles.imageHeart}
+
+                                source={isFav ? require('../../assets/home_main/home/heart.png') : require('../../assets/home_main/home/heart_o.png')} />
                         </TouchableOpacity>
                     </View>
 
@@ -277,9 +300,10 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     imageHeart: {
-        height: myHeight(2.2),
-        width: myHeight(2.2),
+        height: myHeight(2.6),
+        width: myHeight(2.6),
         resizeMode: 'contain',
+        tintColor: myColors.red,
     },
     imageLoc: {
         width: myHeight(2.2), height: myHeight(2.2),

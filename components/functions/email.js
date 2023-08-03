@@ -24,3 +24,4 @@ export function sendVerficationEmail(profile, code) {
     })
     return mail
 }
+
