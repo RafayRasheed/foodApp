@@ -27,7 +27,7 @@ export const ItemSkeleton = () => (
             <SkeletonPlaceholder.Item width={myHeight(10)} height={myHeight(10)} borderRadius={0} />
             <SkeletonPlaceholder.Item marginLeft={myWidth(2.5)} flex={1} justifyContent='space-around'>
                 <SkeletonPlaceholder.Item width={'70%'} height={myHeight(2.2)} />
-                <SkeletonPlaceholder.Item marginTop={myHeight(1.5)} width={'100%'} height={myHeight(2.2)} />
+                <SkeletonPlaceholder.Item marginTop={myHeight(1.5)} width={'95%'} height={myHeight(2.2)} />
             </SkeletonPlaceholder.Item>
         </SkeletonPlaceholder.Item>
     </SkeletonPlaceholder>

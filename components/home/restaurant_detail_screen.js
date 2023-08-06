@@ -8,6 +8,9 @@ import { MyError, Spacer, StatusBarHide, ios, myHeight, myWidth } from '../commo
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { ItemInfo } from './home.component/item_info';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavoriteRest, removeFavoriteRest } from '../../redux/favorite_reducer';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
@@ -69,6 +72,24 @@ export const RestaurantDetail = ({ navigation, route }) => {
     }
     navigation.goBack()
   }
+
+  const { favoriteRestuarnt } = useSelector(state => state.favorite)
+  const dispatch = useDispatch()
+
+  const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+  const [isFav, setIsFav] = useState(checkFav != null)
+
+  function changeFav() {
+    if (!isFav) {
+      dispatch(addFavoriteRest({ resId: restaurant.id }))
+    } else {
+      dispatch(removeFavoriteRest({ resId: restaurant.id }))
+    }
+    setIsFav(!isFav)
+  }
+  useEffect(() => {
+    setIsFav(checkFav != null)
+  }, [checkFav])
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
 
