@@ -9,15 +9,27 @@ import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { useSelector } from 'react-redux';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { RestaurantInfoSkeleton } from '../common/skeletons';
+import { ItemSkeleton, RestaurantInfoSkeleton, RestaurantInfoSkeletonHori } from '../common/skeletons';
 
 
 export const Favourite = ({ navigation }) => {
     const [i, setI] = useState(0)
     const { favoriteItem, favoriteRestuarnt } = useSelector(state => state.favorite)
+    const restaurantLength = favoriteRestuarnt.length
+    const ItemLength = favoriteItem.length
+    const [isLoadingRes, setIsLoadingRes] = useState(true)
+    const [isLoadingItem, setIsLoadingItem] = useState(true)
     useEffect(() => {
 
     }, [])
+
+    useEffect(() => {
+        setIsLoadingItem(ItemLength != 0)
+    }, [favoriteItem])
+
+    useEffect(() => {
+        setIsLoadingRes(restaurantLength != 0)
+    }, [favoriteRestuarnt])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
             <StatusbarH />
@@ -50,7 +62,7 @@ export const Favourite = ({ navigation }) => {
             </View>
 
             <Spacer paddingT={myHeight(1.5)} />
-            {/* Restaurants & Items */}
+            {/* Restaurants & Items Headings */}
             <View style={{ flexDirection: 'row', alignItems: "center", }}>
                 <Spacer paddingEnd={myWidth(5)} />
                 <TouchableOpacity activeOpacity={0.7} onPress={() => setI(0)}>
@@ -103,21 +115,59 @@ export const Favourite = ({ navigation }) => {
             {/* Line */}
             <View style={{ height: myHeight(0.3), backgroundColor: myColors.divider }} />
 
-            {/* <View style={{
-                marginHorizontal: myWidth(4), borderWidth: 2, borderColor: myColors.divider,
-                borderRadius: myWidth(3), overflow: 'hidden'
-            }}>
-            </View> */}
+
             <Spacer paddingT={myHeight(1)} />
 
-            <RestaurantInfoSkeleton />
+            {/* Loading for Restaurant */}
+            {
+                (isLoadingRes && i == 0) &&
+                <>
+                    <RestaurantInfoSkeleton isFull={true} />
+                    <RestaurantInfoSkeleton isFull={true} />
+                    <RestaurantInfoSkeleton isFull={true} />
+                </>
+
+            }
+            {/* Loading for Items */}
+            {
+                (isLoadingItem && i == 1) &&
+                <>
+                    <ItemSkeleton />
+                    <ItemSkeleton />
+                    <ItemSkeleton />
+                    <ItemSkeleton />
+                    <ItemSkeleton />
+                    <ItemSkeleton />
+                </>
+
+            }
+
 
             <Spacer paddingT={myHeight(2)} />
 
             {/* <FlatList
                
             /> */}
-
+            {
+                (!restaurantLength && i == 0) &&
+                <Text style={[styles.textCommon, {
+                    flex: 1,
+                    fontFamily: myFonts.bodyBold,
+                    fontSize: myFontSize.medium0,
+                    alignSelf: 'center',
+                    textAlignVertical: 'center',
+                }]}>{'No Restaurants Found!'}</Text>
+            }
+            {
+                (!ItemLength && i == 1) &&
+                <Text style={[styles.textCommon, {
+                    flex: 1,
+                    fontFamily: myFonts.bodyBold,
+                    fontSize: myFontSize.medium0,
+                    alignSelf: 'center',
+                    textAlignVertical: 'center',
+                }]}>{'No Items Found!'}</Text>
+            }
         </SafeAreaView>
     )
 }
