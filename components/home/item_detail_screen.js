@@ -9,6 +9,7 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { useSelector, useDispatch } from 'react-redux'
 import { addCart, removeItemCart } from '../../redux/cart_reducer';
+import { addFavoriteItem, removeFavoriteItem } from '../../redux/favorite_reducer';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
@@ -23,10 +24,32 @@ export const ItemDetails = ({ navigation, route }) => {
     const [count, setCount] = useState(1)
     const [errorMessage, setErrorMessage] = useState(null)
 
+
+    //Favourite
+    const { favoriteItem } = useSelector(state => state.favorite)
+    const checkFav = favoriteItem.find(data => data.itemId == item.id)
+    const [isFav, setIsFav] = useState(checkFav != null)
+
+    function changeFav() {
+        if (!isFav) {
+            dispatch(addFavoriteItem({ resId: item.resId, itemId: item.id }))
+        } else {
+            dispatch(removeFavoriteItem({ resId: item.resId, itemId: item.id }))
+        }
+        setIsFav(!isFav)
+    }
+    useEffect(() => {
+        setIsFav(checkFav != null)
+    }, [checkFav])
+
+
+
+
     function showError(message) {
         // setIsLoading(false)
         setErrorMessage(message)
     }
+
     useEffect(() => {
         if (errorMessage) {
             setTimeout(() => {
@@ -132,8 +155,15 @@ export const ItemDetails = ({ navigation, route }) => {
                             borderRadius: myHeight(5),
                         }}
                         activeOpacity={0.8}
-                        onPress={null}>
-                        <Text>Dill</Text>
+                        onPress={changeFav}>
+                        <Image style={{
+                            height: myHeight(2.6),
+                            width: myHeight(2.6),
+                            resizeMode: 'contain',
+                            tintColor: myColors.red,
+                        }}
+
+                            source={isFav ? require('../assets/home_main/home/heart.png') : require('../assets/home_main/home/heart_o.png')} />
                     </TouchableOpacity>
 
                 </View>

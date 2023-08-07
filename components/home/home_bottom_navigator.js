@@ -11,6 +11,7 @@ import { CartNavigator } from "../cart/cart_navigator";
 import { createStackNavigator } from "@react-navigation/stack"
 import { deleteLogin } from "../functions/storageMMKV";
 import { useSelector } from "react-redux";
+import { ProfileNavigator } from "../profile/profile_navigator";
 
 const Tab = createBottomTabNavigator()
 
@@ -19,9 +20,9 @@ const Icons = {
         image: require('../assets/home_main/home/navigator/home.png'),
         style: { width: myWidth(6.5), height: myHeight(2.68) }
     },
-    ACTIVITY: {
-        image: require('../assets/home_main/home/navigator/activity.png'),
-        style: { width: myWidth(6.2), height: myHeight(2.15) }
+    ORDERS: {
+        image: require('../assets/home_main/home/navigator/orderIcon.png'),
+        style: { width: myHeight(2.9), height: myHeight(2.9) }
     },
     HOT: {
         image: require('../assets/home_main/home/navigator/fire.png'),
@@ -33,7 +34,7 @@ const Icons = {
         image: require('../assets/home_main/home/navigator/cart.png'),
         style: { width: myWidth(5.5), height: myHeight(2.68) }
     },
-    ACCOUNT: {
+    PROFILE: {
         image: require('../assets/home_main/home/navigator/account.png'),
         style: { width: myWidth(6.2), height: myHeight(2.68) }
     },
@@ -128,10 +129,10 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
                 initialRouteName="HOME"
             >
                 <Tab.Screen name="HOME" component={HomeNavigator} />
-                <Tab.Screen name="ACTIVITY" component={Xr} />
+                <Tab.Screen name="ORDERS" component={Xr} />
                 <Tab.Screen name="HOT" component={Xr} />
                 <Tab.Screen name="CART" component={CartNavigator} />
-                <Tab.Screen name="ACCOUNT" component={Xr} />
+                <Tab.Screen name="PROFILE" component={ProfileNavigator} />
 
             </Tab.Navigator>
         </>

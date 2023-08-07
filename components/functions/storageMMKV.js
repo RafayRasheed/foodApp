@@ -37,5 +37,9 @@ export function setCartLocal(cart) {
     storage.set(saveCart, JSON.stringify(cart))
 }
 export function getCartLocal() {
-    return JSON.parse(storage.getString(saveCart))
+    const s = storage.getString(saveCart)
+    if (s) {
+        return JSON.parse(s)
+    }
+    return []
 }

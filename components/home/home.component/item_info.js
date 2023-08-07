@@ -1,11 +1,31 @@
-import React from "react"
-import { Text, View, Image, StyleSheet } from "react-native"
+import React, { useState, useEffect } from "react"
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native"
 import { Spacer, myHeight, myWidth } from "../../common"
 import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
+import { useDispatch, useSelector } from "react-redux"
+import { addFavoriteItem, removeFavoriteItem } from "../../../redux/favorite_reducer"
 
 
 export const ItemInfo = ({ item }) => {
+    const { favoriteItem } = useSelector(state => state.favorite)
+    const dispatch = useDispatch()
+
+    const checkFav = favoriteItem.find(data => data.itemId == item.id)
+    const [isFav, setIsFav] = useState(checkFav != null)
+
+    function changeFav() {
+        if (!isFav) {
+            dispatch(addFavoriteItem({ resId: item.resId, itemId: item.id }))
+        } else {
+            dispatch(removeFavoriteItem({ resId: item.resId, itemId: item.id }))
+        }
+        setIsFav(!isFav)
+    }
+    useEffect(() => {
+        setIsFav(checkFav != null)
+    }, [checkFav])
+
     return (
 
         <View style={{
@@ -44,18 +64,32 @@ export const ItemInfo = ({ item }) => {
                                 fontFamily: myFonts.heading,
                             },
                         ]}>
-                        {item?.name}
-                    </Text>
-                    <Text numberOfLines={1}
-                        style={[
-                            styles.textCommon,
-                            {
-                                fontSize: myFontSize.xBody,
-                                fontFamily: myFonts.heading,
-                            },
-                        ]}>
-                        {'Dill'}
-                    </Text>
+                        {item?.name}</Text>
+                    <View style={{ width: myHeight(3.5) }} />
+
+                    {/* Heart */}
+                    <TouchableOpacity activeOpacity={0.85}
+                        onPress={changeFav}
+                        style={{
+                            alignSelf: 'flex-end',
+                            backgroundColor: myColors.background,
+                            padding: myHeight(0.8),
+                            borderRadius: myWidth(5),
+                            position: 'absolute',
+                            right: myWidth(-1),
+                            marginVertical: myHeight(0.5),
+
+                        }}>
+                        {/* <Text style={styles.textRating}>Dill</Text> */}
+                        <Image style={{
+                            height: myHeight(2.6),
+                            width: myHeight(2.6),
+                            resizeMode: 'contain',
+                            tintColor: myColors.red,
+                        }}
+
+                            source={isFav ? require('../../assets/home_main/home/heart.png') : require('../../assets/home_main/home/heart_o.png')} />
+                    </TouchableOpacity>
                 </View>
                 <Spacer paddingT={myHeight(0.5)} />
                 {/* Second Line */}
