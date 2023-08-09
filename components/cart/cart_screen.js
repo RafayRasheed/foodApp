@@ -49,8 +49,9 @@ export const Cart = ({ navigation }) => {
                     <Text style={[styles.textCommon, {
                         fontSize: myFontSize.medium2,
                         fontFamily: myFonts.heading,
-                    }]}>Carts</Text>
+                    }]}>Cart</Text>
                     <Spacer paddingT={myHeight(1)} />
+                    <View style={{ height: myHeight(0.5), width: myWidth(100), marginStart: -myWidth(4), backgroundColor: myColors.divider }} />
 
                     {
                         cart?.map((res, i) =>
@@ -126,6 +127,16 @@ export const Cart = ({ navigation }) => {
                         )
                     }
                 </ScrollView>
+
+                {
+                    cart.length == 0 &&
+                    <View style={{ height: '100%', width: '100%', justifyContent: "center", alignItems: 'center', position: 'absolute' }}>
+                        <Text style={[styles.textCommon, {
+                            fontSize: myFontSize.medium,
+                            fontFamily: myFonts.heading,
+                        }]}>Your Cart is Empty!</Text>
+                    </View>
+                }
 
             </SafeAreaView>
         </>

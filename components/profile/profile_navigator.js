@@ -10,7 +10,7 @@ export const ProfileNavigator = ({ navigation, route }) => {
 
     return (
         <ProfileTAB.Navigator
-            initialRouteName="Favourite"
+            initialRouteName="Profile"
             screenOptions={{
                 animation: 'fade',
                 headerShown: false
