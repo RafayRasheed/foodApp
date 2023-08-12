@@ -22,11 +22,31 @@ if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
     const [isLoading, setIsLoading] = useState(true)
+    const [categories, setCategories] = useState(null)
 
     const dispatch = useDispatch()
+    function getCategories() {
+        let catArray = []
+        firestore().collection('categories').orderBy('count', 'desc').get().then((result) => {
+            if (!result.empty) {
+                result.forEach((cat) => {
+                    catArray.push(cat.data())
+                })
+                setCategories(catArray)
+
+            }
+            else {
+
+                setCategories(catArray)
+            }
+        }).catch((er) => {
+            console.log('Error on Get Category', er)
+        })
+    }
     // re.turn (<Test />)
     useEffect(() => {
         const profile = getLogin()
+        getCategories()
 
         firestore().collection('users').doc(profile.uid).get()
             .then((data) => {
@@ -40,12 +60,17 @@ export const HomeScreen = ({ navigation }) => {
                 if (favoriteItem && favoriteItem.length) {
                     dispatch(setFavoriteItem(favoriteItem))
                 }
+            }).catch((er) => {
+                console.log('Error on Get Users for fav', er)
             })
         dispatch(setCart(getCartLocal()))
-        setTimeout(() => {
-            setIsLoading(false)
-        }, 2000)
+
     }, [])
+    useEffect(() => {
+        if (categories) {
+            setIsLoading(false)
+        }
+    }, [categories])
     return (
 
         <SafeAreaView style={styles.container}>

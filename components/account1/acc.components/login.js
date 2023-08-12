@@ -10,38 +10,7 @@ import storage from '@react-native-firebase/storage';
 
 export const Login = ({ navigation, showError, showLoading }) => {
 
-    useEffect(() => {
-        console.log('han')
 
-        // const s1 = storage().ref('images/restaurants/23456789/heart.png').getDownloadURL()
-        // console.log(s1)
-
-
-        // s1.then((s) => {
-
-        //     console.log(s)
-        // }).catch((e) => {
-        //     console.log('er', e)
-
-        // })
-
-        const reference = storage().ref('images/restaurants/23456789')
-        reference.list().then(result => {
-            // Loop over each item
-            result.items.forEach(ref => {
-                ref.getDownloadURL().then((uri) => {
-
-                    console.log(uri)
-                }).catch((e) => {
-                    console.log('er', e)
-
-                })
-            });
-
-
-        });
-
-    }, [])
 
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
@@ -51,6 +20,7 @@ export const Login = ({ navigation, showError, showLoading }) => {
 
     function verifyEmail() {
         if (email) {
+            console.log(email)
             let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
             if (reg.test(email)) {
                 return true
