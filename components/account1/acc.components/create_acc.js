@@ -27,7 +27,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
             if (name.length > 2) {
                 return true
             }
-            showError('Name is to Short')
+            showError('Name is too Short')
             return false
         }
         showError('Please Enter a Name')

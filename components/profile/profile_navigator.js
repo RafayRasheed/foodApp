@@ -20,10 +20,7 @@ export const ProfileNavigator = ({ navigation, route }) => {
                 name='Profile'
                 component={Profile}
             />
-            <ProfileTAB.Screen
-                name='Favourite'
-                component={Favourite}
-            />
+
         </ProfileTAB.Navigator>
 
     )

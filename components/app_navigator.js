@@ -7,15 +7,27 @@ import { ImageViewer } from "./common/image_viewer"
 import { AccountNavigator2 } from "./account1/acc_stack"
 import { storage } from "./common"
 import { createStackNavigator } from "@react-navigation/stack"
-import { containFirstTime, containLogin } from "./functions/storageMMKV"
+import { containFirstTime, containLogin, getLogin } from "./functions/storageMMKV"
 import { ItemDetails } from "./home/item_detail_screen"
 import { Search } from "./home/search_screen"
 import { ItemSearch } from "./home/item_search_screen"
 import { RestaurantMoreDetails } from "./home/rest_more_info_screen"
+import { ProfileInfo } from "./profile/profile_info"
+import { Favourite } from "./profile/favourite_screen"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { setProfile } from "../redux/profile_reducer"
 
 const AppTAB = createStackNavigator()
 
 export const AppNavigator = () => {
+    // const dispatch = useDispatch()
+    // useEffect(() => {
+    //     if (containLogin()) {
+    //         const profile = getLogin()
+    //         dispatch(setProfile(profile))
+    //     }
+    // }, [])
     return (
         <NavigationContainer>
             <AppTAB.Navigator
@@ -36,6 +48,11 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={ItemDetails} name="ItemDetails" />
                 <AppTAB.Screen component={Search} name="Search" />
                 <AppTAB.Screen component={ItemSearch} name="ItemSearch" />
+
+
+                {/* PROFILE */}
+                <AppTAB.Screen component={ProfileInfo} name="ProfileInfo" />
+                <AppTAB.Screen component={Favourite} name="Favourite" />
 
             </AppTAB.Navigator>
         </NavigationContainer>

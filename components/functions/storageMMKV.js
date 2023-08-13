@@ -14,12 +14,22 @@ export function containFirstTime() {
 
 
 // Login
+export function containLogin() {
+    return storage.contains(saveLogin)
+}
 export function setLogin(profile) {
     storage.set(saveLogin, JSON.stringify(profile))
     return containLogin()
 }
+
 export function getLogin() {
-    return JSON.parse(storage.getString(saveLogin))
+    if (containLogin()) {
+
+        return JSON.parse(storage.getString(saveLogin))
+    } else {
+
+        return {}
+    }
 }
 
 export function deleteLogin() {
@@ -27,9 +37,6 @@ export function deleteLogin() {
     return containLogin()
 }
 
-export function containLogin() {
-    return storage.contains(saveLogin)
-}
 
 
 // Cart
