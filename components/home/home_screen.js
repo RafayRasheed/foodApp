@@ -170,10 +170,7 @@ export const HomeScreen = ({ navigation }) => {
                                                     height: myHeight(4.2), width: myHeight(4.2),
                                                     resizeMode: 'contain',
                                                 }} source={{ uri: item.image }} /> */}
-                                                {/* <Image style={{
-                                                    height: myHeight(4.2), width: myHeight(4.2),
-                                                    resizeMode: 'contain',
-                                                }} source={{ uri: item.image }} /> */}
+
                                             </View>
 
                                             <Spacer paddingEnd={myWidth(2)} />
