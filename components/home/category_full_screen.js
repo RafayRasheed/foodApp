@@ -4,17 +4,19 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Categories, Restaurants, offers } from "./home_data";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
+import { ImageUri } from "../common/image_uri";
 
-export const CategoryFull = ({ navigation }) => {
+export const CategoryFull = ({ navigation, route }) => {
     const [search, setSearch] = useState(null)
     const [filterList, setFilterList] = useState([])
+    const { categories } = route.params
 
     useEffect(() => {
         if (search) {
-            const s = Categories.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+            const s = categories.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
             setFilterList(s)
         } else {
-            setFilterList(Categories)
+            setFilterList(categories)
         }
     }, [search])
     return (
@@ -94,10 +96,11 @@ export const CategoryFull = ({ navigation }) => {
                         }} onPress={() => navigation.navigate('RestaurantAll', { name: item.name, restaurants: Restaurants })}>
                             <View style={{ paddingBottom: myHeight(1), }}>
                                 <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: myColors.background, elevation: 3, borderRadius: myWidth(5), width: myWidth(43), height: myWidth(36), }}>
-                                    <Image style={{
-                                        maxHeight: myWidth(35), maxWidth: myWidth(35),
+                                    <ImageUri width={myWidth(35)} height={myWidth(35)} resizeMode="contain" uri={item.image} />
+                                    {/* <Image style={{
+                                        height: myWidth(35), width: myWidth(35),
                                         resizeMode: 'contain',
-                                    }} source={item.image} />
+                                    }} source={{ uri: item.image }} /> */}
                                 </View>
                             </View>
                             <Text

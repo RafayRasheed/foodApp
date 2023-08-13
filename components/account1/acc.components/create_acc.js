@@ -6,7 +6,7 @@ import { myColors } from "../../../ultils/myColors";
 import { Person } from "../../functions/structures";
 import uuid from 'react-native-uuid';
 import RNSmtpMailer from "react-native-smtp-mailer";
-import { encodeInfo, verificationCode } from "../../functions/functions";
+import { dataFullData, encodeInfo, verificationCode } from "../../functions/functions";
 import firestore from '@react-native-firebase/firestore';
 import { sendVerficationEmail } from "../../functions/email";
 
@@ -27,7 +27,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
             if (name.length > 2) {
                 return true
             }
-            showError('Name is to Short')
+            showError('Name is too Short')
             return false
         }
         showError('Please Enter a Name')
@@ -72,7 +72,8 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
         navigate('Verification', { code, profile, reset: false })
     }
     function sendEmail() {
-        const profile = new Person(uuid.v4(), name, email, encodeInfo(password), new Date(), 'customer')
+        const dateData = dataFullData()
+        const profile = new Person(uuid.v4(), name, email, encodeInfo(password), dateData.date, dateData.dateInt)
         const code = verificationCode()
         sendVerficationEmail(profile, code)
             .then(success => {

@@ -7,6 +7,8 @@ import firestore from '@react-native-firebase/firestore';
 import { setLogin } from "../functions/storageMMKV";
 import { sendVerficationEmail } from "../functions/email";
 import { verificationCode } from "../functions/functions";
+import { useDispatch } from "react-redux";
+import { setProfile } from "../../redux/profile_reducer";
 
 export const Verification = ({ navigation, route }) => {
     const { code, profile, reset } = route.params
@@ -82,7 +84,9 @@ export const Verification = ({ navigation, route }) => {
     }, [])
 
     function goToLogin() {
-        setLogin(profile)
+        const dispatch = useDispatch()
+        dispatch(setProfile(profile))
+        // setLogin(profile)
         setIsLoading(false)
         navigation.replace("HomeBottomNavigator")
     }

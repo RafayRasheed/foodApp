@@ -6,11 +6,13 @@ import { myColors } from "../../../ultils/myColors";
 import firestore from '@react-native-firebase/firestore';
 import { deccodeInfo } from "../../functions/functions";
 import { setLogin } from "../../functions/storageMMKV";
-import storage from '@react-native-firebase/storage';
+import { useDispatch } from "react-redux";
+import { setProfile } from "../../../redux/profile_reducer";
 
 export const Login = ({ navigation, showError, showLoading }) => {
 
 
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
@@ -20,7 +22,6 @@ export const Login = ({ navigation, showError, showLoading }) => {
 
     function verifyEmail() {
         if (email) {
-            console.log(email)
             let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
             if (reg.test(email)) {
                 return true
@@ -32,12 +33,11 @@ export const Login = ({ navigation, showError, showLoading }) => {
     }
     function verifyPass() {
         if (password) {
-            // if (password.length > 5) {
-            //     return true
-            // }
-            // showError('Password must be at least 6 character')
-            // return false
-            return true
+            if (password.length > 5) {
+                return true
+            }
+            showError('Password must be at least 6 character')
+            return false
         }
         showError('Please Enter a Password')
         return false
@@ -51,7 +51,8 @@ export const Login = ({ navigation, showError, showLoading }) => {
     function goToLogin(myUser) {
         const decodePass = deccodeInfo(myUser.password.toString())
         if (decodePass == password) {
-            setLogin(myUser)
+            dispatch(setProfile(myUser))
+            // setLogin(myUser)
             showLoading(false)
             navigation.replace("HomeBottomNavigator")
         }

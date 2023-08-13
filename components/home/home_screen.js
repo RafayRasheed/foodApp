@@ -15,6 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import { setFavoriteItem, setFavoriteRest } from '../../redux/favorite_reducer';
 import { RestaurantInfoSkeleton } from '../common/skeletons';
 import { HomeSkeleton } from './home.component/home_skeleton';
+import { ImageUri } from '../common/image_uri';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -131,7 +132,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <TouchableOpacity style={{
                                     flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                                     paddingStart: myWidth(2)
-                                }} activeOpacity={0.6} onPress={() => navigation.navigate('CategoryFull')}>
+                                }} activeOpacity={0.6} onPress={() => navigation.navigate('CategoryFull', { categories })}>
 
                                     <Text
                                         style={[styles.textCommon, {
@@ -150,7 +151,7 @@ export const HomeScreen = ({ navigation }) => {
                             <ScrollView horizontal showsHorizontalScrollIndicator={false}
                                 contentContainerStyle={{ paddingHorizontal: myWidth(1) }}>
 
-                                {Categories.slice(0, 4).map((item, i) =>
+                                {categories.slice(0, 4).map((item, i) =>
 
                                     <View key={i} style={{ padding: myHeight(1.4), paddingEnd: myWidth(2) }}>
                                         <TouchableOpacity activeOpacity={0.8} style={{
@@ -162,13 +163,13 @@ export const HomeScreen = ({ navigation }) => {
                                             <View style={{
                                                 height: myHeight(5), width: myHeight(5), borderRadius: myHeight(5),
                                                 backgroundColor: '#00000008',
-                                                // backgroundColor:myColors.background, 
                                                 alignItems: 'center', justifyContent: 'center'
                                             }} >
-                                                <Image style={{
-                                                    maxHeight: myHeight(4.2), maxWidth: myHeight(4.2),
+                                                <ImageUri width={myHeight(4.2)} height={myHeight(4.2)} resizeMode='contain' uri={item.image} />
+                                                {/* <Image style={{
+                                                    height: myHeight(4.2), width: myHeight(4.2),
                                                     resizeMode: 'contain',
-                                                }} source={item.image} />
+                                                }} source={{ uri: item.image }} /> */}
                                             </View>
 
                                             <Spacer paddingEnd={myWidth(2)} />
