@@ -14,11 +14,11 @@ import { SelectCity } from "./select_city";
 export const AccScreen = ({ navigation }) => {
     const [onAcc, setOnAcc] = useState(false)
     const [onLogin, setOnLogin] = useState(false)
-    const [city, setCity] = useState(null)
 
     const [errorMsg, setErrorMsg] = useState(null)
     const [loading, setLoading] = useState(false)
 
+    const [city, setCity] = useState(null)
     const [showCityModal, setShowCityModal] = useState(false)
 
     function showError(message) {
@@ -26,12 +26,17 @@ export const AccScreen = ({ navigation }) => {
         setErrorMsg(message)
     }
     const onBackPress = () => {
+        if (showCityModal) {
+            setShowCityModal(false)
+            return true
+        }
         if (onAcc) {
             setOnAcc(false)
             return true
         }
         return false
     };
+
 
 
     useEffect(() => {
@@ -42,7 +47,7 @@ export const AccScreen = ({ navigation }) => {
             }
                 , errorTime)
         }
-    }, [errorMsg])
+    }, [errorMsg, showCityModal])
 
     useLayoutEffect(
         React.useCallback(() => {

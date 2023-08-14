@@ -110,6 +110,7 @@ export const ProfileInfo = ({ navigation }) => {
                 .update({
                     name: name,
                     password: encodeInfo(password),
+                    city: city
                 })
                 .then((data) => {
                     goToDone()

@@ -8,6 +8,7 @@ import { deccodeInfo } from "../../functions/functions";
 import { setLogin } from "../../functions/storageMMKV";
 import { useDispatch } from "react-redux";
 import { setProfile } from "../../../redux/profile_reducer";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export const Login = ({ navigation, showError, showLoading }) => {
 
@@ -93,6 +94,7 @@ export const Login = ({ navigation, showError, showLoading }) => {
     //     storeData("yes")
     // },[])
     return (
+
         <View style={{
             flex: 1, width: myWidth(87),
             justifyContent: 'center', justifyContent: 'space-between',

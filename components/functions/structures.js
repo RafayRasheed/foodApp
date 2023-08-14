@@ -7,4 +7,4 @@ export function Person(uid, name, email, city, password, date, dateInt,) {
     this.password = password;
     this.date = date;
     this.dateInt = dateInt;
-}
+} 
