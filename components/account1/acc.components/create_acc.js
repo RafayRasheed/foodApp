@@ -9,14 +9,14 @@ import RNSmtpMailer from "react-native-smtp-mailer";
 import { dataFullData, encodeInfo, verificationCode } from "../../functions/functions";
 import firestore from '@react-native-firebase/firestore';
 import { sendVerficationEmail } from "../../functions/email";
+import { SelectCity } from "../select_city";
 
 
-export const CreateAcc = ({ navigate, showError, showLoading }) => {
+export const CreateAcc = ({ navigate, showError, showLoading, city, setShowCityModal }) => {
     const [name, setName] = useState(null)
     // const [email, setEmail] = useState('shaheerkhan777.rr@gmail.com')
     const [email, setEmail] = useState(null)
     const [password, setPass] = useState()
-    const [verifyReg, setVerifyReg] = useState(false)
     const [hidePass, setHidePass] = useState(true);
 
     function onGoogle() {
@@ -44,6 +44,15 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
         }
         showError('Please Enter a Email')
     }
+    function verifyCity() {
+        if (city) {
+
+            return true
+
+        }
+        showError('Please Select a City')
+    }
+
 
     function verifyPass() {
         if (password) {
@@ -63,7 +72,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
     }
 
     function onVerifying() {
-        if (verifyName() && verifyEmail() && verifyPass()) {
+        if (verifyName() && verifyEmail() && verifyPass() && verifyCity()) {
             onRegister()
         }
     }
@@ -73,7 +82,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
     }
     function sendEmail() {
         const dateData = dataFullData()
-        const profile = new Person(uuid.v4(), name, email, encodeInfo(password), dateData.date, dateData.dateInt)
+        const profile = new Person(uuid.v4(), name, email, city, encodeInfo(password), dateData.date, dateData.dateInt)
         const code = verificationCode()
         sendVerficationEmail(profile, code)
             .then(success => {
@@ -119,7 +128,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
             <View>
                 {/* Name Portion */}
                 <View>
-                    <Text style={[styles.heading, { color: name ? myColors.textL4 : myColors.text }]}>Full Name</Text>
+                    <Text style={[styles.heading, { color: myColors.text }]}>Full Name</Text>
                     <View style={styles.containerInput}>
 
                         <TextInput placeholder="Enter Your Full Name"
@@ -134,7 +143,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                 <Spacer paddingT={myHeight(0.98)} />
                 {/* email Portion */}
                 <View>
-                    <Text style={[styles.heading, { color: email ? myColors.textL4 : myColors.text }]}>Email address</Text>
+                    <Text style={[styles.heading, { color: myColors.text }]}>Email address</Text>
                     <View style={styles.containerInput}>
 
                         <TextInput placeholder="Eg namaemail@emailkamu.com"
@@ -151,7 +160,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                 <Spacer paddingT={myHeight(0.98)} />
                 {/* password Portion */}
                 <View>
-                    <Text style={[styles.heading, { color: password ? myColors.textL4 : myColors.text }]}>Password</Text>
+                    <Text style={[styles.heading, { color: myColors.text }]}>Password</Text>
                     <View style={styles.containerInput}>
                         <TextInput placeholder="Password"
                             placeholderTextColor={myColors.textL4}
@@ -166,13 +175,38 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Spacer paddingT={myHeight(0.98)} />
+                {/* city Portion */}
+                <View>
+                    <Text style={[styles.heading, { color: myColors.text }]}>City</Text>
+
+                    <TouchableOpacity activeOpacity={0.8} style={styles.containerInput} onPress={() => setShowCityModal(true)}>
+                        <View>
+                            <Image style={{
+                                height: myHeight(2.8),
+                                width: myHeight(2.8),
+                                paddingHorizontal: myWidth(4),
+                                resizeMode: 'contain',
+                            }}
+                                source={require('../../assets/account/flag.png')} />
+                        </View>
+                        <Spacer paddingEnd={myWidth(1)} />
+                        <TextInput placeholder="Select Your City"
+                            placeholderTextColor={myColors.textL4}
+                            style={styles.input} cursorColor={myColors.primary}
+                            value={city}
+                            editable={false}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={{ alignItems: 'center' }}>
                 {/* Button Register */}
                 <TouchableOpacity onPress={onVerifying}
                     activeOpacity={0.8}
                     style={[styles.button]}>
-                    <Text style={styles.textReg}>Registration</Text>
+                    <Text style={styles.textReg}>Register</Text>
+
                 </TouchableOpacity>
 
                 <Spacer paddingT={myHeight(1.2)} />
@@ -186,6 +220,7 @@ export const CreateAcc = ({ navigate, showError, showLoading }) => {
                     <Text style={styles.textGoogle}>Sign up with Google</Text>
                 </TouchableOpacity>
             </View>
+
         </View>
 
     )

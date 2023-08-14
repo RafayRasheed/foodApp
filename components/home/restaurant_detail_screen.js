@@ -164,7 +164,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
             // height:'100%',
             //    position:'absolute', left:0,
             backgroundColor: myColors.background,
-            marginTop: -myHeight(3),
+            marginTop: -myHeight(6),
             borderRadius: myHeight(3),
             borderTopStartRadius: myHeight(3),
             borderTopEndRadius: myHeight(3),

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deccodeInfo, encodeInfo } from '../functions/functions';
 import firestore from '@react-native-firebase/firestore';
 import { setProfile } from '../../redux/profile_reducer';
+import { SelectCity } from '../account1/select_city';
 
 
 export const ProfileInfo = ({ navigation }) => {
@@ -23,6 +24,9 @@ export const ProfileInfo = ({ navigation }) => {
     const [hidePass, setHidePass] = useState(true);
     const [isEditMode, setIsEditMode] = useState(false)
     const [errorMsg, setErrorMsg] = useState(null)
+    const [city, setCity] = useState(profile.city)
+    const [showCityModal, setShowCityModal] = useState(false)
+
 
     const disptach = useDispatch()
     useEffect(() => {
@@ -61,7 +65,7 @@ export const ProfileInfo = ({ navigation }) => {
     function checking() {
         if (isEditMode) {
 
-            if (profile.name == name && pass == password) {
+            if (profile.name == name && pass == password && city == profile.city) {
                 setIsEditMode(false)
                 return false
 
@@ -77,6 +81,7 @@ export const ProfileInfo = ({ navigation }) => {
                     return false
                 }
             }
+
             return true
         }
 
@@ -91,6 +96,7 @@ export const ProfileInfo = ({ navigation }) => {
             ...profile,
             name: name,
             password: encodeInfo(password),
+            city: city
         }
         disptach(setProfile(updaProfile))
         setIsEditMode(false)
@@ -189,6 +195,38 @@ export const ProfileInfo = ({ navigation }) => {
                     </View>
 
                 </View>
+                <Spacer paddingT={myHeight(0.98)} />
+
+                {/* City */}
+                <View>
+                    <Text style={[styles.heading, { color: myColors.text }]}>City</Text>
+                    <TouchableOpacity activeOpacity={isEditMode ? 0.8 : 1} onPress={() => {
+                        if (isEditMode) {
+
+                            setShowCityModal(true)
+                        }
+                    }}
+                        style={[styles.containerInput, { borderColor: isEditMode ? myColors.primaryT : myColors.textL4 }]}>
+                        <View>
+                            <Image style={{
+                                height: myHeight(2.8),
+                                width: myHeight(2.8),
+                                paddingHorizontal: myWidth(4),
+                                resizeMode: 'contain',
+                            }}
+                                source={require('../assets/account/flag.png')} />
+                        </View>
+                        <Spacer paddingEnd={myWidth(1)} />
+                        <TextInput placeholder="Select Your City"
+                            placeholderTextColor={myColors.textL4}
+                            autoCorrect={false}
+                            editable={false}
+                            style={[styles.input,]} cursorColor={myColors.primary}
+                            value={city}
+                        />
+                    </TouchableOpacity>
+                </View>
+
             </View>
 
 
@@ -210,6 +248,9 @@ export const ProfileInfo = ({ navigation }) => {
 
             {isLoading && <Loader />}
             {errorMsg && <MyError message={errorMsg} />}
+            {showCityModal &&
+                <SelectCity showCityModal={setShowCityModal} setCity={setCity} city={city} />
+            }
 
         </SafeAreaView>
     )

@@ -30,6 +30,7 @@ export const Verification = ({ navigation, route }) => {
     const [seconds, setSeconds] = useState(30);
 
 
+    const dispatch = useDispatch()
 
 
 
@@ -84,7 +85,6 @@ export const Verification = ({ navigation, route }) => {
     }, [])
 
     function goToLogin() {
-        const dispatch = useDispatch()
         dispatch(setProfile(profile))
         // setLogin(profile)
         setIsLoading(false)
@@ -104,7 +104,7 @@ export const Verification = ({ navigation, route }) => {
             })
             .catch(err => {
                 showError('Something wrong')
-                console.log('Internal error while register user')
+                console.log('Internal error while register user', err)
             })
     }
 
