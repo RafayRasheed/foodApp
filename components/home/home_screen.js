@@ -11,7 +11,7 @@ import { RestRating } from './rest_rating_screen';
 import { getCartLocal, getLogin } from '../functions/storageMMKV';
 import { setCart } from '../../redux/cart_reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
+import firestore, { Filter } from '@react-native-firebase/firestore';
 import { setFavoriteItem, setFavoriteRest } from '../../redux/favorite_reducer';
 import { RestaurantInfoSkeleton } from '../common/skeletons';
 import { HomeSkeleton } from './home.component/home_skeleton';
@@ -24,6 +24,8 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState(null)
+    const profile = getLogin()
+
 
     const dispatch = useDispatch()
     function getCategories() {
@@ -44,9 +46,32 @@ export const HomeScreen = ({ navigation }) => {
             console.log('Error on Get Category', er)
         })
     }
+
+    function getNearbyRestuarant() {
+        firestore().collection('restaurants')
+            .where('update', '==', true)
+            .where('city', '==', profile.city)
+            .orderBy('dateInt', 'desc').get().then((result) => {
+                if (!result.empty) {
+                    result.forEach((res) => {
+                        // catArray.push(cat.data())
+                        console.log(res.data())
+                    })
+                    // setCategories(catArray)
+
+                }
+                else {
+                    console.log('empty')
+
+                    // setCategories(catArray)
+                }
+            }).catch((er) => {
+                console.log('Error on Get Restaurant', er)
+            })
+    }
     // re.turn (<Test />)
     useEffect(() => {
-        const profile = getLogin()
+        getNearbyRestuarant()
         getCategories()
 
         firestore().collection('users').doc(profile.uid).get()
