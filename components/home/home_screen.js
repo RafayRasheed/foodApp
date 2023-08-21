@@ -51,11 +51,12 @@ export const HomeScreen = ({ navigation }) => {
         firestore().collection('restaurants')
             .where('update', '==', true)
             .where('city', '==', profile.city)
-            .orderBy('dateInt', 'desc').get().then((result) => {
+            .orderBy('dateInt', 'desc').limit(10).get().then((result) => {
                 if (!result.empty) {
                     result.forEach((res) => {
                         // catArray.push(cat.data())
-                        console.log(res.data())
+                        console.log('.........................................................')
+                        console.log(res.data().name)
                     })
                     // setCategories(catArray)
 
@@ -72,7 +73,6 @@ export const HomeScreen = ({ navigation }) => {
     // re.turn (<Test />)
     useEffect(() => {
         getNearbyRestuarant()
-        getCategories()
 
         firestore().collection('users').doc(profile.uid).get()
             .then((data) => {
@@ -89,6 +89,7 @@ export const HomeScreen = ({ navigation }) => {
             }).catch((er) => {
                 console.log('Error on Get Users for fav', er)
             })
+        getCategories()
         dispatch(setCart(getCartLocal()))
 
     }, [])
