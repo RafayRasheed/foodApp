@@ -45,7 +45,7 @@ export const ItemInfo = ({ item }) => {
                     height: myHeight(10),
                     resizeMode: 'contain',
                 }}
-                source={item.images[0]}
+                source={item.image}
             />
             <Spacer paddingEnd={myWidth(3)} />
 

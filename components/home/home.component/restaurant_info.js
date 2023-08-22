@@ -5,19 +5,20 @@ import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
 import { useDispatch, useSelector } from 'react-redux'
 import { addFavoriteRest, removeFavoriteRest } from '../../../redux/favorite_reducer'
+import { ImageUri } from '../../common/image_uri'
 export const RestaurantInfo = ({ restaurant }) => {
 
     const { favoriteRestuarnt } = useSelector(state => state.favorite)
     const dispatch = useDispatch()
 
-    const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+    const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.uid)
     const [isFav, setIsFav] = useState(checkFav != null)
 
     function changeFav() {
         if (!isFav) {
-            dispatch(addFavoriteRest({ resId: restaurant.id }))
+            dispatch(addFavoriteRest({ resId: restaurant.uid }))
         } else {
-            dispatch(removeFavoriteRest({ resId: restaurant.id }))
+            dispatch(removeFavoriteRest({ resId: restaurant.uid }))
         }
         setIsFav(!isFav)
     }
@@ -29,19 +30,19 @@ export const RestaurantInfo = ({ restaurant }) => {
             <View style={styles.container}>
                 {/* Image & Others*/}
 
-                <ImageBackground style={{
+                <View style={{
                     height: myHeight(14.5),
                     width: '100%',
-                    resizeMode: 'cover',
+                    // resizeMode: 'cover',
                     // borderRadius: myWidth(2.5),
                     borderTopRightRadius: myWidth(2.5),
                     borderTopLeftRadius: myWidth(2.5),
                     overflow: 'hidden'
-                }} source={restaurant.images[0]}>
+                }} >
+                    <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={restaurant.images[0].toString()} />
 
-
-                    <Spacer paddingT={myHeight(0.8)} />
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {/* <Spacer paddingT={myHeight(0.8)} /> */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', position: 'absolute', top: myHeight(0.8) }}>
 
                         <View style={{ flex: 1 }}>
 
@@ -69,11 +70,17 @@ export const RestaurantInfo = ({ restaurant }) => {
                         </TouchableOpacity>
                     </View>
 
-                </ImageBackground>
+                </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* Icon */}
                     <View style={styles.containerIcon}>
-                        <Image style={styles.imageIcon} source={restaurant.icon} />
+                        <View style={styles.imageIcon}>
+                            {/* {console.log(restaurant)} */}
+
+                            <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={restaurant.icon} />
+                        </View>
+
+                        {/* <Image style={styles.imageIcon} source={restaurant.icon} /> */}
                     </View>
 
                     {/* Rating & Delivery Time */}
@@ -280,9 +287,10 @@ const styles = StyleSheet.create({
         height: myHeight(6),
         width: myHeight(6),
         borderRadius: myHeight(4),
-        resizeMode: 'contain',
         borderWidth: myHeight(0.2),
         borderColor: myColors.background,
+        overflow: 'hidden',
+        zIndex: 10
     },
     imageVeri: {
         height: myHeight(1.2),

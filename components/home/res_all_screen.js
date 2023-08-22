@@ -1,17 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, ScrollView, FlatList, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts"
 import { myColors } from "../../ultils/myColors"
 import { Categories, offers } from "./home_data";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
 import { RestaurantInfo } from "./home.component/restaurant_info";
 import { RestaurantInfoFull } from "./home.component/restaurant_info_full";
+import { useSelector } from "react-redux";
 
 export const RestaurantAll = ({ navigation, route }) => {
-    const { restaurants } = route.params
     const { name } = route.params
+    let restaurants = []
+    const data = useSelector(State => State.data)
+
+    const [filterRes, setFilterRes] = useState([])
+
     const [search, setSearch] = useState(null)
 
+    useEffect(() => {
+        if (search) {
+            const newR = filterRes.filter(res => res.name.toLowerCase().includes(search.toLowerCase()))
+            setFilterRes(newR)
+            // if (name == 'New Arrivals' || name == 'Recommended') {
+            // }
+
+            // else {
+            //     const newR = filterRes.filter(res => res.categories.findIndex(name) != -1)
+            //     setFilterRes(newR)
+            // }
+
+        } else {
+            if (name == 'New Arrivals') {
+
+                setFilterRes(data.nearby)
+            }
+            else if (name == 'Recommended') {
+                setFilterRes(data.recommend)
+            }
+            else {
+                const newR = data.AllRest.filter(res => res.categories.findIndex(cat => cat == name) != -1)
+                //  console.log()
+                setFilterRes(newR)
+                // setFilterRes(data.AllRest)
+
+            }
+        }
+    }, [search])
     return (
         <View style={{ paddingHorizontal: myWidth(0), flex: 1, backgroundColor: myColors.background }}>
             <StatusbarH />
@@ -74,15 +108,25 @@ export const RestaurantAll = ({ navigation, route }) => {
                 borderColor: myColors.offColor, width: "100%"
             }} /> */}
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <FlatList
+                data={filterRes}
+                keyExtractor={item => item.uid}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) =>
+                    <TouchableOpacity activeOpacity={0.95}
+                        onPress={() => navigation.navigate('RestaurantDetail', { item })} >
+                        <RestaurantInfoFull restaurant={item} />
+                    </TouchableOpacity>}
+            />
+            {/* <ScrollView showsVerticalScrollIndicator={false}>
 
-                {restaurants.map((item, i) =>
+                {filterRes.map((item, i) =>
                     <TouchableOpacity key={i} activeOpacity={0.95}
                         onPress={() => navigation.navigate('RestaurantDetail', { item })} >
                         <RestaurantInfoFull restaurant={item} />
                     </TouchableOpacity>
                 )}
-            </ScrollView>
+            </ScrollView> */}
         </View>
     )
 }

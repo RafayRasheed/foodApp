@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
+import { SafeAreaView, Alert, ScrollView, StyleSheet, TouchableOpacity, Image, View, Text, FlatList, Modal, UIManager, LayoutAnimation } from 'react-native'
 import { MyError, Spacer, StatusbarH, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
@@ -16,6 +16,8 @@ import { setFavoriteItem, setFavoriteRest } from '../../redux/favorite_reducer';
 import { RestaurantInfoSkeleton } from '../common/skeletons';
 import { HomeSkeleton } from './home.component/home_skeleton';
 import { ImageUri } from '../common/image_uri';
+import storage from '@react-native-firebase/storage';
+import { setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -24,6 +26,8 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState(null)
+    const [nearbyRestaurant, setNearbyRestaurant] = useState([])
+    const [RecommendRestaurant, setRecommendRestaurant] = useState([])
     const profile = getLogin()
 
 
@@ -47,18 +51,27 @@ export const HomeScreen = ({ navigation }) => {
         })
     }
 
-    function getNearbyRestuarant() {
+    function getTopRatedRes() {
         firestore().collection('restaurants')
             .where('update', '==', true)
             .where('city', '==', profile.city)
-            .orderBy('dateInt', 'desc').limit(10).get().then((result) => {
+            .orderBy('rating', 'desc').get().then((result) => {
                 if (!result.empty) {
-                    result.forEach((res) => {
+                    let rest = []
+                    const size = result.size
+                    result.forEach((res, i) => {
+                        rest.push(res.data())
                         // catArray.push(cat.data())
-                        console.log('.........................................................')
-                        console.log(res.data().name)
+                        if (size > 4 && i == 4) {
+                            setRecommendRestaurant(rest)
+                        }
+
+                        // console.log(res.data().name)
                     })
-                    // setCategories(catArray)
+                    if (size <= 5) {
+                        setRecommendRestaurant(rest)
+                    }
+                    dispatch(setRecommend(rest))
 
                 }
                 else {
@@ -70,9 +83,73 @@ export const HomeScreen = ({ navigation }) => {
                 console.log('Error on Get Restaurant', er)
             })
     }
+    function getNearbyRestuarant() {
+
+        firestore().collection('restaurants')
+            .where('update', '==', true)
+            .where('city', '==', profile.city)
+            .orderBy('dateInt', 'desc').get().then((result) => {
+                if (!result.empty) {
+                    let rest = []
+                    const size = result.size
+                    result.forEach((res, i) => {
+                        rest.push(res.data())
+                        // catArray.push(cat.data())
+                        if (size > 4 && i == 4) {
+                            setNearbyRestaurant(rest)
+                        }
+
+                        // console.log(res.data().name)
+                    })
+                    if (size <= 5) {
+                        setNearbyRestaurant(rest)
+                    }
+                    dispatch(setNearby(rest))
+
+                }
+                else {
+                    console.log('empty')
+
+                    // setCategories(catArray)
+                }
+            }).catch((er) => {
+                console.log('Error on Get top rated Restaurant', er)
+            })
+    }
+
+    function getAllRestuarant() {
+        firestore().collection('restaurants')
+            .where('update', '==', true)
+            .where('city', '==', profile.city)
+            .get().then((result) => {
+                if (!result.empty) {
+                    let rest = []
+
+                    result.forEach((res, i) => {
+                        rest.push(res.data())
+                        // catArray.push(cat.data())
+
+                    })
+                    dispatch(setAllRest(rest))
+
+                }
+                else {
+
+                    console.log('empty')
+
+
+                    // setCategories(catArray)
+                }
+            }).catch((er) => {
+                // Alert.alert(er.toString())
+
+                console.log('Error on Get all Restaurant', er)
+            })
+    }
     // re.turn (<Test />)
     useEffect(() => {
         getNearbyRestuarant()
+        getTopRatedRes()
 
         firestore().collection('users').doc(profile.uid).get()
             .then((data) => {
@@ -91,6 +168,7 @@ export const HomeScreen = ({ navigation }) => {
             })
         getCategories()
         dispatch(setCart(getCartLocal()))
+        getAllRestuarant()
 
     }, [])
     useEffect(() => {
@@ -155,7 +233,7 @@ export const HomeScreen = ({ navigation }) => {
                                 }]}>Categories</Text>
 
                                 {/* See all */}
-                                <TouchableOpacity style={{
+                                {/* <TouchableOpacity style={{
                                     flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                                     paddingStart: myWidth(2)
                                 }} activeOpacity={0.6} onPress={() => navigation.navigate('CategoryFull', { categories })}>
@@ -170,14 +248,14 @@ export const HomeScreen = ({ navigation }) => {
                                         height: myHeight(1.5), width: myHeight(1.5), marginStart: myWidth(1),
                                         resizeMode: 'contain', tintColor: myColors.primaryT
                                     }} source={require('../assets/home_main/home/go.png')} />
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
 
                             <Spacer paddingT={myHeight(0.3)} />
                             <ScrollView horizontal showsHorizontalScrollIndicator={false}
                                 contentContainerStyle={{ paddingHorizontal: myWidth(1) }}>
 
-                                {categories.slice(0, 4).map((item, i) =>
+                                {categories.map((item, i) =>
 
                                     <View key={i} style={{ padding: myHeight(1.4), paddingEnd: myWidth(2) }}>
                                         <TouchableOpacity activeOpacity={0.8} style={{
@@ -228,7 +306,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <TouchableOpacity style={{
                                     flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                                     paddingStart: myWidth(2)
-                                }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'New Arrivals', restaurants: Restaurants })}>
+                                }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'New Arrivals' })}>
 
                                     <Text
                                         style={[styles.textCommon, {
@@ -250,7 +328,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <View style={{
                                     flexDirection: 'row',
                                 }}>
-                                    {Restaurants.map((item, i) =>
+                                    {nearbyRestaurant.map((item, i) =>
                                         <TouchableOpacity key={i} activeOpacity={0.95}
                                             onPress={() => navigation.navigate('RestaurantDetail', { item })} >
                                             <RestaurantInfo restaurant={item} />
@@ -269,12 +347,12 @@ export const HomeScreen = ({ navigation }) => {
                                 <Text style={[styles.textCommon, {
                                     fontSize: myFontSize.xxBody,
                                     fontFamily: myFonts.bodyBold,
-                                }]}>Nearby Restaurants</Text>
+                                }]}>Recommended</Text>
 
                                 <TouchableOpacity style={{
                                     flexDirection: 'row', alignItems: 'center', paddingVertical: myHeight(0.4),
                                     paddingStart: myWidth(2)
-                                }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'Nearby Restaurants', restaurants: Restaurants })}>
+                                }} activeOpacity={0.6} onPress={() => navigation.navigate('RestaurantAll', { name: 'Recommended', restaurants: Restaurants })}>
 
                                     <Text
                                         style={[styles.textCommon, {
@@ -296,7 +374,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <View style={{
                                     flexDirection: 'row',
                                 }}>
-                                    {Restaurants.map((item, i) =>
+                                    {RecommendRestaurant.map((item, i) =>
                                         <TouchableOpacity key={i} activeOpacity={0.95}
                                             onPress={() => navigation.navigate('RestaurantDetail', { item })} >
                                             <RestaurantInfo restaurant={item} />

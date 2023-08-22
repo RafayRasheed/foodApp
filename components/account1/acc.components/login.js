@@ -96,9 +96,9 @@ export const Login = ({ navigation, showError, showLoading }) => {
     return (
 
         <View style={{
-            flex: 1, width: myWidth(87),
+            flex: 1, width: myWidth(87), height: myHeight(78),
             justifyContent: 'center', justifyContent: 'space-between',
-            marginVertical: myHeight(4)
+            marginVertical: myHeight(4),
         }}>
             <View>
                 {/* email Portion */}
@@ -146,7 +146,6 @@ export const Login = ({ navigation, showError, showLoading }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-
             {/* <Spacer paddingT={myHeight(4.1)} /> */}
             <View style={{ alignItems: 'center' }}>
                 {/* Button Login */}
