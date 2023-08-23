@@ -11,6 +11,7 @@ import { ItemInfo } from './home.component/item_info';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavoriteRest, removeFavoriteRest } from '../../redux/favorite_reducer';
 import { useFocusEffect } from '@react-navigation/native';
+import { ImageUri } from '../common/image_uri';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
@@ -19,8 +20,24 @@ export const RestaurantDetail = ({ navigation, route }) => {
   const { foodCategory } = restaurant;
   const [selectCat, setSelectCat] = useState(null);
   const [currentItem, setCurrentItems] = useState([]);
-
+  const [allItems, setAllItems] = useState([])
   //Back Functions
+  useEffect(() => {
+    let alIt = []
+    foodCategory.map((subCat, ind) => {
+      const items = subCat.items
+
+
+      items?.map((item, i) => {
+        alIt.push(item)
+
+      })
+
+    }
+
+    )
+    setAllItems(alIt)
+  }, [])
 
   const onBackPress = () => {
 
@@ -76,14 +93,14 @@ export const RestaurantDetail = ({ navigation, route }) => {
   const { favoriteRestuarnt } = useSelector(state => state.favorite)
   const dispatch = useDispatch()
 
-  const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.id)
+  const checkFav = favoriteRestuarnt.find(redID => redID == restaurant.uid)
   const [isFav, setIsFav] = useState(checkFav != null)
 
   function changeFav() {
     if (!isFav) {
-      dispatch(addFavoriteRest({ resId: restaurant.id }))
+      dispatch(addFavoriteRest({ resId: restaurant.uid }))
     } else {
-      dispatch(removeFavoriteRest({ resId: restaurant.id }))
+      dispatch(removeFavoriteRest({ resId: restaurant.uid }))
     }
     setIsFav(!isFav)
   }
@@ -93,14 +110,15 @@ export const RestaurantDetail = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: myColors.background }}>
 
-      <ImageBackground style={{
+      <View style={{
         width: '100%',
         height: myHeight(28),
 
         borderBottomLeftRadius: myWidth(4),
         borderBottomRightRadius: myWidth(4),
         overflow: 'hidden',
-      }} source={restaurant?.images[0]}>
+      }} >
+        <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={restaurant.images[0].toString()} />
 
         {/* Back */}
         <TouchableOpacity
@@ -141,7 +159,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
             }}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('ItemSearch', { items: restaurant.foodCategory, restaurant })}>
+            onPress={() => navigation.navigate('ItemSearch', { items: allItems, restaurant })}>
             <Image
               style={{
                 width: myHeight(2.6),
@@ -154,7 +172,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
 
         </View>
 
-      </ImageBackground>
+      </View>
 
       {/* Content */}
       <View style={{}}>
@@ -175,19 +193,22 @@ export const RestaurantDetail = ({ navigation, route }) => {
             //    backgroundColor:'#ffffff30'
           }}>
           {/* Icon */}
-          <Image
+          <View
             style={{
               width: myHeight(6.5),
               height: myHeight(6.5),
-              resizeMode: 'contain',
               borderRadius: myHeight(6),
               borderWidth: myHeight(0.15),
               marginTop: -myHeight(3),
               borderColor: myColors.primaryT,
               alignSelf: 'center',
-            }}
-            source={restaurant.icon}
-          />
+              overflow: 'hidden'
+            }}>
+
+            <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={restaurant.icon} borderRadius={5000} />
+          </View>
+
+
           {/* Heart */}
           <TouchableOpacity
             style={{
@@ -453,32 +474,21 @@ export const RestaurantDetail = ({ navigation, route }) => {
             </View>
             :
             <View>
-              {
-                foodCategory.map((subCat, ind) => {
-                  const items = subCat.items
-                  return (
-                    <View key={ind}>
-                      {items?.map((item, i) =>
-                        <TouchableOpacity
-                          style={{
 
-                          }}
-                          key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
+              {allItems?.map((item, i) =>
+                <TouchableOpacity
+                  style={{
 
-                          <ItemInfo item={item} />
+                  }}
+                  key={i} activeOpacity={0.9} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
+
+                  <ItemInfo item={item} />
 
 
-                        </TouchableOpacity>
-                      )
-                      }
-                    </View>
-                  )
-
-
-                }
-
-                )
+                </TouchableOpacity>
+              )
               }
+
             </View>
           }
         </View>

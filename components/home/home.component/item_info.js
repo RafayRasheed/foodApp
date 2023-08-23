@@ -5,6 +5,7 @@ import { myFontSize, myFonts, myLetSpacing } from "../../../ultils/myFonts"
 import { myColors } from "../../../ultils/myColors"
 import { useDispatch, useSelector } from "react-redux"
 import { addFavoriteItem, removeFavoriteItem } from "../../../redux/favorite_reducer"
+import { ImageUri } from "../../common/image_uri"
 
 
 export const ItemInfo = ({ item }) => {
@@ -39,14 +40,9 @@ export const ItemInfo = ({ item }) => {
             borderColor: myColors.divider
         }} >
 
-            <Image
-                style={{
-                    width: myHeight(10),
-                    height: myHeight(10),
-                    resizeMode: 'contain',
-                }}
-                source={item.image}
-            />
+
+            <ImageUri width={myHeight(10)} height={myHeight(10)} resizeMode='cover' uri={item.image} />
+
             <Spacer paddingEnd={myWidth(3)} />
 
             <View style={{ flex: 1 }}>

@@ -12,7 +12,7 @@ const cartReducer = createSlice({
             let checkRest = null
 
             state.cart.map((res) => {
-                if (res.restaurant.id == action.payload.restaurant.id) {
+                if (res.restaurant.uid == action.payload.restaurant.uid) {
                     checkRest = res
                 }
                 else {
@@ -84,7 +84,7 @@ const cartReducer = createSlice({
             restIndex = null
             checkRes = null
             state.cart.map((res, i) => {
-                if (res.restaurant.id == action.payload.resId) {
+                if (res.restaurant.uid == action.payload.resId) {
                     restIndex = i
                     checkRes = res
                     checkRes.cartItems = checkRes.cartItems.filter(item => item.item.id !== action.payload.item.Id && item.item.optionsId != action.payload.item.optionsId)
@@ -99,7 +99,7 @@ const cartReducer = createSlice({
 
         },
         removeResCart(state, action) {
-            state.cart = state.cart.filter(res => res.restaurant.id !== action.payload.resId)
+            state.cart = state.cart.filter(res => res.restaurant.uid !== action.payload.resId)
             setCartLocal(state.cart)
 
         },

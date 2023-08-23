@@ -11,11 +11,55 @@ import { Restaurants } from './home_data';
 import { RestaurantInfoFull } from './home.component/restaurant_info_full';
 import Lottie from 'lottie-react-native';
 import { Filter } from './home.component/filter';
+import { useSelector } from 'react-redux';
+import { ItemInfo } from './home.component/item_info';
+const CommonFaci = ({ name, fac, setFAc }) => (
+    <TouchableOpacity activeOpacity={0.75}
+        onPress={() => {
+            setFAc(!fac)
+        }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <View style={{
+                height: myHeight(3.5),
+                width: myHeight(3.5),
+                paddingTop: myHeight(0.75)
+            }}>
+                <View style={{ width: myHeight(2.2), height: myHeight(2.2), borderWidth: 1.5, borderColor: myColors.textL4 }} />
+                {
+                    fac &&
+                    <Image style={{
+                        height: myHeight(3.5),
+                        width: myHeight(3.5),
+                        resizeMode: 'contain',
+                        tintColor: myColors.primaryT,
+                        marginTop: -myHeight(3.3)
+                    }} source={require('../assets/home_main/home/check2.png')} />
+                }
+            </View>
+            <Spacer paddingEnd={myWidth(1)} />
+            <Text style={[styles.textCommon,
+            {
+                fontFamily: myFonts.bodyBold,
+                fontSize: myFontSize.xBody,
 
+            }]}>{name}</Text>
+        </View>
+    </TouchableOpacity>
+)
+function containString(contain, thiss) {
+    return (contain.toLowerCase().includes(thiss.toLowerCase()))
+}
 export const Search = ({ navigation }) => {
+    const { AllItems, AllRest } = useSelector(State => State.data)
+
     const [search, setSearch] = useState(null)
     const [load, setLoad] = useState(null)
     const [filterModal, setFilterModal] = useState(null)
+    const [DineIn, setDineIn] = useState(false)
+    const [Delivery, setDelivery] = useState(false)
+    const [TakeAway, setTakeAway] = useState(false)
+    const [filterItems, setFilterItems] = useState([])
+    // const [fullRest, setFullRest] = useState([])
 
     const Loader = () => (
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -41,21 +85,30 @@ export const Search = ({ navigation }) => {
             </View>
         </View>
     )
+    function onGoToItem(item) {
+        const restaurant = AllRest.filter(res => res.uid == item.resId)[0]
+        console.log(restaurant)
+        navigation.navigate('ItemDetails', { item, restaurant })
+    }
     useEffect(() => {
 
-        if (search && search.length == 1) {
-            setLoad(true)
+        if (search) {
+            const newR = AllItems?.filter(item => (Delivery ? item.homeDelivery == true : true) && (TakeAway ? item.takeAway == true : true) && (DineIn ? item.dineIn == true : true) && (containString(item.name, search) || containString(item.subCatName, search) || containString(item.catName, search)))
+            setFilterItems(newR)
         }
-    }, [search])
+        else {
+            setFilterItems([])
+        }
+    }, [search, DineIn, TakeAway, Delivery])
 
 
-    useEffect(() => {
-        if (load) {
-            setTimeout(() =>
-                setLoad(false)
-                , 3000)
-        }
-    }, [load])
+    // useEffect(() => {
+    //     if (load) {
+    //         setTimeout(() =>
+    //             setLoad(false)
+    //             , 3000)
+    //     }
+    // }, [DineIn, TakeAway, Delivery])
     return (
 
         <>
@@ -89,7 +142,7 @@ export const Search = ({ navigation }) => {
                             }} source={require('../assets/home_main/home/back.png')} />
                         </TouchableOpacity>
                         <Spacer paddingEnd={myWidth(2.5)} />
-                        <TextInput placeholder=" Search Any reastaurants"
+                        <TextInput placeholder=" Search Any Item"
                             placeholderTextColor={myColors.textL5}
                             autoCorrect={false}
                             selectionColor={myColors.primaryT}
@@ -107,8 +160,7 @@ export const Search = ({ navigation }) => {
                         // value={search} onChangeText={(val) => null}
                         />
                     </View>
-                    <Spacer paddingEnd={myWidth(3)} />
-                    {/* Filter */}
+                    {/* <Spacer paddingEnd={myWidth(3)} />
                     <TouchableOpacity activeOpacity={0.8} onPress={() => setFilterModal(true)} style={{}}>
                         <Image style={{
                             height: myHeight(4.2),
@@ -116,36 +168,42 @@ export const Search = ({ navigation }) => {
                             resizeMode: 'contain',
                             tintColor: myColors.textL0
                         }} source={require('../assets/home_main/home/filter.png')} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
+                <Spacer paddingT={myHeight(1.5)} />
 
+                <View style={{ marginHorizontal: myWidth(5), flexDirection: 'row', justifyContent: 'space-between' }}>
 
+                    <CommonFaci name={'Dine In'} fac={DineIn} setFAc={setDineIn} />
+                    <CommonFaci name={'Delivery'} fac={Delivery} setFAc={setDelivery} />
+                    <CommonFaci name={'Take Away'} fac={TakeAway} setFAc={setTakeAway} />
+                </View>
                 {/* Icon Empty Or Content */}
 
                 {
-                    load ? <Loader /> :
-                        (search) ?
-                            <View style={{ flex: 1 }}>
-                                <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
-                                    <Spacer paddingT={myHeight(1.3)} />
 
-                                    {Restaurants.map((item, i) =>
-                                        <TouchableOpacity key={i} activeOpacity={0.85} onPress={() => navigation.navigate("RestaurantDetail", { item })}>
-                                            <RestaurantInfoFull restaurant={item} />
-                                        </TouchableOpacity>
-                                    )}
-                                </ScrollView>
-                            </View>
-                            :
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Lottie
-                                    autoPlay={true}
-                                    loop={true}
-                                    source={require('../assets/lottie/food.json')}
-                                    style={{ height: myHeight(27), width: myHeight(27), marginTop: -myHeight(3) }}
+                    (search) ?
+                        <View style={{ flex: 1 }}>
+                            <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                                <Spacer paddingT={myHeight(1.3)} />
 
-                                />
-                            </View>
+                                {filterItems.map((item, i) =>
+                                    <TouchableOpacity key={i} activeOpacity={0.85} onPress={() => onGoToItem(item)}>
+                                        <ItemInfo item={item} />
+                                    </TouchableOpacity>
+                                )}
+                            </ScrollView>
+                        </View>
+                        :
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Lottie
+                                autoPlay={true}
+                                loop={true}
+                                source={require('../assets/lottie/food.json')}
+                                style={{ height: myHeight(27), width: myHeight(27), marginTop: -myHeight(3) }}
+
+                            />
+                        </View>
                 }
 
             </SafeAreaView>

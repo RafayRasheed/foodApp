@@ -17,7 +17,7 @@ import { RestaurantInfoSkeleton } from '../common/skeletons';
 import { HomeSkeleton } from './home.component/home_skeleton';
 import { ImageUri } from '../common/image_uri';
 import storage from '@react-native-firebase/storage';
-import { setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
+import { setAllItems, setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -28,6 +28,9 @@ export const HomeScreen = ({ navigation }) => {
     const [categories, setCategories] = useState(null)
     const [nearbyRestaurant, setNearbyRestaurant] = useState([])
     const [RecommendRestaurant, setRecommendRestaurant] = useState([])
+
+
+
     const profile = getLogin()
 
 
@@ -58,10 +61,25 @@ export const HomeScreen = ({ navigation }) => {
             .orderBy('rating', 'desc').get().then((result) => {
                 if (!result.empty) {
                     let rest = []
+                    let items = []
+
+
                     const size = result.size
                     result.forEach((res, i) => {
-                        rest.push(res.data())
-                        // catArray.push(cat.data())
+                        const restaurant = res.data()
+                        rest.push(restaurant)
+                        restaurant.foodCategory.map((subCat, ind) => {
+                            subCat.items?.map((item, i) => {
+                                const newItem = {
+                                    ...item,
+                                    homeDelivery: restaurant.homeDelivery,
+                                    takeAway: restaurant.takeAway,
+                                    dineIn: restaurant.dineIn
+                                }
+                                items.push(newItem)
+                            })
+
+                        })
                         if (size > 4 && i == 4) {
                             setRecommendRestaurant(rest)
                         }
@@ -72,6 +90,9 @@ export const HomeScreen = ({ navigation }) => {
                         setRecommendRestaurant(rest)
                     }
                     dispatch(setRecommend(rest))
+                    dispatch(setAllItems(items))
+                    dispatch(setAllRest(rest))
+
 
                 }
                 else {
@@ -124,12 +145,21 @@ export const HomeScreen = ({ navigation }) => {
             .get().then((result) => {
                 if (!result.empty) {
                     let rest = []
+                    let items = []
 
                     result.forEach((res, i) => {
-                        rest.push(res.data())
+                        const restaurant = res.data()
+                        rest.push(restaurant)
+                        restaurant.foodCategory.map((subCat, ind) => {
+                            subCat.items?.map((item, i) => {
+                                items.push(item)
+                            })
+
+                        })
                         // catArray.push(cat.data())
 
                     })
+
                     dispatch(setAllRest(rest))
 
                 }
@@ -167,8 +197,8 @@ export const HomeScreen = ({ navigation }) => {
                 console.log('Error on Get Users for fav', er)
             })
         getCategories()
+        // getAllRestuarant()
         dispatch(setCart(getCartLocal()))
-        getAllRestuarant()
 
     }, [])
     useEffect(() => {
@@ -269,7 +299,7 @@ export const HomeScreen = ({ navigation }) => {
                                                 backgroundColor: '#00000008',
                                                 alignItems: 'center', justifyContent: 'center'
                                             }} >
-                                                <ImageUri width={myHeight(4.2)} height={myHeight(4.2)} resizeMode='contain' uri={item.image} />
+                                                <ImageUri width={myHeight(4.2)} height={myHeight(4.2)} resizeMode='contain' uri={item.image} borderRadius={5000} />
                                                 {/* <Image style={{
                                                     height: myHeight(4.2), width: myHeight(4.2),
                                                     resizeMode: 'contain',

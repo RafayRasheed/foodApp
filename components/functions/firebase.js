@@ -13,7 +13,7 @@ export function uploadFavouriteFirebase(newFav, type) {
             { favoriteItem: newFav }
     ).then(() => {
     }).catch((err) => {
-        console.log('err uploadFavouriteFirebase')
+        console.log('err uploadFavouriteFirebase', err)
     })
 
 }

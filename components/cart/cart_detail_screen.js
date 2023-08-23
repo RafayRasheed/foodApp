@@ -8,13 +8,14 @@ import { myFontSize, myFonts, myLetSpacing } from "../../ultils/myFonts";
 import { myColors } from "../../ultils/myColors";
 import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
 import { addCart, removeItemCart, removeResCart } from "../../redux/cart_reducer";
+import { ImageUri } from "../common/image_uri";
 
 
 export const CartDetail = ({ navigation, route }) => {
     const dispatch = useDispatch()
     const { restaurant } = route.params
     const { cart } = useSelector(state => state.cart)
-    const resCart = cart.filter(res => res.restaurant.id == restaurant.id)[0]
+    const resCart = cart.filter(res => res.restaurant.uid == restaurant.uid)[0]
     const { cartItems } = resCart
 
     function addToCart(item, quantity, totalPrice) {
@@ -22,11 +23,11 @@ export const CartDetail = ({ navigation, route }) => {
         // navigation.goBack()
     }
     function removeItem(item, totalPrice) {
-        dispatch(removeItemCart({ resId: restaurant.id, item, totalPrice }))
+        dispatch(removeItemCart({ resId: restaurant.uid, item, totalPrice }))
     }
 
     function removeAll() {
-        dispatch(removeResCart({ resId: restaurant.id }))
+        dispatch(removeResCart({ resId: restaurant.uid }))
         navigation.goBack()
     }
     return (
@@ -90,12 +91,14 @@ export const CartDetail = ({ navigation, route }) => {
                                 backgroundColor: myColors.background, elevation: 4.5,
                                 paddingVertical: myHeight(0.8),
                             }}>
-                                <Image style={{
+                                {/* <Image style={{
                                     width: myHeight(10),
                                     height: myHeight(10),
                                     resizeMode: 'contain',
                                     borderRadius: myWidth(1.5)
-                                }} source={item.images[0]} />
+                                }} source={item.images[0]} /> */}
+                                <ImageUri borderRadius={myWidth(1.5)} width={myHeight(10)} height={myHeight(10)} resizeMode='cover' uri={item.image} />
+
 
                                 <Spacer paddingEnd={myWidth(2.5)} />
                                 <View style={{ flex: 1 }}>

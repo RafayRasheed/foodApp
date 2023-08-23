@@ -4,6 +4,7 @@ import { Spacer, StatusBarShow, StatusbarH, ios, myHeight, myWidth } from '../co
 import { myColors } from '../../ultils/myColors';
 import { myFonts, myLetSpacing, myFontSize } from '../../ultils/myFonts';
 import { useSelector, useDispatch } from 'react-redux'
+import { ImageUri } from '../common/image_uri';
 
 
 
@@ -66,14 +67,19 @@ export const Cart = ({ navigation }) => {
                                     flexDirection: 'row', paddingBottom: myHeight(2),
                                     alignItems: 'center'
                                 }}>
-                                    <Image style={{
-                                        height: myHeight(7.8),
-                                        width: myHeight(7.8),
-                                        resizeMode: 'cover',
-                                        borderRadius: myWidth(1),
-                                        overflow: 'hidden'
 
-                                    }} source={res.restaurant.images[0]} />
+
+                                    <View
+                                        style={{
+                                            height: myHeight(7.8),
+                                            width: myHeight(7.8),
+                                            borderRadius: myWidth(1),
+                                            overflow: 'hidden'
+                                        }}
+                                    >
+                                        <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={res.restaurant.images[0].toString()} />
+
+                                    </View>
                                     <Spacer paddingEnd={myWidth(2.5)} />
 
                                     {/* Name & Price & Go*/}

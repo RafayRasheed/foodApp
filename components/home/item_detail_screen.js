@@ -10,6 +10,7 @@ import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { useSelector, useDispatch } from 'react-redux'
 import { addCart, removeItemCart } from '../../redux/cart_reducer';
 import { addFavoriteItem, removeFavoriteItem } from '../../redux/favorite_reducer';
+import { ImageUri } from '../common/image_uri';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
@@ -180,13 +181,8 @@ export const ItemDetails = ({ navigation, route }) => {
                             marginTop: StatusBar.currentHeight + myHeight(1.5)
                         }}>
 
-                            <Image style={{
-                                height: myHeight(22),
-                                width: myHeight(22),
-                                resizeMode: 'cover',
-                            }}
-                                source={item?.images[0]}
-                            />
+                            <ImageUri width={myHeight(22)} height={myHeight(22)} resizeMode='cover' borderRadius={5000} uri={item.image} />
+
                         </View>
 
                         {/* Name */}
@@ -291,31 +287,34 @@ export const ItemDetails = ({ navigation, route }) => {
 
                             </View>
                         </View>
+                        {item.description &&
+                            <View>
+                                <Spacer paddingT={myHeight(1.3)} />
+                                <Text
+                                    style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.body3,
+                                            fontFamily: myFonts.heading,
+                                            color: myColors.text,
+                                        },
+                                    ]}>Details</Text>
 
-                        <Spacer paddingT={myHeight(1.3)} />
-                        <Text
-                            style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body3,
-                                    fontFamily: myFonts.heading,
-                                    color: myColors.text,
-                                },
-                            ]}>Details</Text>
-
-                        <Spacer paddingT={myHeight(0.3)} />
-                        {/* Description */}
-                        <Text
-                            style={[
-                                styles.textCommon,
-                                {
-                                    fontSize: myFontSize.body2,
-                                    fontFamily: myFonts.bodyBold,
-                                    color: myColors.textL4,
-                                },
-                            ]}>
-                            {item.description}
-                        </Text>
+                                <Spacer paddingT={myHeight(0.3)} />
+                                {/* Description */}
+                                <Text
+                                    style={[
+                                        styles.textCommon,
+                                        {
+                                            fontSize: myFontSize.body2,
+                                            fontFamily: myFonts.bodyBold,
+                                            color: myColors.textL4,
+                                        },
+                                    ]}>
+                                    {item.description}
+                                </Text>
+                            </View>
+                        }
 
                         <Spacer paddingT={myHeight(2.5)} />
 
@@ -338,13 +337,9 @@ export const ItemDetails = ({ navigation, route }) => {
                                 borderRadius: myHeight(60), overflow: 'hidden',
                                 borderWidth: myHeight(0.15), borderColor: myColors.offColor
                             }}>
-                                <Image style={{
-                                    height: myHeight(6),
-                                    width: myHeight(6),
-                                    resizeMode: 'cover',
-                                }}
-                                    source={restaurant?.images[0]}
-                                />
+
+                                <ImageUri width={myHeight(6)} height={myHeight(6)} resizeMode='cover' uri={restaurant.icon} borderRadius={5000} />
+
                             </View>
 
                             {/* Details */}
@@ -632,20 +627,22 @@ export const ItemDetails = ({ navigation, route }) => {
                             backgroundColor: myColors.background, borderRadius: myWidth(6)
                         }}>
 
-                        <Image
+                        <View
                             style={{
                                 width: myHeight(12),
                                 height: myHeight(12),
-                                resizeMode: 'contain',
                                 borderRadius: myHeight(10),
                                 borderWidth: myHeight(0.15),
                                 marginTop: -myHeight(5),
                                 borderColor: myColors.primaryT,
                                 alignSelf: 'center',
+                                overflow: 'hidden',
                                 backgroundColor: myColors.background
                             }}
-                            source={item.images[0]}
-                        />
+                        >
+                            <ImageUri width={'100%'} height={'100%'} resizeMode='cover' uri={item.image.toString()} />
+
+                        </View>
                         <Spacer paddingT={myHeight(1)} />
                         <Text
                             numberOfLines={1}
