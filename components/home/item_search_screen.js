@@ -9,12 +9,16 @@ import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Lottie from 'lottie-react-native';
 import { ItemInfo } from './home.component/item_info';
-
+function containString(contain, thiss) {
+    return (contain.toLowerCase().includes(thiss.toLowerCase()))
+}
 export const ItemSearch = ({ navigation, route }) => {
     const [search, setSearch] = useState(null)
     const [load, setLoad] = useState(null)
     const { items } = route.params
     const { restaurant } = route.params
+    const [filterItem, setFilterItem] = useState([])
+
 
     const Loader = () => (
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -42,9 +46,14 @@ export const ItemSearch = ({ navigation, route }) => {
     )
     useEffect(() => {
 
-        if (search && search.length == 1) {
-            setLoad(true)
+        if (search) {
+            const newR = items.filter(item => (containString(item.name, search) || containString(item.subCatName, search) || containString(item.catName, search)))
+            setFilterItem(newR)
         }
+        else {
+            setFilterItem([])
+        }
+
     }, [search])
 
 
@@ -111,27 +120,23 @@ export const ItemSearch = ({ navigation, route }) => {
 
                 {
                     load ? <Loader /> :
-                        (search) ?
-                            <View style={{ flex: 1 }}>
-                                <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
-                                    <Spacer paddingT={myHeight(1.3)} />
 
-                                    {items?.map((cat, i) =>
-                                        <View key={i}>
-                                            {cat?.items?.map((item, i) =>
-                                                <View>
-                                                    <TouchableOpacity key={i} activeOpacity={0.85} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
-                                                        <ItemInfo item={item} />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )}
+                        <View style={{ flex: 1 }}>
+                            <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                                <Spacer paddingT={myHeight(1.3)} />
 
-                                        </View>
-                                    )}
-                                </ScrollView>
-                            </View>
-                            :
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                {filterItem?.map((item, i) =>
+                                    <TouchableOpacity key={i} activeOpacity={0.85} onPress={() => navigation.navigate('ItemDetails', { item, restaurant })}>
+                                        <ItemInfo item={item} />
+                                    </TouchableOpacity>
+                                )}
+
+
+                            </ScrollView>
+                        </View>
+
+                }
+                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <Lottie
                                     autoPlay={true}
                                     loop={true}
@@ -139,8 +144,7 @@ export const ItemSearch = ({ navigation, route }) => {
                                     style={{ height: myHeight(27), width: myHeight(27), marginTop: -myHeight(3) }}
 
                                 />
-                            </View>
-                }
+                            </View> */}
 
             </SafeAreaView>
 

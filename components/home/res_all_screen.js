@@ -7,20 +7,62 @@ import { Spacer, StatusbarH, myHeight, myWidth } from "../common";
 import { RestaurantInfo } from "./home.component/restaurant_info";
 import { RestaurantInfoFull } from "./home.component/restaurant_info_full";
 import { useSelector } from "react-redux";
+const CommonFaci = ({ name, fac, setFAc }) => (
+    <TouchableOpacity activeOpacity={0.75}
+        onPress={() => {
+            setFAc(!fac)
+        }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <View style={{
+                height: myHeight(3.5),
+                width: myHeight(3.5),
+                paddingTop: myHeight(0.75)
+            }}>
+                <View style={{ width: myHeight(2.2), height: myHeight(2.2), borderWidth: 1.5, borderColor: myColors.textL4 }} />
+                {
+                    fac &&
+                    <Image style={{
+                        height: myHeight(3.5),
+                        width: myHeight(3.5),
+                        resizeMode: 'contain',
+                        tintColor: myColors.primaryT,
+                        marginTop: -myHeight(3.3)
+                    }} source={require('../assets/home_main/home/check2.png')} />
+                }
+            </View>
+            <Spacer paddingEnd={myWidth(1)} />
+            <Text style={[styles.textCommon,
+            {
+                fontFamily: myFonts.bodyBold,
+                fontSize: myFontSize.xBody,
 
+            }]}>{name}</Text>
+        </View>
+    </TouchableOpacity>
+)
+function containString(contain, thiss) {
+    return (contain.toLowerCase().includes(thiss.toLowerCase()))
+}
 export const RestaurantAll = ({ navigation, route }) => {
     const { name } = route.params
     let restaurants = []
     const data = useSelector(State => State.data)
 
     const [filterRes, setFilterRes] = useState([])
+    const [fullRest, setFullRest] = useState([])
 
     const [search, setSearch] = useState(null)
+    const [DineIn, setDineIn] = useState(false)
+    const [Delivery, setDelivery] = useState(false)
+    const [TakeAway, setTakeAway] = useState(false)
+    const [first, setFirst] = useState(true)
+
 
     useEffect(() => {
-        if (search) {
-            const newR = filterRes.filter(res => res.name.toLowerCase().includes(search.toLowerCase()))
+        if (!first) {
+            const newR = fullRest.filter(res => (search ? containString(res.name, search) : true) && (Delivery ? res.homeDelivery == true : true) && (TakeAway ? res.takeAway == true : true) && (DineIn ? res.dineIn == true : true))
             setFilterRes(newR)
+
             // if (name == 'New Arrivals' || name == 'Recommended') {
             // }
 
@@ -29,23 +71,29 @@ export const RestaurantAll = ({ navigation, route }) => {
             //     setFilterRes(newR)
             // }
 
-        } else {
+        }
+        else {
             if (name == 'New Arrivals') {
-
                 setFilterRes(data.nearby)
+                setFullRest(data.nearby)
             }
             else if (name == 'Recommended') {
                 setFilterRes(data.recommend)
+                setFullRest(data.recommend)
+
             }
             else {
-                const newR = data.AllRest.filter(res => res.categories.findIndex(cat => cat == name) != -1)
+                const newR = data.AllRest.filter(res => (res.categories.findIndex(cat => cat == name) != -1))
                 //  console.log()
                 setFilterRes(newR)
+                setFullRest(newR)
+
                 // setFilterRes(data.AllRest)
 
             }
         }
-    }, [search])
+        setFirst(false)
+    }, [search, Delivery, DineIn, TakeAway])
     return (
         <View style={{ paddingHorizontal: myWidth(0), flex: 1, backgroundColor: myColors.background }}>
             <StatusbarH />
@@ -103,6 +151,12 @@ export const RestaurantAll = ({ navigation, route }) => {
                 </View>
             </View>
             <Spacer paddingT={myHeight(1.5)} />
+            <View style={{ marginHorizontal: myWidth(5), flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                <CommonFaci name={'Dine In'} fac={DineIn} setFAc={setDineIn} />
+                <CommonFaci name={'Delivery'} fac={Delivery} setFAc={setDelivery} />
+                <CommonFaci name={'Take Away'} fac={TakeAway} setFAc={setTakeAway} />
+            </View>
             {/* <View style={{
                 borderTopWidth: myHeight(0.1), alignSelf: 'flex-end',
                 borderColor: myColors.offColor, width: "100%"
