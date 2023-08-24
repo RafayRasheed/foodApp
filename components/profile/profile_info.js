@@ -101,6 +101,7 @@ export const ProfileInfo = ({ navigation }) => {
         disptach(setProfile(updaProfile))
         setIsEditMode(false)
         setIsLoading(false)
+        navigation.goBack()
 
     }
     function onSave() {

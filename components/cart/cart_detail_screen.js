@@ -30,6 +30,10 @@ export const CartDetail = ({ navigation, route }) => {
         dispatch(removeResCart({ resId: restaurant.uid }))
         navigation.goBack()
     }
+
+    function goToCheckout() {
+        navigation.navigate('Checkout', { restaurant })
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background, }}>
             <View style={{
@@ -306,6 +310,7 @@ export const CartDetail = ({ navigation, route }) => {
                         }]}>Add More Items</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.85}
+                        onPress={goToCheckout}
                         style={{
                             flex: 0.5,
                             paddingVertical: myHeight(1),

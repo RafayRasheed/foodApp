@@ -12,6 +12,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { deleteLogin } from "../functions/storageMMKV";
 import { useSelector } from "react-redux";
 import { ProfileNavigator } from "../profile/profile_navigator";
+import { OrderScreen } from "../orders/orders_screen";
 
 const Tab = createBottomTabNavigator()
 
@@ -129,7 +130,7 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
                 initialRouteName="HOME"
             >
                 <Tab.Screen name="HOME" component={HomeNavigator} />
-                <Tab.Screen name="ORDERS" component={Xr} />
+                <Tab.Screen name="ORDERS" component={OrderScreen} />
                 <Tab.Screen name="HOT" component={Xr} />
                 <Tab.Screen name="CART" component={CartNavigator} />
                 <Tab.Screen name="PROFILE" component={ProfileNavigator} />

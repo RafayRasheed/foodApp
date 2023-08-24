@@ -17,6 +17,7 @@ import { Favourite } from "./profile/favourite_screen"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setProfile } from "../redux/profile_reducer"
+import { Checkout } from "./cart/checkout"
 
 const AppTAB = createStackNavigator()
 
@@ -53,6 +54,7 @@ export const AppNavigator = () => {
                 {/* PROFILE */}
                 <AppTAB.Screen component={ProfileInfo} name="ProfileInfo" />
                 <AppTAB.Screen component={Favourite} name="Favourite" />
+                <AppTAB.Screen component={Checkout} name="Checkout" />
 
             </AppTAB.Navigator>
         </NavigationContainer>

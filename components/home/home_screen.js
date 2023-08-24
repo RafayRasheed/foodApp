@@ -18,6 +18,7 @@ import { HomeSkeleton } from './home.component/home_skeleton';
 import { ImageUri } from '../common/image_uri';
 import storage from '@react-native-firebase/storage';
 import { setAllItems, setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
+import { setHistoryOrderse, setPendingOrderse, setProgressOrderse } from '../../redux/order_reducer';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -31,7 +32,6 @@ export const HomeScreen = ({ navigation }) => {
     const [nearbyRestaurant, setNearbyRestaurant] = useState([])
     const [RecommendRestaurant, setRecommendRestaurant] = useState([])
     const [startPro, setStartPro] = useState({})
-
 
 
 
@@ -184,6 +184,38 @@ export const HomeScreen = ({ navigation }) => {
                 console.log('Error on Get all Restaurant', er)
             })
     }
+
+
+    function gettingOrders() {
+        // -1=rejected
+        // -2=cancelled
+        // 100= completed
+        // 0 = pending 
+        // 1 = inProgress
+        firestore().collection('orders').doc(profile.uid).collection('orders')
+            .onSnapshot(documentSnapshot => {
+                let pending = []
+                let progress = []
+                let history = []
+                documentSnapshot.forEach(documentSnapshot1 => {
+
+                    const order = documentSnapshot1.data()
+                    if (order.status == -1 || order.status == 100 || order.status == -2) {
+                        history.push(order)
+                    }
+                    else if (order.status == 0) {
+                        pending.push(order)
+                    }
+                    else {
+                        progress.push(order)
+                    }
+                });
+                dispatch(setPendingOrderse(pending))
+                dispatch(setHistoryOrderse(history))
+                dispatch(setProgressOrderse(progress))
+            });
+
+    }
     // re.turn (<Test />)
     useEffect(() => {
         getNearbyRestuarant()
@@ -205,10 +237,39 @@ export const HomeScreen = ({ navigation }) => {
                 console.log('Error on Get Users for fav', er)
             })
         getCategories()
-        // getAllRestuarant()
         dispatch(setCart(getCartLocal()))
+        // gettingOrders()
+
 
     }, [profile])
+
+    useEffect(() => {
+        const subscriber = firestore().collection('orders').doc(profile.uid).collection('orders')
+            .onSnapshot(documentSnapshot => {
+                let pending = []
+                let progress = []
+                let history = []
+                documentSnapshot.forEach(documentSnapshot1 => {
+                    const order = documentSnapshot1.data()
+                    if (order.status == -1 || order.status == 100 || order.status == -2) {
+                        history.push(order)
+                    }
+                    else if (order.status == 0) {
+                        pending.push(order)
+                    }
+                    else {
+                        progress.push(order)
+                    }
+                });
+                dispatch(setPendingOrderse(pending))
+                dispatch(setHistoryOrderse(history))
+                dispatch(setProgressOrderse(progress))
+            });
+
+        // Stop listening for updates when no longer required
+        return () => subscriber();
+    }, []);
+
     useEffect(() => {
         if (categories) {
             setIsLoading(false)
