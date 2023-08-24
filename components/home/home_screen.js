@@ -24,14 +24,16 @@ if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
 }
 export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
+    const { profile } = useSelector(state => state.profile)
+
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState(null)
     const [nearbyRestaurant, setNearbyRestaurant] = useState([])
     const [RecommendRestaurant, setRecommendRestaurant] = useState([])
+    const [startPro, setStartPro] = useState({})
 
 
 
-    const profile = getLogin()
 
 
     const dispatch = useDispatch()
@@ -59,6 +61,7 @@ export const HomeScreen = ({ navigation }) => {
             .where('update', '==', true)
             .where('city', '==', profile.city)
             .orderBy('rating', 'desc').get().then((result) => {
+                console.log('sdgsgseg')
                 if (!result.empty) {
                     let rest = []
                     let items = []
@@ -97,7 +100,11 @@ export const HomeScreen = ({ navigation }) => {
                 }
                 else {
                     console.log('empty')
+                    setRecommendRestaurant([])
 
+                    dispatch(setRecommend([]))
+                    dispatch(setAllItems([]))
+                    dispatch(setAllRest([]))
                     // setCategories(catArray)
                 }
             }).catch((er) => {
@@ -130,7 +137,8 @@ export const HomeScreen = ({ navigation }) => {
                 }
                 else {
                     console.log('empty')
-
+                    setNearbyRestaurant([])
+                    dispatch(setNearby([]))
                     // setCategories(catArray)
                 }
             }).catch((er) => {
@@ -200,7 +208,7 @@ export const HomeScreen = ({ navigation }) => {
         // getAllRestuarant()
         dispatch(setCart(getCartLocal()))
 
-    }, [])
+    }, [profile])
     useEffect(() => {
         if (categories) {
             setIsLoading(false)
