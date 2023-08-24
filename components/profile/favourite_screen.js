@@ -10,25 +10,46 @@ import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { useSelector } from 'react-redux';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { ItemSkeleton, RestaurantInfoSkeleton, RestaurantInfoSkeletonHori } from '../common/skeletons';
+import { ItemInfo } from '../home/home.component/item_info';
+import { RestaurantInfoFull } from '../home/home.component/restaurant_info_full';
 
 
 export const Favourite = ({ navigation }) => {
     const [i, setI] = useState(0)
+    const { AllItems, AllRest } = useSelector(State => State.data)
+
     const { favoriteItem, favoriteRestuarnt } = useSelector(state => state.favorite)
+
     const restaurantLength = favoriteRestuarnt.length
     const ItemLength = favoriteItem.length
+    const [favItems, setFavItems] = useState([])
+    const [favRest, setFavRest] = useState([])
     const [isLoadingRes, setIsLoadingRes] = useState(true)
     const [isLoadingItem, setIsLoadingItem] = useState(true)
     useEffect(() => {
 
     }, [])
 
+    function onGoToItem(item) {
+        const restaurant = AllRest.filter(res => res.uid == item.resId)[0]
+        console.log(restaurant)
+        navigation.navigate('ItemDetails', { item, restaurant })
+    }
+
     useEffect(() => {
         setIsLoadingItem(ItemLength != 0)
+        const favI = AllItems.filter(item => favoriteItem.findIndex(fi => fi.itemId == item.id) != -1)
+        setFavItems(favI)
+        setIsLoadingItem(false)
+
+
     }, [favoriteItem])
 
     useEffect(() => {
         setIsLoadingRes(restaurantLength != 0)
+        const favR = AllRest.filter(res => favoriteRestuarnt.findIndex(fr => fr == res.uid) != -1)
+        setFavRest(favR)
+        setIsLoadingRes(false)
     }, [favoriteRestuarnt])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.background }}>
@@ -115,7 +136,67 @@ export const Favourite = ({ navigation }) => {
             {/* Line */}
             <View style={{ height: myHeight(0.3), backgroundColor: myColors.divider }} />
 
+            {
+                (!favRest.length && i == 0) &&
+                <Text style={[styles.textCommon, {
+                    fontFamily: myFonts.bodyBold,
+                    fontSize: myFontSize.medium0,
+                    alignSelf: 'center',
+                    textAlignVertical: 'center',
+                    marginTop: myHeight(2)
+                }]}>{'No Restaurants Found!'}</Text>
+            }
+            {
+                (!favItems.length && i == 1) &&
+                <Text style={[styles.textCommon, {
 
+                    fontFamily: myFonts.bodyBold,
+                    fontSize: myFontSize.medium0,
+                    alignSelf: 'center',
+                    textAlignVertical: 'center',
+                    marginTop: myHeight(2)
+
+                }]}>{'No Items Found!'}</Text>
+            }
+            {/* {(!isLoadingItem && ItemLength && i == 1) &&
+                <View style={{ flex: 1 }}>
+                    <ScrollView contentContainerStyle={{ paddingHorizontal: myWidth(4.1) }} showsVerticalScrollIndicator={false}>
+                        <Spacer paddingT={myHeight(1.3)} />
+
+                        {favItems.map((item, i) =>
+                            <TouchableOpacity key={i} activeOpacity={0.85} onPress={() => onGoToItem(item)}>
+                                <ItemInfo item={item} />
+                            </TouchableOpacity>
+                        )}
+                    </ScrollView>
+                </View>
+            } */}
+
+            <FlatList
+                data={i == 0 ? favRest : favItems}
+                keyExtractor={item => i == 0 ? item.uid : item.id}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => {
+                    if (i == 0) {
+                        return (
+
+                            <TouchableOpacity activeOpacity={0.95}
+                                onPress={() => navigation.navigate('RestaurantDetail', { item })} >
+                                <RestaurantInfoFull restaurant={item} />
+                            </TouchableOpacity>
+                        )
+                    } else {
+                        return (
+
+                            <TouchableOpacity key={i} activeOpacity={0.85} style={{ marginHorizontal: myWidth(4) }} onPress={() => onGoToItem(item)}>
+                                <ItemInfo item={item} />
+                            </TouchableOpacity>
+                        )
+                    }
+                }
+
+                }
+            />
             <Spacer paddingT={myHeight(1)} />
 
             {/* Loading for Restaurant */}
@@ -148,26 +229,7 @@ export const Favourite = ({ navigation }) => {
             {/* <FlatList
                
             /> */}
-            {
-                (!restaurantLength && i == 0) &&
-                <Text style={[styles.textCommon, {
-                    flex: 1,
-                    fontFamily: myFonts.bodyBold,
-                    fontSize: myFontSize.medium0,
-                    alignSelf: 'center',
-                    textAlignVertical: 'center',
-                }]}>{'No Restaurants Found!'}</Text>
-            }
-            {
-                (!ItemLength && i == 1) &&
-                <Text style={[styles.textCommon, {
-                    flex: 1,
-                    fontFamily: myFonts.bodyBold,
-                    fontSize: myFontSize.medium0,
-                    alignSelf: 'center',
-                    textAlignVertical: 'center',
-                }]}>{'No Items Found!'}</Text>
-            }
+
         </SafeAreaView>
     )
 }

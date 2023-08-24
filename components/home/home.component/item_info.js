@@ -37,6 +37,7 @@ export const ItemInfo = ({ item }) => {
             elevation: 5, marginVertical: myHeight(1),
             borderRadius: myWidth(2),
             borderWidth: myHeight(0.15),
+            overflow: 'hidden',
             borderColor: myColors.divider
         }} >
 
