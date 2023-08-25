@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
+import { StyleSheet, Alert, TextInput, TouchableOpacity, View, SafeAreaView, Image, Text, ScrollView, StatusBar, Easing } from 'react-native';
 import { Loader, MyError, Spacer, errorTime, ios, myHeight, myWidth } from '../common';
 import { myFonts, myLetSpacing, myFontSize } from '../../ultils/myFonts';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { myColors } from '../../ultils/myColors';
 import firestore, { Filter } from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
 import { StatusbarH } from '../common';
 import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
 import { dataFullData, verificationCode } from '../functions/functions';
+import { removeResCart } from '../../redux/cart_reducer';
 
 export const Checkout = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false)
@@ -20,16 +22,21 @@ export const Checkout = ({ navigation, route }) => {
     const { cart } = useSelector(state => state.cart)
     const resCart = cart.filter(res => res.restaurant.uid == restaurant.uid)[0]
     const [onDelivery, setOnDelivery] = useState(true)
-    const total = Math.round(parseInt(resCart.subTotal) + parseInt(restaurant.delivery))
+    const total = resCart ? Math.round(parseInt(resCart.subTotal) + parseInt(restaurant.delivery)) : 0
 
 
-    const [addressUpdate, setAddressUpdate] = useState('WEARTERYTUIOIOIDTAFEGT DY DFY DY D')
-    const [address, setAddress] = useState('WEARTERYTUIOIOIDTAFEGT DY DFY DY D')
+    // const [addressUpdate, setAddressUpdate] = useState('WEARTERYTUIOIOIDTAFEGT DY DFY DY D')
+    // const [address, setAddress] = useState('WEARTERYTUIOIOIDTAFEGT DY DFY DY D')
+    const [addressUpdate, setAddressUpdate] = useState(null)
+    const [address, setAddress] = useState(null)
     const [showAddressModal, setShowAddressModal] = useState(false)
 
 
-    const [phoneUpdate, setPhoneUpdate] = useState('03308246728')
-    const [phone, setPhone] = useState('03308246728')
+    // const [phoneUpdate, setPhoneUpdate] = useState('03308246728')
+    // const [phone, setPhone] = useState('03308246728')
+
+    const [phoneUpdate, setPhoneUpdate] = useState(null)
+    const [phone, setPhone] = useState(null)
     const [showPhoneModal, setShowPhoneModal] = useState(false)
 
     const [showOrderPickModal, setShowOrderPickModal] = useState(null)
@@ -45,40 +52,20 @@ export const Checkout = ({ navigation, route }) => {
                 , errorTime)
         }
     }, [errorMsg])
-    function gettingOrders() {
-        // -1=rejected
-        // -2=cancelled
-        // 100= completed
-        // 0 = pending 
-        // 1 = inProgress
-        firestore().collection('orders').doc(profile.uid).collection('orders').get()
 
-            .then(querySnapshot => {
-
-                querySnapshot.forEach(documentSnapshot => {
-                    const order = documentSnapshot.data()
-                    if (order.status == -1 || order.status == 100 || order.status == -2) {
-
-                    }
-                    else if (order.status == 0) {
-
-                    }
-                    else {
-
-                    }
-                    // console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-                });
-            });
-        // .catch((er) => {
-        //     // Alert.alert(er.toString())
-
-        //     console.log('Error on Get orders', er)
-        // })
-    }
     useEffect(() => {
-        gettingOrders()
+
     })
+    function done() {
+
+        navigation.navigate('HomeScreen')
+        dispatch(removeResCart({ resId: restaurant.uid }))
+        setIsLoading(false)
+
+    }
     function onPlaceOrder() {
+        const dateData = dataFullData()
+
         if (onAddAddress() && onAddPhone()) {
             setIsLoading(true)
             const dateData = dataFullData()
@@ -89,7 +76,7 @@ export const Checkout = ({ navigation, route }) => {
                 name: restaurant.name,
                 image: restaurant.images[0],
                 dateInt: dateData.dateInt,
-                date: dateData.date,
+                date: dateData.date + "  " + dateData.time,
                 userId: profile.uid,
                 address,
                 phone,
@@ -98,26 +85,52 @@ export const Checkout = ({ navigation, route }) => {
                     total
                 },
                 status: 0,
+                statusT: 'Pending',
                 read: false,
+                delivery: parseInt(restaurant.delivery),
+                deliveryCharges: restaurant.deliveryCharges
+
             }
-            firestore().collection('orders').doc(restaurant.uid).collection('orders').doc(orderId.toString()).set(order).then((data) => {
-                firestore().collection('orders').doc(profile.uid).collection('orders').doc(orderId.toString()).set(order).then((data) => {
-                    setIsLoading(false)
-                    navigation.navigate('HomeScreen')
-                    dispatch(removeResCart({ resId: restaurant.uid }))
+            database()
+                .ref(`/orders/${restaurant.uid}/${orderId.toString()}`)
+                .set(order)
+                .then(() => {
+                    database()
+                        .ref(`/orders/${profile.uid}/${orderId.toString()}`)
+                        .set(order)
+                        .then(() => {
+                            done()
+                        })
+                        .catch((er) => {
+                            console.log('Error on set order', er)
+                            setErrorMsg('Something Wrong')
 
-
-                }).catch((er) => {
-
+                        })
+                })
+                .catch((er) => {
                     console.log('Error on set order', er)
                     setErrorMsg('Something Wrong')
+
                 })
+            // firestore().collection('orders').doc(restaurant.uid).collection('orders').doc(orderId.toString()).set(order)
+            //     .then((data) => {
+            //         firestore().collection('orders').doc(profile.uid).collection('orders').doc(orderId.toString()).set(order).then((data) => {
+            //             done()
 
-            }).catch((er) => {
-                console.log('Error on set order', er)
-                setErrorMsg('Something Wrong')
+            //         }).catch((er) => {
 
-            })
+            //             console.log('Error on set order', er)
+            //             setErrorMsg('Something Wrong')
+            //         })
+
+            //     }).catch((er) => {
+            //         console.log('Error on set order', er)
+            //         setErrorMsg('Something Wrong')
+
+            //     })
+
+
+
         }
     }
 
@@ -190,6 +203,7 @@ export const Checkout = ({ navigation, route }) => {
             }}>
                 <StatusbarH />
 
+                <Spacer paddingT={myHeight(1.2)} />
 
                 <View style={{
                     flexDirection: 'row', paddingHorizontal: myWidth(4),
@@ -271,6 +285,7 @@ export const Checkout = ({ navigation, route }) => {
                             fontSize: myFontSize.body2,
                             fontFamily: myFonts.bodyBold,
                         }]}>{restaurant.delivery} minutes</Text>
+
 
 
                     </View>
@@ -467,7 +482,7 @@ export const Checkout = ({ navigation, route }) => {
                     {/* Pricing */}
                     <View style={{ marginHorizontal: myWidth(2.5) }}>
                         {/* Subtotal  */}
-                        <PricingRow title={'Subtotal'} value={resCart.subTotal} fontFamily={myFonts.bodyBold} fontSize={myFontSize.body2} />
+                        <PricingRow title={'Subtotal'} value={resCart?.subTotal} fontFamily={myFonts.bodyBold} fontSize={myFontSize.body2} />
 
                         <Spacer paddingT={myHeight(1)} />
                         {/* Delivery Fees */}

@@ -18,6 +18,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { setProfile } from "../redux/profile_reducer"
 import { Checkout } from "./cart/checkout"
+import { OrderDetails } from "./orders/order_detail_screen"
 
 const AppTAB = createStackNavigator()
 
@@ -55,6 +56,8 @@ export const AppNavigator = () => {
                 <AppTAB.Screen component={ProfileInfo} name="ProfileInfo" />
                 <AppTAB.Screen component={Favourite} name="Favourite" />
                 <AppTAB.Screen component={Checkout} name="Checkout" />
+                <AppTAB.Screen component={OrderDetails} name="OrderDetails" />
+
 
             </AppTAB.Navigator>
         </NavigationContainer>

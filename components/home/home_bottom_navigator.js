@@ -44,6 +44,8 @@ const Icons = {
 
 const screenOptions = ({ navigator, route }) => {
     const { cart } = useSelector(state => state.cart)
+    const { progress } = useSelector(state => state.orders)
+
     const name = route.name
     return {
         headerShown: false,
@@ -83,6 +85,24 @@ const screenOptions = ({ navigator, route }) => {
                                     paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(1)
                                 }}>
                                     <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>{cart.length}</Text>
+                                </View>
+                                : null
+                        }
+                    </View>
+                )
+            }
+            if (name == 'ORDERS') {
+                return (
+                    <View>
+                        <Image style={[Icons[name].style, { tintColor: color, resizeMode: 'contain', }]}
+                            source={Icons[name].image} />
+                        {
+                            progress?.length ?
+                                <View style={{
+                                    position: 'absolute', top: -myHeight(0.6), right: -myHeight(1.4), backgroundColor: myColors.red, borderRadius: 100,
+                                    paddingVertical: myHeight(0.35), paddingHorizontal: myHeight(1)
+                                }}>
+                                    <Text style={[styles.textCommon, { fontSize: myFontSize.tiny, fontFamily: myFonts.bodyBold, color: myColors.background }]}>{progress.length}</Text>
                                 </View>
                                 : null
                         }

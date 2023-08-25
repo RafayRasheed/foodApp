@@ -19,6 +19,7 @@ import { ImageUri } from '../common/image_uri';
 import storage from '@react-native-firebase/storage';
 import { setAllItems, setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
 import { setHistoryOrderse, setPendingOrderse, setProgressOrderse } from '../../redux/order_reducer';
+import database from '@react-native-firebase/database';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -244,13 +245,14 @@ export const HomeScreen = ({ navigation }) => {
     }, [profile])
 
     useEffect(() => {
-        const subscriber = firestore().collection('orders').doc(profile.uid).collection('orders')
-            .onSnapshot(documentSnapshot => {
+        database()
+            .ref(`/orders/${profile.uid}`)
+            .on('value', snapshot => {
                 let pending = []
                 let progress = []
                 let history = []
-                documentSnapshot.forEach(documentSnapshot1 => {
-                    const order = documentSnapshot1.data()
+                snapshot.forEach(documentSnapshot1 => {
+                    const order = documentSnapshot1.val()
                     if (order.status == -1 || order.status == 100 || order.status == -2) {
                         history.push(order)
                     }
@@ -260,14 +262,44 @@ export const HomeScreen = ({ navigation }) => {
                     else {
                         progress.push(order)
                     }
+
                 });
+                pending.sort((a, b) => b.dateInt - a.dateInt);
+                progress.sort((a, b) => b.dateInt - a.dateInt);
+                history.sort((a, b) => b.dateInt - a.dateInt);
                 dispatch(setPendingOrderse(pending))
                 dispatch(setHistoryOrderse(history))
                 dispatch(setProgressOrderse(progress))
+                console.log('User data: ', pending.length, progress.length, history.length);
             });
+        // const subscriber = firestore().collection('orders').doc(profile.uid).collection('orders')
+        //     .onSnapshot(documentSnapshot => {
+        //         let pending = []
+        //         let progress = []
+        //         let history = []
+        //         documentSnapshot.forEach(documentSnapshot1 => {
+        //             const order = documentSnapshot1.data()
+        //             if (order.status == -1 || order.status == 100 || order.status == -2) {
+        //                 history.push(order)
+        //             }
+        //             else if (order.status == 0) {
+        //                 pending.push(order)
+        //             }
+        //             else {
+        //                 progress.push(order)
+        //             }
 
-        // Stop listening for updates when no longer required
-        return () => subscriber();
+        //         });
+        //         pending.sort((a, b) => b.dateInt - a.dateInt);
+        //         progress.sort((a, b) => b.dateInt - a.dateInt);
+        //         history.sort((a, b) => b.dateInt - a.dateInt);
+        //         dispatch(setPendingOrderse(pending))
+        //         dispatch(setHistoryOrderse(history))
+        //         dispatch(setProgressOrderse(progress))
+        //     });
+
+        // // Stop listening for updates when no longer required
+        // return () => subscriber();
     }, []);
 
     useEffect(() => {

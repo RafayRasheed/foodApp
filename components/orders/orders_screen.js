@@ -72,22 +72,20 @@ export const OrderScreen = ({ navigation }) => {
                     {/* Order */}
                     <TouchableOpacity activeOpacity={0.6} onPress={() => setI(0)}
                         style={[styles.containerButtonOrder_Hist, { backgroundColor: i == 0 ? myColors.primaryT : myColors.primaryL2 }]}>
-                        <Text style={[styles.textHist_Order, { color: i == 0 ? myColors.background : myColors.text }]}>In Progress</Text>
+                        <Text style={[styles.textHist_Order, { color: i == 0 ? myColors.background : myColors.text }]}>In Progress ({progress.length})</Text>
                     </TouchableOpacity>
                     {/* History */}
                     <TouchableOpacity activeOpacity={0.6} onPress={() => setI(1)}
                         style={[styles.containerButtonOrder_Hist, { backgroundColor: i == 1 ? myColors.primaryT : myColors.primaryL2 }]}>
-                        <Text style={[styles.textHist_Order, { color: i == 1 ? myColors.background : myColors.text }]}>Pending</Text>
+                        <Text style={[styles.textHist_Order, { color: i == 1 ? myColors.background : myColors.text }]}>Pending ({pending.length})</Text>
                     </TouchableOpacity>
 
                     {/* History */}
                     <TouchableOpacity activeOpacity={0.6} onPress={() => setI(2)}
                         style={[styles.containerButtonOrder_Hist, { backgroundColor: i == 2 ? myColors.primaryT : myColors.primaryL2 }]}>
-                        <Text style={[styles.textHist_Order, { color: i == 2 ? myColors.background : myColors.text }]}>History</Text>
+                        <Text style={[styles.textHist_Order, { color: i == 2 ? myColors.background : myColors.text }]}>History ({history.length})</Text>
                     </TouchableOpacity>
                 </View>
-
-
             </View>
 
             <Spacer paddingT={myHeight(2)} />
@@ -97,7 +95,8 @@ export const OrderScreen = ({ navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.containerContentScroll}>
                 {i == 0 &&
                     progress.map((item, ind) =>
-                        <TouchableOpacity key={ind} activeOpacity={0.85} onPress={() => item.type == 'ride' ? navigation.navigate('OrderDetails', { item }) : navigation.navigate('RideDetails', { item })}>
+                        <TouchableOpacity key={ind} activeOpacity={0.85}
+                            onPress={() => navigation.navigate('OrderDetails', { item })}>
                             {console.log('dg')}
                             {ind != 0 &&
                                 <View style={{
@@ -115,7 +114,7 @@ export const OrderScreen = ({ navigation }) => {
                 {i == 1 &&
                     pending.map((item, ind) =>
                         <TouchableOpacity key={ind} activeOpacity={0.85}
-                            onPress={() => item.type == 'ride' ? navigation.navigate('OrderDetails', { item }) : navigation.navigate('RideDetails', { item })}>
+                            onPress={() => navigation.navigate('OrderDetails', { item })}>
                             {ind != 0 &&
                                 <View style={{
                                     height: myHeight(0.16),
@@ -130,7 +129,7 @@ export const OrderScreen = ({ navigation }) => {
                 {i == 2 &&
                     history.map((item, ind) =>
                         <TouchableOpacity key={ind} activeOpacity={0.85}
-                            onPress={() => item.type == 'ride' ? navigation.navigate('OrderDetails', { item }) : navigation.navigate('RideDetails', { item })}>
+                            onPress={() => navigation.navigate('OrderDetails', { item })}>
                             {ind != 0 &&
                                 <View style={{
                                     height: myHeight(0.16),
@@ -166,8 +165,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     containerButtonOrder_Hist: {
-        paddingHorizontal: myWidth(6.5),
-        paddingVertical: myHeight(0.4),
+        paddingHorizontal: myWidth(3.5),
+        paddingVertical: myHeight(0.5),
         borderRadius: myWidth(10),
         justifyContent: 'center',
         alignItems: 'center',

@@ -31,16 +31,10 @@ export const History_Order = ({ item }) => {
                         <Text numberOfLines={1} style={[styles.textTime_Status, {
                             fontSize: myFontSize.xxSmall,
                             fontFamily: myFonts.heading,
-                            color: item.status == 'Completed' ? '#4CD964' : item.status == 'Cancelled' ? '#FF1010' : myColors.primaryT,
+                            color: item.status > 0 ? '#4CD964' : item.status < 0 ? '#FF1010' : myColors.primaryT,
 
-                        }]}>{item.status}</Text>
+                        }]}>{item.statusT}</Text>
                         {/* Status Tag */}
-                        <View style={{
-                            // backgroundColor:  item.status == 'Completed' ? '#4CD964' : item.status == 'Cancelled' ? '#FF1010' : myColors.primaryT,
-                            // paddingHorizontal: myWidth(3), paddingVertical: myHeight(0.1),
-                            // borderRadius: myWidth(1.2)
-                        }}>
-                        </View>
                     </View>
 
                 </View>
@@ -159,6 +153,8 @@ const styles = StyleSheet.create({
         height: myHeight(1.9),
         width: myHeight(1.9),
         resizeMode: 'contain',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        tintColor: myColors.primaryT
+
     },
 })

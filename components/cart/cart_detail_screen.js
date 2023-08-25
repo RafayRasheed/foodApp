@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -16,8 +16,14 @@ export const CartDetail = ({ navigation, route }) => {
     const { restaurant } = route.params
     const { cart } = useSelector(state => state.cart)
     const resCart = cart.filter(res => res.restaurant.uid == restaurant.uid)[0]
-    const { cartItems } = resCart
+    const cartItems = resCart ? resCart.cartItems : []
 
+    useEffect(() => {
+        const resCart = cart.filter(res => res.restaurant.uid == restaurant.uid)[0]
+        if (!resCart) {
+            navigation.goBack()
+        }
+    }, [cart])
     function addToCart(item, quantity, totalPrice) {
         dispatch(addCart({ restaurant, item, quantity, totalPrice }))
         // navigation.goBack()
@@ -85,9 +91,8 @@ export const CartDetail = ({ navigation, route }) => {
                 <Spacer paddingT={myHeight(1.2)} />
 
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: myWidth(4) }}>
-                    {cartItems.map((cartItem, i) => {
+                    {cartItems?.map((cartItem, i) => {
                         const { item } = cartItem
-
                         return (
                             <View key={i} style={{
                                 flexDirection: 'row', marginVertical: myHeight(1.15),
@@ -271,7 +276,7 @@ export const CartDetail = ({ navigation, route }) => {
                             <Text style={[styles.textCommon, {
                                 color: myColors.primaryT, fontFamily: myFonts.heading,
                                 fontSize: myFontSize.xMedium
-                            }]}>{resCart.subTotal}</Text>
+                            }]}>{resCart?.subTotal}</Text>
                         </View>
                     </View>
                     <View style={{ alignItems: 'center' }}>

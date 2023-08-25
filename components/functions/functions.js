@@ -27,7 +27,7 @@ export function dataFullData() {
     const date = new Date()
 
     const year = adjustSting(date.getUTCFullYear().toString(), 2)
-    const month = adjustSting(date.getUTCMonth().toString(), 2)
+    const month = adjustSting((date.getUTCMonth() + 1).toString(), 2)
     const day = adjustSting(date.getUTCDate().toString(), 2)
     const hours = adjustSting(date.getUTCHours().toString(), 2)
     const minutes = adjustSting(date.getUTCMinutes().toString(), 2)
@@ -36,8 +36,12 @@ export function dataFullData() {
     const extra = verificationCode().toString().slice(0, 3)
     const code = year + month + day + hours + minutes + seconds + mili + extra
 
+
+    const hoursN = adjustSting(date.getHours().toString(), 2)
+    const minutesN = adjustSting(date.getMinutes().toString(), 2)
     const dateData = {
         date: day + '-' + month + '-' + year,
+        time: hoursN + ":" + minutesN,
         dateInt: parseInt(code)
     }
     return (dateData)

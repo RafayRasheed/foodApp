@@ -159,6 +159,7 @@ export const AccScreen = ({ navigation }) => {
                             <CreateAcc navigate={navigation.navigate} showError={showError} showLoading={setLoading} city={city} setShowCityModal={setShowCityModal} />}
                         {/* <Spacer paddingT={myHeight(4)}/> */}
                     </TouchableOpacity>
+                    {errorMsg && <MyError message={errorMsg} />}
                     {loading && <Loader />}
                 </Modalize>
 
@@ -168,7 +169,6 @@ export const AccScreen = ({ navigation }) => {
 
 
 
-                {errorMsg && <MyError message={errorMsg} />}
 
             </View>
 
