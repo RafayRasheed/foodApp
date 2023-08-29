@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux"
 import { setProfile } from "../redux/profile_reducer"
 import { Checkout } from "./cart/checkout"
 import { OrderDetails } from "./orders/order_detail_screen"
+import { navigationRef } from "./RootNavigation"
 
 const AppTAB = createStackNavigator()
 
@@ -31,7 +32,7 @@ export const AppNavigator = () => {
     //     }
     // }, [])
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             <AppTAB.Navigator
                 // initialRouteName="StartupNavigator"
                 initialRouteName={containFirstTime() ? containLogin() ? 'HomeBottomNavigator' : "AccountNavigator" : "StartupScreen"}

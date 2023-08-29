@@ -194,6 +194,16 @@ export const OrderDetails = ({ navigation, route }) => {
                         fontSize: myFontSize.body2,
                         fontFamily: myFonts.headingBold,
                     }]}>Phone: <Text style={{ fontFamily: myFonts.bodyBold, }}>{item.phone}</Text></Text>
+                    <Text style={[styles.textCommon, {
+                        fontSize: myFontSize.body2,
+                        fontFamily: myFonts.headingBold,
+                    }]}>Delevery Charges: <Text style={{ fontFamily: myFonts.bodyBold, }}>{item.deliveryCharges}</Text></Text>
+
+                    <Text style={[styles.textCommon, {
+                        fontSize: myFontSize.body2,
+                        fontFamily: myFonts.headingBold,
+                    }]}>Delevery Time: <Text style={{ fontFamily: myFonts.bodyBold, }}>{item.delivery} minutes</Text></Text>
+
                     <Spacer paddingT={myHeight(1.5)} />
                     {cartItems?.map((cartItem, i) => {
                         const { item } = cartItem

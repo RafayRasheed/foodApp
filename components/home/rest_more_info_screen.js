@@ -5,7 +5,7 @@ import {
     Linking, Platform, ImageBackground, FlatList,
 } from 'react-native';
 
-import { MyError, Spacer, ios, myHeight, myWidth } from '../common';
+import { Loader, MyError, Spacer, errorTime, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import { ImagesShortViewer } from './home.component/images_short_viewer';
@@ -13,8 +13,15 @@ import Collapsible from 'react-native-collapsible';
 import { Stars } from './home.component/star';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { ImageUri } from '../common/image_uri';
+import { dataFullData } from '../functions/functions';
+import { useDispatch, useSelector } from 'react-redux';
+import firestore, { Filter } from '@react-native-firebase/firestore';
 
 export const RestaurantMoreDetails = ({ navigation, route }) => {
+    const { profile } = useSelector(state => state.profile)
+    const [errorMsg, setErrorMsg] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+
     const { restaurant } = route.params;
     const [timmingClose, setTimingClose] = useState(true)
     const [infoClose, setInfoClose] = useState(true)
@@ -25,11 +32,84 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
     const [RatingModal, setRatinModal] = useState(false)
     const [starI, setStarI] = useState(undefined)
     const [review, setReview] = useState(null)
+
+
+
+    const disptach = useDispatch()
+    useEffect(() => {
+        if (errorMsg) {
+            setTimeout(() => {
+                setIsLoading(false)
+                setErrorMsg(null)
+            }
+                , errorTime)
+        }
+    }, [errorMsg])
+
     function hideModal() {
         setRatinModal(false)
     }
     function onDone() {
-        hideModal()
+        if (starI && review) {
+            setIsLoading(true)
+
+            firestore().collection('restaurants').doc(restaurant.uid).get()
+                .then((data) => {
+                    const res = data.data()
+                    const noOfRatings = res.noOfRatings ? res.noOfRatings : 0
+                    const ratingTotal = res.ratingTotal ? res.ratingTotal : 0
+                    const rating = res.rating ? res.rating : 0
+                    const reviews = res.reviews ? res.reviews : []
+
+                    const newRatingTotal = ratingTotal + starI + 1
+                    const newnoOfRatings = noOfRatings + 1
+                    const newrating = newRatingTotal / newnoOfRatings
+
+
+                    const date = dataFullData()
+                    const reviewNew =
+                    {
+                        dateInt: date.dateInt,
+                        id: profile.uid,
+                        name: profile.name,
+                        rating: starI + 1,
+                        date: date.date,
+                        review: review,
+                    }
+                    const newReview = [
+                        ...reviews,
+                        reviewNew
+                    ]
+
+                    const update = {
+                        noOfRatings: newnoOfRatings,
+                        ratingTotal: newRatingTotal,
+                        reviews: newReview,
+                        rating: newrating
+                    }
+
+                    firestore().collection('restaurants').doc(restaurant.uid).update(update)
+                        .then((data) => {
+                            setIsLoading(false)
+                            hideModal()
+                        }).catch((er) => {
+                            console.log('Error on Get Users for fav', er)
+                            setErrorMsg('Something Wrong')
+
+                        })
+                }).catch((er) => {
+                    console.log('Error on Get Users for fav', er)
+                    setErrorMsg('Something Wrong')
+
+                })
+
+
+        }
+
+        else (
+            setErrorMsg('PLease Add Review and rate')
+        )
+        // hideModal()
     }
 
     return (
@@ -738,6 +818,9 @@ export const RestaurantMoreDetails = ({ navigation, route }) => {
 
                 </TouchableOpacity>
             }
+            {isLoading && <Loader />}
+            {errorMsg && <MyError message={errorMsg} />}
+
         </>
 
     )

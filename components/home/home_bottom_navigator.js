@@ -25,10 +25,10 @@ const Icons = {
         image: require('../assets/home_main/home/navigator/orderIcon.png'),
         style: { width: myHeight(2.9), height: myHeight(2.9) }
     },
-    HOT: {
-        image: require('../assets/home_main/home/navigator/fire.png'),
-        style: { width: myHeight(3.8), height: myHeight(3.8) }
-    },
+    // HOT: {
+    //     image: require('../assets/home_main/home/navigator/fire.png'),
+    //     style: { width: myHeight(3.8), height: myHeight(3.8) }
+    // },
 
     // WALLET: require('../assets/home_main/navigator/wallet.png'),
     CART: {
@@ -61,18 +61,18 @@ const screenOptions = ({ navigator, route }) => {
         tabBarInactiveTintColor: myColors.text,
         // tabBarShowLabel:name=='HOT'?true:false,
         tabBarIcon: ({ color }) => {
-            if (name == 'HOT') {
-                return (
-                    <View style={{
-                        padding: myHeight(2), backgroundColor: color == myColors.primaryT ? myColors.primaryL3 : myColors.primaryL5, borderWidth: myHeight(0.1), borderColor: myColors.offColor7,
-                        borderRadius: myHeight(10), elevation: 3,
-                        marginTop: -myHeight(7.5)
-                    }}>
-                        <Image style={[Icons[name].style, { resizeMode: 'contain', }]}
-                            source={Icons[name].image} />
-                    </View>
-                )
-            }
+            // if (name == 'HOT') {
+            //     return (
+            //         <View style={{
+            //             padding: myHeight(2), backgroundColor: color == myColors.primaryT ? myColors.primaryL3 : myColors.primaryL5, borderWidth: myHeight(0.1), borderColor: myColors.offColor7,
+            //             borderRadius: myHeight(10), elevation: 3,
+            //             marginTop: -myHeight(7.5)
+            //         }}>
+            //             <Image style={[Icons[name].style, { resizeMode: 'contain', }]}
+            //                 source={Icons[name].image} />
+            //         </View>
+            //     )
+            // }
             if (name == 'CART') {
                 return (
                     <View>
@@ -151,7 +151,6 @@ export const HomeBottomNavigator = ({ route, navigation }) => {
             >
                 <Tab.Screen name="HOME" component={HomeNavigator} />
                 <Tab.Screen name="ORDERS" component={OrderScreen} />
-                <Tab.Screen name="HOT" component={Xr} />
                 <Tab.Screen name="CART" component={CartNavigator} />
                 <Tab.Screen name="PROFILE" component={ProfileNavigator} />
 

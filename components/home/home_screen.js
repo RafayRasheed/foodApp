@@ -20,6 +20,9 @@ import storage from '@react-native-firebase/storage';
 import { setAllItems, setAllRest, setNearby, setRecommend } from '../../redux/data_reducer';
 import { setHistoryOrderse, setPendingOrderse, setProgressOrderse } from '../../redux/order_reducer';
 import database from '@react-native-firebase/database';
+import { deccodeInfo } from '../functions/functions';
+import messaging from '@react-native-firebase/messaging';
+import notifee from '@notifee/react-native';
 
 if (!ios && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -28,8 +31,8 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
     const { profile } = useSelector(state => state.profile)
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [categories, setCategories] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [categories, setCategories] = useState([])
     const [nearbyRestaurant, setNearbyRestaurant] = useState([])
     const [RecommendRestaurant, setRecommendRestaurant] = useState([])
     const [startPro, setStartPro] = useState({})
@@ -45,6 +48,7 @@ export const HomeScreen = ({ navigation }) => {
                 result.forEach((cat) => {
                     catArray.push(cat.data())
                 })
+
                 setCategories(catArray)
 
             }
@@ -62,7 +66,6 @@ export const HomeScreen = ({ navigation }) => {
             .where('update', '==', true)
             .where('city', '==', profile.city)
             .orderBy('rating', 'desc').get().then((result) => {
-                console.log('sdgsgseg')
                 if (!result.empty) {
                     let rest = []
                     let items = []
@@ -84,28 +87,32 @@ export const HomeScreen = ({ navigation }) => {
                             })
 
                         })
-                        if (size > 4 && i == 4) {
-                            setRecommendRestaurant(rest)
-                        }
+
 
                         // console.log(res.data().name)
                     })
-                    if (size <= 5) {
-                        setRecommendRestaurant(rest)
-                    }
+
+                    setRecommendRestaurant(rest)
                     dispatch(setRecommend(rest))
                     dispatch(setAllItems(items))
                     dispatch(setAllRest(rest))
+                    rest.sort((a, b) => b.dateInt - a.dateInt);
+                    setNearbyRestaurant(rest)
+                    dispatch(setNearby(rest))
+
 
 
                 }
                 else {
                     console.log('empty')
                     setRecommendRestaurant([])
+                    setNearbyRestaurant([])
 
                     dispatch(setRecommend([]))
                     dispatch(setAllItems([]))
                     dispatch(setAllRest([]))
+                    dispatch(setNearby([]))
+
                     // setCategories(catArray)
                 }
             }).catch((er) => {
@@ -219,30 +226,72 @@ export const HomeScreen = ({ navigation }) => {
     }
     // re.turn (<Test />)
     useEffect(() => {
-        getNearbyRestuarant()
-        getTopRatedRes()
+        // getTopRatedRes()
 
-        firestore().collection('users').doc(profile.uid).get()
-            .then((data) => {
-                const all = data.data()
-                const favoriteRes = all.favoriteRes
-                const favoriteItem = all.favoriteItem
+        // firestore().collection('users').doc(profile.uid).get()
+        //     .then((data) => {
+        //         const all = data.data()
+        //         const favoriteRes = all.favoriteRes
+        //         const favoriteItem = all.favoriteItem
 
-                if (favoriteRes && favoriteRes.length) {
-                    dispatch(setFavoriteRest(favoriteRes))
-                }
-                if (favoriteItem && favoriteItem.length) {
-                    dispatch(setFavoriteItem(favoriteItem))
-                }
-            }).catch((er) => {
-                console.log('Error on Get Users for fav', er)
-            })
-        getCategories()
+        //         if (favoriteRes && favoriteRes.length) {
+        //             dispatch(setFavoriteRest(favoriteRes))
+        //         }
+        //         if (favoriteItem && favoriteItem.length) {
+        //             dispatch(setFavoriteItem(favoriteItem))
+        //         }
+        //     }).catch((er) => {
+        //         console.log('Error on Get Users for fav', er)
+        //     })
+        // getCategories()
         dispatch(setCart(getCartLocal()))
         // gettingOrders()
+        getToken()
+
+    }, [profile.city])
+
+    useEffect(() => {
+
+        const unsubscribe = messaging().onMessage(async remoteMessage => {
+            Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+            onDisplayNotification(remoteMessage)
+        });
+
+        return unsubscribe;
+
+    }, []);
+
+    async function onDisplayNotification(remoteMessage) {
+        // Request permissions (required for iOS)
+        await notifee.requestPermission()
+
+        // Create a channel (required for Android)
+        const channelId = await notifee.createChannel({
+            id: remoteMessage.messageId,
+            name: 'Orders'
+        });
 
 
-    }, [profile])
+        // Display a notification
+        await notifee.displayNotification({
+            title: remoteMessage.notification.title,
+            body: remoteMessage.notification.body,
+            android: {
+                channelId,
+                // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+                // pressAction is needed if you want the notification to open the app when pressed
+                pressAction: {
+                    id: 'default',
+                },
+            },
+        });
+    }
+
+    async function getToken() {
+        const token = await messaging().getToken();
+        console.log(token)
+
+    }
 
     useEffect(() => {
         database()
@@ -459,7 +508,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <View style={{
                                     flexDirection: 'row',
                                 }}>
-                                    {nearbyRestaurant.map((item, i) =>
+                                    {nearbyRestaurant.slice(0, 3).map((item, i) =>
                                         <TouchableOpacity key={i} activeOpacity={0.95}
                                             onPress={() => navigation.navigate('RestaurantDetail', { item })} >
                                             <RestaurantInfo restaurant={item} />
@@ -505,7 +554,7 @@ export const HomeScreen = ({ navigation }) => {
                                 <View style={{
                                     flexDirection: 'row',
                                 }}>
-                                    {RecommendRestaurant.map((item, i) =>
+                                    {RecommendRestaurant.slice(0, 3).map((item, i) =>
                                         <TouchableOpacity key={i} activeOpacity={0.95}
                                             onPress={() => navigation.navigate('RestaurantDetail', { item })} >
                                             <RestaurantInfo restaurant={item} />

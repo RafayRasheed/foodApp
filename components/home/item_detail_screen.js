@@ -3,7 +3,7 @@ import {
     ScrollView, StyleSheet, TouchableOpacity, Image,
     View, Text, StatusBar, TextInput,
 } from 'react-native';
-import { MyError, Spacer, errorTime, ios, myHeight, myWidth } from '../common';
+import { Loader, MyError, Spacer, errorTime, ios, myHeight, myWidth } from '../common';
 import { myColors } from '../../ultils/myColors';
 import { myFontSize, myFonts, myLetSpacing } from '../../ultils/myFonts';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addCart, removeItemCart } from '../../redux/cart_reducer';
 import { addFavoriteItem, removeFavoriteItem } from '../../redux/favorite_reducer';
 import { ImageUri } from '../common/image_uri';
+import firestore, { Filter } from '@react-native-firebase/firestore';
 
 export const ItemDetails = ({ navigation, route }) => {
     const { item } = route.params;
@@ -24,7 +25,7 @@ export const ItemDetails = ({ navigation, route }) => {
     const price = parseInt(item.price)
     const [count, setCount] = useState(1)
     const [errorMessage, setErrorMessage] = useState(null)
-
+    const [isLoading, setIsLoading] = useState(false)
 
     //Favourite
     const { favoriteItem } = useSelector(state => state.favorite)
@@ -54,6 +55,7 @@ export const ItemDetails = ({ navigation, route }) => {
     useEffect(() => {
         if (errorMessage) {
             setTimeout(() => {
+                setIsLoading(false)
                 setErrorMessage(null)
             }, errorTime)
         }
@@ -71,9 +73,7 @@ export const ItemDetails = ({ navigation, route }) => {
     function hideModal() {
         setRatinModal(false)
     }
-    function onDone() {
-        hideModal()
-    }
+
     function checkRequired() {
         let s = true
         let itemArray = []
@@ -116,6 +116,83 @@ export const ItemDetails = ({ navigation, route }) => {
             navigation.goBack()
         }
 
+    }
+
+
+    function onDone() {
+        if (starI) {
+            setIsLoading(true)
+
+            firestore().collection('restaurants').doc(restaurant.uid).get()
+                .then((data) => {
+                    const res = data.data()
+                    let catIndex = 0
+                    let itemIndex = 0
+                    let item2 = {}
+                    res.foodCategory.map((cat, i) => {
+                        if (item.subCatName == cat.name) {
+                            catIndex = i
+                            cat.items.map((it, itI) => {
+                                if (item.id == it.id) {
+                                    itemIndex = itI
+                                    item2 = it
+
+
+                                }
+
+                            })
+                        }
+                    })
+
+                    if (item2) {
+
+                        const noOfRatings = item2.noOfRatings ? item2.noOfRatings : 0
+                        const ratingTotal = item2.ratingTotal ? item2.ratingTotal : 0
+
+                        const newRatingTotal = ratingTotal + starI + 1
+                        const newnoOfRatings = noOfRatings + 1
+                        const newrating = newRatingTotal / newnoOfRatings
+                        const newItem = {
+                            ...item2,
+                            noOfRatings: newnoOfRatings,
+                            ratingTotal: newRatingTotal,
+                            rating: newrating
+                        }
+                        let newCat = res.foodCategory[catIndex]
+                        newCat.items[itemIndex] = newItem
+
+                        const newFoodCartegpry = res.foodCategory
+                        newFoodCartegpry[catIndex] = newCat
+
+                        const update = {
+                            foodCategory: newFoodCartegpry
+                        }
+
+                        firestore().collection('restaurants').doc(restaurant.uid).update(update)
+                            .then((data) => {
+                                setIsLoading(false)
+                                hideModal()
+                            }).catch((er) => {
+                                console.log('Error on Get Users for fav', er)
+                                setErrorMessage('Something Wrong')
+                            })
+                    }
+
+
+
+                }).catch((er) => {
+                    console.log('Error on Get Users for fav', er)
+                    setErrorMessage('Something Wrong')
+
+                })
+
+
+        }
+
+        else (
+            setErrorMessage('PLease  rate')
+        )
+        // hideModal()
     }
 
     return (
@@ -765,6 +842,7 @@ export const ItemDetails = ({ navigation, route }) => {
                 </TouchableOpacity>
             }
             {errorMessage && <MyError message={errorMessage} />}
+            {isLoading && <Loader />}
 
         </>
 

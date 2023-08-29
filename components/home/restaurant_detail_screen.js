@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFavoriteRest, removeFavoriteRest } from '../../redux/favorite_reducer';
 import { useFocusEffect } from '@react-navigation/native';
 import { ImageUri } from '../common/image_uri';
+import { deccodeInfo } from '../functions/functions';
 
 export const RestaurantDetail = ({ navigation, route }) => {
   const restaurant = route.params.item;
@@ -22,6 +23,7 @@ export const RestaurantDetail = ({ navigation, route }) => {
   const [currentItem, setCurrentItems] = useState([]);
   const [allItems, setAllItems] = useState([])
   //Back Functions
+
   useEffect(() => {
     let alIt = []
     foodCategory.map((subCat, ind) => {
