@@ -20,7 +20,6 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
     //         remoteMessage,
     //     );
 
-    messaging().se
     // });
 });
 messaging().getInitialNotification(async remoteMessage => {
