@@ -254,7 +254,6 @@ export const HomeScreen = ({ navigation }) => {
 
         const unsubscribe = messaging().onMessage(async remoteMessage => {
             Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-            onDisplayNotification(remoteMessage)
         });
 
         return unsubscribe;
@@ -267,7 +266,7 @@ export const HomeScreen = ({ navigation }) => {
 
         // Create a channel (required for Android)
         const channelId = await notifee.createChannel({
-            id: remoteMessage.messageId,
+            id: remoteMessage.messageId.toString(),
             name: 'Orders'
         });
 

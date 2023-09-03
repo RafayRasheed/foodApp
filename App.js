@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Platform, TouchableOpacity, StyleSheet, PermissionsAndroid } from 'react-native';
 // import { MMKV } from 'react-native-mmkv';
 import { myColors } from './ultils/myColors';
 import { myHeight, printWithPlat } from './components/common';
@@ -10,6 +10,7 @@ import storeRedux from './redux/store_redux';
 import SplashScreen from 'react-native-splash-screen'
 import { getCartLocal } from './components/functions/storageMMKV';
 import { dataFullData, verificationCode } from './components/functions/functions';
+import { notificationListeners, requestUserPermission } from './components/RootNavigation';
 // import { enableLatestRenderer } from 'react-native-maps';
 
 // enableLatestRenderer();
@@ -214,11 +215,31 @@ const citiesPakistan = [
   'Tump',
 ];
 export default function App() {
+  useEffect(() => {
+
+    if (Platform.OS == 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS).then((res) => {
+        console.log("res+++++", res)
+        if (!!res && res != 'granted') {
+          requestUserPermission()
+
+        }
+        if (!!res && res == 'granted') {
+          requestUserPermission()
+
+        }
+      }).catch(error => {
+        alert('something wrong')
+      })
+    } else {
+
+    }
+
+  }, [])
 
   useEffect(() => {
     printWithPlat('Started Successfully')
     SplashScreen.hide()
-    console.log(pakd.length)
     // const dispatch = useDispatch()
     // dispatch(setCart(getCartLocal()))
     // console.log(typeof getCartLocal())

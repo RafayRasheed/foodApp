@@ -20,6 +20,7 @@ import { setProfile } from "../redux/profile_reducer"
 import { Checkout } from "./cart/checkout"
 import { OrderDetails } from "./orders/order_detail_screen"
 import { navigationRef } from "./RootNavigation"
+import NavigationService from "./NavigationService"
 
 const AppTAB = createStackNavigator()
 
@@ -32,7 +33,7 @@ export const AppNavigator = () => {
     //     }
     // }, [])
     return (
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer ref={(re) => NavigationService.setTopLevelNavigator(re)}>
             <AppTAB.Navigator
                 // initialRouteName="StartupNavigator"
                 initialRouteName={containFirstTime() ? containLogin() ? 'HomeBottomNavigator' : "AccountNavigator" : "StartupScreen"}
