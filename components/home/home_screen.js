@@ -31,7 +31,7 @@ export const HomeScreen = ({ navigation }) => {
     const name = "Someone";
     const { profile } = useSelector(state => state.profile)
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState([])
     const [nearbyRestaurant, setNearbyRestaurant] = useState([])
     const [RecommendRestaurant, setRecommendRestaurant] = useState([])
@@ -102,6 +102,8 @@ export const HomeScreen = ({ navigation }) => {
 
 
 
+
+                    setIsLoading(false)
                 }
                 else {
                     console.log('empty')
@@ -226,24 +228,24 @@ export const HomeScreen = ({ navigation }) => {
     }
     // re.turn (<Test />)
     useEffect(() => {
-        // getTopRatedRes()
+        getTopRatedRes()
 
-        // firestore().collection('users').doc(profile.uid).get()
-        //     .then((data) => {
-        //         const all = data.data()
-        //         const favoriteRes = all.favoriteRes
-        //         const favoriteItem = all.favoriteItem
+        firestore().collection('users').doc(profile.uid).get()
+            .then((data) => {
+                const all = data.data()
+                const favoriteRes = all.favoriteRes
+                const favoriteItem = all.favoriteItem
 
-        //         if (favoriteRes && favoriteRes.length) {
-        //             dispatch(setFavoriteRest(favoriteRes))
-        //         }
-        //         if (favoriteItem && favoriteItem.length) {
-        //             dispatch(setFavoriteItem(favoriteItem))
-        //         }
-        //     }).catch((er) => {
-        //         console.log('Error on Get Users for fav', er)
-        //     })
-        // getCategories()
+                if (favoriteRes && favoriteRes.length) {
+                    dispatch(setFavoriteRest(favoriteRes))
+                }
+                if (favoriteItem && favoriteItem.length) {
+                    dispatch(setFavoriteItem(favoriteItem))
+                }
+            }).catch((er) => {
+                console.log('Error on Get Users for fav', er)
+            })
+        getCategories()
         dispatch(setCart(getCartLocal()))
         // gettingOrders()
         getToken()
@@ -252,11 +254,11 @@ export const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
 
-        const unsubscribe = messaging().onMessage(async remoteMessage => {
-            Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-        });
+        // const unsubscribe = messaging().onMessage(async remoteMessage => {
+        //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        // });
 
-        return unsubscribe;
+        // return unsubscribe;
 
     }, []);
 
@@ -287,8 +289,8 @@ export const HomeScreen = ({ navigation }) => {
     }
 
     async function getToken() {
-        const token = await messaging().getToken();
-        console.log(token)
+        // const token = await messaging().getToken();
+        // console.log(token)
 
     }
 
@@ -318,6 +320,7 @@ export const HomeScreen = ({ navigation }) => {
                 dispatch(setPendingOrderse(pending))
                 dispatch(setHistoryOrderse(history))
                 dispatch(setProgressOrderse(progress))
+
                 console.log('User data: ', pending.length, progress.length, history.length);
             });
         // const subscriber = firestore().collection('orders').doc(profile.uid).collection('orders')
@@ -352,7 +355,6 @@ export const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (categories) {
-            setIsLoading(false)
         }
     }, [categories])
     return (

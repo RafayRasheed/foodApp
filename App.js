@@ -216,24 +216,54 @@ const citiesPakistan = [
 ];
 export default function App() {
   useEffect(() => {
+    const api = 'https://fcm.googleapis.com/v1/projects/foodapp-edd7e/messages:send'
+    const myToken = 'dph9AvipQKa-rwb7sJG_K7:APA91bEo3djpvpDx9GFN_UEjJ2lMQBfzSe1fEsA5GQccV49_FOTYf_bdyWgl9-dFc3FXCtM3PSbAnmx4a9zLcTUwiHmLxZGFV5xqJVywztCOWyc0KlKN3n_0t60JejK8y1rRBGqUFKV9'
+    // fetch(api, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json', // Specify the content type as JSON
+    //     // Authorization: myToken,
+    //   },
+    //   message: {
+    //     token: myToken,
+    //     notification: {
+    //       "body": "This is an FCM notification message!",
+    //       "title": "FCM Message"
+    //     }
+    //   }
+    //   // body: JSON.stringify(postData) // Convert the data to JSON format
+    // })
+    //   .then(response => {
+    //     console.log(response.json())
+    //     return response.json(); // Parse the response as JSON
+    //   })
+    //   .then(data => {
+    //     // Handle the response data
+    //     console.log(data);
+    //     console.log('data');
+    //   })
+    //   .catch(error => {
+    //     // Handle errors
+    //     console.error('Fetch error:', error);
+    //   })
 
-    if (Platform.OS == 'android') {
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS).then((res) => {
-        console.log("res+++++", res)
-        if (!!res && res != 'granted') {
-          requestUserPermission()
+    // if (Platform.OS == 'android') {
+    //   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS).then((res) => {
+    //     console.log("res+++++", res)
+    //     if (!!res && res != 'granted') {
+    //       requestUserPermission()
 
-        }
-        if (!!res && res == 'granted') {
-          requestUserPermission()
+    //     }
+    //     if (!!res && res == 'granted') {
+    //       requestUserPermission()
 
-        }
-      }).catch(error => {
-        alert('something wrong')
-      })
-    } else {
+    //     }
+    //   }).catch(error => {
+    //     alert('something wrong')
+    //   })
+    // } else {
 
-    }
+    // }
 
   }, [])
 

@@ -21,6 +21,12 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
     //     );
 
     // });
+
+    messaging().sendMessage({
+        data: {
+
+        }
+    })
 });
 messaging().getInitialNotification(async remoteMessage => {
     // navigateNoti('OrderDetails', {})
