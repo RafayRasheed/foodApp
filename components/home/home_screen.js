@@ -69,10 +69,9 @@ export const HomeScreen = ({ navigation }) => {
                 if (!result.empty) {
                     let rest = []
                     let items = []
-
-
                     const size = result.size
                     result.forEach((res, i) => {
+                        console.log(i)
                         const restaurant = res.data()
                         rest.push(restaurant)
                         restaurant.foodCategory.map((subCat, ind) => {
@@ -97,12 +96,8 @@ export const HomeScreen = ({ navigation }) => {
                     dispatch(setAllItems(items))
                     dispatch(setAllRest(rest))
                     rest.sort((a, b) => b.dateInt - a.dateInt);
-                    setNearbyRestaurant(rest)
+                    setNearbyRestaurant(rest.length)
                     dispatch(setNearby(rest))
-
-
-
-
                     setIsLoading(false)
                 }
                 else {
@@ -114,11 +109,14 @@ export const HomeScreen = ({ navigation }) => {
                     dispatch(setAllItems([]))
                     dispatch(setAllRest([]))
                     dispatch(setNearby([]))
+                    setIsLoading(false)
 
                     // setCategories(catArray)
                 }
             }).catch((er) => {
                 console.log('Error on Get Restaurant', er)
+                setIsLoading(false)
+
             })
     }
     function getNearbyRestuarant() {
