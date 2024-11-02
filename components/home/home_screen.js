@@ -95,9 +95,11 @@ export const HomeScreen = ({ navigation }) => {
                     dispatch(setRecommend(rest))
                     dispatch(setAllItems(items))
                     dispatch(setAllRest(rest))
-                    rest.sort((a, b) => b.dateInt - a.dateInt);
-                    setNearbyRestaurant(rest)
-                    dispatch(setNearby(rest))
+                    // const neww = rest.sort((, b) => b.dateInt - a.dateInt);
+                    const sortedArray = [...rest].sort((a, b) => b.dateInt - a.dateInt);
+
+                    setNearbyRestaurant(sortedArray)
+                    dispatch(setNearby(sortedArray))
                     setIsLoading(false)
                 }
                 else {
