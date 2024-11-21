@@ -528,7 +528,7 @@ export const Checkout = ({navigation, route}) => {
                     {phoneUpdate ? phoneUpdate : 'Add Phone'}
                   </Text>
                 </View>
-
+                <View></View>
                 <Image
                   style={{
                     height: myHeight(2),
